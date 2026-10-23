@@ -1,0 +1,29 @@
+# 백업 · 임시 파일
+*.bak
+*.orig
+*.tmp
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 에디터
+.vscode/
+.idea/
+*.code-workspace
+
+# 로컬 도구
+.claude/
+node_modules/
+
+# 안 쓰는 옛 도구 (파일만 남겨 둠)
+old/
+
+# 사람 · AI가 작업하며 보는 문서 (깃허브에 안 올림, CLAUDE.md "깃허브에 안 올리는 파일")
+쓰는법.md
+SKILL.md
+REFERENCES.md
+HANDOFF.json
+요청.md

@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OOC MAKERS : FOOD TOP3</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/MonadABXY/mona-font/web/mona.css">
+<script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.js" defer></script>
+<style id="card-css">
+/*
+  FOOD TOP3 카드(도시락) — 아늑한 도트 게임의 아이템 창처럼.
+  도트 문법만 쓴다: 크림색 평면 + 계단 모서리 진갈색 테두리(4방향 그림자) + 번지지 않는 도트 그림자.
+  나무결 · 광택 · 입체 테두리는 쓰지 않는다. 글자는 전부 모나, 이모지는 모나 컬러 이모지.
+  캐릭터별 색은 두지 않는다 — 이름표는 모두 같은 나무판. 색은 이모지와 금 · 은 · 동 메달에만.
+  HTML 저장은 이 <style> 을 그대로 옮긴다 — 카드 밖 규칙은 아래 두 번째 <style> 에.
+*/
+:root{
+  --wood:#5b3a29; --paper:#fdf3dc; --slot:#f6e2b8; --slot-edge:#d9b17a; --ink:#4a2f22; --ink-soft:#8a6448;
+  --meadow:#cdd6a8; --leaf:#6e9443; --leaf-dark:#4d6b2c;
+  --px:"Mona12","Malgun Gothic",sans-serif; --emoji:"Mona12 Color Emoji","Mona12 Emoji",sans-serif;
+}
+.boxes{display:grid;grid-template-columns:repeat(auto-fill,minmax(520px,1fr));gap:28px;align-items:start;padding:4px 14px 14px 6px}
+.box{background:var(--paper);color:var(--ink);font-family:var(--px);padding:14px 16px 18px;
+  box-shadow:0 -4px 0 0 var(--wood),0 4px 0 0 var(--wood),-4px 0 0 0 var(--wood),4px 0 0 0 var(--wood),8px 8px 0 0 rgba(91,58,41,.22)}
+.plate{display:inline-block;margin:0 0 16px;padding:6px 14px 5px;font:700 24px/1 var(--px);color:var(--paper);background:var(--wood);overflow-wrap:anywhere;
+  box-shadow:0 -2px 0 0 var(--wood),0 2px 0 0 var(--wood),-2px 0 0 0 var(--wood),2px 0 0 0 var(--wood),4px 4px 0 0 rgba(91,58,41,.25)}
+.tray{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.cell{background:var(--slot);padding:12px 14px 14px;display:flex;flex-direction:column;gap:10px;min-width:0;margin:3px;
+  box-shadow:0 -3px 0 0 var(--slot-edge),0 3px 0 0 var(--slot-edge),-3px 0 0 0 var(--slot-edge),3px 0 0 0 var(--slot-edge),inset 0 3px 0 0 rgba(91,58,41,.08)}
+.cat{display:flex;align-items:center;gap:8px;padding-bottom:8px;border-bottom:2px dashed var(--slot-edge)}
+.cat em{font-style:normal;font-family:var(--emoji);font-size:24px;line-height:1}
+.cat b{font:700 24px/1 var(--px);color:var(--ink)}
+.cat span{font:400 12px/1 var(--px);letter-spacing:.08em;color:var(--ink-soft);margin-left:auto}
+.cell ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.cell li{display:grid;grid-template-columns:24px minmax(0,1fr);gap:10px;align-items:start}
+.rank{width:24px;height:24px;display:grid;place-items:center;font:700 12px/1 var(--px);margin-top:-2px;
+  --m:#efe3cf; --me:#bfa98a; background:var(--m); color:var(--ink);
+  box-shadow:0 -2px 0 0 var(--me),0 2px 0 0 var(--me),-2px 0 0 0 var(--me),2px 0 0 0 var(--me)}
+.cell li:nth-child(1) .rank{--m:#f6cf55; --me:#b98a1e}
+.cell li:nth-child(2) .rank{--m:#dfe4e8; --me:#8d98a3}
+.cell li:nth-child(3) .rank{--m:#e8a978; --me:#a5653a}
+.name{font:700 16px/1.35 var(--px);color:var(--ink);overflow-wrap:anywhere}
+.why{font:400 12px/1.5 var(--px);color:var(--ink-soft);margin-top:3px;overflow-wrap:anywhere}
+@media (max-width:900px){.boxes{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:520px){.tray{grid-template-columns:minmax(0,1fr)}.box{padding:12px 12px 14px}}
+</style>
+<style>
+/*
+  페이지 — 풀밭 위에 창 두 개. 왼쪽 창: OOC 복사 · 챗봇 출력 붙여넣기 · 저장(매번 하는 일).
+  오른쪽: 카드들, 그 안에서만 스크롤. 1920×900 에서 페이지 스크롤 없음.
+  게임 화면이라 테마는 하나(밝음)만 둔다.
+*/
+:root{color-scheme:light}
+/* 스크롤바: 크림색 홈 + 진갈색 각진 손잡이 */
+*{scrollbar-width:auto;scrollbar-color:var(--wood) var(--slot)}
+::-webkit-scrollbar{width:14px;height:14px}
+::-webkit-scrollbar-track{background:var(--slot);box-shadow:inset 2px 0 0 0 var(--slot-edge)}
+::-webkit-scrollbar-thumb{background:var(--wood);border:3px solid var(--slot);border-radius:0}
+::-webkit-scrollbar-thumb:hover{background:#6e4834}
+::-webkit-scrollbar-button{display:none}
+::-webkit-scrollbar-corner{background:var(--slot)}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background-color:var(--meadow);background-image:radial-gradient(rgba(255,255,255,.28) 1.5px,transparent 1.5px);background-size:24px 24px;
+  color:var(--ink);font:400 12px/1.5 var(--px)}
+
+/* 도트 단추: 크림 면 + 계단 테두리 + 아래 도트 그림자. 누르면 2px 내려간다 */
+button{font:700 12px/1 var(--px);color:var(--ink);background:var(--paper);border:0;border-radius:0;padding:9px 12px 8px;cursor:pointer;white-space:nowrap;margin:2px 2px 6px;
+  box-shadow:0 -2px 0 0 var(--wood),0 2px 0 0 var(--wood),-2px 0 0 0 var(--wood),2px 0 0 0 var(--wood),0 6px 0 0 rgba(91,58,41,.3)}
+button:hover{background:#fff8e8}
+button:active{transform:translateY(2px);box-shadow:0 -2px 0 0 var(--wood),0 2px 0 0 var(--wood),-2px 0 0 0 var(--wood),2px 0 0 0 var(--wood),0 4px 0 0 rgba(91,58,41,.3)}
+button.go{background:var(--leaf);color:var(--paper);box-shadow:0 -2px 0 0 var(--leaf-dark),0 2px 0 0 var(--leaf-dark),-2px 0 0 0 var(--leaf-dark),2px 0 0 0 var(--leaf-dark),0 6px 0 0 rgba(91,58,41,.3)}
+button.go:hover{background:#7ba34d}
+button.go:active{box-shadow:0 -2px 0 0 var(--leaf-dark),0 2px 0 0 var(--leaf-dark),-2px 0 0 0 var(--leaf-dark),2px 0 0 0 var(--leaf-dark),0 4px 0 0 rgba(91,58,41,.3)}
+button:focus-visible,textarea:focus-visible,a:focus-visible,summary:focus-visible{outline:2px dashed var(--wood);outline-offset:4px}
+
+.app{display:grid;grid-template-columns:380px minmax(0,1fr);gap:16px;height:100vh;padding:24px 0 24px 24px}
+.side{display:flex;flex-direction:column;gap:18px;padding:20px 20px 16px;min-height:0;overflow-y:auto;background:var(--paper);
+  box-shadow:0 -4px 0 0 var(--wood),0 4px 0 0 var(--wood),-4px 0 0 0 var(--wood),4px 0 0 0 var(--wood),8px 8px 0 0 rgba(91,58,41,.22)}
+.side h1{margin:4px 0 0;font:700 36px/1 var(--px);color:var(--ink)}
+.step{display:flex;flex-direction:column;gap:10px}
+.step h2{margin:0;font:700 12px/1 var(--px);color:var(--ink-soft)}
+.step.grow{flex:1;min-height:220px}
+/* 저장 줄: 배치 고르기 + PNG · HTML · 캐릭터별 를 한 줄에 */
+.save-row{flex-wrap:nowrap;gap:8px}
+.save-row .seg{margin:3px 2px;padding:3px;gap:2px}
+.save-row .seg button{padding:6px 7px 5px}
+.save-row>button{padding:9px 9px 8px}
+.row{display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center}
+.status{color:var(--ink-soft)}
+.slot{background:var(--slot);color:var(--ink);margin:3px;
+  box-shadow:0 -3px 0 0 var(--slot-edge),0 3px 0 0 var(--slot-edge),-3px 0 0 0 var(--slot-edge),3px 0 0 0 var(--slot-edge),inset 0 3px 0 0 rgba(91,58,41,.08)}
+details.peek summary{cursor:pointer;color:var(--ink-soft);list-style:none;width:max-content}
+details.peek summary:hover{color:var(--ink)}
+details.peek summary::-webkit-details-marker{display:none}
+details.peek summary::before{content:"▸ "}
+details.peek[open] summary::before{content:"▾ "}
+pre.ooc{margin:10px 3px 3px;white-space:pre-wrap;word-break:break-word;font:400 12px/1.6 var(--px);padding:12px;max-height:34vh;overflow:auto}
+textarea{flex:1;min-height:140px;width:calc(100% - 6px);resize:none;border:0;border-radius:0;padding:12px;font:400 12px/1.6 var(--px)}
+textarea::placeholder{color:var(--ink-soft)}
+
+/* 저장: 캐릭터마다 한 줄 + 전체 */
+/* 캐릭터별 저장 창: 한 줄에 이름 · PNG · HTML */
+.who{display:flex;flex-direction:column;gap:6px;padding:12px 14px 8px;max-height:60vh;overflow:auto}
+.who-row{display:flex;align-items:center;gap:8px}
+.who-row span{flex:1;min-width:0;font:700 12px/1.4 var(--px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.who-row button{padding:6px 9px 5px}
+button:disabled{opacity:.45;cursor:default;transform:none}
+
+.main{overflow:auto;padding:0 24px 20px 8px;margin-top:-4px;min-height:0}  /* 카드 테두리 윗변을 왼쪽 창 윗변(24px - 4px)에 맞춘다 */
+.empty{width:min(420px,100%);padding:40px 16px;text-align:center;color:var(--ink-soft);background:rgba(253,243,220,.7);border:2px dashed var(--wood)}
+.main:has(.empty){padding-bottom:0}
+.boxes:has(> .empty){display:flex;align-items:center;justify-content:center;min-height:100%;padding:0}
+
+/* 등장인물 배지: 이름표와 같은 나무판, 눌러서 바로 고친다 */
+/* 바꾸기 창: 왼쪽 창 옆에 떠 있는 작은 창(제목줄로 끌어 옮김) */
+.pip{position:fixed;z-index:20;width:380px;max-width:calc(100vw - 32px);background:var(--paper);
+  box-shadow:0 -4px 0 0 var(--wood),0 4px 0 0 var(--wood),-4px 0 0 0 var(--wood),4px 0 0 0 var(--wood),8px 8px 0 0 rgba(91,58,41,.3)}
+.pip[hidden]{display:none}
+.pip-bar{display:flex;align-items:center;justify-content:space-between;padding:6px 6px 6px 12px;background:var(--wood);color:var(--paper);user-select:none}
+.pip-bar b{font:700 12px/1 var(--px)}
+.pip-x{margin:0;padding:3px 7px;background:transparent;color:var(--paper);box-shadow:none;font:700 12px/1 var(--px)}
+.pip-x:hover{background:rgba(253,243,220,.15)}
+.pip-x:active{transform:none;box-shadow:none}
+.cast{display:flex;flex-direction:column;gap:10px;padding:14px 14px 10px}
+/* 이유 방식: 칸 안에 단추 둘, 고른 것은 나무판 */
+.seg{display:inline-flex;gap:4px;padding:4px;background:var(--slot);margin:3px;
+  box-shadow:0 -2px 0 0 var(--slot-edge),0 2px 0 0 var(--slot-edge),-2px 0 0 0 var(--slot-edge),2px 0 0 0 var(--slot-edge)}
+.seg button{margin:0;padding:6px 9px 5px;background:transparent;color:var(--ink-soft);box-shadow:none}
+.seg button:hover{background:rgba(253,243,220,.7);color:var(--ink)}
+.seg button:active{transform:none;box-shadow:none}
+.seg button[aria-pressed="true"]{background:var(--wood);color:var(--paper)}
+.cast .line{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px}
+.cast b{width:34px;flex:none;font:700 12px/1 var(--px);color:var(--ink-soft)}
+.seg.names{flex-wrap:wrap;max-width:calc(100% - 44px)}
+.badge{display:inline-flex;align-items:center;background:var(--wood);margin:2px 3px;
+  box-shadow:0 -2px 0 0 var(--wood),0 2px 0 0 var(--wood),-2px 0 0 0 var(--wood),2px 0 0 0 var(--wood)}
+.badge input{background:transparent;border:0;outline:0;color:var(--paper);font:700 12px/1 var(--px);padding:5px 7px 4px;box-sizing:border-box}
+.badge input::placeholder{color:rgba(253,243,220,.5)}
+.badge:focus-within{box-shadow:0 -2px 0 0 var(--leaf),0 2px 0 0 var(--leaf),-2px 0 0 0 var(--leaf),2px 0 0 0 var(--leaf)}
+.badge .x{margin:0 2px 0 0;padding:3px 5px;background:transparent;color:var(--paper);box-shadow:none;font:700 12px/1 var(--px)}
+.badge .x:hover{background:rgba(253,243,220,.15)}
+.badge .x:active{transform:none;box-shadow:none}
+.cast .add{padding:6px 8px 5px;margin:2px 2px 6px}
+
+@media (max-width:900px){
+  html,body{height:auto}
+  .app{display:block;height:auto;padding:16px 16px 32px}
+  textarea{flex:none;height:200px}
+  .main{overflow:visible;padding:24px 0 0;margin-top:0}
+  .who{max-height:none}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div>
+      <h1>FOOD TOP3</h1>
+    </div>
+
+    <section class="step">
+      <h2>1 · 챗봇에 넣을 OOC</h2>
+      <div class="row">
+        <button class="go" id="copyOoc" type="button">OOC 복사</button>
+        <button id="castBtn" type="button" aria-expanded="false" aria-controls="cast">바꾸기</button>
+        <span class="status" id="copyStatus" aria-live="polite"></span>
+      </div>
+      <details class="peek">
+        <summary>내용 보기</summary>
+        <pre class="ooc slot" id="ooc">[OOC: 롤플레이를 잠시 멈추고, PC와 NPC의 좋아하는 음식·음료·과일·과자를 각각 TOP3로 정리한다. 다른 말 없이 아래 양식만 그대로 출력한다.
+
+■ 출력 대상
+- PC와 NPC.
+
+■ 출력 양식 (기호와 줄 구성을 정확히 지킨다)
+@캐릭터 이름
+#음식
+1. 항목 | 이유
+2. 항목 | 이유
+3. 항목 | 이유
+#음료
+1. 항목 | 이유
+2. 항목 | 이유
+3. 항목 | 이유
+#과일
+1. 항목 | 이유
+2. 항목 | 이유
+3. 항목 | 이유
+#과자
+1. 항목 | 이유
+2. 항목 | 이유
+3. 항목 | 이유
+
+- 캐릭터마다 @부터 다시 반복한다.
+- 항목과 이유는 | 기호로 구분하고, 한 항목은 한 줄에 쓴다.
+- 굵은 글씨, 표, HTML, 제목, 맺음말을 붙이지 않는다.
+
+■ 선택 기준
+- 캐릭터의 성격, 입맛, 생활 습관, 직업과 생활 환경, 성장 배경, 세계관에서 구할 수 있는 음식인지를 근거로 고른다.
+- 이유는 거창하지 않게 쓴다. "식감이 좋아서", "손이 덜 가서", "자주 먹다 보니", "단 건 별로라 이 정도가 적당해서"처럼 평범한 일상 취향 수준이면 충분하다. 사연이나 상징을 만들어 붙이지 않는다.
+- 롤플레이 중 함께 먹었거나 언급된 음식을 의미 있는 최애로 끌어올리지 않는다. 이전 기록은 입맛과 습관을 짐작하는 참고 정도로만 쓰고, 특정 사건이나 상대와의 추억 때문에 좋아하게 됐다는 식의 이유는 쓰지 않는다.
+- 모든 선택이 상대 캐릭터와 연결되지 않게 한다. 각자 원래 좋아하는 것을 고른다.
+- 1위가 반드시 특별할 필요는 없다.
+- 캐릭터끼리 같은 항목이 겹치는 것은 실제로 입맛이 비슷할 때만 허용하고, 누구에게나 들어갈 만한 무난한 목록으로 채우지 않는다.
+- 설정에 음식 취향이 명시되어 있으면 그것을 우선하고, 정보가 없는 부분은 성향에서 자연스럽게 짐작되는 선에서 고른다.
+- 세계관에 존재하지 않는 음식은 넣지 않는다. 현실 기반 세계관이면 실재하는 음식과 음료 위주로 고른다.
+- 이유는 정리된 설명체로 쓰되, 그 캐릭터라면 할 법한 생각처럼 읽히게 한다.]</pre>
+      </details>
+    </section>
+
+    <section class="step grow">
+      <h2>2 · 챗봇 출력 붙여넣기</h2>
+      <div class="row">
+        <button id="sample" type="button">예시</button>
+        <button id="clear" type="button">비우기</button>
+        <span class="status" id="parseStatus" aria-live="polite"></span>
+      </div>
+      <textarea class="slot" id="src" spellcheck="false" aria-label="챗봇 출력" placeholder="@캐릭터 이름&#10;#음식&#10;1. 항목 | 이유"></textarea>
+    </section>
+
+    <section class="step save">
+      <h2>3 · 저장</h2>
+      <div class="row save-row">
+        <div class="seg" id="pngCols" role="group" aria-label="PNG 배치"><button type="button" data-cols="2" aria-pressed="true">나란히</button><button type="button" data-cols="1" aria-pressed="false">세로로</button></div>
+        <button id="savePng" type="button">PNG</button>
+        <button id="saveHtml" type="button">HTML</button>
+        <button id="eachBtn" type="button" aria-expanded="false" aria-controls="each" disabled>캐릭터별</button>
+      </div>
+      <span class="status" id="saveStatus" aria-live="polite"></span>
+    </section>
+  </aside>
+
+  <main class="main">
+    <div class="boxes" id="out" aria-live="polite"></div>
+  </main>
+</div>
+
+<div class="pip" id="each" role="dialog" aria-label="캐릭터별 저장" hidden>
+  <div class="pip-bar"><b>캐릭터별 저장</b><button class="pip-x" type="button" aria-label="닫기" title="닫기 (Esc)">×</button></div>
+  <div class="who" id="who"></div>
+</div>
+
+<div class="pip" id="cast" role="dialog" aria-label="바꾸기" hidden>
+  <div class="pip-bar"><b>바꾸기</b><button class="pip-x" type="button" aria-label="닫기" title="닫기 (Esc)">×</button></div>
+  <div class="cast">
+      <div class="line"><b>이유</b><div class="seg" id="whyMode" role="group" aria-label="이유 쓰는 방식"><button type="button" data-why="plain" aria-pressed="true">그냥 이유</button><button type="button" data-why="line" aria-pressed="false">캐릭터 대사</button></div></div>
+      <div class="line"><b>이름</b><div class="seg" id="castPreset" role="group" aria-label="이름 한 번에 바꾸기"><button type="button" data-preset="tag" title="PC = {{user}}, 첫 NPC = {{char}}">{{user}} · {{char}}</button><button type="button" data-preset="word" title="PC = PC, 첫 NPC = NPC">PC · NPC</button><button type="button" data-preset="custom" title="이름을 직접 적기">직접 입력</button></div></div>
+      <div class="line"><b>PC</b><div class="seg names" id="castPc"></div></div>
+      <div class="line"><b>NPC</b><div class="seg names" id="castNpc"></div><button class="add" id="addNpc" type="button">+ NPC</button></div>
+  </div>
+</div>
+
+<script>
+const CAT_EN={"음식":"Food","음료":"Drink","과일":"Fruit","과자":"Snack"};
+const CAT_ICON={"음식":"🍚","음료":"🥤","과일":"🍓","과자":"🍪"};
+const SAMPLE=`@이현진 (뮤트)
+#음식
+1. 소고기 안심 스테이크 | 양념이나 향이 강하지 않고 짧은 시간에 필요한 열량을 채우기 좋아서.
+2. 평양냉면 | 자극적인 맛이나 냄새가 남지 않고 식사 후에도 입안이 깔끔해서.
+3. 백숙 | 뼈만 발라내면 먹기 편하고 소화가 잘되어 컨디션 관리에 알맞아서.
+#음료
+1. 찬물 | 향이나 당분이 전혀 없어 예민한 감각을 건드리지 않고 갈증만 없애줘서.
+2. 아이스 아메리카노 | 단맛이 없고 잠을 깨우거나 집중력을 유지할 때 습관처럼 마시기 무난해서.
+3. 무가당 탄산수 | 입안이 텁텁할 때 깔끔하게 헹구기 좋고 별다른 잔향이 남지 않아서.
+#과일
+1. 블루베리 | 껍질을 까거나 씨를 뱉을 필요 없이 한 입에 털어 넣기 편하고 손에 묻지 않아서.
+2. 사과 | 무르지 않고 아삭하게 씹히는 식감이 명확하며 단맛이 과하지 않아서.
+3. 청포도 | 한 알씩 떼어먹기 간편하고 즙이 손에 덜 흐르며 뒷맛이 산뜻해서.
+#과자
+1. 다크 초콜릿 (카카오 80% 이상) | 단맛이 적고 쌉싸름하며 작전 중 열량을 보충할 때 부스러기가 날리지 않아서.
+2. 구운 아몬드 | 씹는 식감이 단단하고 소금기가 없으며 손에 가루가 묻어나지 않아서.
+3. 플레인 크래커 | 별다른 향이나 시즈닝이 없어 출출할 때 입에 넣고 조용히 녹여 먹기 적당해서.
+
+@이은유 (스프링)
+#음식
+1. 해산물 토마토 파스타 | 새콤달콤한 소스에 탱글탱글한 새우나 조개를 골라 먹는 재미가 있어서.
+2. 연어 포케 | 채소와 소스가 잘 어우러져 상큼하고 배부르게 먹어도 속이 더부룩하지 않아서.
+3. 치즈 오믈렛 | 폭신하고 부드러운 식감에 고소한 치즈가 늘어나 아침이나 브런치로 먹으면 기분이 좋아져서.
+#음료
+1. 피치 얼그레이 티 | 홍차의 은은한 향에 달콤한 복숭아 맛이 섞여 있어 마실 때마다 기분이 전환되어서.
+2. 자몽 에이드 | 톡 쏘는 탄산에 쌉싸름하고 상큼한 맛이 졸음을 깨우고 피로를 날려주는 기분이라서.
+3. 바닐라 라떼 | 그냥 커피는 조금 쓰게 느껴질 때 적당히 달달하고 부드럽게 당을 채우기 좋아서.
+#과일
+1. 복숭아 | 향부터 달콤하고 베어 물었을 때 과즙이 풍부하며 말랑하고 부드러운 식감이 좋아서.
+2. 딸기 | 색깔도 예쁘고 한 입에 쏙 들어가며 새콤달콤한 맛이 디저트로 먹기에 딱 맞아서.
+3. 귤 | 껍질 까기가 쉽고 소파에 앉아 하나씩 까먹다 보면 시간 가는 줄 몰라서.
+#과자
+1. 과일 젤리 | 가방에 넣어 다니며 하나씩 꺼내 먹기 편하고 쫄깃하게 씹히는 식감이 재미있어서.
+2. 마카롱 | 작지만 달콤함이 꽉 차 있어 피곤할 때 한 입 먹으면 금방 기운이 나는 것 같아서.
+3. 버터 쿠키 | 홍차나 커피에 곁들이기 좋고 입안에서 사르르 부서지는 고소한 맛이 질리지 않아서.`;
+
+const src=document.getElementById('src'), out=document.getElementById('out'), who=document.getElementById('who'), st=document.getElementById('parseStatus');
+
+function esc(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function clean(l){return l.replace(/\*\*|__|`/g,'').replace(/^\s*[-•·]\s+/,'').trim()}
+
+function parse(text){
+  const chars=[];let ch=null,cat=null;
+  for(let raw of text.split(/\r?\n/)){
+    if(/^\s*```/.test(raw))continue;
+    const l=clean(raw); if(!l)continue;
+    let m;
+    if((m=l.match(/^@\s*(.+)$/))||(m=l.match(/^#{2,}\s*(.+)$/))){
+      ch={name:m[1].trim(),cats:[]};chars.push(ch);cat=null;continue;
+    }
+    if((m=l.match(/^#\s*(.+)$/))||(m=l.match(/^\[?\s*(음식|음료|과일|과자)\s*\]?\s*:?$/))){
+      if(!ch){ch={name:'이름 없음',cats:[]};chars.push(ch)}
+      cat={name:m[1].replace(/[\[\]:]/g,'').trim(),items:[]};ch.cats.push(cat);continue;
+    }
+    if((m=l.match(/^(\d+)\s*(?:위|\.|\)|:)?\s+(.+)$/))&&cat){
+      let body=m[2],name=body,why='';
+      let idx=body.indexOf('|');
+      if(idx<0){const d=body.match(/\s[-—–]\s/); if(d)idx=d.index;}
+      if(idx>=0){name=body.slice(0,idx).trim();why=body.slice(idx).replace(/^\s*[|\-—–]\s*/,'').replace(/^이유\s*[:：]\s*/,'').trim();}
+      cat.items.push({rank:m[1],name,why});continue;
+    }
+  }
+  return chars.filter(c=>c.cats.length);
+}
+
+function quoteIf(s){return typeof whyMode!=='undefined'&&whyMode==='line'&&!/^["“'‘「『]/.test(s)?'“'+s+'”':s}
+function render(){
+  const text=src.value;
+  try{localStorage.setItem('taste-input',text)}catch(e){}
+  const chars=parse(text);
+  if(!chars.length){
+    out.innerHTML='<div class="empty">챗봇 출력을 붙여넣으면 캐릭터마다 도시락이 생깁니다.</div>';
+    who.innerHTML='';eachOff();
+    st.textContent=text.trim()?'양식을 읽지 못했어요. @이름, #음식, "1. 항목 | 이유" 줄이 있는지 봐 주세요.':'';
+    return;
+  }
+  let n=0;
+  out.innerHTML=chars.map(c=>{
+    const cells=c.cats.map(cat=>{n+=cat.items.length;return `<article class="cell">
+      <div class="cat">${CAT_ICON[cat.name]?`<em aria-hidden="true">${CAT_ICON[cat.name]}</em>`:''}<b>${esc(cat.name)}</b>${CAT_EN[cat.name]?`<span>${CAT_EN[cat.name]}</span>`:''}</div>
+      <ol>${cat.items.map(it=>`<li><span class="rank">${esc(it.rank)}</span><div><div class="name">${esc(it.name)}</div>${it.why?`<div class="why">${esc(quoteIf(it.why))}</div>`:''}</div></li>`).join('')}</ol>
+    </article>`}).join('');
+    return `<section class="box"><h3 class="plate">${esc(c.name)}</h3><div class="tray">${cells}</div></section>`;
+  }).join('');
+  document.getElementById('eachBtn').disabled=false;
+  who.innerHTML=chars.map((c,i)=>`<div class="who-row"><span title="${esc(c.name)}">${esc(c.name)}</span><button type="button" data-png="${i}">PNG</button><button type="button" data-html="${i}">HTML</button></div>`).join('');
+  st.textContent='';
+}
+
+// ── 저장 ──
+// PNG: html-to-image 로 카드를 실제 화면 그대로 찍는다. 글꼴은 카드에 쓰는 모나 셋만 넣는다(페이지 글꼴 전부를 넣으면 느리다)
+const MONA='https://cdn.jsdelivr.net/gh/MonadABXY/mona-font/web/';
+const FONT_CSS=[['Mona12','Mona12.woff2',400],['Mona12','Mona12-Bold.woff2',700],['Mona12 Color Emoji','Mona12ColorEmoji.woff2',400],['Mona12 Color Emoji','Mona12ColorEmoji.woff2',700]]
+  .map(([f,file,w])=>`@font-face{font-family:"${f}";src:url("${MONA}${file}") format("woff2");font-weight:${w};font-style:normal}`).join('\n');
+const saveSt=document.getElementById('saveStatus');
+const stem=name=>'food-top3'+(name?'-'+name.replace(/\s*\(예시\)\s*/,''):'');
+function download(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name.replace(/[\\/:*?"<>|]/g,'_');document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000)}
+const emojiCache={};
+async function emojiPng(ch){
+  if(emojiCache[ch])return emojiCache[ch];
+  await document.fonts.load('48px "Mona12 Color Emoji"',ch);
+  const c=document.createElement('canvas');c.width=c.height=48;
+  const g=c.getContext('2d');g.imageSmoothingEnabled=false;g.font='48px "Mona12 Color Emoji"';g.textAlign='center';g.textBaseline='middle';g.fillText(ch,24,26);
+  return emojiCache[ch]=c.toDataURL('image/png');
+}
+// cols: 전체 저장일 때 한 줄에 놓을 카드 수(2 = 나란히, 1 = 세로로). 카드 하나 저장이면 화면 폭 그대로
+async function savePng(el,name,bg,cols){
+  if(!window.htmlToImage){saveSt.textContent='PNG 저장 도구를 못 불러왔어요. 인터넷 연결을 확인해 주세요.';return}
+  saveSt.textContent='만드는 중…';
+  try{
+    await document.fonts.ready;
+    // 테두리(4px)와 도트 그림자(8px)가 잘리지 않게, 둘레를 띄운 임시 상자에 복제해서 찍는다.
+    // 임시 상자는 화면 밖 상자 안에 둔다(화면 안에 두면 찍는 동안 카드가 비쳐 보인다)
+    const holder=document.createElement('div');holder.style.cssText='position:fixed;left:-100000px;top:0';
+    const frame=document.createElement('div');
+    frame.style.cssText='display:inline-block;padding:8px 16px 16px 8px';
+    if(bg)frame.style.background=bg;
+    const copy=el.cloneNode(true);
+    if(cols){const n=Math.min(cols,el.querySelectorAll('.box').length);copy.style.gridTemplateColumns=`repeat(${n},600px)`;copy.style.padding='0'}
+    else copy.style.width=el.offsetWidth+'px';
+    // 이모지 글꼴은 이미지 안으로 못 들어가 기본 이모지로 바뀐다 — 페이지에서 모나 이모지로 그린 그림으로 바꿔 끼운다
+    for(const em of copy.querySelectorAll('.cat em')){const img=new Image();img.src=await emojiPng(em.textContent);img.alt='';img.style.cssText='width:24px;height:24px;image-rendering:pixelated;display:block';em.replaceWith(img)}
+    frame.append(copy);holder.append(frame);document.body.append(holder);
+    try{
+      const blob=await htmlToImage.toBlob(frame,{pixelRatio:2,fontEmbedCSS:FONT_CSS});
+      download(blob,name+'.png');saveSt.textContent='저장했어요.';
+    }finally{holder.remove()}
+  }catch(err){saveSt.textContent='PNG를 만들지 못했어요. '+(err&&err.message||'')}
+}
+document.getElementById('savePng').onclick=()=>{
+  const chars=parse(src.value);
+  if(!chars.length){saveSt.textContent='저장할 카드가 없어요.';return}
+  savePng(out,stem(chars.length===1?chars[0].name:''),getComputedStyle(document.documentElement).getPropertyValue('--meadow').trim(),pngCols);
+};
+// 전체 PNG 배치: 나란히(2열) / 세로로(1열). 그 브라우저에 기억
+let pngCols=2;try{if(localStorage.getItem('food-top3.cols')==='1')pngCols=1}catch(e){}
+const colSeg=document.getElementById('pngCols');
+function drawCols(){colSeg.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.cols===pngCols)))}
+colSeg.addEventListener('click',e=>{const b=e.target.closest('[data-cols]');if(!b)return;pngCols=+b.dataset.cols;try{localStorage.setItem('food-top3.cols',String(pngCols))}catch(e){}drawCols()});
+drawCols();
+who.addEventListener('click',e=>{
+  const p=e.target.closest('[data-png]'), x=e.target.closest('[data-html]');if(!p&&!x)return;
+  const box=out.querySelectorAll('.box')[+(p||x).dataset[p?'png':'html']], name=stem(box.querySelector('.plate').textContent);
+  if(p)savePng(box,name,null);else saveHtml(box.outerHTML,name);
+});
+document.getElementById('saveHtml').onclick=()=>{
+  if(!out.querySelector('.box')){saveSt.textContent='저장할 카드가 없어요.';return}
+  const chars=parse(src.value);
+  saveHtml(out.innerHTML,stem(chars.length===1?chars[0].name:''));
+};
+function saveHtml(inner,name){
+  const html=`<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FOOD TOP3</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/MonadABXY/mona-font/web/mona.css">
+<style>${document.getElementById('card-css').textContent}</style>
+<style>*{box-sizing:border-box}body{margin:0;padding:24px 16px;background:var(--meadow)}.boxes{max-width:1200px;margin:0 auto}</style>
+</head>
+<body>
+<div class="boxes">${inner}</div>
+</body>
+</html>
+`;
+  download(new Blob([html],{type:'text/html'}),name+'.html');saveSt.textContent='저장했어요.';
+}
+
+src.addEventListener('input',render);
+document.getElementById('sample').onclick=()=>{src.value=SAMPLE;render()};
+document.getElementById('clear').onclick=()=>{src.value='';render();src.focus()};
+// ── 등장인물: PC 하나 + NPC 여럿. 복사하는 OOC 의 "출력 대상" 줄만 바꾼다(나머지 문장은 OOC.txt 그대로) ──
+const pre=document.getElementById('ooc'), OOC_BASE=pre.textContent;
+let whyMode='plain';try{if(localStorage.getItem('food-top3.why')==='line')whyMode='line'}catch(e){}
+const whySeg=document.getElementById('whyMode');
+function drawWhy(){whySeg.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.why===whyMode)))}
+whySeg.addEventListener('click',e=>{const b=e.target.closest('[data-why]');if(!b)return;whyMode=b.dataset.why;
+  try{localStorage.setItem('food-top3.why',whyMode)}catch(e){}drawWhy();pre.textContent=oocText();render()});
+drawWhy();
+// 이름: mode = tag({{user}} · {{char}}) / word(PC · NPC) / custom(직접 입력). 직접 입력한 이름은 saved 에 남겨 다시 고르면 돌아온다
+const PRESETS={tag:['{{user}}','{{char}}'],word:['PC','NPC']};
+let cast={mode:'tag',pc:'{{user}}',npc:['{{char}}'],saved:null};
+try{const c=JSON.parse(localStorage.getItem('food-top3.cast')||'null');if(c&&typeof c.pc==='string'&&Array.isArray(c.npc)){
+  cast=Object.assign(cast,c);
+  if(!PRESETS[cast.mode]&&cast.mode!=='custom')cast.mode=Object.keys(PRESETS).find(k=>PRESETS[k][0]===cast.pc&&PRESETS[k][1]===cast.npc[0])||'custom';
+}}catch(e){}
+const names=()=>({pc:cast.pc.trim(),npc:cast.npc.map(s=>s.trim()).filter(Boolean)});
+// OOC 문장 속 PC · NPC 낱말 자리에 이름을 바꿔 넣는다. "PC와" 의 와/과는 PC 이름 받침에 맞춘다
+function josaWa(word){const c=word.charCodeAt(word.length-1);return c>=0xAC00&&c<=0xD7A3&&(c-0xAC00)%28?'과':'와'}
+function oocText(){
+  // 비어 있으면 미리보기에는 "이름" 으로 보인다(복사는 막는다)
+  const n=names(), pc=n.pc||'이름', npc=n.npc.join(', ')||'이름';
+  let t=OOC_BASE.replace(/\bPC와 NPC\b/g,()=>pc+josaWa(pc)+' '+npc).replace(/\bNPC\b/g,()=>npc).replace(/\bPC\b/g,()=>pc);
+  if(whyMode==='line')t=asLines(t);
+  return t;
+}
+// "캐릭터 대사" — OOC.txt(그냥 이유 판)에서 이유를 쓰는 줄만 대사 쪽으로 바꾼다. OOC.txt 문장이 바뀌면 여기 맞는지 본다
+function asLines(t){
+  return t.replace(/\| 이유$/gm,'| 대사')
+    .replace('- 항목과 이유는 | 기호로 구분하고','- 항목과 대사는 | 기호로 구분하고')
+    .replace(/^- 이유는 거창하지 않게 쓴다\..*$/m,'- 대사는 그 캐릭터가 이 음식을 좋아하는 까닭을 직접 말하는 한 줄로 쓴다. 평소 말투 · 어미 · 호칭을 그대로 살리고, 따옴표는 붙이지 않는다.')
+    .replace(/^- 이유는 정리된 설명체로 쓰되[^\]\n]*/m,'- 대사는 거창하지 않게, 평범한 일상 취향이 드러나는 정도면 충분하다. 사연이나 상징을 만들어 붙이지 않는다.');
+}
+// 배지 칸 폭 = 글자 폭(모나 글꼴로 잰다)
+const measure=document.createElement('canvas').getContext('2d');
+function fitBadge(input){measure.font='700 12px Mona12';input.style.width=Math.ceil(measure.measureText(input.value||input.placeholder||' ').width+14)+'px'}
+function badge(value,i){
+  return `<span class="badge"><input value="${esc(value)}" placeholder="이름" data-i="${i}" spellcheck="false" aria-label="${i<0?'PC':'NPC '+(i+1)} 이름">${i>=0&&cast.npc.length>1?`<button class="x" type="button" data-x="${i}" aria-label="NPC ${i+1} 빼기" title="빼기">×</button>`:''}</span>`;
+}
+function drawPreset(){document.querySelectorAll('#castPreset [data-preset]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.preset===cast.mode)))}
+document.getElementById('castPreset').addEventListener('click',e=>{const b=e.target.closest('[data-preset]');if(!b)return;
+  const m=b.dataset.preset;if(m===cast.mode)return;
+  if(cast.mode==='custom')cast.saved={pc:cast.pc,npc:[...cast.npc]};
+  if(m==='custom'){const s=cast.saved||{pc:'',npc:['']};cast.pc=s.pc;cast.npc=s.npc.length?[...s.npc]:['']}
+  else{const [p,n]=PRESETS[m];cast.pc=p;cast.npc[0]=n}
+  cast.mode=m;drawCast();castChanged();
+  if(m==='custom'){const empty=[...castBox.querySelectorAll('.names input')].find(i=>!i.value.trim());if(empty)empty.focus()}
+});
+function drawCast(){
+  drawPreset();
+  document.getElementById('castPc').innerHTML=badge(cast.pc,-1);
+  document.getElementById('castNpc').innerHTML=cast.npc.map(badge).join('');
+  castBox.querySelectorAll('input').forEach(fitBadge);
+}
+function castChanged(){try{localStorage.setItem('food-top3.cast',JSON.stringify(cast))}catch(e){}pre.textContent=oocText()}
+const castBox=document.getElementById('cast'), castBtn=document.getElementById('castBtn');
+// ── 떠 있는 작은 창(PiP): 연 단추 바로 아래(자리가 없으면 바로 위)에 뜬다. 옮기지 않는다 ──
+function makePip(box,btn,focusSel){
+  function place(){
+    const r=btn.getBoundingClientRect(), w=box.offsetWidth, hgt=box.offsetHeight, gap=14;
+    box.style.left=Math.max(16,Math.min(r.left,innerWidth-w-16))+'px';
+    const below=r.bottom+gap, above=r.top-gap-hgt;
+    box.style.top=(below+hgt<=innerHeight-16||above<16?Math.max(16,below):above)+'px';
+  }
+  function set(open){
+    box.hidden=!open;btn.setAttribute('aria-expanded',String(open));
+    if(open){place();const t=box.querySelector(focusSel);if(t)t.focus()}else if(document.activeElement&&box.contains(document.activeElement))btn.focus();
+  }
+  btn.addEventListener('click',()=>set(box.hidden));
+  box.querySelector('.pip-x').addEventListener('click',()=>set(false));
+  // 단추가 움직이면 따라간다(창 크기 바뀜), 왼쪽 창이 스크롤되면 닫는다
+  addEventListener('resize',()=>{if(!box.hidden)place()});
+  document.querySelector('.side').addEventListener('scroll',()=>{if(!box.hidden)set(false)});
+  return set;
+}
+const setCastPip=makePip(castBox,castBtn,'input');
+const eachBox=document.getElementById('each'), eachBtn=document.getElementById('eachBtn'), setEachPip=makePip(eachBox,eachBtn,'[data-png]');
+function eachOff(){eachBtn.disabled=true;setEachPip(false)}
+document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if(!eachBox.hidden)setEachPip(false);else if(!castBox.hidden)setCastPip(false)});
+castBox.addEventListener('input',e=>{const t=e.target;if(!t.dataset.i)return;const i=+t.dataset.i;
+  if(i<0)cast.pc=t.value;else cast.npc[i]=t.value;cast.mode='custom';fitBadge(t);drawPreset();castChanged()});
+castBox.addEventListener('click',e=>{const x=e.target.closest('[data-x]');if(!x)return;cast.npc.splice(+x.dataset.x,1);drawCast();castChanged()});
+document.getElementById('addNpc').onclick=()=>{cast.npc.push('');drawCast();castChanged();const ins=document.querySelectorAll('#castNpc input');ins[ins.length-1].focus()};
+drawCast();pre.textContent=oocText();
+document.fonts.load('700 12px Mona12').then(()=>castBox.querySelectorAll('input').forEach(fitBadge));
+
+document.getElementById('copyOoc').onclick=()=>{
+  const s=document.getElementById('copyStatus'), n=names();
+  if(!n.pc||!n.npc.length){
+    s.textContent='PC · NPC 이름을 입력해 주세요.';setCastPip(true);
+    const empty=[...castBox.querySelectorAll('.names input')].find(i=>!i.value.trim());if(empty)empty.focus();
+    return;
+  }
+  pre.textContent=oocText();
+  const sel=()=>{pre.closest('details').open=true;const r=document.createRange();r.selectNodeContents(pre);const w=getSelection();w.removeAllRanges();w.addRange(r);s.textContent='선택해 뒀어요. Ctrl+C로 복사하세요.'};
+  try{navigator.clipboard.writeText(pre.textContent).then(()=>s.textContent='복사했어요.',sel)}catch(e){sel()}
+};
+
+let saved='';try{saved=localStorage.getItem('taste-input')||''}catch(e){}
+src.value=saved;
+render();
+</script>
+</body>
+</html>

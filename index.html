@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="캐릭터 롤플레이 대화에 붙여 쓰는 OOC 프롬프트 모음">
+<title>OOC MAKERS</title>
+<style>
+/*
+  도구 목록 — 한 줄에 도구 하나: 눌린 칸 속 도트 그림 · 이름 · 한 줄 소개 · 분류.
+  결은 현황판과 같은 소프트 UI(바탕 한 가지 회색, 이중 그림자, 알약 단추). 색은 그림에만.
+
+  도구 추가하는 법 (도구 수 · 분류 버튼은 자동)
+  1. <ol class="list"> 에 <li data-tags="분류" data-keywords="검색어 …"> 블록 하나를 복사한다.
+     분류는 큰 갈래만 — 기록(목록 · 순위 · 카드로 정리) · 장면(이야기 한 토막) · 이미지(그림 프롬프트). 새 분류를 쓰면 버튼이 저절로 생긴다.
+  2. <div class="pic" data-icon="이름"> 의 이름으로 맨 아래 ICONS 에 24줄 × 24칸 그림과 색(pal)을 넣는다.
+     그 도구의 얼굴 물건 하나. 사방 2칸은 비우고, 검은 외곽선 없이 같은 색의 진한 톤으로 가장자리.
+  3. old/ 에 있는 도구는 올리지 않는다(git 에도 안 올라간다).
+*/
+:root{
+  --c0:#F7F7FA; --c1:#E7E7EC; --c2:#CFCFD6; --c3:#A6A6B0; --c4:#666E76; --c5:#2E3338;
+  --surface:#FFFFFF; --well:#F1F1F5; --edge:rgba(46,51,56,.09);
+  --up:0 0 0 1px var(--edge), 0 1px 2px rgba(46,51,56,.05), 0 6px 18px rgba(46,51,56,.06);
+  --up-sm:0 0 0 1px var(--edge), 0 1px 2px rgba(46,51,56,.06);
+  --in:inset 0 0 0 1px var(--edge), inset 0 1px 2px rgba(46,51,56,.06);
+  --in-sm:inset 0 0 0 1px var(--edge), inset 0 1px 2px rgba(46,51,56,.08);
+  --r:14px; --r-lg:20px; --pill:999px;
+  --font:"Pretendard Variable","Pretendard",-apple-system,"Apple SD Gothic Neo","Malgun Gothic","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --c0:#23262B; --c1:#1C1F23; --c2:#3A3F45; --c3:#7C848D; --c4:#B9C0C7; --c5:#F2F4F6;
+  --surface:#2B2F35; --well:#1F2226; --edge:rgba(255,255,255,.08);
+  --up:0 0 0 1px var(--edge), 0 1px 2px rgba(0,0,0,.3), 0 6px 18px rgba(0,0,0,.28);
+  --up-sm:0 0 0 1px var(--edge), 0 1px 2px rgba(0,0,0,.3);
+  --in:inset 0 0 0 1px var(--edge), inset 0 1px 2px rgba(0,0,0,.3);
+  --in-sm:inset 0 0 0 1px var(--edge), inset 0 1px 2px rgba(0,0,0,.35); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --c0:#23262B; --c1:#1C1F23; --c2:#3A3F45; --c3:#7C848D; --c4:#B9C0C7; --c5:#F2F4F6;
+  --surface:#2B2F35; --well:#1F2226; --edge:rgba(255,255,255,.08);
+  --up:0 0 0 1px var(--edge), 0 1px 2px rgba(0,0,0,.3), 0 6px 18px rgba(0,0,0,.28);
+  --up-sm:0 0 0 1px var(--edge), 0 1px 2px rgba(0,0,0,.3);
+  --in:inset 0 0 0 1px var(--edge), inset 0 1px 2px rgba(0,0,0,.3);
+  --in-sm:inset 0 0 0 1px var(--edge), inset 0 1px 2px rgba(0,0,0,.35); color-scheme:dark}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { min-height: 100vh; background: var(--c0); color: var(--c4); font-family: var(--font); font-size: 14px; letter-spacing: -.005em; -webkit-font-smoothing: antialiased; }
+.wrap { max-width: 860px; margin: 0 auto; padding: 64px 32px 56px; }
+
+/* 머리: 작은 머리말 · 큰 제목 · 도구 수 */
+.head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 28px; }
+.kicker { font-size: 11px; font-weight: 500; letter-spacing: .14em; color: var(--c3); }
+.head h1 { margin: 4px 0 0; font-size: 38px; font-weight: 700; letter-spacing: -.03em; line-height: 1.05; color: var(--c5); }
+.count { font-size: 12.5px; color: var(--c3); white-space: nowrap; }
+.count b { font-size: 15px; font-weight: 700; color: var(--c5); font-variant-numeric: tabular-nums; margin-right: 4px; }
+
+/* 분류(세그먼트) · 검색(눌린 알약) */
+.tools { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; }
+.filters { display: flex; padding: 4px; background: var(--well); border-radius: var(--pill); box-shadow: var(--in); }
+.filters:empty { display: none; }
+.filters button { border: 0; background: transparent; border-radius: var(--pill); padding: 7px 14px; font: 600 12.5px var(--font); color: var(--c3); cursor: pointer; transition: background .2s ease-out, color .2s ease-out; }
+.filters button:hover { color: var(--c4); }
+.filters button[aria-pressed="true"] { background: var(--surface); color: var(--c5); box-shadow: var(--up-sm); }
+.filters button small { margin-left: 5px; font-size: 12px; font-weight: 500; opacity: .6; }
+.search { flex: 1; min-width: 0; }
+.search input { width: 100%; height: 40px; padding: 0 18px; border: 0; border-radius: var(--pill); background: var(--surface); color: var(--c5); font: 13px var(--font); box-shadow: var(--in); }
+.search input::placeholder { color: var(--c3); }
+.search input:focus { outline: none; box-shadow: var(--in), 0 0 0 2px var(--c2); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+/* 목록: 올라온 카드 한 줄씩 */
+.list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 16px; }
+.list > li[hidden] { display: none; }
+.item { display: grid; grid-template-columns: 72px minmax(0, 1fr) auto; align-items: center; gap: 18px; padding: 14px 20px 14px 14px; text-decoration: none; color: inherit; background: var(--surface); border-radius: var(--r-lg); box-shadow: var(--up); transition: box-shadow .18s ease-out; }
+.item:hover { box-shadow: var(--up), 0 0 0 1px var(--c2); }
+.item:active { background: var(--well); box-shadow: var(--in); }
+.item:focus-visible { outline: 2px solid var(--c3); outline-offset: 2px; }
+.pic { width: 72px; height: 72px; border-radius: var(--r); background: var(--well); box-shadow: var(--in); padding: 6px; }
+.pic svg { display: block; width: 100%; height: 100%; shape-rendering: crispEdges; }
+.name { margin: 0; font-size: 16px; font-weight: 700; letter-spacing: -.015em; color: var(--c5); }
+.what { margin: 3px 0 0; font-size: 13px; line-height: 1.5; color: var(--c4); word-break: keep-all; }
+.tags { display: flex; gap: 5px; }
+.tags span { padding: 3px 10px; border-radius: var(--pill); background: var(--c1); font-size: 11px; font-weight: 600; color: var(--c3); }
+.empty { margin: 0; padding: 40px 0; text-align: center; font-size: 13px; color: var(--c3); border-radius: var(--r-lg); box-shadow: var(--in); }
+
+@media (max-width: 620px) {
+  .wrap { padding: 36px 16px 32px; }
+  .head h1 { font-size: 32px; }
+  .tools { flex-direction: column; align-items: stretch; }
+  .item { grid-template-columns: 56px minmax(0, 1fr); gap: 14px; padding: 12px 14px 12px 12px; }
+  .pic { width: 56px; height: 56px; padding: 4px; }
+  .tags { grid-column: 2; }
+}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+</head>
+<body>
+<main class="wrap">
+  <header class="head">
+    <div>
+      <div class="kicker">ROLEPLAY OOC</div>
+      <h1>OOC Makers</h1>
+    </div>
+    <span class="count"><b id="count">0</b>개 도구</span>
+  </header>
+
+  <div class="tools">
+    <div class="filters" id="filters" role="group" aria-label="분류"></div>
+    <label class="search"><span class="sr">검색</span><input id="search" type="search" placeholder="검색 — 예: 음식, 취향" autocomplete="off" spellcheck="false"></label>
+  </div>
+
+  <ol class="list">
+    <li data-tags="기록" data-keywords="음식 음료 과일 과자 취향 최애 좋아하는 순위 TOP3 카드 도시락 NPC">
+      <a class="item" href="Food_TOP3/index.html">
+        <div class="pic" data-icon="lunchbox" aria-hidden="true"></div>
+        <div><p class="name">FOOD TOP3</p><p class="what">캐릭터마다 좋아하는 음식 · 음료 · 과일 · 과자 TOP3</p></div>
+        <div class="tags"></div>
+      </a>
+    </li>
+  </ol>
+
+  <p class="empty" id="empty" hidden>맞는 도구가 없습니다. 검색어를 지우거나 다른 분류를 고르세요.</p>
+
+</main>
+<script>
+// ── 분류 · 검색: 분류 버튼은 줄들의 data-tags 를 모아 만든다. 분류가 하나뿐이면 버튼 줄을 그리지 않는다 ──
+const rows = [...document.querySelectorAll('.list > li')];
+const tagsOf = (li) => (li.dataset.tags || '').split(/\s+/).filter(Boolean);
+rows.forEach((li) => tagsOf(li).forEach((t) => { const s = document.createElement('span'); s.textContent = t; li.querySelector('.tags').append(s); }));
+const allTags = [...new Set(rows.flatMap(tagsOf))];
+const filters = document.getElementById('filters');
+const search = document.getElementById('search');
+let tag = '';
+const button = (label, value, count) => {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.dataset.tag = value;
+  b.innerHTML = label + '<small>' + count + '</small>';
+  b.addEventListener('click', () => { tag = value; apply(); });
+  return b;
+};
+if (allTags.length > 1) filters.append(button('전체', '', rows.length), ...allTags.map((t) => button(t, t, rows.filter((li) => tagsOf(li).includes(t)).length)));
+function apply() {
+  const q = search.value.trim().toLowerCase();
+  let shown = 0;
+  rows.forEach((li) => {
+    const text = (li.textContent + ' ' + (li.dataset.keywords || '')).toLowerCase();
+    const ok = (!tag || tagsOf(li).includes(tag)) && (!q || q.split(/\s+/).every((w) => text.includes(w)));
+    li.hidden = !ok;
+    if (ok) shown += 1;
+  });
+  filters.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.tag === tag)));
+  document.getElementById('empty').hidden = shown > 0;
+}
+search.addEventListener('input', apply);
+apply();
+document.getElementById('count').textContent = String(rows.length);
+
+// 도트 그림 — 24×24 칸. 글자 하나가 한 칸, "." 은 빈칸, 나머지는 pal 의 색. 같은 색이 가로로 이어지면 한 사각형으로 그린다.
+const ICONS = {
+  // 위에서 본 4칸 도시락: 밥과 달걀 · 음료 · 딸기 · 쿠키
+  lunchbox: { pal: { a: '#b5523b', b: '#e07a5f', d: '#fbf7ef', e: '#f2c14e', r: '#d94f63', f: '#7aa35a', g: '#e6f0f7', h: '#6fa8d6', l: '#b9d8ee', i: '#fbe9ec', j: '#d39a55', k: '#f6ead6' },
+    rows: [
+      '........................',
+      '........................',
+      '........................',
+      '........................',
+      '..aaaaaaaaaaaaaaaaaaaa..',
+      '..abbbbbbbbbbbbbbbbbba..',
+      '..abdddddddbbgghhhggba..',
+      '..abdeeedddbbghhhhhgba..',
+      '..abdeeedrdbbghhlhhgba..',
+      '..abdddddddbbghhhhhgba..',
+      '..abdfffdddbbgghhhggba..',
+      '..abbbbbbbbbbbbbbbbbba..',
+      '..abbbbbbbbbbbbbbbbbba..',
+      '..abifiiifibbjjkkkkkba..',
+      '..abrrriirrbbjjkjjkkba..',
+      '..abrrriirrbbkkkjjkkba..',
+      '..abirriiribbjjkkkjjba..',
+      '..abiiiiiiibbjjkkkjjba..',
+      '..abbbbbbbbbbbbbbbbbba..',
+      '..aaaaaaaaaaaaaaaaaaaa..',
+      '........................',
+      '........................',
+      '........................',
+      '........................',
+    ] },
+};
+function draw(icon) {
+  let rects = '';
+  icon.rows.forEach((row, y) => {
+    for (let x = 0; x < row.length;) {
+      const c = row[x];
+      let w = 1;
+      while (row[x + w] === c) w += 1;
+      if (c !== '.') rects += `<rect x="${x}" y="${y}" width="${w}" height="1" fill="${icon.pal[c]}"/>`;
+      x += w;
+    }
+  });
+  return `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">${rects}</svg>`;
+}
+document.querySelectorAll('.pic[data-icon]').forEach((el) => { const icon = ICONS[el.dataset.icon]; if (icon) el.innerHTML = draw(icon); });
+</script>
+</body>
+</html>
