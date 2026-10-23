@@ -347,7 +347,15 @@ function render(){
 // PNG: html-to-image 로 카드를 실제 화면 그대로 찍는다. 글꼴은 카드에 쓰는 모나 셋만 넣는다(페이지 글꼴 전부를 넣으면 느리다)
 const MONA='https://cdn.jsdelivr.net/gh/MonadABXY/mona-font/web/';
 const FONT_CSS=[['Mona12','Mona12.woff2',400],['Mona12','Mona12-Bold.woff2',700],['Mona12 Color Emoji','Mona12ColorEmoji.woff2',400],['Mona12 Color Emoji','Mona12ColorEmoji.woff2',700]]
-  .map(([f,file,w])=>`@font-face{font-family:"${f}";src:url("${MONA}${file}") format("woff2");font-weight:${w};font-style:normal}`).join('\n');
+  .map(([f,file,w])=>`@font-face{font-family:"${f}";src:url("${MONA}${file}") format("woff2");font-weight:${w};font-style:normal;font-display:swap}`).join('\n');
+// PNG 용 글꼴: 모나 두 굵기만(이모지는 그림으로 바꿔 끼우므로 뺀다). 한 번 받아 data URL 로 들고 있어 두 번째부터 빠르다
+let pngFontCache=null;
+async function pngFontCss(){
+  if(pngFontCache)return pngFontCache;
+  const toData=async file=>{const b=await (await fetch(MONA+file)).blob();return await new Promise(r=>{const fr=new FileReader();fr.onload=()=>r(fr.result);fr.readAsDataURL(b)})};
+  const [n,b]=await Promise.all([toData('Mona12.woff2'),toData('Mona12-Bold.woff2')]);
+  return pngFontCache=`@font-face{font-family:"Mona12";src:url("${n}") format("woff2");font-weight:400;font-style:normal}\n@font-face{font-family:"Mona12";src:url("${b}") format("woff2");font-weight:700;font-style:normal}`;
+}
 const saveSt=document.getElementById('saveStatus');
 const stem=name=>'food-top3'+(name?'-'+name.replace(/\s*\(예시\)\s*/,''):'');
 function download(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name.replace(/[\\/:*?"<>|]/g,'_');document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000)}
@@ -378,7 +386,10 @@ async function savePng(el,name,bg,cols){
     for(const em of copy.querySelectorAll('.cat em')){const img=new Image();img.src=await emojiPng(em.textContent);img.alt='';img.style.cssText='width:24px;height:24px;image-rendering:pixelated;display:block';em.replaceWith(img)}
     frame.append(copy);holder.append(frame);document.body.append(holder);
     try{
-      const blob=await htmlToImage.toBlob(frame,{pixelRatio:2,fontEmbedCSS:FONT_CSS});
+      // 그림 안 글꼴은 처음 그릴 때 준비가 늦어 기본 글꼴로 깨질 수 있다(특히 사파리 · 모바일) — 한 번 미리 그려 데운 뒤 저장한다
+      const opt={pixelRatio:2,fontEmbedCSS:await pngFontCss()};
+      await htmlToImage.toCanvas(frame,opt);
+      const blob=await htmlToImage.toBlob(frame,opt);
       download(blob,name+'.png');saveSt.textContent='저장했어요.';
     }finally{holder.remove()}
   }catch(err){saveSt.textContent='PNG를 만들지 못했어요. '+(err&&err.message||'')}
@@ -404,19 +415,28 @@ document.getElementById('saveHtml').onclick=()=>{
   const chars=parse(src.value);
   saveHtml(out.innerHTML,stem(chars.length===1?chars[0].name:''));
 };
+// HTML: 글꼴은 <link> 대신 @font-face 로 웹폰트 주소에 바로 연결하고, 스타일은 본문 맨 앞에 둔다
+// — <head> 나 <link> 가 빠지는 곳에 본문만 붙여넣어도 글꼴 · 모양이 따라오게. 색 변수는 :root 대신 .ft3 안에만
 function saveHtml(inner,name){
+  const css=document.getElementById('card-css').textContent.replace(/:root\{/,'.ft3{');
   const html=`<!doctype html>
 <html lang="ko">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>FOOD TOP3</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/MonadABXY/mona-font/web/mona.css">
-<style>${document.getElementById('card-css').textContent}</style>
-<style>*{box-sizing:border-box}body{margin:0;padding:24px 16px;background:var(--meadow)}.boxes{max-width:1200px;margin:0 auto}</style>
 </head>
-<body>
+<body style="margin:0">
+<div class="ft3">
+<style>
+${FONT_CSS}
+.ft3{box-sizing:border-box;padding:24px 16px;background:#cdd6a8}
+.ft3 *{box-sizing:border-box}
+.ft3 .boxes{max-width:1200px;margin:0 auto}
+${css}
+</style>
 <div class="boxes">${inner}</div>
+</div>
 </body>
 </html>
 `;
