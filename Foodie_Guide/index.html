@@ -62,6 +62,7 @@
 .memo{flex:none;position:relative;width:600px;background:var(--note);color:var(--ink);font-size:13px;line-height:1.55;padding:22px 20px 18px 46px;box-shadow:0 8px 14px rgba(0,0,0,.3)}
 .memo.wk{word-break:keep-all}   /* 줄바꿈 '단어': 낱말 중간에서 끊지 않는다(칸보다 긴 낱말만 끊긴다). '글자'는 기본 */
 .memo::before{content:"";position:absolute;left:32px;top:0;bottom:0;width:1px;background:var(--margin)}
+.memo[data-fixed]::before{left:32px}   /* PNG 저장 복제본: 폰 폭 규칙과 상관없이 같은 자리 */
 .mh{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding-bottom:10px;border-bottom:1.5px solid var(--rule)}
 .mh b{font-family:var(--mono);font-size:12px;letter-spacing:.24em;white-space:nowrap}
 /* 가게 목록은 두 단으로 흘린다(OOC 는 4곳이지만 챗봇이 더 · 덜 내도 빈 칸이 없게 칸을 고정하지 않는다) */
@@ -143,6 +144,7 @@ textarea:focus,textarea:focus-visible{outline:0;border-color:var(--ink);box-shad
 @media (prefers-reduced-motion:reduce){.status.busy::before{animation:none}}
 .save-row{flex-wrap:nowrap;gap:8px}
 .save-row>button{padding:8px 10px 7px}
+@media (max-width:380px){.save-row{flex-wrap:wrap}}   /* 아주 좁은 폰(360)에서는 넘치지 않게 두 줄로 */
 .well{background:var(--well);color:var(--ink);border:1px solid #d6cfc1}
 details.peek summary{cursor:pointer;color:var(--ink-soft);list-style:none;width:max-content}
 details.peek summary:hover{color:var(--ink)}
@@ -264,6 +266,7 @@ textarea::placeholder{color:var(--ink-soft)}
     <section class="step save">
       <h2>3 · 저장</h2>
       <div class="row save-row">
+        <div class="seg" id="pngLayout" role="group" aria-label="PNG 배치"><button type="button" data-layout="row" aria-pressed="true" title="영수증 옆에 노트">가로</button><button type="button" data-layout="col" aria-pressed="false" title="영수증 위, 노트 아래">세로</button></div>
         <button id="savePng" type="button">PNG</button>
         <button id="saveHtml" type="button">HTML</button>
         <button id="eachBtn" type="button" aria-expanded="false" aria-controls="each" disabled>캐릭터별</button>
@@ -517,14 +520,31 @@ async function pngFontCss(text){
 const saveSt=document.getElementById('saveStatus');
 const stem=name=>'foodie-guide'+(name?'-'+name:'');
 function download(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name.replace(/[\\/:*?"<>|]/g,'_');document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000)}
-// PNG 한 장 = 한 쌍(영수증 + 메모). 성공하면 true
+// PNG 배치: row(가로 — 영수증 옆에 노트, 노트 두 단, 기본) / col(세로 — 영수증 위 노트 아래, 둘 다 360 · 노트 한 단).
+// 화면 폭에 따라 바뀌는 카드 CSS(폰 미디어 쿼리)를 복제본에 인라인으로 덮어, 폰 · PC 어디서 저장해도 같은 그림이 나온다
+let pngLayout='row';try{if(localStorage.getItem('foodie.layout')==='col')pngLayout='col'}catch(e){}
+function fixLayout(set,mode){
+  const row=mode==='row', rcp=set.querySelector('.rcp'), memo=set.querySelector('.memo');
+  Object.assign(set.style,{display:'flex',flexDirection:row?'row':'column',flexWrap:'nowrap',alignItems:row?'flex-start':'center',gap:row?'16px':'24px',width:'auto',maxWidth:'none'});
+  Object.assign(rcp.style,{width:row?'340px':'360px',maxWidth:'none'});
+  rcp.querySelector('.paper').style.padding='26px 22px 34px';
+  Object.assign(memo.style,{width:row?'600px':'360px',maxWidth:'none',padding:'22px 20px 18px 46px'});
+  memo.dataset.fixed='';   // 왼쪽 여백 선 위치도 고정(.memo[data-fixed]::before)
+  set.querySelector('.mi').style.columnCount=row?'2':'1';
+}
+const laySeg=document.getElementById('pngLayout');
+function drawLayout(){laySeg.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.layout===pngLayout)))}
+laySeg.addEventListener('click',e=>{const b=e.target.closest('[data-layout]');if(!b)return;pngLayout=b.dataset.layout;
+  try{localStorage.setItem('foodie.layout',pngLayout)}catch(e){}drawLayout()});
+drawLayout();
+// PNG 한 장 = 한 쌍(영수증 + 메모)
 async function savePng(el,name,bg){
   // 그림자가 잘리지 않게 둘레를 띄운 임시 상자에 복제해서 찍는다. 임시 상자는 화면 밖에(화면 안이면 찍는 동안 비친다)
   const holder=document.createElement('div');holder.style.cssText='position:fixed;left:-100000px;top:0';
   const frame=document.createElement('div');
   frame.style.cssText='display:inline-block;padding:28px 32px 40px';
   frame.style.background=bg;
-  const copy=el.cloneNode(true);copy.style.flexWrap='nowrap';   // 화면이 좁아 메모가 아래로 내려가 있어도 저장은 옆으로
+  const copy=el.cloneNode(true);fixLayout(copy,pngLayout);
   frame.append(copy);holder.append(frame);document.body.append(holder);
   try{
     // 처음 그릴 때 글꼴 준비가 늦어 기본 글꼴로 찍힐 수 있다 — 한 번 미리 그려 데운 뒤 저장한다
