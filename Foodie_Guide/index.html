@@ -23,7 +23,13 @@
 :root{
   --counter:#33373c; --paper:#fffdf8; --note:#f7f2e2; --note-line:#e4dac0; --margin:#dfa496; --ink:#25221e; --ink-soft:#7a746c; --rule:#3a3631;
   --mono:"Special Elite","NanumGothicCoding","Nanum Gothic Coding",monospace;
+  --note-font:"NanumGothicCoding","Nanum Gothic Coding",monospace;
 }
+/* 글꼴: 영수증 틀(ITEM · PRICE · 가격 · TOTAL · 날짜 · THANK YOU)과 노트 제목만 타자기(--mono).
+   가게 · 메뉴 이름과 노트 본문은 영문 · 숫자까지 나눔고딕코딩(--note-font). 이 글꼴 공백(13px 에 6.5px)은
+   타자기 글꼴(3.8px)보다 넓어 word-spacing:-.2em 으로 맞춘다 */
+.memo,.rcp .shop,.rcp .menu{font-family:var(--note-font);word-spacing:-.2em}
+.qm{font-family:"Special Elite",serif;word-spacing:0}   /* 한줄평 따옴표: 나눔고딕코딩의 “ ” 는 한 칸 폭이라 안쪽이 뜬다 */
 /* 결과 영역(왼쪽 창 뺀 곳) 안에서 가운데. 윗변은 왼쪽 창 윗변과 같은 줄 */
 .receipts{display:flex;flex-wrap:wrap;justify-content:center;gap:36px 28px;align-items:flex-start;padding:0 0 24px}
 /* 한 쌍: 영수증 340 + 메모 600. 옆에 자리가 없으면 메모가 영수증 아래로(둘 다 가운데) */
@@ -53,12 +59,12 @@
 .code{margin-top:5px;text-align:center;font-size:11px;letter-spacing:.3em;color:var(--ink-soft)}
 .thx{margin-top:12px;text-align:center;font-size:13px;font-weight:700;letter-spacing:.3em}
 /* 메모 한 장 */
-.memo{flex:none;position:relative;width:600px;background:var(--note);color:var(--ink);font:400 13px/1.55 var(--mono);padding:22px 20px 18px 46px;box-shadow:0 8px 14px rgba(0,0,0,.3)}
+.memo{flex:none;position:relative;width:600px;background:var(--note);color:var(--ink);font-size:13px;line-height:1.55;padding:22px 20px 18px 46px;box-shadow:0 8px 14px rgba(0,0,0,.3)}
 .memo.wk{word-break:keep-all}   /* 줄바꿈 '단어': 낱말 중간에서 끊지 않는다(칸보다 긴 낱말만 끊긴다). '글자'는 기본 */
 .memo::before{content:"";position:absolute;left:32px;top:0;bottom:0;width:1px;background:var(--margin)}
 .mh{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding-bottom:10px;border-bottom:1.5px solid var(--rule)}
-.mh b{font-size:12px;letter-spacing:.24em;white-space:nowrap}
-/* 가게 목록은 두 단으로 흘린다(칸 고정이 아니라 3 · 5곳이어도 빈 칸이 없다) */
+.mh b{font-family:var(--mono);font-size:12px;letter-spacing:.24em;white-space:nowrap}
+/* 가게 목록은 두 단으로 흘린다(OOC 는 4곳이지만 챗봇이 더 · 덜 내도 빈 칸이 없게 칸을 고정하지 않는다) */
 .mi{list-style:none;margin:0;padding:0;column-count:2;column-gap:32px;column-rule:1px solid var(--note-line)}
 /* 구분선은 가게 위에 — 단마다 맨 위 선은 머리말 선에 겹치고, 맨 아래엔 선이 남지 않는다 */
 .mi li{break-inside:avoid;padding:12px 0 13px;border-top:1px solid var(--note-line)}
@@ -77,6 +83,9 @@
 .memo .dish{padding-left:28px}
 .desc{margin-top:2px;padding-left:42px;font-size:12px;line-height:1.55;color:var(--ink-soft);overflow-wrap:anywhere}
 /* 캐릭터 한줄평: 노트 면보다 밝은 평평한 칸(옅은 선 1px, 그림자 · 둥근 장식 없음) */
+/* 상대와 함께 간 가게: 가게 이름 아래 WITH 표 + 같이 간 사람 */
+.with{display:flex;align-items:baseline;gap:6px;margin-top:5px;padding-left:28px;font-size:12px;color:var(--ink-soft);overflow-wrap:anywhere}
+.with .tag{border-color:#b9604c;color:#b9604c}   /* 노트 여백 선과 같은 계열 — 함께 간 가게만 눈에 띄게 */
 .note{margin:9px 0 0 28px;padding:7px 10px 8px;background:#fffcf3;border:1px solid var(--note-line);font-size:12.5px;line-height:1.55;overflow-wrap:anywhere}
 @media (max-width:760px){.receipts{flex-direction:column;align-items:center;padding-right:0}.set{flex-direction:column;align-items:center;gap:24px;width:100%}.rcp,.memo{width:100%;max-width:360px}.mi{column-count:1}}
 @media (max-width:520px){.paper{padding:22px 18px 30px}.memo{padding:20px 16px 16px 40px}.memo::before{left:28px}}
@@ -122,6 +131,12 @@ textarea:focus,textarea:focus-visible{outline:0;border-color:var(--ink);box-shad
 .step.grow{flex:1;min-height:220px}
 .row{display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center}
 .status{color:var(--ink-soft);font-size:12px}
+/* 토글: 옆 단추와 같은 단추(테두리 · 높이 · 글자) 안에 작은 스위치. 켜면 스위치가 잉크로 차고 네모 손잡이가 오른쪽 */
+.toggle{display:inline-flex;align-items:center;gap:7px}
+.toggle i{position:relative;flex:none;width:24px;height:13px;border:1.5px solid var(--ink-soft);background:var(--paper)}
+.toggle i::after{content:"";position:absolute;top:2px;left:2px;width:6px;height:6px;background:var(--ink-soft)}
+.toggle[aria-checked="true"] i{border-color:var(--ink);background:var(--ink)}
+.toggle[aria-checked="true"] i::after{left:auto;right:2px;background:var(--paper)}
 /* 저장 중: 알림 앞에 도는 작은 고리 */
 .status.busy::before{content:"";display:inline-block;width:9px;height:9px;margin-right:6px;border:1.5px solid var(--ink-soft);border-right-color:transparent;border-radius:50%;vertical-align:-1px;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -162,6 +177,7 @@ textarea::placeholder{color:var(--ink-soft)}
 .seg button:hover{background:var(--hover);color:var(--ink)}
 .seg button:active{transform:none}
 .seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+#withMode button{min-width:28px}   /* 숫자 하나짜리 단추도 누르기 편한 폭 */
 .seg.names{flex-wrap:wrap;max-width:calc(100% - 50px)}
 .badge{display:inline-flex;align-items:center;background:var(--ink);margin:1px}
 .badge input{background:transparent;border:0;outline:0;color:var(--paper);font:700 12px/1 var(--ui);padding:6px 7px 5px}
@@ -211,7 +227,7 @@ textarea::placeholder{color:var(--ink-soft)}
 평: 한줄평
 
 - 캐릭터마다 @부터 다시 반복하고, 가게마다 [가게 이름] 줄부터 다시 반복한다.
-- 가게는 3~6곳. 실제로 자주 다닐 만한 만큼만 고르고, 개수를 채우려고 늘리지 않는다. 순서는 자주 가는 순서다.
+- 가게는 캐릭터마다 4곳. 순서는 자주 가는 순서다.
 - 별점은 그 캐릭터가 매기는 점수로, ★ 뒤에 1부터 5까지 0.5 단위 숫자로 쓴다.
 - 시그니처는 그 가게에서 가장 잘 알려진 대표 메뉴다. 내 메뉴는 캐릭터가 늘 시키는 것이고, 시그니처와 같으면 내 메뉴 줄은 쓰지 않는다.
 - 가격은 메뉴 이름 뒤에 " - "를 두고, 그 메뉴를 한 번 시킬 때 내는 값을 숫자로 쓴다. 세계관의 화폐가 원이 아니면 숫자 뒤에 단위를 붙인다.
@@ -219,13 +235,14 @@ textarea::placeholder{color:var(--ink-soft)}
 - 한 항목은 한 줄에 쓴다. 줄 맨 앞에 번호, 목록 기호(-, *), # 을 붙이지 않고, | 기호, 따옴표, 굵은 글씨, 표, HTML, 제목, 맺음말을 쓰지 않는다.
 
 ■ 선택 기준
+- 가게는 음식이나 음료를 사 먹는 곳만 고른다. 식당, 카페, 주점, 빵집 · 디저트 가게, 분식집, 포장마차, 막과자점 같은 과자 · 간식 가게가 들어간다. 편의점, 마트, 화장품 가게, 드럭스토어, 생활용품점 같은 소매점은 넣지 않는다.
 - 캐릭터의 입맛, 생활 반경, 직업과 일과, 주머니 사정, 혼자 먹는지 여럿이 먹는지를 근거로 고른다.
 - 가게 이름은 세계관 안에서 자연스러우면 된다. 현실 기반 세계관이라도 실존 가게인 것처럼 지어내지 않고, 실존 프랜차이즈를 쓸 때는 실제로 파는 메뉴만 쓴다.
 - 별점은 캐릭터의 기준으로 매긴다. 자주 가는 곳이라고 별점이 꼭 높을 필요는 없다. 가깝고 싸서 다니는 곳이면 별점이 낮을 수도 있다.
 - 시그니처를 두고 다른 메뉴를 시키는지는 캐릭터의 입맛과 습관에 맡긴다.
 - 한줄평은 거창하지 않게 쓴다. "양이 많아서", "늦게까지 열어서", "혼자 가도 눈치가 안 보여서"처럼 그 가게를 계속 찾는 평범한 까닭이면 충분하다. 사연이나 상징을 만들어 붙이지 않는다.
 - 롤플레이 중 함께 간 가게를 특별한 단골로 끌어올리지 않는다. 이전 기록은 입맛과 생활 반경을 짐작하는 참고 정도로만 쓴다.
-- 모든 가게가 상대 캐릭터와 연결되지 않게 한다. 각자 원래 다니는 곳을 고른다.
+- 어떤 가게도 상대 캐릭터와 연결 짓지 않는다. 상대와 함께 다니는 곳, 상대 때문에 알게 된 곳, 상대를 떠올려 고른 곳은 넣지 않는다. 각자 원래 다니는 곳을 고른다.
 - 비싸거나 유명한 곳이 꼭 들어갈 필요는 없다.
 - 설정에 음식 취향이나 단골집이 명시되어 있으면 그것을 우선하고, 정보가 없는 부분은 성향에서 자연스럽게 짐작되는 선에서 고른다.
 - 세계관에 없는 음식과 가게 형태는 넣지 않는다.
@@ -238,6 +255,7 @@ textarea::placeholder{color:var(--ink-soft)}
       <div class="row">
         <button id="sample" type="button">예시</button>
         <button id="clear" type="button">비우기</button>
+        <button class="toggle" id="wrapMode" type="button" role="switch" aria-checked="true" title="테이스팅 노트를 낱말 중간에서 끊지 않는다. 끄면 칸 끝에서 글자 단위로 끊는다"><i aria-hidden="true"></i>단어 줄바꿈</button>
         <span class="status" id="parseStatus" aria-live="polite"></span>
       </div>
       <textarea class="well" id="src" spellcheck="false" aria-label="챗봇 출력" placeholder="@캐릭터 이름&#10;[가게 이름] ★별점&#10;시그니처: 메뉴 - 가격, 맛 묘사"></textarea>
@@ -268,7 +286,7 @@ textarea::placeholder{color:var(--ink-soft)}
   <div class="pip-bar"><b>바꾸기</b><button class="pip-x" type="button" aria-label="닫기" title="닫기 (Esc)">×</button></div>
   <div class="cast">
       <div class="line"><b>한줄평</b><div class="seg" id="whyMode" role="group" aria-label="한줄평 쓰는 방식"><button type="button" data-why="plain" aria-pressed="true">그냥 평</button><button type="button" data-why="line" aria-pressed="false">캐릭터 대사</button></div></div>
-      <div class="line"><b>줄바꿈</b><div class="seg" id="wrapMode" role="group" aria-label="테이스팅 노트 줄바꿈"><button type="button" data-wrap="word" aria-pressed="true" title="낱말 중간에서 끊지 않는다">단어</button><button type="button" data-wrap="char" aria-pressed="false" title="칸 끝에서 글자 단위로 끊는다">글자</button></div></div>
+      <div class="line"><b>함께</b><div class="seg" id="withMode" role="group" aria-label="4곳 중 상대와 함께 간 가게 수"><button type="button" data-with="0" aria-pressed="false" title="모든 가게를 각자 다니는 곳으로">없음</button><button type="button" data-with="1" aria-pressed="true" title="마지막 한 곳은 상대와 함께 간 곳">1</button><button type="button" data-with="2" aria-pressed="false" title="마지막 두 곳은 상대와 함께 간 곳">2</button><button type="button" data-with="3" aria-pressed="false" title="마지막 세 곳은 상대와 함께 간 곳">3</button><button type="button" data-with="4" aria-pressed="false" title="4곳 모두 상대와 함께 간 곳">4</button></div></div>
       <div class="line"><b>이름</b><div class="seg" id="castPreset" role="group" aria-label="이름 한 번에 바꾸기"><button type="button" data-preset="tag" title="PC = {{user}}, 첫 NPC = {{char}}">{{user}} · {{char}}</button><button type="button" data-preset="word" title="PC = PC, 첫 NPC = NPC">PC · NPC</button><button type="button" data-preset="custom" title="이름을 직접 적기">직접 입력</button></div></div>
       <div class="line"><b>PC</b><div class="seg names" id="castPc"></div></div>
       <div class="line"><b>NPC</b><div class="seg names" id="castNpc"></div><button class="add" id="addNpc" type="button">+ NPC</button></div>
@@ -276,40 +294,50 @@ textarea::placeholder{color:var(--ink-soft)}
 </div>
 
 <script>
-const SAMPLE=`@이현진 (뮤트)
-[하천면옥] ★4.5
-시그니처: 물냉면 - 14000, 메밀 향이 은은하고 동치미를 섞은 육수가 슴슴하면서도 끝맛이 시원하다.
-평: 국물이 슴슴하고 먹고 나서 냄새가 오래 남지 않아서.
-[정육식당 소담] ★4
-시그니처: 양념 갈비 - 29000, 달큰한 간장 양념이 배어 숯불에 구우면 겉이 살짝 그을린다.
-내 메뉴: 안심 구이 1인분 - 32000, 소금만 쳐서 구워 결이 부드럽고 육즙이 깔끔하다.
-평: 양념 없이 구워 줘서 고기 맛만 나고, 빨리 먹고 나올 수 있어서.
-[24시 들깨백숙] ★3
-시그니처: 들깨 백숙 - 38000, 들깨를 갈아 넣은 국물이 걸쭉하고 고소하며 닭살이 푹 퍼져 있다.
-내 메뉴: 반계탕 - 11000, 반 마리라 양이 가볍고 맑은 국물에 마늘 향이 살짝 돈다.
-평: 새벽에 일이 끝나도 문이 열려 있고 소화가 잘돼서.
-[무인카페 노트] ★2.5
-시그니처: 아이스 아메리카노 - 2500, 산미가 거의 없고 쓴맛이 앞서는 묽은 커피다.
-평: 말 거는 사람이 없어서 조용히 마시고 나오기 편해서.
+const SAMPLE=`@은유
+[허브앤리프 티하우스] ★4.5
+시그니처: 캐모마일 시트러스 블렌드 - 6500, 은은한 국화 향 끝에 상큼한 오렌지 껍질의 산미가 깔끔하게 남는다.
+내 메뉴: 라벤더 밀크티 - 7000, 우유의 고소함 속에 라벤더 특유의 풀 향이 부드럽게 퍼지며 당도가 높다.
+평: 본부 정문에서 걸어서 오 분 거리라 가이딩 끝나고 당 충전하러 들르기 딱 좋음.
 
-@이은유 (스프링)
-[파도 파스타] ★5
-시그니처: 해산물 토마토 파스타 - 17500, 새콤한 토마토소스에 새우, 홍합, 바지락이 넉넉히 들어 바다 향이 진하다.
-평: 새우랑 조개를 골라 먹는 재미가 있어서.
-[그린보울] ★4
-시그니처: 연어 포케 - 13900, 두툼한 생연어에 아보카도와 새콤달콤한 간장 드레싱을 얹었다.
-평: 배부르게 먹어도 속이 더부룩하지 않아서.
-[오후의 홍차] ★4.5
-시그니처: 스콘 세트 - 15000, 겉은 바삭하고 속은 포슬한 스콘에 클로티드 크림과 딸기잼이 곁들여진다.
-내 메뉴: 피치 얼그레이 + 버터 쿠키 - 9800, 베르가못 향 위에 복숭아 단내가 얹히고 쿠키는 입에서 사르르 부서진다.
-평: 창가 자리에 앉아 있으면 시간 가는 줄 몰라서.
-[브런치 하우스 몽] ★4
-시그니처: 수플레 팬케이크 - 16000, 두툼하고 흔들릴 만큼 폭신하며 메이플 시럽의 단맛이 진하다.
-내 메뉴: 치즈 오믈렛 - 12000, 겉은 매끈하고 속은 반숙이라 녹은 치즈가 길게 늘어난다.
-평: 주말 아침에 가면 그날 하루 기분이 좋아져서.
-[말랑젤리] ★3.5
-시그니처: 과일 젤리 한 봉지 - 4500, 과즙 맛이 진하고 쫀득해서 오래 씹힌다.
-평: 가방에 넣어 두고 하나씩 꺼내 먹기 좋아서.`;
+[오복분식] ★4.0
+시그니처: 즉석 떡볶이 2인분 - 14000, 걸쭉한 고추장 양념에 쫄면과 어묵이 넉넉하게 들어가 매콤하고 달짝지근하다.
+내 메뉴: 참치마요 주먹밥과 모둠튀김 - 7500, 고소한 참치 마요네즈가 뭉쳐진 따뜻한 밥에 바삭하게 튀긴 김말이와 고구마가 곁들여진다.
+평: 다른 팀 요원들이랑 작전 대기 중에 우르르 몰려가서 가볍게 나눠 먹기 편함.
+
+[Frostbite] ★5.0
+시그니처: 생딸기 설산 빙수 - 22000, 곱게 갈린 우유 얼음 위에 당도 높은 생딸기와 연유가 듬뿍 올라가 차갑고 달콤하다.
+평: 딸기가 진짜 신선하고 달아서 현진 씨 손 끌고 주말마다 출석 도장 찍는 곳.
+함께: 뮤트
+
+[메종 드 베리] ★4.5
+시그니처: 딸기 쇼트케이크 - 8500, 촉촉한 시트 사이에 동물성 생크림과 단단한 과육의 딸기가 층층이 박혀 있다.
+내 메뉴: 딸기 타르트 - 9000, 버터 풍미가 진한 바삭한 타르트지 위에 커스터드 크림과 생딸기가 빈틈없이 올라가 있다.
+평: 현진 씨가 딸기 맛있는 데 데려가 준다고 해서 알게 된 뒤로 포장도 자주 해 옴.
+함께: 뮤트
+
+@뮤트
+[여의도 24시 나주곰탕] ★3.5
+시그니처: 한우 나주곰탕 - 11000, 맑고 투명한 고기 육수에 얇게 썬 양지와 수육이 넉넉하게 들어가 담백하고 깔끔하다.
+내 메뉴: 특곰탕 - 14000, 기본 곰탕보다 고기 양이 두 배 가까이 많고 국물에서 진한 육향이 올라온다.
+평: 새벽 임무 끝나고 복귀할 때 유일하게 열려 있고 구석 자리가 있어서 혼자 빨리 먹고 나오기 좋음.
+
+[블랙아웃 로스터스] ★3.0
+시그니처: 아인슈페너 - 6000, 쌉싸름한 아메리카노 위에 쫀쫀하고 달콤한 동물성 크림이 두껍게 올라가 있다.
+내 메뉴: 아이스 아메리카노 - 4500, 산미가 전혀 없고 다크 초콜릿 같은 묵직한 쓴맛과 탄 맛이 강하게 난다.
+평: 키오스크로 주문하고 밖에서 바로 받아 갈 수 있어서 누구랑 말 섞을 필요가 없음.
+
+[Frostbite] ★4.0
+시그니처: 생딸기 설산 빙수 - 22000, 곱게 갈린 우유 얼음 위에 당도 높은 생딸기와 연유가 듬뿍 올라가 차갑고 달콤하다.
+내 메뉴: 에스프레소 샷 추가 아메리카노 - 5000, 얼음이 가득 든 물에 진하게 추출한 에스프레소 세 샷이 들어가 혀끝이 얼얼할 정도로 씁쓸하다.
+평: 내 입엔 너무 달지만 맞은편에서 딸기 고르는 거 구경하는 시간이 나쁘지 않음.
+함께: 은유
+
+[심야식당 카게] ★4.5
+시그니처: 사시미 모둠 - 38000, 두툼하게 썰어낸 숙성 광어와 연어, 참치가 차가운 얼음 위에 정갈하게 담겨 나온다.
+내 메뉴: 소고기 타다끼와 우동 세트 - 29000, 겉만 살짝 익혀 육즙이 가둬진 소고기에 짭조름한 폰즈 소스와 따뜻한 가쓰오부시 국물 우동이 함께 나온다.
+평: 전부 개별 룸으로 되어 있어서 박스 벗고 편하게 밥 먹기 괜찮음.
+함께: 은유`;
 
 const src=document.getElementById('src'), out=document.getElementById('out'), who=document.getElementById('who'), st=document.getElementById('parseStatus');
 
@@ -348,7 +376,7 @@ function dish(s){
   const k=s.indexOf(',');   // 가격이 없으면 첫 쉼표 앞이 메뉴
   return k<0?{menu:s,price:null,priceRaw:'',desc:''}:{menu:s.slice(0,k).trim(),price:null,priceRaw:'',desc:s.slice(k+1).trim()};
 }
-const LABEL=/(시그니처|대표\s*메뉴|베스트|SIG(?:NATURE)?|BEST|내\s*메뉴|내\s*주문|늘\s*시키는\s*메뉴|MY(?:\s*PICK)?|한줄평|평|대사|한마디)/.source;
+const LABEL=/(시그니처|대표\s*메뉴|베스트|SIG(?:NATURE)?|BEST|내\s*메뉴|내\s*주문|늘\s*시키는\s*메뉴|MY(?:\s*PICK)?|한줄평|평|대사|한마디|함께|같이\s*간\s*사람)/.source;
 const LINE=new RegExp('^'+LABEL+'\\s*[:：|]\\s*(.*)$','i');
 // 채팅 화면이 줄바꿈을 먹어 한 덩어리로 붙여넣어도 읽게, 표시(@ · [가게] · 시그니처: …) 앞에서 줄을 다시 나눈다
 function split(text){
@@ -369,6 +397,7 @@ function parse(text){
       const k=m[1].replace(/\s/g,'').toLowerCase();
       if(/^(시그니처|대표메뉴|베스트|sig|signature|best)$/.test(k))shop.sig=dish(m[2]);
       else if(/^(한줄평|평|대사|한마디)$/.test(k))shop.note=unq(m[2]);
+      else if(/^(함께|같이간사람)$/.test(k))shop.with=unq(m[2]);
       else shop.my=dish(m[2]);
       continue;
     }
@@ -378,7 +407,7 @@ function parse(text){
     else if((m=l.match(/^\d+\s*(?:위|\.|\)|:)?\s+(.+)$/))){const f=m[1].split('|');name=f[0];rest=f.slice(1).join('|')}
     else continue;
     if(!ch){ch={name:'이름 없음',items:[]};chars.push(ch)}
-    shop={shop:name.trim(),stars:null,sig:null,my:null,note:''};
+    shop={shop:name.trim(),stars:null,sig:null,my:null,note:'',with:''};
     const f=rest.split('|').map(s=>s.trim());
     if(f.length>=3){shop.my=dish(f.slice(0,3).join('|'));shop.note=unq(f.slice(3).join(' '))}
     else shop.stars=stars(rest.replace(/\|/g,''));
@@ -398,7 +427,8 @@ const pad=(n,k)=>String(n).padStart(k,'0');
 function today(){const d=new Date();return {date:`${d.getFullYear()}.${pad(d.getMonth()+1,2)}.${pad(d.getDate(),2)}`,code:`${d.getFullYear()}${pad(d.getMonth()+1,2)}${pad(d.getDate(),2)}`,time:`${pad(d.getHours(),2)}:${pad(d.getMinutes(),2)}`}}
 
 // 노트의 한줄평은 늘 “ ” 로 묶는다(챗봇 양식에는 따옴표를 안 쓰게 하고, 보여 줄 때만 묶는다)
-function quote(s){s=unq(s);return '“'+s+'”'}
+// 따옴표는 타자기 글꼴로(나눔고딕코딩의 “ ” 는 한 칸 폭이라 안쪽이 뜬다). HTML 을 돌려준다
+function quote(s){return '<span class="qm">“</span>'+esc(unq(s))+'<span class="qm">”</span>'}
 const priceText=d=>d&&d.price?money(d.price.num,d.price.unit,d.price.pre):(d&&d.priceRaw)||'—';
 // 영수증: 가게 ……… 늘 시키는 메뉴 값, 아래 메뉴 이름. 합계는 그 값들
 function receipt(c,i,t){
@@ -422,8 +452,9 @@ function memo(c){
   const starRow=v=>v==null?'':`<span class="stars" title="별점 ${v}">${'★'.repeat(Math.round(v-.01))}${'☆'.repeat(5-Math.round(v-.01))}<b>${v}</b></span>`;
   const dishRow=(d,tag,my)=>`<div class="dish"><div class="ln"><span class="tag${my?' my':''}">${tag}</span><span class="dn">${esc(d.menu)}</span>${d.price||d.priceRaw?`<span class="dp">${esc(priceText(d))}</span>`:''}</div>${d.desc?`<div class="desc">${esc(d.desc)}</div>`:''}</div>`;
   const rows=c.items.map((it,k)=>`<li><div class="mt"><span class="no">${pad(k+1,2)}</span><span class="shop">${esc(it.shop)}</span>${starRow(it.stars)}</div>`+
+    (it.with?`<div class="with"><span class="tag">WITH</span><span>${esc(it.with)}</span></div>`:'')+
     (it.sig?dishRow(it.sig,it.my?'SIG':'SIG·MY',!it.my):'')+(it.my?dishRow(it.my,'MY',true):'')+
-    (it.note?`<div class="note">${esc(quote(it.note))}</div>`:'')+'</li>').join('');
+    (it.note?`<div class="note">${quote(it.note)}</div>`:'')+'</li>').join('');
   return `<section class="memo${wrapMode==='word'?' wk':''}"><header class="mh"><b>TASTING NOTE</b></header><ol class="mi">${rows}</ol></section>`;
 }
 function render(){
@@ -580,13 +611,20 @@ function drawWhy(){whySeg.querySelectorAll('button').forEach(b=>b.setAttribute('
 whySeg.addEventListener('click',e=>{const b=e.target.closest('[data-why]');if(!b)return;whyMode=b.dataset.why;
   try{localStorage.setItem('foodie.why',whyMode)}catch(e){}drawWhy();pre.textContent=oocText();render()});
 drawWhy();
-// 테이스팅 노트 줄바꿈: word(단어, 기본) / char(글자). 그 브라우저에 기억
+// 테이스팅 노트 줄바꿈(붙여넣기 줄의 토글): 켜면 word(단어, 기본) / 끄면 char(글자). 그 브라우저에 기억
 let wrapMode='word';try{if(localStorage.getItem('foodie.wrap')==='char')wrapMode='char'}catch(e){}
-const wrapSeg=document.getElementById('wrapMode');
-function drawWrap(){wrapSeg.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.wrap===wrapMode)))}
-wrapSeg.addEventListener('click',e=>{const b=e.target.closest('[data-wrap]');if(!b)return;wrapMode=b.dataset.wrap;
+const wrapBtn=document.getElementById('wrapMode');
+function drawWrap(){wrapBtn.setAttribute('aria-checked',String(wrapMode==='word'))}
+wrapBtn.addEventListener('click',()=>{wrapMode=wrapMode==='word'?'char':'word';
   try{localStorage.setItem('foodie.wrap',wrapMode)}catch(e){}drawWrap();render()});
 drawWrap();
+// 함께: 4곳 중 상대와 함께 간 가게 수 0~4(기본 1). 그 브라우저에 기억 — 예전 값 'last' 는 1, 'none' 은 0
+let withN=1;try{const v=localStorage.getItem('foodie.with');withN=v==='none'?0:v==='last'||v==null?1:Math.max(0,Math.min(4,+v||0))}catch(e){}
+const withSeg=document.getElementById('withMode');
+function drawWith(){withSeg.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.with===withN)))}
+withSeg.addEventListener('click',e=>{const b=e.target.closest('[data-with]');if(!b)return;withN=+b.dataset.with;
+  try{localStorage.setItem('foodie.with',String(withN))}catch(e){}drawWith();pre.textContent=oocText()});
+drawWith();
 // 이름: mode = tag({{user}} · {{char}}) / word(PC · NPC) / custom(직접 입력). 직접 입력한 이름은 saved 에 남겨 다시 고르면 돌아온다
 const PRESETS={tag:['{{user}}','{{char}}'],word:['PC','NPC']};
 let cast={mode:'tag',pc:'{{user}}',npc:['{{char}}'],saved:null};
@@ -600,8 +638,20 @@ function josaWa(word){const c=word.charCodeAt(word.length-1);return c>=0xAC00&&c
 function oocText(){
   const n=names(), pc=n.pc||'이름', npc=n.npc.join(', ')||'이름';
   let t=OOC_BASE.replace(/\bPC와 NPC\b/g,()=>pc+josaWa(pc)+' '+npc).replace(/\bNPC\b/g,()=>npc).replace(/\bPC\b/g,()=>pc);
+  if(withN>0)t=withShops(t,withN);
   if(whyMode==='line')t=asLines(t);
   return t;
+}
+// "함께 N곳" — 4곳 중 마지막 N곳을 상대와 함께 간 곳으로 바꾼다. 1~3 이면 나머지는 OOC.txt 그대로 상대와 엮지 않고,
+// 4 면 모두 함께 간 곳이라 "엮지 않는다" 줄을 뺀다. 기록에 없으면 지어낸 사연 없이 함께 갔을 법한 곳으로.
+// OOC.txt 문장이 바뀌면 여기 맞대는 문장도 본다
+function withShops(t,n){
+  const all=n>=4, cnt=['','한 곳','두 곳','세 곳'][n], which=all?'가게 4곳은 모두':`마지막 ${cnt}은`;
+  t=t.replace(/^(- 캐릭터마다 @부터 다시 반복하고[^\n]*)$/m,`$1\n- ${which} 출력 대상 중 다른 캐릭터와 함께 간 곳이다. 함께 간 가게마다 마지막에 함께: 같이 간 캐릭터 이름 줄을 하나 더 쓴다.`)
+    .replace(/^- 롤플레이 중 함께 간 가게를[^\n]*$/m,`- 함께 간 곳은 롤플레이 기록에서 실제로 함께 간 곳을 고른다. 기록에 없으면 둘의 관계와 생활 반경에서 자연스럽게 함께 갔을 법한 곳으로 고르되, 사연이나 특별한 의미를 지어 붙이지 않는다.${all?'':' 나머지 가게에서는 이전 기록을 입맛과 생활 반경을 짐작하는 참고로만 쓴다.'}`);
+  if(all)return t.replace(/^- 어떤 가게도 상대 캐릭터와 연결 짓지 않는다\.[^\n]*\n/m,'');
+  return t.replace('순서는 자주 가는 순서다.','순서는 자주 가는 순서이고, 함께 간 가게는 맨 끝에 모아 둔다.')
+    .replace('- 어떤 가게도 상대 캐릭터와 연결 짓지 않는다.',`- 마지막 ${cnt}을 뺀 나머지는 상대 캐릭터와 연결 짓지 않는다.`);
 }
 // "캐릭터 대사" — OOC.txt(그냥 평 판)에서 한줄평을 쓰는 줄만 대사 쪽으로 바꾼다. OOC.txt 문장이 바뀌면 여기 맞는지 본다
 function asLines(t){
@@ -670,7 +720,9 @@ document.getElementById('copyOoc').onclick=()=>{
   }
   pre.textContent=oocText();
   const sel=()=>{pre.closest('details').open=true;const r=document.createRange();r.selectNodeContents(pre);const w=getSelection();w.removeAllRanges();w.addRange(r);s.textContent='선택해 뒀어요. Ctrl+C로 복사하세요.'};
-  try{navigator.clipboard.writeText(pre.textContent).then(()=>s.textContent='복사했어요.',sel)}catch(e){sel()}
+  // "복사했어요." 는 3초 뒤 지운다(그사이 다른 알림으로 바뀌었으면 두고)
+  const done=()=>{s.textContent='복사했어요.';clearTimeout(s._t);s._t=setTimeout(()=>{if(s.textContent==='복사했어요.')s.textContent=''},3000)};
+  try{navigator.clipboard.writeText(pre.textContent).then(done,sel)}catch(e){sel()}
 };
 
 let saved='';try{saved=localStorage.getItem('foodie-input')||''}catch(e){}
