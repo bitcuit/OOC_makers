@@ -540,7 +540,9 @@ document.getElementById('copyOoc').onclick=()=>{
   }
   pre.textContent=oocText();
   const sel=()=>{pre.closest('details').open=true;const r=document.createRange();r.selectNodeContents(pre);const w=getSelection();w.removeAllRanges();w.addRange(r);s.textContent='선택해 뒀어요. Ctrl+C로 복사하세요.'};
-  try{navigator.clipboard.writeText(pre.textContent).then(()=>s.textContent='복사했어요.',sel)}catch(e){sel()}
+  // "복사했어요." 는 3초 뒤 지운다(그사이 다른 알림으로 바뀌었으면 두고)
+  const done=()=>{s.textContent='복사했어요.';clearTimeout(s._t);s._t=setTimeout(()=>{if(s.textContent==='복사했어요.')s.textContent=''},3000)};
+  try{navigator.clipboard.writeText(pre.textContent).then(done,sel)}catch(e){sel()}
 };
 
 let saved='';try{saved=localStorage.getItem('taste-input')||''}catch(e){}

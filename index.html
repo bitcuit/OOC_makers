@@ -105,7 +105,7 @@ body { min-height: 100vh; background: var(--c0); color: var(--c4); font-family: 
 
   <div class="tools">
     <div class="filters" id="filters" role="group" aria-label="분류"></div>
-    <label class="search"><span class="sr">검색</span><input id="search" type="search" placeholder="검색 — 예: 음식, 취향" autocomplete="off" spellcheck="false"></label>
+    <label class="search"><span class="sr">검색</span><input id="search" type="search" placeholder="검색 — 예: 음식, 맛집" autocomplete="off" spellcheck="false"></label>
   </div>
 
   <ol class="list">
@@ -113,6 +113,13 @@ body { min-height: 100vh; background: var(--c0); color: var(--c4); font-family: 
       <a class="item" href="Food_TOP3/index.html">
         <div class="pic" data-icon="lunchbox" aria-hidden="true"></div>
         <div><p class="name">FOOD TOP3</p><p class="what">캐릭터마다 좋아하는 음식 · 음료 · 과일 · 과자 TOP3</p></div>
+        <div class="tags"></div>
+      </a>
+    </li>
+    <li data-tags="기록" data-keywords="맛집 단골 가게 식당 카페 메뉴 가격 영수증 리스트 목록 NPC">
+      <a class="item" href="Foodie_Guide/index.html">
+        <div class="pic" data-icon="receipt" aria-hidden="true"></div>
+        <div><p class="name">FOODIE GUIDE</p><p class="what">캐릭터마다 자주 가는 맛집 · 늘 시키는 메뉴 · 가격을 영수증으로</p></div>
         <div class="tags"></div>
       </a>
     </li>
@@ -182,6 +189,34 @@ const ICONS = {
       '..aaaaaaaaaaaaaaaaaaaa..',
       '........................',
       '........................',
+      '........................',
+      '........................',
+    ] },
+  // 감열지 영수증 한 장: 상호 · 점선 · 항목 줄 · 바코드 · 아래 톱니
+  receipt: { pal: { e: '#c9c3b6', w: '#fbf9f3', k: '#3a3631', s: '#a39d92' },
+    rows: [
+      '........................',
+      '........................',
+      '......eeeeeeeeeeee......',
+      '......ewwwwwwwwwwe......',
+      '......ewwkkkkkkwwe......',
+      '......ewwwwwwwwwwe......',
+      '......ewsssssssswe......',
+      '......ewwwwwwwwwwe......',
+      '......ewkkkwwwkkwe......',
+      '......ewwwwwwwwwwe......',
+      '......ewkkkkwwkkwe......',
+      '......ewwwwwwwwwwe......',
+      '......ewkkwwwwkkwe......',
+      '......ewwwwwwwwwwe......',
+      '......ewsssssssswe......',
+      '......ewkkkkwkkkwe......',
+      '......ewwwwwwwwwwe......',
+      '......ewkwkkwkwkwe......',
+      '......ewkwkkwkwkwe......',
+      '......ewwwwwwwwwwe......',
+      '......ewewewewewee......',
+      '......e.e.e.e.e.e.......',
       '........................',
       '........................',
     ] },
