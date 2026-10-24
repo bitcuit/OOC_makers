@@ -10,6 +10,7 @@
 | 도구 | 하는 일 |
 |---|---|
 | [FOOD TOP3](Food_TOP3/index.html) | 캐릭터마다 좋아하는 음식 · 음료 · 과일 · 과자 TOP3를 뽑는 OOC. 챗봇 출력을 붙여넣으면 캐릭터별 4칸 도시락 카드로 보여 주고, PNG · HTML로 저장합니다 |
+| [FOODIE GUIDE](Foodie_Guide/index.html) | 캐릭터마다 자주 가는 맛집을 뽑는 OOC. 챗봇 출력을 붙여넣으면 캐릭터별로 영수증(늘 시키는 메뉴 · 가격 · 합계)과 메모 한 장(시그니처 · 맛 묘사 · 별점 · 한줄평)을 나란히 보여 주고, PNG · HTML로 저장합니다 |
 
 ## 쓰는 순서
 
@@ -23,3 +24,4 @@ Settings → Pages에서 Source를 `main` 브랜치 + `/ (root)`로 지정하면
 루트 [`index.html`](index.html)이 도구 목록이고, 각 도구는 폴더 주소로도 바로 열립니다.
 
 - https://bitcuit.github.io/OOC_makers/Food_TOP3/
+- https://bitcuit.github.io/OOC_makers/Foodie_Guide/
