@@ -110,6 +110,13 @@ body { min-height: 100vh; background: var(--c0); color: var(--c4); font-family: 
   </div>
 
   <ol class="list">
+    <li data-tags="기록" data-keywords="캐릭터 소개 프로필 게임 스킬 판정 배너 이명 슬로건 색 황동">
+      <a class="item" href="Character_File/index.html">
+        <div class="pic" data-icon="dossier" aria-hidden="true"></div>
+        <div><p class="name">CHARACTER FILE</p><p class="what">캐릭터 소개 · 선택 스킬 상세 · 직접 꾸미는 가로 배너</p></div>
+        <div class="tags"></div>
+      </a>
+    </li>
     <li data-tags="기록" data-keywords="음식 음료 과일 과자 취향 최애 좋아하는 순위 TOP3 카드 도시락 NPC">
       <a class="item" href="Food_TOP3/index.html">
         <div class="pic" data-icon="lunchbox" aria-hidden="true"></div>
@@ -165,6 +172,32 @@ document.getElementById('count').textContent = String(rows.length);
 
 // 도트 그림 — 24×24 칸. 글자 하나가 한 칸, "." 은 빈칸, 나머지는 pal 의 색. 같은 색이 가로로 이어지면 한 사각형으로 그린다.
 const ICONS = {
+  dossier: { pal: { b:'#7f6342', p:'#2b241d', g:'#d5b47b', m:'#a18c70' }, rows: [
+    '........................',
+    '........................',
+    '....bbbbbbbbbbbbbbbb....',
+    '....bppppppppppppppb....',
+    '....bppppppppppppppb....',
+    '....bppggggppmmmmppb....',
+    '....bppggggppppppppb....',
+    '....bppggggppmmmmppb....',
+    '....bppggggppppppppb....',
+    '....bppppppppmmmmppb....',
+    '....bpggggggpppppppb....',
+    '....bpggggggpmmmmppb....',
+    '....bpggggggpppppppb....',
+    '....bppppppppppppppb....',
+    '....bppppppppppppppb....',
+    '....bppmmmmmmmmmpppb....',
+    '....bppppppppppppppb....',
+    '....bppmmmmmmppppppb....',
+    '....bppppppppppppppb....',
+    '....bppppppppppppppb....',
+    '....bbbbbbbbbbbbbbbb....',
+    '........................',
+    '........................',
+    '........................',
+  ] },
   // 위에서 본 4칸 도시락: 밥과 달걀 · 음료 · 딸기 · 쿠키
   lunchbox: { pal: { a: '#b5523b', b: '#e07a5f', d: '#fbf7ef', e: '#f2c14e', r: '#d94f63', f: '#7aa35a', g: '#e6f0f7', h: '#6fa8d6', l: '#b9d8ee', i: '#fbe9ec', j: '#d39a55', k: '#f6ead6' },
     rows: [

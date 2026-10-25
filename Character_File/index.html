@@ -1,0 +1,677 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OOC MAKERS : CHARACTER FILE</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Cpath fill='%237f6342' d='M2 1h12v14H2z'/%3E%3Cpath fill='%232b241d' d='M3 2h10v12H3z'/%3E%3Cpath fill='%23d5b47b' d='M5 4h3v3H5zM4 8h5v2H4zM10 4h2v1h-2zM10 6h2v1h-2zM10 8h2v1h-2zM4 12h8v1H4z'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;600;700;800&family=Noto+Serif+KR:wght@400;600;700&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.js" defer></script>
+<style id="card-css">
+.record{background:var(--paper);color:var(--text);font:400 14px/1.85 'Noto Sans KR',sans-serif;border:1px solid var(--line);container-type:inline-size;position:relative;isolation:isolate;overflow-wrap:anywhere}
+.record *,.banner *{box-sizing:border-box}.banner .banner-finished{position:absolute;object-fit:fill;transform:translate(-50%,-50%);pointer-events:none}.banner .banner-finished{z-index:4}.banner .banner-copy{z-index:5}.banner .banner-copy~.banner-finished{z-index:6}
+.record h1,.record h2,.record h3,.record p,.record blockquote,.record dl,.record dd{margin:0}
+.record .record-body{padding:44px 52px 48px}
+.record .eyebrow{font-size:10px;letter-spacing:.23em;color:var(--brass);font-weight:600}
+.record .identity{padding:0 0 32px;border-bottom:1px solid var(--line)}
+.record .identity,.record .story{container-type:inline-size}
+.record .epithet{font:500 18px/1.6 'Noto Serif KR',serif;color:var(--brass);margin-top:18px}
+.record .char-name{font:700 48px/1.3 'Noto Serif KR',serif;letter-spacing:-.045em;color:var(--text);margin-top:2px}
+.record .slogan{font:400 18px/1.8 'Noto Serif KR',serif;color:var(--muted);margin-top:18px}
+.record .story{padding:12px 0 52px}
+.record .quote{font:600 22px/1.8 'Noto Serif KR',serif;color:var(--text);padding-bottom:18px}
+.record .intro{color:var(--muted);line-height:2;white-space:pre-line;max-width:none}
+.record .story-with-image{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);align-items:center;gap:24px}
+.record .story-with-image.photo-left{grid-template-columns:minmax(0,1fr) minmax(0,1.6fr)}.record .photo-left .story-picture{grid-column:1;grid-row:1}.record .photo-left .story-content{grid-column:2;grid-row:1}
+.record .story-picture{position:relative;aspect-ratio:5/4;overflow:hidden;background:var(--paper);isolation:isolate}
+.record .story-picture img{position:absolute;max-width:none;transform:translate(-50%,-50%);object-fit:fill;pointer-events:none}
+.record .story-picture::after{content:'';position:absolute;inset:0;background:linear-gradient(var(--intro-fade,270deg),transparent var(--intro-fade-start,0%),var(--paper) var(--intro-fade-end,100%));pointer-events:none}.record .story-picture.no-fade::after{display:none}
+.record .story-content .quote{color:var(--story-text,var(--text))}.record .story-content .intro{color:var(--story-text,var(--muted))}
+.record .section-title{font-size:11px;font-weight:600;letter-spacing:.17em;color:var(--brass);padding:0 0 14px}
+.record .profile{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:22px 0;gap:20px 24px}
+.record dt{font-size:10px;color:var(--muted);letter-spacing:.07em;margin-bottom:4px}
+.record dd{font-size:14px;line-height:1.7;color:var(--text)}
+.record .wide{grid-column:1/-1}
+.record .position{display:flex;align-items:baseline;gap:16px;margin:24px 0 30px}
+.record .role-name{color:var(--brass);font-size:16px;font-weight:600;white-space:nowrap}
+.record .role-desc{color:var(--muted);font-size:13px}
+.record .kit{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;padding:0;background:transparent;border:0;margin-bottom:38px}
+.record .kit p{font-size:12px;line-height:1.9;color:var(--muted);padding:20px;background:var(--well);border:1px solid var(--line)}
+.record .kit b{display:block;color:var(--brass);font-size:11px;font-weight:500;margin-bottom:7px}
+.record .skill-list{border-top:1px solid var(--line)}
+.record .skill{border-bottom:1px solid var(--line);margin:0;position:relative}
+.record .skill-head{display:grid;grid-template-columns:82px minmax(0,1fr) 42px;align-items:start;gap:18px;padding:22px 12px;list-style:none;border-left:2px solid transparent;margin:0;background:transparent;outline-offset:-3px}
+.record .skill-head::-webkit-details-marker{display:none}
+.record .has-detail>.skill-head{cursor:pointer}
+.record .has-detail:hover>.skill-head,.record .has-detail[open]>.skill-head{background:var(--select-bg)}.record .has-detail>.skill-head:focus-visible{outline:none;background:var(--select-bg)}
+.record .skill-key{font-size:10px;letter-spacing:.02em;color:var(--brass);border:1px solid var(--line);padding:3px 6px;text-align:center;line-height:1.6;white-space:nowrap;margin-top:2px;min-width:0}
+.record .skill-name{font-size:16px;font-weight:600;line-height:1.6;color:var(--text)}
+.record .skill-desc{font-size:13px;line-height:1.9;color:var(--muted);margin-top:6px}
+.record .skill-voice{font:400 12px/1.9 'Noto Serif KR',serif;color:var(--brass);margin-top:9px;white-space:pre-line}
+.record .detail-hint{font-size:10px;color:var(--brass);text-align:right;padding-top:5px;white-space:nowrap}
+.record .skill-detail{background:color-mix(in srgb,var(--raised) 72%,transparent);-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px);border:1px solid var(--line);padding:22px 24px;line-height:1.8;box-shadow:0 3px 10px var(--drop,#000a);z-index:80;scrollbar-width:thin;scrollbar-color:var(--line) var(--raised)}
+.record .detail-title{font-size:12px;color:var(--brass);font-weight:600;padding-bottom:12px;border-bottom:1px solid var(--line);margin-bottom:14px}
+.record .detail-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:18px}
+.record .detail-grid dd{font-size:12px}
+.record .detail-row{display:grid;grid-template-columns:80px minmax(0,1fr);gap:12px;margin-top:9px}
+.record .detail-row dt{margin:0;padding-top:2px}.record .detail-row dd{font-size:12px;color:var(--text);white-space:pre-line}
+.record .flavors{padding-top:36px;display:grid;gap:20px}
+.record .flavor{font:400 15px/1.9 'Noto Serif KR',serif;color:var(--muted);margin:0}
+.record .flavor figcaption{font:400 11px/1.8 'Noto Sans KR',sans-serif;color:var(--muted);margin-top:7px}
+.record .voices{padding-top:30px}.record .voice-list{display:grid;grid-template-columns:1fr 1fr;gap:18px 28px}.record .voice-line dt{margin-bottom:6px}.record .voice-line dd{font:400 14px/1.9 'Noto Serif KR',serif}
+.record .strategy{margin-top:32px;display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.record .strategy h3{font-size:11px;color:var(--brass);letter-spacing:.08em;padding-bottom:8px}.record .strategy p{font-size:12px;color:var(--muted);white-space:pre-line}
+.record .footer{border-top:1px solid var(--line);margin-top:36px;padding-top:18px;display:flex;gap:16px;justify-content:space-between;color:var(--muted);font-size:9px;letter-spacing:.14em}
+.record .only-details .identity,.record .only-details .story,.record .only-details .profile,.record .only-details .position,.record .only-details .kit,.record .only-details .flavors,.record .only-details .voices{display:none}
+.record.for-print .skill-detail{position:static!important;width:auto!important;max-height:none!important;box-shadow:none;background:var(--raised);-webkit-backdrop-filter:none;backdrop-filter:none;margin:0 12px 22px;border-color:var(--line)}
+.record.for-print .detail-hint{visibility:hidden}.record.for-print .skill-head{background:transparent}
+.record.for-print .has-detail[open]>.skill-head{background:transparent;border-left-color:transparent}
+.banner{position:relative;aspect-ratio:var(--banner-ratio,3/1);overflow:hidden;background:var(--well,#191611);isolation:isolate;container-type:inline-size;color:#fff9ee}
+.banner-bg,.banner-char{position:absolute;max-width:none;object-fit:fill;transform:translate(-50%,-50%);pointer-events:none}
+.banner-bg{filter:blur(calc(var(--bg-blur,0) * 1cqw))}
+.banner-glow{position:absolute;max-width:none;transform:translate(-50%,-50%);filter:blur(calc(var(--glow-size,0) * 1cqw));mix-blend-mode:var(--glow-blend,normal);opacity:var(--glow-alpha,1);pointer-events:none}.banner-glow>div{width:100%;height:100%;background:var(--glow-color,transparent);mask-size:100% 100%;mask-repeat:no-repeat}
+.banner-shade{mix-blend-mode:var(--shade-blend,normal)}
+.banner-shade{position:absolute;inset:0;pointer-events:none}
+.banner-copy{position:absolute;left:6%;top:50%;transform:translateY(-50%);width:57%;padding:12px 0}
+.banner-slogan{font-size:clamp(10px,1.75cqw,27px);font-weight:400;line-height:1.65;white-space:pre-line;overflow-wrap:anywhere;margin:0 0 1.3cqw!important;color:#fff5e6}
+.banner-name{font-size:clamp(18px,4.8cqw,72px);font-weight:700;line-height:1.3;letter-spacing:-.035em;overflow-wrap:anywhere;margin:0!important;color:#fffaf2}
+.banner[data-export]{width:var(--banner-width,1500px)!important;height:var(--banner-height,500px)!important}
+@container (max-width:600px){
+ .record .record-body{padding:28px 22px 32px}.record .char-name{font-size:36px}.record .epithet{font-size:15px}.record .slogan{font-size:15px}.record .quote{font-size:18px}
+ .record .profile{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.record .kit{grid-template-columns:1fr;padding:0;gap:12px;margin-bottom:30px}.record .kit p{padding:18px}.record .position{display:block}.record .role-desc{margin-top:8px}.record .voice-list{grid-template-columns:1fr;gap:16px}
+ .record .skill-head{grid-template-columns:61px minmax(0,1fr);gap:12px;padding:20px 8px}.record .skill-name{font-size:14px}.record .skill-key{font-size:9px;padding:3px}.record .detail-hint{display:none}
+ .record .skill-detail{padding:18px 16px;box-shadow:none;margin-bottom:16px}.record .detail-row{grid-template-columns:69px minmax(0,1fr);gap:8px}.record .strategy{grid-template-columns:1fr;gap:20px}.record .footer{font-size:8px}
+ .record .banner{aspect-ratio:var(--banner-ratio,3/1)}
+ .record .story-with-image{grid-template-columns:1fr;gap:18px}.record .story-picture{grid-row:1}
+ .record .story-with-image.photo-left{grid-template-columns:1fr}.record .photo-left .story-content{grid-column:1;grid-row:2}.record .photo-left .story-picture{grid-column:1;grid-row:1}
+}
+@media (max-width:900px),(hover:none){.record .skill-detail{position:static!important;width:auto!important;max-height:none!important;background:var(--raised);-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:none}}
+</style>
+<style>
+:root{color-scheme:dark;--bg:#15120f;--paper:#25211b;--panel:#211d18;--well:#191611;--raised:#30291f;--line:#635139;--brass:#cfb185;--text:#e4dfd6;--muted:#b2a99b;--select:#d8a35b;--select-bg:#3c3020;--focus:#e5bc7a;font-family:'Noto Sans KR',sans-serif}
+*{box-sizing:border-box} [hidden]{display:none!important}html,body{margin:0;height:100%;background:var(--bg);color:var(--text)}body{font-size:12px}button,input,textarea,select{font:inherit}button,input,select,textarea{color:var(--text)}button{border:1px solid var(--line);padding:8px 11px;background:transparent;line-height:1.4;cursor:pointer;white-space:nowrap;border-radius:2px;min-height:34px}button:hover{background:var(--raised)}button:active{background:var(--well)}button:disabled{opacity:.38;cursor:default}button.primary{background:var(--brass);color:var(--bg);border-color:var(--brass);font-weight:700}button.primary:hover{filter:brightness(1.08)}button.text{padding:4px 0;border:0;min-height:26px;color:var(--muted)}button.text:hover{color:var(--text);background:transparent}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+input[type=text],textarea,select{background:var(--well);border:1px solid var(--line);border-radius:2px;padding:9px 10px;line-height:1.6;min-width:0;width:100%}input[type=color]{width:33px;height:30px;padding:3px;border:1px solid var(--line);border-radius:2px;background:var(--well);cursor:pointer}input[type=checkbox]{accent-color:var(--brass);width:15px;height:15px;margin:0;flex:none;position:relative;top:1px}input[type=range]{accent-color:var(--brass);min-width:0;width:100%;margin:0;height:26px}textarea{resize:vertical;min-height:130px;font-size:11px;line-height:1.8}textarea::placeholder{color:var(--muted);opacity:.65}select{height:35px;padding:3px 24px 5px 8px;font-size:11px;appearance:none;cursor:pointer;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-size:4px 4px;background-position:calc(100% - 14px) calc(50% - 1px),calc(100% - 10px) calc(50% - 1px);background-repeat:no-repeat}h1,h2,p{margin:0}.app{display:grid;grid-template-columns:356px minmax(0,1fr);gap:32px;height:100dvh;max-width:1690px;margin:auto;padding:28px 32px;overflow:hidden}.side{border:1px solid var(--line);background:var(--panel);min-height:0;overflow:auto;scrollbar-width:thin;scrollbar-color:var(--line) var(--panel);display:flex;flex-direction:column}.side-head{padding:25px 24px 20px;border-bottom:1px solid var(--line)}.side-head h1{font:600 21px/1.4 'Noto Serif KR',serif;letter-spacing:-.04em}.small-label{font-size:9px;letter-spacing:.21em;color:var(--brass);margin-bottom:7px}.top-settings{padding:16px 24px 18px;border-bottom:1px solid var(--line);background:var(--well)}.banner-line{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:34px}.check{display:flex;align-items:center;gap:8px;font-size:12px;cursor:pointer}.theme-line{display:flex;align-items:center;gap:10px;margin-top:10px}.theme-line label{color:var(--muted);font-size:11px}.theme-line button{margin-left:auto}.step{padding:20px 24px;border-bottom:1px solid var(--line)}.step h2{font-size:11px;color:var(--brass);font-weight:600;letter-spacing:.035em;margin-bottom:12px}.row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.ooc-actions{gap:5px;flex-wrap:nowrap}.ooc-actions button{font-size:10px;padding:8px 6px}.grow{flex:1;display:flex;flex-direction:column;min-height:255px}.grow textarea#src{flex:1}.input-actions{justify-content:space-between;margin-bottom:9px}.input-actions .row{gap:14px}.status{font-size:10px;color:var(--muted);line-height:1.7;min-height:0}.status:not(:empty){display:block;margin-top:8px}.status.error{color:#e8a591}.peek{margin-top:12px}.peek summary{font-size:10px;color:var(--muted);cursor:pointer}.ooc{white-space:pre-wrap;max-height:190px;overflow:auto;font:10px/1.8 'Noto Sans KR',sans-serif;background:var(--well);padding:12px;margin:8px 0 0;color:var(--muted)}.add-detail{align-self:flex-start;margin-top:12px;font-size:11px}.detail-input{margin-top:12px}.detail-input header{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;color:var(--brass);font-size:11px}.detail-input textarea{height:110px;min-height:96px}.save{border-bottom:0;padding-bottom:24px}#saveStatus{overflow-wrap:anywhere}.save-row{flex-wrap:nowrap;gap:5px}.save-buttons{margin-top:8px}.save-row .split-check{flex:none;gap:6px;font-size:11px;margin-left:4px}.save-row select[hidden]+.split-check{margin-left:0}.save-row select{flex:none;width:58px;padding:3px 18px 5px 7px;background-position:calc(100% - 11px) calc(50% - 1px),calc(100% - 7px) calc(50% - 1px)}.save-row button{padding:8px 9px;font-size:10px}.banner-save{margin-top:10px}.main{min-width:0;overflow:auto;scrollbar-width:thin;scrollbar-color:var(--line) var(--bg);padding:0 10px 20px 0}.empty{height:100%;display:flex;align-items:center;justify-content:center;text-align:center;color:var(--muted);font:400 14px/1.9 'Noto Serif KR',serif;min-height:250px}.empty p{max-width:260px}.pip{position:fixed;z-index:120;width:570px;max-width:calc(100vw - 32px);max-height:calc(100dvh - 32px);overflow:auto;border:1px solid var(--line);background:color-mix(in srgb,var(--panel) 66%,transparent);-webkit-backdrop-filter:blur(7px) saturate(1.2);backdrop-filter:blur(7px) saturate(1.2);box-shadow:0 4px 12px var(--drop,#000a);scrollbar-width:thin;scrollbar-color:var(--line) var(--panel)}.pip.small{width:320px}.pip-bar{display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5;padding:12px 18px;background:color-mix(in srgb,var(--raised) 60%,transparent);-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px);border-bottom:1px solid var(--line)}.pip-bar b{font-size:12px;font-weight:500;color:var(--brass)}.pip-x{padding:3px 7px;min-height:27px;font-size:18px;line-height:1;border-color:transparent}.pip-content{padding:18px 20px 24px}.pip .banner{border:0;margin-bottom:18px}.edit-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px 18px}.field{min-width:0}.field>label,.field-label{display:block;color:var(--muted);font-size:10px;margin-bottom:7px}.field>label.check{display:flex;color:inherit;font-size:12px;margin-bottom:10px}.field input,.field select{margin-top:0}.full{grid-column:1/-1}.file-row{display:flex;gap:7px;align-items:center}.file-row label{display:inline-flex;align-items:center;border:1px solid var(--line);padding:7px 10px;min-height:34px;cursor:pointer;white-space:nowrap}.file-row label:hover{background:var(--raised)}.file-row input{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden}.file-row button{padding:6px 8px;font-size:10px}.range-row{display:grid;grid-template-columns:55px 1fr 34px;gap:8px;align-items:center;margin-top:7px}.range-row label{font-size:10px;color:var(--muted)}.range-row output{font-size:10px;text-align:right;color:var(--muted);font-variant-numeric:tabular-nums}.edit-sep{grid-column:1/-1;height:1px;background:var(--line);margin:2px 0}.font-sans{font-family:'Noto Sans KR',sans-serif}.font-serif{font-family:'Noto Serif KR',serif}.font-display{font-family:'Black Han Sans',sans-serif}.busy::before{content:'';display:inline-block;width:9px;height:9px;border:1px solid var(--muted);border-right-color:transparent;border-radius:50%;margin-right:6px;animation:spin 1s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:1100px){.app{grid-template-columns:330px minmax(0,1fr);gap:22px;padding:22px}.side-head,.step,.top-settings{padding-left:20px;padding-right:20px}}
+@media(max-width:900px){html,body{height:auto}.app{display:block;height:auto;overflow:visible;padding:16px 16px 32px}.side{overflow:visible}.side-head{padding:20px}.grow textarea#src{height:175px;flex:none}.grow{min-height:0}.main{padding:24px 0 0;overflow:visible}.empty{height:250px}.pip{max-height:calc(100dvh - 32px)}.pip-content{padding:16px 16px 22px}}
+@media(max-width:450px){.edit-grid{grid-template-columns:1fr}.edit-grid .full{grid-column:1}.edit-sep{grid-column:1}.app{padding:12px 12px 28px}.side-head,.step,.top-settings{padding-left:20px;padding-right:20px}}
+.reset-message{font-size:11px;line-height:1.8;margin:0 0 16px}#confirmReset{border-color:#aa7160}
+.theme-line{flex-wrap:wrap;gap:8px}.theme-line button{margin-left:0;font-size:10px;padding:6px 7px}.palette-pip{width:360px}.palette-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.palette-grid button{padding:5px;min-width:0;white-space:normal;font-size:9px;line-height:1.5}.palette-swatches{display:flex;height:25px;border:1px solid var(--line);margin-bottom:5px}.palette-swatches i{width:50%}.palette-grid button[aria-pressed=true]{outline:2px solid var(--focus);outline-offset:1px}
+/* 펼친 입력 영역이 저장 줄과 겹치지 않도록 왼쪽 창 안에서 흐르게 한다. */
+.side-head,.top-settings,.step{flex-shrink:0}.grow{flex:1 0 auto}.grow textarea#src{min-height:96px;flex:1 0 96px}.empty{height:calc(100dvh - 100px)}
+.pip{max-width:calc(100% - 32px)}
+.main{position:relative}.result-tools{position:sticky;top:12px;height:0;display:flex;justify-content:flex-end;z-index:25;pointer-events:none;margin-right:18px}.result-tools button{pointer-events:auto;background:var(--raised)}
+.banner.editing{touch-action:none;user-select:none;cursor:grab}.banner.editing img{pointer-events:auto;touch-action:none;user-select:none}.banner.editing .banner-copy{pointer-events:none}.banner.editing img[data-layer]:not(.is-selected){pointer-events:none}.banner.editing .is-selected{outline:1px dashed var(--focus);outline-offset:-1px}.banner.editing.is-dragging{cursor:grabbing}
+.artboard.editing{touch-action:none;user-select:none;cursor:grab}.artboard.editing img{pointer-events:auto;touch-action:none;user-select:none}.artboard.editing .is-selected{outline:1px dashed var(--focus);outline-offset:-1px}.artboard.editing.is-dragging{cursor:grabbing}
+.text-editing [data-text]{pointer-events:auto;touch-action:none;user-select:none;cursor:move}.text-editing [data-text].text-selected{outline:1px dashed var(--focus);outline-offset:4px}.field-heading{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:7px}.field-heading label{font-size:10px;color:var(--muted)}.field-heading .row{gap:7px}.field-heading button{font-size:9px}.file-row{flex-wrap:wrap}
+.text-editing [data-text]{position:relative;outline:1px dashed var(--line);outline-offset:4px}.text-editing [data-text].text-selected{outline-color:var(--focus)}.text-editing [data-text]::after{content:attr(data-edit-label);position:absolute;left:0;top:-19px;background:var(--raised);color:var(--brass);padding:1px 5px;font:400 9px/1.7 'Noto Sans KR',sans-serif;pointer-events:none}.artboard.editing::before{content:attr(data-edit-label);position:absolute;left:5px;top:5px;z-index:5;background:var(--raised);color:var(--brass);padding:1px 5px;font:400 9px/1.7 'Noto Sans KR',sans-serif;pointer-events:none}.artboard.editing{outline:1px dashed var(--focus);outline-offset:-1px}
+.result-tools{position:absolute;top:12px;right:18px;height:auto;margin:0}.record .story-content .quote{color:var(--story-text,var(--text))}.record .story-content .intro{color:var(--story-text,var(--muted))}
+.banner-editor{width:352px;max-height:min(640px,72dvh)}.banner-editor .pip-bar{touch-action:none;cursor:move;user-select:none}.banner-editor .pip-content{padding:16px 18px 24px}.banner-editor .edit-grid{grid-template-columns:1fr 1fr;gap:14px 12px}.banner-editor .edit-sep{grid-column:1/-1}.banner-editor .full{grid-column:1/-1}.banner-editor .field-label{font-size:10px}.banner-editor input[type=number]{background:var(--well);border:1px solid var(--line);border-radius:2px;padding:7px 8px;width:100%;min-width:0;line-height:1.6;font-variant-numeric:tabular-nums}.layer-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-bottom:12px}.layer-tabs button{padding:7px 5px;font-size:10px}.layer-tabs button[aria-pressed=true],.name-mode button[aria-pressed=true]{background:var(--brass);color:var(--bg)}.geometry-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 12px;margin:14px 0 12px}.image-note{color:var(--muted);font-size:10px;line-height:1.7;margin:8px 0 0}.intro-fade-controls{border:1px solid var(--line);padding:12px;margin-top:14px}.intro-fade-controls .field-label{margin:0}.intro-fade-controls .field-heading{margin-bottom:10px}.fade-stop{display:grid;grid-template-columns:48px minmax(0,1fr) 57px;gap:8px;align-items:center;margin-top:8px}.fade-stop label{color:var(--muted);font-size:10px}.banner-editor .fade-stop input[type=number]{padding:6px}.webfont-form{border-top:1px solid var(--line);padding-top:14px}.webfont-form summary{cursor:pointer;color:var(--brass);font-size:11px}.webfont-form .field{margin-top:12px}.webfont-form textarea{min-height:86px;height:86px;font-size:10px}.webfont-list{display:grid;gap:8px;margin-top:12px}.webfont-row{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:10px}.webfont-row span{flex:1;min-width:0;overflow-wrap:anywhere}.webfont-row button{min-height:26px;padding:4px 7px;font-size:10px}.ooc-count{float:right;color:var(--muted);font-size:9px;font-variant-numeric:tabular-nums}.ooc-count.over{color:#e8a591}
+@media(max-width:900px){.empty{height:250px}.grow textarea#src{flex:none}}
+@media(max-width:600px){.banner-editor{max-height:55dvh}.result-tools{margin-right:12px;top:10px}.result-tools button{font-size:10px;padding:6px 8px;min-height:29px}.banner-editor .pip-content{padding:14px 16px 22px}}.help-toggle{border-style:dashed!important;color:var(--muted)}.help-toggle[aria-expanded=true]{color:var(--brass);border-color:var(--brass)!important}.layer-help{border:1px solid var(--line);background:var(--well);padding:12px 14px;margin:-4px 0 14px;line-height:1.7}.layer-help:not([hidden]){display:grid;grid-template-columns:max-content 1fr;gap:6px 10px;word-break:keep-all}.layer-help p{display:contents}.layer-help p.image-note{display:block;grid-column:1/-1}.layer-help b{color:var(--brass);font-weight:500;white-space:nowrap}.layer-help .image-note{margin:8px 0 0}.guide .banner,.guide .story-picture,.guide [data-text]{outline:1px dashed var(--focus);outline-offset:-1px}.guide [data-text]{position:relative}.guide .banner::before,.guide .story-picture::before,.guide [data-text]::after{position:absolute;z-index:6;background:var(--raised);color:var(--brass);padding:1px 5px;font:400 9px/1.7 'Noto Sans KR',sans-serif;pointer-events:none;white-space:nowrap}.guide .banner::before{content:'배너 · 배경 · 캐릭터 · 추가 이미지';left:5px;top:5px}.guide .story-picture::before{content:'소개 이미지';left:5px;top:5px}.guide .story-picture.is-empty::before{content:'소개 이미지 · 비어 있음'}.guide [data-text]::after{left:0;top:-19px}.guide [data-text=slogan]::after{content:'슬로건'}.guide [data-text=name]::after{content:'이명 + 이름'}.guide .story-content{position:relative;outline:1px dashed var(--focus);outline-offset:-1px}.guide .story-content::after{content:'소개 본문';position:absolute;z-index:6;left:0;top:-19px;background:var(--raised);color:var(--brass);padding:1px 5px;font:400 9px/1.7 'Noto Sans KR',sans-serif;pointer-events:none;white-space:nowrap}.record .story-picture.is-empty{background:var(--well)}.record .story-picture.is-empty::after{display:none}
+</style>
+</head>
+<body>
+<div class="app">
+ <aside class="side">
+  <header class="side-head"><div class="small-label">CHARACTER FILE</div><h1>캐릭터 파일</h1></header>
+  <section class="top-settings" aria-label="배너와 색">
+   <div class="banner-line"><label class="check"><input type="checkbox" id="bannerOn">캐릭터 배너 만들기</label></div>
+   <div class="theme-line"><label for="themeColor">기준색</label><input type="color" id="themeColor" value="#ad8550" aria-label="전체 기준색"><span id="themeHex" hidden></span><label for="surfaceColor">바탕색</label><input type="color" id="surfaceColor" value="#211f1c" aria-label="전체 바탕색"><button type="button" id="paletteBtn" aria-controls="palettePip" aria-expanded="false">색 조합</button><button type="button" class="text" id="resetTheme">기본값</button></div>
+  </section>
+  <section class="step">
+   <h2>1 · 챗봇에 넣을 OOC</h2>
+   <div class="row ooc-actions"><button type="button" class="primary" id="copyBase">기본 OOC 복사</button><button type="button" id="copyExtra">상세 OOC 복사</button><button type="button" id="castBtn" aria-expanded="false" aria-controls="cast">바꾸기</button><button type="button" id="resetAllBtn" aria-expanded="false" aria-controls="resetConfirm">전체 초기화</button></div>
+   <label class="check" style="margin-top:12px"><input type="checkbox" id="relationshipOn">관계성 반영</label>
+   <span class="status" id="copyStatus" aria-live="polite"></span>
+   <details class="peek"><summary>기본 내용 보기</summary><pre class="ooc" id="ooc1">[OOC: 롤플레잉을 멈추고 {{char}}를 사이퍼즈 플레이어블 캐릭터 소개로 역기획한다. AU가 아니며 원래 세계관·소속·인물상을 유지한다. 설정·능력·직업·습관·말투·실제 행동에 근거하고, 약한 인물은 특기를 기술로 번역하되 전투력을 부풀리지 않는다. 없는 사건·관계·신념·트라우마·갈등은 만들지 않고 모르는 프로필은 불명. 실제 게임의 이명·스킬명 차용·변형 금지.
+이명은 대표 요소 하나를 담은 간결한 명사형 칭호. 억지 조어·설명문·과장된 한자어를 피한다. 슬로건은 실제 처지·욕망·서사에 맞는 상징적 한 줄, 인용은 슬로건을 반복하지 않는 본인 말투의 한마디. 소개는 중요한 과거·현재·관계·행동을 엮은 3~5문장으로, 인물에 맞는 비유를 허용하되 없는 사상이나 비장한 결말을 강요하지 않는다.
+포지션은 탱커·근거리 딜러·원거리 딜러·서포터 중 하나. 플레이 정체성 하나, 둘 이상 스킬의 고유 연계와 뚜렷한 약점을 설계한다. 스킬명은 동작·직업·상징·인물 어휘에 맞게 통일한다. 스킬 설명은 ~합니다 문체 1~2문장, 판정 수치는 제외한다.
+스킬 설명·대사는 특정 상대와의 관계를 의도적으로 반영하지 않는다.
+다음 양식의 &lt;&gt;를 실제 내용으로 바꿔 한 캐릭터만 출력한다. 표식·라벨은 유지하고 큰따옴표·마크다운·표·HTML·해설은 쓰지 않는다.
+@&lt;이름&gt;
+이명: &lt;이명&gt;
+슬로건: &lt;한 줄&gt;
+인용: &lt;대사&gt;
+소개: &lt;서사&gt;
+[프로필]
+코드명: &lt;영어 대문자 한 단어&gt;
+본명: &lt;본명&gt;
+국적: &lt;국적&gt;
+소속: &lt;소속&gt;
+연령: &lt;연령&gt;
+능력: &lt;한 문장&gt;
+[포지션]
+포지션: &lt;포지션&gt;
+역할: &lt;한 줄&gt;
+정체성: &lt;정체성&gt;
+메커니즘: &lt;연계&gt;
+약점: &lt;약점&gt;
+[스킬 LC]
+이름: &lt;스킬명&gt;
+설명: &lt;설명&gt;
+대사: &lt;시전 대사&gt;
+스킬 블록은 LC 기본공격, RC 주력기, LC+RC 정체성기 또는 Q 특수기, Shift+LC 다운·추격, F 잡기, Space 회피·가드·이동, Scroll 습관과 소규모 버프, E1 궁극기 순으로 반복한다. Shift+RC와 E2는 근거가 있을 때만 추가한다. 공격·회피·궁극기는 대사 줄을 반복해 각 1~2개를 쓰고, 다른 스킬도 어울리면 넣는다. 무언·과묵한 설정에 억지 발화를 붙이지 않는다.
+[보이스]
+등장: &lt;선택되거나 나타날 때&gt;
+전투: &lt;싸우기 시작할 때&gt;
+승리: &lt;이겼을 때&gt;
+패배: &lt;졌을 때&gt;
+상황 대사도 본인 말투로 짧게 쓴다. 말하지 않는 설정이면 해당 줄을 생략한다.
+[플레이버]
+평가: &lt;주변인·목격자의 평가&gt; — &lt;화자&gt;
+평가는 2~3개로, 기존 관계와 목격 경험에 따른 말투·엇갈린 시선을 살리고 칭찬 일색을 피한다. 특정 상대의 등장이나 관계 언급은 강제하지 않는다.]</pre></details>
+   <details class="peek"><summary>상세 내용 보기</summary><pre class="ooc" id="ooc2">[OOC: 직전 {{char}}의 사이퍼즈 소개에 스킬별 대미지·판정 정보만 추가한다. 기존 이명·슬로건·소개·프로필·포지션·스킬 키·이름·설명·대사는 바꾸지 않고 설명도 반복하지 않는다. 기존 동작·효과·연계·약점과 수치·판정이 일치해야 한다.
+판정·운용 메모는 상대와의 관계를 반영하지 않고 실제 기술 효과로만 쓴다.
+아래 &lt;&gt;를 실제 내용으로 바꾸고 표식·라벨을 유지한다. 캐릭터 이름·스킬 키·스킬명은 기본 소개와 정확히 같게 쓰며 기존 순서대로 스킬 블록을 반복한다. 없는 스킬은 추가하지 않고 E1·E2를 구분한다. 큰따옴표·마크다운·표·HTML·해설은 쓰지 않는다.
+@&lt;캐릭터 이름&gt;
+[스킬 LC]
+이름: &lt;스킬명&gt;
+쿨타임: &lt;초 단위 수치&gt;
+대미지: &lt;타격별 기본값+공격력×배율·횟수·조건, 비공격기는 없음&gt;
+효과수치: &lt;해당되는 회복·보호막·버프·디버프의 값/식·대상·시간, 없으면 생략&gt;
+공격판정: &lt;근거리·중거리·원거리·복합·없음&gt;
+다운 유발: &lt;ON·OFF·조건부&gt;
+잡기 판정: &lt;레벨·발생 시점·유지 구간 또는 없음&gt;
+잡기 면역: &lt;레벨·적용 구간 또는 없음&gt;
+슈퍼아머: &lt;종류·전방 또는 전체·적용 구간 또는 없음&gt;
+무적: &lt;종류·방향·적용 구간 또는 없음&gt;
+운용 메모: &lt;실전 활용이나 상대 대응 한 문장&gt;
+쿨타임은 LC 0.2~2초, 일반기 4~16초, 회피 6~30초, 궁극기 80~115초를 출발점으로 효과·사거리·선후딜에 맞추며 모드 전환 등은 예외를 허용한다. 비공격기에 공격·다운을 억지로 붙이지 않는다. F도 동작에 맞는 잡기 레벨을 주되 상위 레벨을 남발하지 않는다.
+수치 표기는 공식 홈페이지를 기준으로 하되 새 캐릭터의 설계값임을 전제한다. 대미지는 장비·치명·역할 버프·대상 방어 적용 전이며 기본값도 방어무시가 아니다. 연타·충전·지속 피해는 타당 식·횟수·조건을 나누고 총합과 중복 적용하지 않는다. 보정이 필요하면 대미지 줄에 병기한다. 회복·보호막은 즉시/지속, 고정량/누구의 최대 체력 비례인지 구분하고 식이 없는 효과에 임의 변수를 붙이지 않는다. 피해량은 역할뿐 아니라 사거리·제어·생존·지원 성능과 함께 조정한다.
+잡기 면역·슈퍼아머·무적은 필요한 기술에만 부여하고, 발동 후 0.3초부터·붙잡은 동안처럼 적용 구간과 피격 가능한 빈틈을 명시한다. 강한 판정에는 선후딜·짧은 사거리·긴 쿨타임·시전 조건 중 합당한 대가를 둔다. 궁극기도 무적·슈퍼아머를 자동 부여하지 않으며 E2가 있으면 E1과 기능·위험을 구분한다.
+마지막에 아래 두 구역을 각각 2~3줄로, 건조한 공략 문체로 출력한다.
+[강점]
+메모: &lt;키트 강점&gt;
+[대응]
+메모: &lt;대응당하기 쉬운 상황&gt;]</pre></details>
+  </section>
+  <section class="step grow">
+   <h2>2 · 챗봇 출력 붙여넣기</h2>
+   <div class="row input-actions"><div class="row"><button type="button" class="text" id="sample">예시</button><button type="button" class="text" id="clear">비우기</button></div><span class="status">기본 소개</span></div>
+   <textarea id="src" aria-label="기본 소개 결과" placeholder="@캐릭터 이름&#10;이명: 캐릭터의 이명&#10;슬로건: 캐릭터를 나타내는 한 줄" spellcheck="false"></textarea>
+   <button type="button" class="add-detail" id="extraBtn" aria-expanded="false" aria-controls="extraInput">＋ 스킬 상세 추가</button>
+   <div class="detail-input" id="extraInput" hidden><header><span>스킬 상세 · 선택</span><div class="row"><button type="button" class="text" id="sampleExtra">예시</button><button type="button" class="text" id="clearExtra">비우기</button></div></header><textarea id="extra" aria-label="스킬 상세 결과" placeholder="@캐릭터 이름&#10;[스킬 LC]&#10;이름: 기본 소개와 같은 스킬명&#10;쿨타임: 0.4초&#10;대미지: 1타 기본값 + 공격력 × 배율" spellcheck="false"></textarea></div>
+   <span class="status" id="parseStatus" role="status"></span><span class="status" id="storageStatus" role="status"></span>
+  </section>
+  <section class="step save">
+   <h2>3 · 저장</h2>
+   <div class="row save-row"><select id="saveMode" aria-label="PNG 저장 범위"><option value="intro" title="소개만">소개</option><option value="full" title="상세 포함">전체</option><option value="skills" title="스킬 상세만">상세</option></select><label class="check split-check" title="소개 · 스킬 · 보이스로 나눠 여러 장. 상세가 있으면 스킬을 두 장으로"><input type="checkbox" id="splitPng">분할</label></div><div class="row save-row save-buttons"><button type="button" id="savePng">PNG</button><button type="button" id="saveHtml">HTML</button><button type="button" id="saveBanner" hidden>배너 PNG</button><button type="button" id="savePsd" hidden>배너 PSD</button></div><span class="status" id="saveStatus" role="status"></span>
+  </section>
+ </aside>
+ <main class="main" aria-label="캐릭터 소개 미리보기"><div class="result-tools" id="resultTools" hidden><button id="bannerBtn" type="button" aria-controls="bannerEditor" aria-expanded="false">이미지 편집</button></div><div id="out"></div></main>
+</div>
+<div class="pip small" id="cast" role="dialog" aria-label="출력 대상" hidden><div class="pip-bar"><b>출력 대상</b><button type="button" class="pip-x" aria-label="닫기">×</button></div><div class="pip-content"><span class="field-label">이름</span><div class="row name-mode" style="margin-bottom:12px"><button type="button" data-names="pc" aria-pressed="true">PC · NPC</button><button type="button" data-names="st" aria-pressed="false">{{user}} · {{char}}</button></div><label class="field-label" for="subject">캐릭터</label><div class="row" style="margin-bottom:8px"><button type="button" data-subject="char">NPC</button><button type="button" data-subject="user">PC</button></div><input id="subject" type="text" value="NPC" placeholder="NPC 또는 캐릭터 이름"><div id="partnerField" style="margin-top:12px" hidden><label class="field-label" for="partner">관계를 반영할 상대</label><input id="partner" type="text" placeholder="PC"><button type="button" class="text" id="autoPartner">자동으로 고르기</button></div><span class="status" id="subjectStatus"></span></div></div>
+<div class="pip small" id="resetConfirm" role="dialog" aria-label="전체 초기화" hidden><div class="pip-bar"><b>전체 초기화</b><button type="button" class="pip-x" aria-label="닫기">×</button></div><div class="pip-content"><p class="reset-message">이 도구의 글·이미지·글꼴·색 설정을 모두 지우고 처음부터 시작해요.</p><div class="row"><button type="button" id="cancelReset">취소</button><button type="button" id="confirmReset">모두 지우기</button></div><span class="status" id="resetStatus" role="status"></span></div></div>
+<div class="pip palette-pip" id="palettePip" role="dialog" aria-label="색 조합" hidden><div class="pip-bar"><b>색 조합</b><button type="button" class="pip-x" aria-label="닫기">×</button></div><div class="pip-content"><div class="palette-grid" id="paletteGrid" role="group" aria-label="기준색과 바탕색 조합 20개"></div></div></div>
+<div class="pip banner-editor" id="bannerEditor" role="dialog" aria-label="이미지 편집" hidden>
+ <div class="pip-bar" id="imageEditorHandle"><b>이미지 편집</b><button type="button" class="pip-x" aria-label="닫기">×</button></div>
+ <div class="pip-content">
+  <div class="layer-tabs" role="group" aria-label="편집할 대상"><button type="button" data-layer-choice="char" aria-pressed="true">캐릭터</button><button type="button" data-layer-choice="bg" aria-pressed="false">배경</button><button type="button" data-layer-choice="text" aria-pressed="false">소개</button><button type="button" data-layer-choice="intro" aria-pressed="false">소개 이미지</button><button type="button" data-layer-choice="finished" aria-pressed="false">추가 이미지</button><button type="button" class="help-toggle" id="layerHelp" aria-expanded="false" aria-controls="layerHelpBox">? 도움말</button></div><div class="layer-help" id="layerHelpBox" hidden><p><b>배경 · 캐릭터</b><span>배너에 겹치는 그림. 아래부터 배경, 캐릭터, 글 순서</span></p><p><b>소개</b><span>배너의 슬로건&nbsp;· 이명 + 이름. 위치&nbsp;· 글꼴&nbsp;· 색</span></p><p><b>소개 이미지</b><span>소개 본문 옆 사진. 넣기 전엔 빈칸</span></p><p><b>추가 이미지</b><span>배너 맨 위에 얹는 그림. 완성 배너&nbsp;· 로고&nbsp;· 스티커&nbsp;등</span></p><p class="image-note">출력의 점선이 각 자리. 그림은 끌어서 이동, 휠로 확대</p></div>
+  <div class="field" id="introTargetField" style="margin-bottom:12px" hidden><label for="introTarget">옮길 항목</label><select id="introTarget"><option value="slogan">슬로건</option><option value="name">이명 + 이름</option></select></div>
+  <div class="field" id="finishedSettings" style="margin-bottom:12px" hidden><label for="finishedOrder">추가 이미지 위치</label><select id="finishedOrder"><option value="below">글 아래</option><option value="above">글 위</option></select><p class="image-note">PNG · JPG · WebP. 배너 너비에 맞춤</p></div>
+  <div class="file-row" id="imageFileControls"><label for="layerFile">이미지 바꾸기<input id="layerFile" type="file" accept="image/png,image/jpeg,image/webp"></label><button type="button" id="flipLayout">배치 반전</button><button type="button" id="fitLayer">맞추기</button><button type="button" id="removeLayer">지우기</button></div>
+  <div class="intro-fade-controls" id="introFadeControls" hidden>
+   <label class="check" style="margin-bottom:10px"><input type="checkbox" id="introFadeOn" checked>그라데이션</label><div class="field-heading"><span class="field-label">그라데이션 범위</span><button type="button" class="text" id="resetIntroFade">범위 초기화</button></div>
+   <div class="fade-stop"><label for="introFadeStart">시작 · %</label><input id="introFadeStart" type="range" min="0" max="100" step="1" value="0" data-intro-fade="introFadeStart"><input type="number" min="0" max="100" step="1" value="0" data-intro-fade="introFadeStart" aria-label="그라데이션 시작 위치 %"></div>
+   <div class="fade-stop"><label for="introFadeEnd">끝 · %</label><input id="introFadeEnd" type="range" min="0" max="100" step="1" value="100" data-intro-fade="introFadeEnd"><input type="number" min="0" max="100" step="1" value="100" data-intro-fade="introFadeEnd" aria-label="그라데이션 끝 위치 %"></div>
+   <p class="image-note">선명한 쪽에서 배경색으로 섞이는 구간</p>
+  </div>
+  <p class="image-note" id="imageEditNote">출력의 그림을 끌어서 이동, 휠로 확대. 아래 숫자로도 조정</p>
+  <div class="geometry-grid">
+   <div class="field"><label for="layerX">중심 X · px</label><input id="layerX" type="number" step="1" data-geometry="x"></div>
+   <div class="field"><label for="layerY">중심 Y · px</label><input id="layerY" type="number" step="1" data-geometry="y"></div>
+   <div class="field"><label for="layerW">너비 · px</label><input id="layerW" type="number" min="0.1" step="1" data-geometry="w"></div>
+   <div class="field"><label for="layerH">높이 · px</label><input id="layerH" type="number" min="0.1" step="1" data-geometry="h"></div>
+  </div>
+  <div class="row"><label class="check" id="layerLockLabel"><input id="layerLock" type="checkbox" checked>비율 유지</label><button type="button" id="resetPosition">위치 초기화</button></div>
+  <div class="field" id="charGlowField" style="margin-top:14px" hidden><label class="check"><input id="charGlowOn" type="checkbox">아웃글로우</label><div class="geometry-grid"><div class="field"><label for="charGlowSize">크기 · px</label><input id="charGlowSize" type="number" min="0" step="1" value="16"></div><div class="field"><label for="charGlowColor">색</label><input id="charGlowColor" type="color" value="#d4b889"></div></div><div class="field"><label for="charGlowAlpha">농도</label><div class="range-row" style="grid-template-columns:1fr 34px"><input id="charGlowAlpha" type="range" min="0" max="100" value="100"><output for="charGlowAlpha"></output></div></div><div class="field"><label for="glowBlend">혼합 모드</label><select id="glowBlend" data-blend="glowBlend"></select></div><p class="image-note" id="glowHint" hidden>투명 배경 캐릭터 이미지에서만 사용 가능</p></div>
+  <div class="field" id="bgColorField" style="margin-top:14px" hidden><label for="bgColor">배경색</label><div class="row"><input id="bgColor" type="color" value="#191611"><button type="button" id="bgTheme">기준색 따라가기</button></div></div>
+  <div class="field" id="bgBlurField" style="margin-top:12px" hidden><label for="bgBlur">배경 블러 · px</label><input id="bgBlur" type="number" min="0" step="0.5" value="0"></div>
+  <span class="status" id="imageStatus" role="status"></span>
+  <details class="peek" id="canvasSettings"><summary>배너 크기</summary><div class="geometry-grid"><div class="field"><label for="canvasW">가로 · px</label><input id="canvasW" type="number" min="1" step="1" data-canvas="canvasW" value="1500"></div><div class="field"><label for="canvasH">세로 · px</label><input id="canvasH" type="number" min="1" step="1" data-canvas="canvasH" value="500"></div></div></details>
+  <div class="edit-sep" style="margin:16px 0"></div>
+  <div class="edit-grid" id="bannerTextSettings">
+   <div class="field full"><div class="field-heading"><label for="bannerSlogan">슬로건</label><div class="row"><button type="button" class="text" data-edit-text="slogan">옮기기</button><button type="button" class="text" data-reset-text="slogan">위치 초기화</button></div></div><input id="bannerSlogan" type="text" data-banner="slogan" placeholder="기본 소개에서 가져와요"></div>
+   <div class="field full"><div class="field-heading"><label for="bannerName">이명 + 이름</label><div class="row"><button type="button" class="text" data-edit-text="name">옮기기</button><button type="button" class="text" data-reset-text="name">위치 초기화</button></div></div><input id="bannerName" type="text" data-banner="name" placeholder="기본 소개에서 가져와요"></div>
+   
+   <div class="field"><label for="sloganFont">슬로건 글꼴</label><select id="sloganFont" data-banner="sloganFont"><option value="serif">명조</option><option value="sans">고딕</option><option value="display">굵은 제목</option></select></div>
+   <div class="field"><label for="nameFont">이명 + 이름 글꼴</label><select id="nameFont" data-banner="nameFont"><option value="sans">고딕</option><option value="serif">명조</option><option value="display">굵은 제목</option></select></div>
+   <div class="field"><label for="sloganColor">슬로건 색</label><div class="row"><input id="sloganColor" type="color" value="#fff5e6" data-text-color="slogan"><button type="button" class="text" id="resetSloganColor">초기화</button></div></div><div class="field"><label for="nameColor">이명 + 이름 색</label><div class="row"><input id="nameColor" type="color" value="#fffaf2" data-text-color="name"><button type="button" class="text" id="resetNameColor">초기화</button></div></div>
+   <div class="field full"><label for="storyColor">소개 본문 색</label><div class="row"><input id="storyColor" type="color" value="#e4dfd6" data-text-color="story"><button type="button" class="text" id="resetStoryColor">본문색 초기화</button></div></div>
+   <label class="check full"><input type="checkbox" id="textAutoDark" checked>배너 글자 뒤 자동 어둡게</label>
+   <details class="webfont-form full"><summary>웹폰트 추가</summary><div class="field"><label for="fontLabel">글꼴 이름 · 선택</label><input id="fontLabel" type="text" placeholder="목록에 보일 이름"></div><div class="field"><label for="fontSource">CSS·글꼴 파일 주소 또는 @font-face 코드</label><textarea id="fontSource" spellcheck="false" placeholder="https://…/font.woff2&#10;또는 @font-face { … }"></textarea></div><button type="button" id="addFont">추가</button><span class="status" id="fontStatus" role="status"></span><div class="webfont-list" id="customFontList"></div></details>
+   <div class="field full"><button type="button" class="text" id="takeText">소개에서 가져오기</button></div>
+   <div class="edit-sep"></div>
+   <label class="check full"><input type="checkbox" id="shadeOn" checked>배너 그라데이션</label><div class="field"><label for="shadeColor">그라데이션 색</label><div class="row"><input id="shadeColor" type="color" value="#20170e"><label class="check"><input id="shadeAuto" type="checkbox" checked>자동색</label></div></div>
+   <div class="field"><label for="shadeAlpha">그라데이션 농도</label><div class="range-row" style="grid-template-columns:1fr 34px"><input id="shadeAlpha" type="range" min="0" max="100" value="60" data-banner="alpha"><output for="shadeAlpha"></output></div></div>
+   <div class="field full"><label for="shadeBlend">그라데이션 혼합 모드</label><select id="shadeBlend" data-blend="shadeBlend"></select></div>
+  </div>
+ </div>
+</div>
+<script>
+'use strict';
+const $=id=>document.getElementById(id), esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const FONT={serif:"'Noto Serif KR',serif",sans:"'Noto Sans KR',sans-serif",display:"'Black Han Sans',sans-serif"};
+const FONT_URL='https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;600;700;800&family=Noto+Serif+KR:wght@400;600;700&display=swap';
+const BLENDS={normal:'기본',multiply:'곱하기',screen:'스크린',overlay:'오버레이','soft-light':'소프트 라이트',darken:'어둡게',lighten:'밝게'};
+const PALETTES=[['황동','#ad8550','#211f1c'],['청동','#9d9b62','#1b211e'],['흑백','#aeb8c2','#1c2026'],['심해','#5e9eb5','#12232c'],['자정','#7b8bbd','#191e32'],['은하','#aa87c8','#231b30'],['자두','#bb7c9b','#2a1d28'],['장미','#cc8a8b','#2d1f24'],['호박','#d59952','#292218'],['녹차','#91a66c','#20271c'],['유칼립투스','#80b0a0','#192922'],['겨울','#9bb9d4','#1b2632'],['담청','#6fa7b5','#183038'],['벽돌','#c18466','#2c211c'],['라벤더','#9e91ba','#282333'],['밀크티','#9b704c','#f0e8dc'],['새벽','#5b819d','#e4edf2'],['세이지','#5d8066','#e5ece4'],['베리','#8e526d','#f2e5eb'],['잉크','#55647d','#e8e9ed']];
+const DEFAULTS={seed:'#ad8550',background:'#211f1c',banner:false,subject:'NPC',names:'pc',relationship:false,partner:'',partnerCustom:false,extraOpen:false,saveMode:'full',split:true,customFonts:[],b:{bgX:50,bgY:50,charX:76,charY:55,charZoom:120,alpha:60,shade:null,slogan:'',name:'',sloganFont:'serif',nameFont:'sans',customText:false,canvasW:1500,canvasH:500,bgBlur:0,bgColor:null,shadeAuto:true,shadeBlend:'normal',glowBlend:'normal',glowOn:false,glowSize:16,glowAlpha:100,shadeOn:true,introFadeOn:true,glowColor:'#d4b889',introTarget:'slogan',introSide:'right',introFadeStart:0,introFadeEnd:100,layoutFlip:false,textAutoDark:true,textColors:{slogan:'#fff5e6',name:'#fffaf2',story:null},textPos:{slogan:{x:0,y:0},name:{x:0,y:0},story:{x:0,y:0}},layers:{},layer:'char',finishedAbove:false}};
+let stored={};try{stored=JSON.parse(localStorage.getItem('character-file.settings')||'{}')}catch{}
+const settings={...structuredClone(DEFAULTS),...stored,b:{...DEFAULTS.b,...stored.b}};
+if(!/^#[\da-f]{6}$/i.test(settings.background))settings.background=DEFAULTS.background;
+if(!/^#[\da-f]{6}$/i.test(settings.seed))settings.seed=DEFAULTS.seed;
+for(const k of ['canvasW','canvasH'])if(!Number.isFinite(settings.b[k])||settings.b[k]<=0)settings.b[k]=DEFAULTS.b[k];
+for(const field of ['shadeBlend','glowBlend'])if(!BLENDS[settings.b[field]])settings.b[field]='normal';if(settings.b.bgColor&&!/^#[\da-f]{6}$/i.test(settings.b.bgColor))settings.b.bgColor=null;
+if(!settings.b.layers||typeof settings.b.layers!=='object')settings.b.layers={};
+if(!['bg','char','intro','text','finished'].includes(settings.b.layer))settings.b.layer='char';
+settings.b.textColors={...DEFAULTS.b.textColors,...settings.b.textColors};for(const key of ['slogan','name'])if(!/^#[\da-f]{6}$/i.test(settings.b.textColors[key]))settings.b.textColors[key]=DEFAULTS.b.textColors[key];if(settings.b.textColors.story&&!/^#[\da-f]{6}$/i.test(settings.b.textColors.story))settings.b.textColors.story=null;
+if(!['slogan','name'].includes(settings.b.introTarget))settings.b.introTarget='slogan';settings.b.textPos={...structuredClone(DEFAULTS.b.textPos),...settings.b.textPos};for(const key of ['slogan','name','story'])if(!Number.isFinite(settings.b.textPos[key]?.x)||!Number.isFinite(settings.b.textPos[key]?.y))settings.b.textPos[key]={x:0,y:0};
+for(const key of ['introFadeStart','introFadeEnd'])if(!Number.isFinite(settings.b[key])||settings.b[key]<0||settings.b[key]>100)settings.b[key]=DEFAULTS.b[key];settings.b.introFadeStart=Math.min(settings.b.introFadeStart,settings.b.introFadeEnd);
+if(!Array.isArray(settings.customFonts))settings.customFonts=[];
+if(settings.b.shade&&!/^#[\da-f]{6}$/i.test(settings.b.shade))settings.b.shade=null;if(!/^#[\da-f]{6}$/i.test(settings.b.glowColor))settings.b.glowColor=DEFAULTS.b.glowColor;
+const output=$('out');
+let dataVersion=0;
+let base=null,extraData=null,theme={},assets={bg:'',char:'',intro:'',finished:''},saving=false,imageSizes={},editorPos=null;
+function keep(){try{localStorage.setItem('character-file.settings',JSON.stringify(settings))}catch{$('storageStatus').textContent='설정을 저장할 공간이 부족해요. 현재 화면은 저장할 수 있어요.'}}
+function canvasFor(key){return key==='intro'?{w:500,h:400}:{w:settings.b.canvasW,h:settings.b.canvasH}}
+function geometry(key,reset=false){const b=settings.b,{w:W,h:H}=canvasFor(key),size=imageSizes[key]||{w:W,h:H};let g=b.layers[key];if(reset||!g||!['x','y','w','h'].every(k=>Number.isFinite(g[k]))||g.w<=0||g.h<=0){if(['bg','intro','finished'].includes(key)){const scale=(['intro','finished'].includes(key)?W/size.w:Math.max(W/size.w,H/size.h)),w=size.w*scale,h=size.h*scale;g={x:(W-w)*(key==='intro'?.5:Number(b.bgX??50)/100)+w/2,y:(H-h)*(key==='intro'?.5:Number(b.bgY??50)/100)+h/2,w,h,lock:true}}else{const h=H*(Number(b.charZoom??120)/100);g={x:W*(Number(b.charX??76)/100),y:H*(Number(b.charY??55)/100),w:h*size.w/size.h,h,lock:true}}if(assets[key])b.layers[key]=g}return g}
+function layerStyle(key){const g=geometry(key),size=canvasFor(key);return `left:${g.x/size.w*100}%;top:${g.y/size.h*100}%;width:${g.w/size.w*100}%;height:${g.h/size.h*100}%`}
+function activeText(){return settings.b.layer==='text'?settings.b.introTarget:null}
+function textStyle(key){const p=settings.b.textPos[key],w=key==='story'?1000:1500;return 'transform:translate('+p.x/w*100+'cqw,'+p.y/w*100+'cqw)'}
+function textFrame(key){return key==='story'?$('out').querySelector('.story'):$('out').querySelector('.banner')||$('out').querySelector('.identity')}
+function paintTextPositions(){for(const el of $('out').querySelectorAll('[data-text]'))el.style.transform=textStyle(el.dataset.text).slice('transform:'.length);syncImageEditing()}
+function updateLayerControls(){const key=settings.b.layer,text=activeText(),g=text?settings.b.textPos[text]:geometry(key),eligible=!!imageSizes.char?.hasAlpha;$('introTargetField').hidden=key!=='text';$('imageEditNote').textContent=text?'출력의 점선 글을 끌어서 이동. 아래 숫자로도 조정':'출력의 그림을 끌어서 이동, 휠로 확대. 아래 숫자로도 조정';$('introFadeControls').hidden=key!=='intro';syncIntroFadeControls();$('finishedSettings').hidden=key!=='finished';$('finishedOrder').value=settings.b.finishedAbove?'above':'below';$('introTarget').value=settings.b.introTarget;for(const el of $('imageFileControls').children)el.hidden=!!text&&el.id!=='flipLayout';$('flipLayout').hidden=key==='finished';$('layerLockLabel').hidden=!!text;$('charGlowField').hidden=key!=='char';$('charGlowOn').checked=!!settings.b.glowOn;$('charGlowOn').disabled=!eligible;$('glowHint').hidden=eligible;$('shadeOn').checked=settings.b.shadeOn!==false;$('introFadeOn').checked=settings.b.introFadeOn!==false;for(const el of document.querySelectorAll('#introFadeControls input:not(#introFadeOn),#resetIntroFade'))el.disabled=settings.b.introFadeOn===false;$('charGlowSize').disabled=$('charGlowColor').disabled=$('charGlowAlpha').disabled=!eligible||!settings.b.glowOn;$('charGlowAlpha').value=settings.b.glowAlpha??100;$('charGlowAlpha').nextElementSibling.textContent=(settings.b.glowAlpha??100)+'%';if(document.activeElement!==$('charGlowSize'))$('charGlowSize').value=settings.b.glowSize;if(document.activeElement!==$('charGlowColor'))$('charGlowColor').value=settings.b.glowColor;document.querySelectorAll('[data-layer-choice]').forEach(btn=>btn.setAttribute('aria-pressed',String(btn.dataset.layerChoice===key)));for(const input of document.querySelectorAll('[data-geometry]')){const k=input.dataset.geometry;input.parentElement.hidden=!!text&&(k==='w'||k==='h');input.disabled=text?!textFrame(text):!assets[key];if(document.activeElement!==input)input.value=Math.round((g[k]||0)*100)/100;if(k==='x'||k==='y')input.parentElement.querySelector('label').textContent=(text?'이동 ':'중심 ')+k.toUpperCase()+' · px'}$('layerLock').checked=g.lock!==false;$('canvasSettings').hidden=['intro','text'].includes(key);$('bgColorField').hidden=key!=='bg';$('glowBlend').disabled=!eligible||!settings.b.glowOn;$('glowBlend').value=settings.b.glowBlend;$('shadeBlend').value=settings.b.shadeBlend;$('bgBlurField').hidden=key!=='bg';if(document.activeElement!==$('bgBlur'))$('bgBlur').value=settings.b.bgBlur||0;$('bannerTextSettings').hidden=key!=='text';$('textAutoDark').checked=!!settings.b.textAutoDark;$('shadeAlpha').disabled=!!settings.b.textAutoDark||settings.b.shadeOn===false;if(settings.b.textAutoDark){$('shadeAlpha').value=Math.round(effectiveShadeAlpha()*100);$('shadeAlpha').parentElement.querySelector('output').textContent=Math.round(effectiveShadeAlpha()*100)+'%'}for(const input of document.querySelectorAll('[data-text-color]'))if(document.activeElement!==input)input.value=settings.b.textColors[input.dataset.textColor]||theme.muted;for(const input of document.querySelectorAll('[data-canvas]'))if(document.activeElement!==input)input.value=settings.b[input.dataset.canvas];$('fitLayer').disabled=$('removeLayer').disabled=!assets[key]}
+
+let guideOn=false;function setGuide(on){guideOn=on;$('out').classList.toggle('guide',on);$('layerHelp').setAttribute('aria-expanded',String(on));$('layerHelpBox').hidden=!on;draw()}
+function syncImageEditing(){if($('bannerEditor').hidden&&guideOn){setGuide(false);return}const editing=!$('bannerEditor').hidden,textMode=editing&&settings.b.layer==='text';$('out').classList.toggle('text-editing',textMode);for(const el of $('out').querySelectorAll('[data-text]')){el.classList.toggle('text-selected',textMode&&activeText()===el.dataset.text);if(textMode)el.dataset.editLabel={slogan:'슬로건',name:'이명 + 이름',story:'소개 본문'}[el.dataset.text];else delete el.dataset.editLabel}for(const board of $('out').querySelectorAll('.artboard')){const active=editing&&(settings.b.layer==='intro'?board.classList.contains('story-picture'):settings.b.layer==='text'?false:board.classList.contains('banner'));board.classList.toggle('editing',active);if(active){board.dataset.editLayer=settings.b.layer;board.dataset.editLabel={char:'캐릭터 이미지',bg:'배경 이미지',intro:'소개 이미지',finished:'추가 이미지'}[settings.b.layer];board.tabIndex=0;board.setAttribute('aria-label','편집 중인 이미지. 그림을 끌거나 방향키로 옮기기')}else{delete board.dataset.editLayer;delete board.dataset.editLabel;board.removeAttribute('tabindex');board.removeAttribute('aria-label')}board.querySelectorAll('[data-layer]').forEach(img=>img.classList.toggle('is-selected',active&&img.dataset.layer===settings.b.layer))}updateLayerControls()}
+
+function paintLayers(){for(const glow of $('out').querySelectorAll('.banner-glow'))glow.style.cssText=layerStyle('char');for(const img of $('out').querySelectorAll('img[data-layer]'))img.style.cssText=layerStyle(img.dataset.layer);syncImageEditing()}
+function stripEditor(node){node.querySelectorAll('.artboard').forEach(b=>{b.classList.remove('editing','is-dragging');delete b.dataset.editLayer;b.removeAttribute('tabindex');b.removeAttribute('aria-label')});node.querySelectorAll('[data-edit-label]').forEach(el=>delete el.dataset.editLabel);node.querySelectorAll('.text-selected').forEach(el=>el.classList.remove('text-selected'));node.querySelectorAll('.is-selected').forEach(img=>img.classList.remove('is-selected'));return node}
+function effectiveShadeAlpha(){if(!settings.b.textAutoDark)return settings.b.alpha/100;const l=Math.min(luminance(settings.b.textColors.slogan),luminance(settings.b.textColors.name)),target=Math.max(0,(l+.05)/4.5-.05),v=target<=.0031308?12.92*target:1.055*Math.pow(target,1/2.4)-.055;return Math.min(.96,Math.max(.68,1-v))}
+function shadeColorValue(){return settings.b.shadeAuto?makeTheme(settings.b.bgColor||settings.seed).shade:settings.b.shade||makeTheme(settings.b.bgColor||settings.seed).shade}
+function hexRgb(hex){return [1,3,5].map(i=>parseInt(hex.slice(i,i+2),16))}
+function toHex(rgb){return '#'+rgb.map(v=>Math.round(v).toString(16).padStart(2,'0')).join('')}
+function hslRgb(h,s,l){s/=100;l/=100;const a=s*Math.min(l,1-l);return [0,8,4].map(n=>{const k=(n+h/30)%12;return (l-a*Math.max(-1,Math.min(k-3,9-k,1)))*255})}
+function seedHsl(hex){const r=hexRgb(hex).map(n=>n/255),hi=Math.max(...r),lo=Math.min(...r),d=hi-lo,l=(hi+lo)/2;let h=35,s=0;if(d){s=d/(1-Math.abs(2*l-1));h=60*([r[0],r[1],r[2]].indexOf(hi)===0?((r[1]-r[2])/d+6)%6:[r[0],r[1],r[2]].indexOf(hi)===1?(r[2]-r[0])/d+2:(r[0]-r[1])/d+4)}return [h,s*100,l*100]}
+function luminance(hex){const a=hexRgb(hex).map(v=>{v/=255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4});return a[0]*.2126+a[1]*.7152+a[2]*.0722}
+function contrast(a,b){const x=luminance(a),y=luminance(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05)}
+function mixColor(a,b,p){const x=hexRgb(a),y=hexRgb(b);return toHex(x.map((n,i)=>n+(y[i]-n)*p))}
+function readable(color,bg,min=4.5,target){let out=color;const end=target||(contrast('#ffffff',bg)>contrast('#000000',bg)?'#ffffff':'#000000');for(let i=0;i<45&&contrast(out,bg)<min;i++)out=mixColor(out,end,.12);return out}
+function makeTheme(seed,background=settings.background){const [h,s]=seedHsl(seed),c=(sat,l,hh=h)=>toHex(hslRgb(hh%360,sat,l)),paper=background||c(s*.24,12),dark=luminance(paper)<.18,end=dark?'#ffffff':'#000000';function surface(color){let out=color;for(let i=0;i<30&&(dark?luminance(out)>.18:luminance(out)<.18);i++)out=mixColor(out,dark?'#000000':'#ffffff',.08);return out}const t={bg:surface(mixColor(paper,dark?'#000000':'#ffffff',.5)),panel:surface(mixColor(paper,dark?'#000000':'#ffffff',.14)),well:surface(mixColor(paper,'#000000',dark?.28:.035)),paper,raised:surface(mixColor(paper,dark?'#ffffff':'#000000',.075)),line:mixColor(paper,dark?'#ffffff':'#000000',.25),brass:c(s*.85,dark?69:34),text:c(s*.14,dark?88:12),muted:c(s*.18,dark?68:35),select:c(Math.min(80,s*1.3),dark?66:35,h+5),'select-bg':surface(mixColor(paper,seed,.15)),focus:c(s*.8,dark?78:32),shade:c(s*.45,8),drop:c(Math.min(70,s*.7),dark?4:26)+(dark?'a6':'4d')};const hard=[t.paper,t.raised,t.well,t.panel,t['select-bg']].sort((a,b)=>luminance(a)-luminance(b))[dark?4:0];for(const key of ['brass','muted','select','focus'])t[key]=readable(t[key],hard,4.5,end);t.text=readable(t.text,hard,7,end);return t}
+
+function themeStyle(){return Object.entries(theme).map(([k,v])=>'--'+k+':'+v).join(';')}
+function applyTheme(){theme=makeTheme(settings.seed);for(const [k,v]of Object.entries(theme))document.documentElement.style.setProperty('--'+k,v);$('themeColor').value=settings.seed;$('themeHex').textContent=settings.seed.toUpperCase();$('surfaceColor').value=settings.background;document.documentElement.style.colorScheme=luminance(settings.background)<.18?'dark':'light';updatePaletteSelection();$('shadeColor').value=shadeColorValue();$('shadeColor').disabled=!!settings.b.shadeAuto||settings.b.shadeOn===false;$('shadeAuto').disabled=$('shadeBlend').disabled=settings.b.shadeOn===false;$('shadeAuto').checked=!!settings.b.shadeAuto;$('bgColor').value=settings.b.bgColor||theme.well;}
+function clean(text){return text.replace(/\r/g,'').replace(/```[^\n]*\n?|```/g,'').replace(/\*\*|__/g,'').replace(/\u00a0/g,' ').replace(/^\s*[-•·]\s*/gm,'').replace(/^\s*#{1,6}\s*/gm,'').trim()}
+const FIELD_NAMES='이명|이름|슬로건|인용 대사|인용|소개문구|소개|코드명|본명|국적|소속|연령|능력|포지션|역할|정체성|메커니즘|약점|설명|시전 대사|대사|평가|대미지(?: 공식| 계수)?|데미지(?: 공식| 계수)?|피해량|피해 공식|스킬 계수|효과수치|효과 수치|회복량|회복 공식|보호막|보호막 공식|버프|디버프|타격수|타격 수|쿨타임(?:\\(초\\))?|공격판정|공격 판정|다운 유발|잡기 판정|잡기 면역|슈퍼아머·무적|슈퍼아머|무적|운용 메모|메모|등장|전투|승리|패배';
+function lines(text){let t=clean(text);t=t.replace(/\s*(\[(?:프로필|포지션|플레이버|보이스|강점|대응|스킬\s*[:：]?\s*[^\]]+)\])/g,'\n$1\n');t=t.replace(new RegExp('(?:[ \\t]+|(?<=\\S)\\s+)('+FIELD_NAMES+')\\s*[:：]','g'),'\n$1:');return t.split('\n').map(x=>x.trim()).filter(Boolean)}
+function keyNorm(k){k=k.toUpperCase().replace(/\s|\(|\)/g,'').replace(/1ST/g,'1').replace(/2ND/g,'2').replace(/SHIFT\+/g,'SHIFT+').replace(/WHEEL(?:UP)?/,'SCROLL').replace(/^SP$/,'SPACE').replace(/^LR$/,'LC+RC');if(k==='E')k='E1';return k}
+function sameName(a,b){return a.replace(/[\s“”"'‘’]/g,'').toLowerCase()===b.replace(/[\s“”"'‘’]/g,'').toLowerCase()}
+function skillInfoLabel(label){if(/^(대미지|데미지)( 공식| 계수)?$/.test(label)||['피해량','피해 공식','스킬 계수'].includes(label))return '대미지';if(label==='효과 수치')return '효과수치';return label.replace('공격 판정','공격판정').replace('쿨타임(초)','쿨타임')}
+function parse(text,isExtra=false){const data={name:'',epithet:'',slogan:'',quote:'',intro:'',profile:{},role:'',roleDesc:'',identity:'',mechanism:'',weakness:'',skills:[],flavors:[],voices:[],strength:[],counter:[]};let sec='',sk=null,last='';
+ for(const l of lines(text)){
+  if(/^@/.test(l)){if(data.name)break;data.name=l.slice(1).trim();sk=null;last='';continue}
+  let m=l.match(/^\[?스킬\s*[:：]?\s*([^\]]+)\]?$/i);if(m){sk={key:keyNorm(m[1]),name:'',desc:'',voice:'',info:{}};data.skills.push(sk);sec='skill';last='';continue}
+  m=l.match(/^(LC\+RC|SHIFT\+L[CR]|LC|RC|Q|F|SPACE|SCROLL|E(?:\s*(?:1ST|2ND|1|2))?)\s*[:：]\s*(.+)/i);if(m){const parts=m[2].split(/\s*\/\s*/);sk={key:keyNorm(m[1]),name:parts[0],desc:isExtra?'':parts[1]||'',voice:isExtra?'':parts[2]||'',info:{}};data.skills.push(sk);sec='skill';last='';continue}
+  m=l.match(/^\[?(프로필|포지션|플레이버|보이스|강점|대응)\]?\s*$/);if(m){sec=m[1];sk=null;last='';continue}
+  m=l.match(/^([^:：]{1,16})\s*[:：]\s*(.*)$/);if(m){const label=m[1].replace(/^\d+[.)]\s*/,'').trim(),v=m[2],previous=last;last='';if(sk&&previous==='info:대미지'&&/^(?:\d+(?:~\d+)?타|\d+단계|마지막 타격|충격파|총합)$/.test(label)){sk.info['대미지']+='\n'+label+': '+v;last=previous;continue}
+   if(sk){if(label==='이름')sk.name=v;else if(['설명'].includes(label)){sk.desc=v;last='desc'}else if(['대사','시전 대사'].includes(label))sk.voice=sk.voice?sk.voice+'\n'+v:v;else{const key=skillInfoLabel(label);sk.info[key]=v;last='info:'+key}continue}
+   const top={'이명':'epithet','이름':'name','슬로건':'slogan','인용':'quote','인용 대사':'quote','소개':'intro','소개문구':'intro','포지션':'role','역할':'roleDesc','정체성':'identity','메커니즘':'mechanism','약점':'weakness'};
+   if(top[label]){data[top[label]]=v;last=top[label]}
+   else if(['코드명','본명','국적','소속','연령','능력'].includes(label))data.profile[label]=v;
+   else if(sec==='보이스')data.voices.push({label,text:v});else if(label==='평가')data.flavors.push(v);
+   else if(label==='메모'&&sec==='강점')data.strength.push(v);
+   else if(label==='메모'&&sec==='대응')data.counter.push(v);
+   continue;
+  }
+  if(sec==='플레이버')data.flavors.push(l);else if(sec==='강점')data.strength.push(l);else if(sec==='대응')data.counter.push(l);else if(sk&&last==='desc')sk.desc+=' '+l;else if(sk&&last.startsWith('info:'))sk.info[last.slice(5)]+='\n'+l;else if(last==='intro')data.intro+='\n'+l;
+ }
+ return data.name&&(isExtra?data.skills.length>0:data.skills.length>0||data.intro||data.slogan)?data:null;
+}
+function joinDetails(){let missed=0,attached=0;if(!base)return {missed,attached};for(const s of base.skills){s.detail=null;if(!extraData)continue;if(!sameName(base.name,extraData.name))continue;const match=extraData.skills.find(e=>e.key===s.key&&sameName(e.name,s.name));if(match){s.detail=match.info;attached++}}
+ if(extraData){missed=extraData.skills.length-attached}return {missed,attached}}
+function finishedBannerHtml(){return '<img class="banner-finished" data-layer="finished" draggable="false" src="'+assets.finished+'" alt="" style="'+layerStyle('finished')+'">'}
+function bannerHtml(exporting=false){const b=settings.b,name=b.customText?b.name:[base?.epithet,base?.name].filter(Boolean).join(' '),slogan=b.customText?b.slogan:base?.slogan||'',rgb=hexRgb(shadeColorValue()),a=effectiveShadeAlpha();
+ return `<div class="banner artboard"${exporting?' data-export=""':''} style="${themeStyle()};background:${b.bgColor||theme.well};--shade-blend:${b.shadeBlend};--glow-blend:${b.glowBlend};--glow-size:${Math.max(0,Number(b.glowSize)||0)/b.canvasW*100};--glow-alpha:${(b.glowAlpha??100)/100};--glow-color:${b.glowOn&&imageSizes.char?.hasAlpha?b.glowColor:'transparent'};--bg-blur:${Math.max(0,Number(b.bgBlur)||0)/b.canvasW*100};--banner-ratio:${b.canvasW}/${b.canvasH};--banner-width:${b.canvasW}px;--banner-height:${b.canvasH}px">${assets.bg?`<img class="banner-bg" data-layer="bg" draggable="false" src="${assets.bg}" alt="" style="${layerStyle('bg')}">`:''}${b.shadeOn===false?'':`<div class="banner-shade" style="background:linear-gradient(${b.layoutFlip?270:90}deg,rgba(${rgb.join(',')},${a}) 0%,rgba(${rgb.join(',')},${a*.85}) 32%,rgba(${rgb.join(',')},0) 83%)"></div>`}${b.glowOn&&imageSizes.char?.hasAlpha?`<div class="banner-glow" style="${layerStyle('char')}"><div style="mask-image:url('${assets.char}');-webkit-mask-image:url('${assets.char}')"></div></div>`:''}${assets.char?`<img class="banner-char" data-layer="char" draggable="false" src="${assets.char}" alt="" style="${layerStyle('char')}">`:''}${assets.finished&&!b.finishedAbove?finishedBannerHtml():''}<div class="banner-copy" style="left:${b.layoutFlip?37:6}%"><p class="banner-slogan" data-text="slogan" style="${textStyle('slogan')};color:${b.textColors.slogan};font-family:${esc(FONT[b.sloganFont])}">${esc(slogan)}</p><p class="banner-name" data-text="name" style="${textStyle('name')};color:${b.textColors.name};font-family:${esc(FONT[b.nameFont])};font-weight:${b.nameFont==='display'?400:700}">${esc(name)}</p></div>${assets.finished&&b.finishedAbove?finishedBannerHtml():''}</div>`;
+}
+function smartQuotes(s){return String(s||'').replace(/"([^"]*)"/g,'“$1”')}
+function speech(s){const t=String(s||'').trim().replace(/^[“"]([\s\S]*)[”"]$/,'$1');return '“'+smartQuotes(t)+'”'}
+function flavorHtml(value){const m=value.match(/^([\s\S]*)\s+[—–-]\s+(.+)$/);return '<figure class="flavor"><blockquote>'+esc(speech(m?m[1]:value))+'</blockquote>'+(m?'<figcaption>— '+esc(m[2])+'</figcaption>':'')+'</figure>'}
+function voicesHtml(c){return c.voices.length?'<section class="voices"><h2 class="section-title">VOICE</h2><dl class="voice-list">'+c.voices.map(v=>'<div class="voice-line"><dt>'+esc(v.label)+'</dt><dd>'+esc(speech(v.text))+'</dd></div>').join('')+'</dl></section>':''}
+function storyHtml(c){const text=(c.quote?'<blockquote class="quote">'+esc(speech(c.quote))+'</blockquote>':'')+(c.intro?'<p class="intro">'+esc(smartQuotes(c.intro))+'</p>':'');const pic=assets.intro||guideOn;return '<section class="story'+(pic?' story-with-image'+(settings.b.introSide==='left'?' photo-left':''):'')+'"><div class="story-content" style="'+(settings.b.textColors.story?'--story-text:'+settings.b.textColors.story:'')+'">'+text+'</div>'+(pic?'<div class="story-picture artboard'+(assets.intro?'':' is-empty')+(settings.b.introFadeOn===false?' no-fade':'')+'" style="--intro-fade:'+(settings.b.introSide==='left'?'90deg':'270deg')+';--intro-fade-start:'+settings.b.introFadeStart+'%;--intro-fade-end:'+settings.b.introFadeEnd+'%">'+(assets.intro?'<img data-layer="intro" draggable="false" src="'+assets.intro+'" alt="" style="'+layerStyle('intro')+'">':'')+'</div>':'')+'</section>'}
+function detailsHtml(info,name){const basics=['쿨타임','공격판정','다운 유발'];return `<div class="skill-detail"><h3 class="detail-title">${esc(name)}</h3><dl class="detail-grid">${basics.filter(k=>info[k]).map(k=>`<div><dt>${k}</dt><dd>${esc(info[k])}</dd></div>`).join('')}</dl>${Object.entries(info).filter(([k])=>!basics.includes(k)).sort(([a],[b])=>{const order=['대미지','효과수치','회복량','보호막'];return (order.includes(a)?order.indexOf(a):99)-(order.includes(b)?order.indexOf(b):99)}).map(([k,v])=>`<dl class="detail-row" data-info-field="${esc(k)}"><dt>${esc(k)}</dt><dd>${esc(v)}</dd></dl>`).join('')}</div>`}
+function skillHtml(s){const tag=s.detail?'details':'div';return `<${tag} class="skill${s.detail?' has-detail':''}"><${s.detail?'summary':'div'} class="skill-head"><span class="skill-key">${esc(s.key)}</span><div><h3 class="skill-name">${esc(s.name)}</h3><p class="skill-desc">${esc(s.desc)}</p>${s.voice?`<p class="skill-voice">${s.voice.split('\n').map(v=>esc(speech(v))).join('\n')}</p>`:''}</div>${s.detail?'<span class="detail-hint">상세 ＋</span>':'<span></span>'}</${s.detail?'summary':'div'}>${s.detail?detailsHtml(s.detail,s.name):''}</${tag}>`}
+function recordHtml(){const c=base;if(!c)return settings.banner?`<article class="record" style="${themeStyle()}">${bannerHtml()}</article>`:'';
+ return `<article class="record" style="${themeStyle()}">${settings.banner?bannerHtml():''}<div class="record-body">${settings.banner?'':`<header class="identity"><p class="eyebrow">${esc(c.profile['코드명']||'CHARACTER')}</p><div data-text="name" style="${textStyle('name')}"><p class="epithet">${esc(c.epithet)}</p><h1 class="char-name">${esc(c.name)}</h1></div><p class="slogan" data-text="slogan" style="${textStyle('slogan')}">${esc(c.slogan)}</p></header>`}${storyHtml(c)}<dl class="profile">${Object.entries(c.profile).map(([k,v])=>`<div${k==='능력'?' class="wide"':''}><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl><div class="position"><span class="role-name">${esc(c.role)}</span><p class="role-desc">${esc(c.roleDesc)}</p></div>${c.identity||c.mechanism||c.weakness?`<div class="kit">${[['정체성',c.identity],['메커니즘',c.mechanism],['약점',c.weakness]].filter(x=>x[1]).map(([k,v])=>`<p><b>${k}</b>${esc(v)}</p>`).join('')}</div>`:''}<h2 class="section-title">SKILLS</h2><div class="skill-list">${c.skills.map(skillHtml).join('')}</div>${voicesHtml(c)}${c.flavors.length?`<div class="flavors">${c.flavors.map(flavorHtml).join('')}</div>`:''}${extraData&&sameName(c.name,extraData.name)?`<div class="strategy">${[['강점',extraData.strength],['약점',extraData.counter]].filter(x=>x[1].length).map(([k,v])=>`<section><h3>${k}</h3><p>${esc(v.join('\n'))}</p></section>`).join('')}</div>`:''}<footer class="footer"><span>CHARACTER FILE</span><span>${esc(c.profile['코드명']||c.name)}</span></footer></div></article>`;
+}
+function setupSkills(root){const fine=()=>matchMedia('(min-width:901px) and (hover:hover)').matches;
+ if(!root.__skillsBound){root.__skillsBound=true;let px=-1,py=-1,idle;
+  document.addEventListener('pointermove',e=>{if(e.pointerType==='mouse'){px=e.clientX;py=e.clientY}},true);
+  document.addEventListener('scroll',()=>{if(!fine())return;root.querySelectorAll('.has-detail[open]').forEach(d=>d.open=false);clearTimeout(idle);idle=setTimeout(()=>{const el=px<0?null:document.elementFromPoint(px,py),d=el&&el.closest('.has-detail');if(d&&root.contains(d))d.open=true},150)},true);}
+ root.querySelectorAll('.has-detail').forEach(d=>{const sum=d.querySelector('summary'),box=d.querySelector('.skill-detail');let pinned=false;
+  function closeOthers(){root.querySelectorAll('.has-detail[open]').forEach(other=>{if(other!==d)other.open=false})}
+  function place(){if(!fine())return;const vw=document.documentElement.clientWidth,r=sum.getBoundingClientRect(),w=Math.min(440,vw-32);Object.assign(box.style,{position:'fixed',width:w+'px',maxHeight:Math.min(430,innerHeight-40)+'px',overflow:'auto',left:Math.max(16,Math.min(r.right-w-12,vw-w-16))+'px'});const bh=box.getBoundingClientRect().height;box.style.top=Math.max(16,Math.min(r.top+r.height/2-bh/2,innerHeight-bh-16))+'px'}
+  d.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse'&&fine()){closeOthers();d.open=true;place()}});d.addEventListener('pointerleave',()=>{if(fine()&&!pinned)d.open=false});
+  sum.addEventListener('click',e=>{e.preventDefault();closeOthers();if(fine()){pinned=!pinned;d.open=pinned}else d.open=!d.open;place()});sum.addEventListener('focus',()=>{if(fine()){closeOthers();d.open=true;place()}});
+  d.addEventListener('focusout',e=>{if(fine()&&!pinned&&!d.contains(e.relatedTarget))d.open=false});d.addEventListener('keydown',e=>{if(e.key==='Escape'){pinned=false;d.open=false;sum.focus()}});
+  d.addEventListener('toggle',()=>{if(d.open)place();else pinned=false});
+ });
+}
+function refreshBanner(){$('bannerOn').checked=settings.banner;$('resultTools').hidden=!(settings.banner||base);$('saveBanner').hidden=$('savePsd').hidden=!settings.banner;for(const el of document.querySelectorAll('[data-banner]')){const key=el.dataset.banner;if(document.activeElement!==el)el.value=key==='slogan'&&!settings.b.customText?base?.slogan||'':key==='name'&&!settings.b.customText?[base?.epithet,base?.name].filter(Boolean).join(' '):settings.b[key];const op=el.parentElement.querySelector('output');if(op)op.textContent=el.value+'%'}$('shadeColor').value=shadeColorValue();$('shadeColor').disabled=!!settings.b.shadeAuto||settings.b.shadeOn===false;$('shadeAuto').disabled=$('shadeBlend').disabled=settings.b.shadeOn===false;$('shadeAuto').checked=!!settings.b.shadeAuto;syncImageEditing()}
+function draw(){const y=document.querySelector('.main').scrollTop;$('out').innerHTML=recordHtml()||'<div class="empty"><p>기본 소개 결과를 붙여넣으면<br>캐릭터 파일이 열려요.</p></div>';setupSkills($('out'));document.querySelector('.main').scrollTop=y;refreshBanner();const has=!!base?.skills.some(s=>s.detail);for(const op of $('saveMode').options)op.disabled=['full','skills'].includes(op.value)&&!has;$('saveMode').value=!has&&['full','skills'].includes(settings.saveMode)?'intro':settings.saveMode;$('saveMode').hidden=!has;$('savePng').disabled=saving||!base;$('saveHtml').disabled=saving||!base;$('saveBanner').disabled=$('savePsd').disabled=saving||!settings.banner;}
+function render(){base=parse($('src').value);extraData=parse($('extra').value,true);const joined=joinDetails();let msg='';if($('src').value.trim()&&!base)msg='@이름과 슬로건: 또는 [스킬 LC] 표식이 필요해요. 기본 OOC 양식을 확인해 주세요.';else if($('extra').value.trim()&&!extraData)msg='상세 결과에서 @이름과 [스킬 LC] 표식을 찾지 못했어요.';else if(base&&extraData&&!sameName(base.name,extraData.name))msg='상세 결과의 캐릭터 이름이 기본 소개와 달라요.';else if(joined.missed)msg='키나 이름이 맞지 않는 상세 '+joined.missed+'개는 연결하지 않았어요.';$('parseStatus').textContent=msg;$('parseStatus').classList.toggle('error',!!msg);draw();try{localStorage.setItem('character-file.input',$('src').value);localStorage.setItem('character-file.extra',$('extra').value)}catch{$('storageStatus').textContent='붙여넣은 내용을 저장할 공간이 부족해요. 현재 화면은 저장할 수 있어요.'}}
+function makePip(box,btn,focusSel){function place(){const r=btn.getBoundingClientRect(),w=box.offsetWidth,h=box.offsetHeight;box.style.left=Math.max(16,Math.min(r.left,document.documentElement.clientWidth-w-16))+'px';const below=r.bottom+10;box.style.top=Math.max(16,Math.min(below,innerHeight-h-16))+'px'}function set(open){if(open)setBanner(false);if(open)for(const other of document.querySelectorAll('.pip'))if(other!==box){other.hidden=true;document.querySelector(`[aria-controls="${other.id}"]`)?.setAttribute('aria-expanded','false')}box.hidden=!open;btn.setAttribute('aria-expanded',String(open));if(open){refreshBanner();place();box.querySelector(focusSel)?.focus({preventScroll:true})}else if(box.contains(document.activeElement))btn.focus({preventScroll:true})}
+ btn.onclick=()=>set(box.hidden);box.querySelector('.pip-x').onclick=()=>set(false);addEventListener('resize',()=>{if(!box.hidden)place()});document.querySelector('.side').addEventListener('scroll',()=>{if(!box.hidden)set(false)});return set}
+const setCast=makePip($('cast'),$('castBtn'),'input'),setPalette=makePip($('palettePip'),$('paletteBtn'),'[data-palette]'),setReset=makePip($('resetConfirm'),$('resetAllBtn'),'#cancelReset');
+function clampEditor(){const box=$('bannerEditor'),r=box.getBoundingClientRect(),vw=document.documentElement.clientWidth;const x=Math.max(16,Math.min(editorPos?.x??r.x,vw-r.width-16)),y=Math.max(16,Math.min(editorPos?.y??r.y,innerHeight-r.height-16));box.style.left=x+'px';box.style.top=y+'px';editorPos={x,y}}
+function setBanner(open){$('bannerEditor').hidden=!open;$('bannerBtn').setAttribute('aria-expanded',String(open));if(open){if(!settings.banner)settings.b.layer='text';else if(!base&&settings.b.layer==='intro')settings.b.layer='char';setCast(false);setPalette(false);setReset(false);refreshBanner();if(!editorPos){const r=$('bannerBtn').getBoundingClientRect();editorPos={x:r.left,y:r.bottom+8}}clampEditor();$('bannerEditor').querySelector('[data-layer-choice]')?.focus({preventScroll:true})}else{if($('bannerEditor').contains(document.activeElement))$('bannerBtn').focus({preventScroll:true});syncImageEditing()}}
+$('bannerBtn').onclick=()=>setBanner($('bannerEditor').hidden);$('bannerEditor').querySelector('.pip-x').onclick=()=>setBanner(false);addEventListener('resize',()=>{if(!$('bannerEditor').hidden)clampEditor()});
+let panelDrag=null;const panelHandle=$('imageEditorHandle');panelHandle.addEventListener('pointerdown',e=>{if(e.button!==0||e.target.closest('button'))return;const r=$('bannerEditor').getBoundingClientRect();panelDrag={id:e.pointerId,x:e.clientX,y:e.clientY,left:r.left,top:r.top};panelHandle.setPointerCapture(e.pointerId);e.preventDefault()});panelHandle.addEventListener('pointermove',e=>{if(!panelDrag||panelDrag.id!==e.pointerId)return;editorPos={x:panelDrag.left+e.clientX-panelDrag.x,y:panelDrag.top+e.clientY-panelDrag.y};clampEditor()});for(const type of ['pointerup','pointercancel','lostpointercapture'])panelHandle.addEventListener(type,()=>panelDrag=null);
+document.querySelectorAll('[data-layer-choice]').forEach(btn=>btn.onclick=()=>{settings.b.layer=btn.dataset.layerChoice;keep();syncImageEditing()});
+document.querySelectorAll('[data-geometry]').forEach(input=>{input.addEventListener('input',()=>{const key=settings.b.layer,text=activeText();if(text){const k=input.dataset.geometry,v=input.valueAsNumber;if(['x','y'].includes(k)&&Number.isFinite(v)){settings.b.textPos[text][k]=v;keep();paintTextPositions()}return}if(!assets[key])return;const k=input.dataset.geometry,v=input.valueAsNumber;if(!Number.isFinite(v))return;if((k==='w'||k==='h')&&v<=0){$('imageStatus').textContent='너비와 높이는 0보다 크게 입력해 주세요.';return}const g=geometry(key),old=g[k];if(g.lock!==false&&(k==='w'||k==='h'))g[k==='w'?'h':'w']*=v/old;g[k]=v;$('imageStatus').textContent='';keep();paintLayers()});input.addEventListener('change',updateLayerControls)});
+document.querySelectorAll('[data-text-color]').forEach(input=>input.oninput=()=>{settings.b.textColors[input.dataset.textColor]=input.value;keep();draw()});$('textAutoDark').onchange=e=>{settings.b.textAutoDark=e.target.checked;keep();draw()};$('resetSloganColor').onclick=()=>{settings.b.textColors.slogan=DEFAULTS.b.textColors.slogan;keep();draw()};$('resetNameColor').onclick=()=>{settings.b.textColors.name=DEFAULTS.b.textColors.name;keep();draw()};
+$('resetStoryColor').onclick=()=>{settings.b.textColors.story=null;keep();draw()};
+$('charGlowOn').onchange=e=>{settings.b.glowOn=e.target.checked;keep();draw()};$('charGlowSize').oninput=e=>{const v=e.target.valueAsNumber;if(Number.isFinite(v)&&v>=0){settings.b.glowSize=v;keep();draw()}};$('charGlowColor').oninput=e=>{settings.b.glowColor=e.target.value;keep();draw()};$('charGlowAlpha').oninput=e=>{settings.b.glowAlpha=e.target.valueAsNumber;keep();draw()};
+$('bgBlur').oninput=e=>{const v=e.target.valueAsNumber;if(Number.isFinite(v)&&v>=0){settings.b.bgBlur=v;keep();draw()}};
+function resetTextPosition(key){settings.b.textPos[key]={x:0,y:0};keep();paintTextPositions()}
+function editText(key){settings.b.layer='text';settings.b.introTarget=key;keep();syncImageEditing();const target=textFrame(key),main=document.querySelector('.main');if(target){const r=target.getBoundingClientRect(),m=main.getBoundingClientRect();if(innerWidth>900){if(r.top<m.top||r.bottom>m.bottom)main.scrollTop+=r.top-m.top-16}else window.scrollTo(0,scrollY+r.top-16)}}
+
+$('finishedOrder').onchange=e=>{settings.b.finishedAbove=e.target.value==='above';keep();draw()};
+function syncIntroFadeControls(active){for(const input of document.querySelectorAll('[data-intro-fade]'))if(input!==active)input.value=settings.b[input.dataset.introFade]}
+function paintIntroFade(){for(const picture of output.querySelectorAll('.story-picture')){picture.style.setProperty('--intro-fade-start',settings.b.introFadeStart+'%');picture.style.setProperty('--intro-fade-end',settings.b.introFadeEnd+'%')}}
+function setIntroFade(input,commit=false){const key=input.dataset.introFade;let value=input.valueAsNumber;if(!Number.isFinite(value)){if(commit)syncIntroFadeControls();return}const lower=key==='introFadeEnd'?settings.b.introFadeStart:0,upper=key==='introFadeStart'?settings.b.introFadeEnd:100;if(input.type==='number'&&!commit&&(value<lower||value>upper))return;value=Math.max(lower,Math.min(upper,value));settings.b[key]=value;if(commit||input.type==='range')input.value=value;syncIntroFadeControls(input);paintIntroFade();keep()}
+document.querySelectorAll('[data-intro-fade]').forEach(input=>{input.addEventListener('input',()=>setIntroFade(input));input.addEventListener('change',()=>setIntroFade(input,true))});
+$('resetIntroFade').onclick=()=>{settings.b.introFadeStart=DEFAULTS.b.introFadeStart;settings.b.introFadeEnd=DEFAULTS.b.introFadeEnd;syncIntroFadeControls();paintIntroFade();keep()};
+const flipIntro=()=>{settings.b.introSide=settings.b.introSide==='left'?'right':'left';keep();draw()};const flipBannerSide=()=>{settings.b.layoutFlip=!settings.b.layoutFlip;for(const key of ['char','bg'])if(assets[key]){const g=geometry(key);g.x=settings.b.canvasW-g.x}for(const key of ['slogan','name'])settings.b.textPos[key].x*=-1;keep();draw()};$('shadeOn').onchange=e=>{settings.b.shadeOn=e.target.checked;keep();draw()};$('introFadeOn').onchange=e=>{settings.b.introFadeOn=e.target.checked;keep();draw()};$('layerHelp').onclick=()=>setGuide(!guideOn);document.querySelector('.save-buttons').addEventListener('click',()=>{if(guideOn)setGuide(false)},true);$('flipLayout').onclick=()=>settings.b.layer==='intro'?flipIntro():flipBannerSide();
+$('introTarget').onchange=e=>{settings.b.introTarget=e.target.value;if(e.target.value==='image'){keep();syncImageEditing()}else editText(e.target.value)};document.querySelectorAll('[data-edit-text]').forEach(btn=>btn.onclick=()=>editText(btn.dataset.editText));document.querySelectorAll('[data-reset-text]').forEach(btn=>btn.onclick=()=>resetTextPosition(btn.dataset.resetText));
+$('resetPosition').onclick=()=>{const text=activeText();if(text){resetTextPosition(text);return}const key=settings.b.layer,g=geometry(key),c=canvasFor(key);g.x=c.w*(key==='char'?.76:.5);g.y=c.h*(key==='char'?.55:.5);keep();paintLayers()};
+let textDrag=null;output.addEventListener('pointerdown',e=>{if($('bannerEditor').hidden||settings.b.layer!=='text'||e.button!==0)return;const el=e.target.closest('[data-text]');if(!el)return;const key=el.dataset.text,frame=textFrame(key);if(!frame)return;settings.b.introTarget=key;const p=settings.b.textPos[key],r=frame.getBoundingClientRect();textDrag={id:e.pointerId,key,el,x:p.x,y:p.y,sx:e.clientX,sy:e.clientY,scale:(key==='story'?1000:1500)/r.width};el.setPointerCapture(e.pointerId);syncImageEditing();e.preventDefault()});output.addEventListener('pointermove',e=>{const d=textDrag;if(!d||d.id!==e.pointerId)return;settings.b.textPos[d.key]={x:d.x+(e.clientX-d.sx)*d.scale,y:d.y+(e.clientY-d.sy)*d.scale};paintTextPositions()});for(const type of ['pointerup','pointercancel','lostpointercapture'])output.addEventListener(type,()=>{if(textDrag){textDrag=null;keep()}});
+$('layerLock').onchange=e=>{geometry(settings.b.layer).lock=e.target.checked;keep()};$('fitLayer').onclick=()=>{geometry(settings.b.layer,true);keep();paintLayers()};
+document.querySelectorAll('[data-canvas]').forEach(input=>input.addEventListener('input',()=>{const v=input.valueAsNumber;if(!Number.isFinite(v)||v<=0)return;settings.b[input.dataset.canvas]=v;keep();draw()}));
+let imageDrag=null;output.addEventListener('pointerdown',e=>{if($('bannerEditor').hidden||e.button!==0)return;const img=e.target.closest('img[data-layer]'),banner=e.target.closest('.artboard.editing');if(!img||!banner)return;settings.b.layer=img.dataset.layer;const g=geometry(settings.b.layer),r=banner.getBoundingClientRect();imageDrag={id:e.pointerId,key:settings.b.layer,startX:e.clientX,startY:e.clientY,x:g.x,y:g.y,scaleX:canvasFor(settings.b.layer).w/r.width,scaleY:canvasFor(settings.b.layer).h/r.height,banner};banner.setPointerCapture(e.pointerId);banner.classList.add('is-dragging');syncImageEditing();e.preventDefault()});output.addEventListener('pointermove',e=>{const d=imageDrag;if(!d||e.pointerId!==d.id)return;const g=geometry(d.key);g.x=d.x+(e.clientX-d.startX)*d.scaleX;g.y=d.y+(e.clientY-d.startY)*d.scaleY;paintLayers()});function stopImageDrag(){if(!imageDrag)return;imageDrag.banner.classList.remove('is-dragging');imageDrag=null;keep()}for(const type of ['pointerup','pointercancel','lostpointercapture'])output.addEventListener(type,stopImageDrag);
+output.addEventListener('wheel',e=>{if($('bannerEditor').hidden)return;const banner=e.target.closest('.artboard.editing'),key=settings.b.layer;if(!banner||!assets[key])return;e.preventDefault();const g=geometry(key),factor=Math.exp(-e.deltaY*.001),w=g.w*factor,h=g.h*factor;if(!Number.isFinite(w)||!Number.isFinite(h)||w<.1||h<.1)return;const r=banner.getBoundingClientRect(),x=(e.clientX-r.left)*canvasFor(key).w/r.width,y=(e.clientY-r.top)*canvasFor(key).h/r.height;g.x=x+(g.x-x)*factor;g.y=y+(g.y-y)*factor;g.w=w;g.h=h;keep();paintLayers()},{passive:false});
+output.addEventListener('keydown',e=>{if($('bannerEditor').hidden||!e.target.classList.contains('artboard'))return;const dirs={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,-1],ArrowDown:[0,1]},delta=dirs[e.key];if(!delta||!assets[settings.b.layer])return;const g=geometry(settings.b.layer),step=e.shiftKey?10:1;g.x+=delta[0]*step;g.y+=delta[1]*step;e.preventDefault();keep();paintLayers()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(!$('bannerEditor').hidden)setBanner(false);else if(!$('cast').hidden)setCast(false);else if(!$('palettePip').hidden)setPalette(false);else if(!$('resetConfirm').hidden)setReset(false)}});
+document.querySelector('.main').addEventListener('scroll',()=>{$('out').querySelectorAll('.has-detail[open]').forEach(d=>{if(matchMedia('(hover:hover) and (min-width:901px)').matches)d.open=false})});
+$('themeColor').oninput=e=>{settings.seed=e.target.value;applyTheme();keep();draw()};$('resetTheme').onclick=()=>{settings.seed=DEFAULTS.seed;settings.background=DEFAULTS.background;applyTheme();keep();draw()};
+$('surfaceColor').oninput=e=>{settings.background=e.target.value;applyTheme();keep();draw()};function updatePaletteSelection(){document.querySelectorAll('[data-palette]').forEach(btn=>{const p=PALETTES[+btn.dataset.palette];btn.setAttribute('aria-pressed',String(p[1]===settings.seed&&p[2]===settings.background))})}$('paletteGrid').innerHTML=PALETTES.map(([name,accent,background],i)=>'<button type="button" data-palette="'+i+'" title="'+accent+' · '+background+'"><span class="palette-swatches"><i style="background:'+accent+'"></i><i style="background:'+background+'"></i></span><span>'+esc(name)+'</span></button>').join('');$('paletteGrid').onclick=e=>{const btn=e.target.closest('[data-palette]');if(!btn)return;const p=PALETTES[+btn.dataset.palette];settings.seed=p[1];settings.background=p[2];applyTheme();keep();draw();setPalette(false)};
+$('bannerOn').onchange=e=>{settings.banner=e.target.checked;if(!settings.banner&&!['intro','text'].includes(settings.b.layer))setBanner(false);keep();draw()};
+document.querySelectorAll('[data-banner]').forEach(el=>el.addEventListener('input',()=>{const k=el.dataset.banner;if(k==='slogan'||k==='name'){if(!settings.b.customText){settings.b.slogan=base?.slogan||'';settings.b.name=[base?.epithet,base?.name].filter(Boolean).join(' ')}settings.b.customText=true}settings.b[k]=el.type==='range'?Number(el.value):el.value;keep();draw()}));
+$('shadeColor').oninput=e=>{settings.b.shade=e.target.value;settings.b.shadeAuto=false;keep();draw()};$('shadeAuto').onchange=e=>{if(!e.target.checked&&!settings.b.shade)settings.b.shade=shadeColorValue();settings.b.shadeAuto=e.target.checked;keep();draw()};$('bgColor').oninput=e=>{settings.b.bgColor=e.target.value;keep();applyTheme();draw()};$('bgTheme').onclick=()=>{settings.b.bgColor=null;keep();applyTheme();draw()};document.querySelectorAll('[data-blend]').forEach(select=>{for(const [value,label]of Object.entries(BLENDS)){const option=document.createElement('option');option.value=value;option.textContent=label;select.append(option)}select.value=settings.b[select.dataset.blend];select.onchange=()=>{settings.b[select.dataset.blend]=select.value;keep();draw()}});$('takeText').onclick=()=>{settings.b.customText=false;keep();draw()};
+function showExtra(open){settings.extraOpen=open;$('extraInput').hidden=!open;$('extraBtn').textContent=open?'− 스킬 상세 접기':'＋ 스킬 상세 추가';$('extraBtn').setAttribute('aria-expanded',String(open));keep()}
+$('extraBtn').onclick=()=>showExtra(!settings.extraOpen);$('src').oninput=render;$('extra').oninput=render;$('clear').onclick=()=>{$('src').value='';render();$('src').focus()};$('clearExtra').onclick=()=>{$('extra').value='';render();$('extra').focus()};
+const REL_OFF=["스킬 설명·대사는 특정 상대와의 관계를 의도적으로 반영하지 않는다.","판정·운용 메모는 상대와의 관계를 반영하지 않고 실제 기술 효과로만 쓴다."];
+const NAMES={pc:{char:'NPC',user:'PC'},st:{char:'{{char}}',user:'{{user}}'}},names=()=>NAMES[settings.names]||NAMES.pc;
+function roleOf(v){v=String(v||'').trim();for(const m of Object.values(NAMES))for(const r in m)if(m[r]===v)return r}
+function toNames(v){const r=roleOf(v);return r?names()[r]:v}
+settings.subject=toNames(settings.subject);if(settings.partnerCustom)settings.partner=toNames(settings.partner);
+function relationshipPartner(){return settings.partnerCustom?settings.partner.trim():roleOf(settings.subject)==='user'?names().char:names().user}
+function syncNames(){const n=names();document.querySelectorAll('[data-names]').forEach(btn=>btn.setAttribute('aria-pressed',String(NAMES[btn.dataset.names]===n)));document.querySelectorAll('[data-subject]').forEach(btn=>btn.textContent=n[btn.dataset.subject]);$('subject').placeholder=n.char+' 또는 캐릭터 이름';$('partner').placeholder=n.user}
+const OOC_BASE=[$('ooc1').textContent,$('ooc2').textContent];
+function updateOoc(){syncNames();$('copyStatus').textContent='';$('relationshipOn').checked=!!settings.relationship;$('partnerField').hidden=!settings.relationship;if(document.activeElement!==$('partner'))$('partner').value=relationshipPartner();for(let i=0;i<2;i++){const pre=$('ooc'+(i+1));let text=OOC_BASE[i].replaceAll('{{char}}',settings.subject||names().char);if(settings.relationship){const target=settings.subject||names().char,partner=relationshipPartner();text=text.replace(REL_OFF[i],i===0?target+'·'+partner+'의 기존 관계·호칭·공유 경험을 스킬 설명·시전 및 상황 대사에 어울릴 때 반영한다. 모든 기술을 상대와 엮지 않고 없는 관계·사건·감정은 만들지 않는다.':target+'·'+partner+'의 관계는 기본 소개대로 유지하되, 관계 때문에 판정을 강화하거나 기존 대사를 바꾸지 않는다.')}pre.textContent=text;let count=$('oocCount'+i);if(!count){count=document.createElement('span');count.id='oocCount'+i;count.className='ooc-count';pre.parentElement.querySelector('summary').append(count)}count.textContent=pre.textContent.length.toLocaleString()+' / 1,500자';count.classList.toggle('over',pre.textContent.length>1500)}}
+$('subject').value=settings.subject;$('subject').oninput=e=>{settings.subject=e.target.value;keep();updateOoc()};
+async function copyOoc(i){if(!settings.subject.trim()){$('copyStatus').textContent='캐릭터 이름을 입력해 주세요.';setCast(true);return}if(settings.relationship&&!relationshipPartner()){$('copyStatus').textContent='관계를 반영할 상대를 입력해 주세요.';setCast(true);$('partner').focus();return}const t=$('ooc'+(i+1)).textContent;if(t.length>1500){$('copyStatus').textContent='OOC가 '+t.length+'자예요. 1,500자 안에 들어가도록 캐릭터 이름을 줄여 주세요.';setCast(true);return}try{await navigator.clipboard.writeText(t);$('copyStatus').textContent=(i?'상세':'기본')+' OOC '+t.length+'자를 복사했어요.'}catch{const input=document.createElement('textarea');input.value=t;input.style.cssText='position:fixed;left:-10000px';document.body.append(input);input.select();const ok=document.execCommand('copy');input.remove();$('copyStatus').textContent=ok?'OOC '+t.length+'자를 복사했어요.':'복사하지 못했어요. 내용 보기를 열어 복사해 주세요.'}}
+$('relationshipOn').onchange=e=>{settings.relationship=e.target.checked;keep();updateOoc()};$('partner').oninput=e=>{settings.partner=e.target.value;settings.partnerCustom=true;keep();updateOoc()};$('autoPartner').onclick=()=>{settings.partnerCustom=false;keep();updateOoc()};document.querySelectorAll('[data-names]').forEach(btn=>btn.onclick=()=>{settings.names=btn.dataset.names;settings.subject=toNames(settings.subject);if(settings.partnerCustom)settings.partner=toNames(settings.partner);$('subject').value=settings.subject;keep();updateOoc()});document.querySelectorAll('[data-subject]').forEach(btn=>btn.onclick=()=>{settings.subject=names()[btn.dataset.subject];$('subject').value=settings.subject;keep();updateOoc()});
+$('copyBase').onclick=()=>copyOoc(0);$('copyExtra').onclick=()=>copyOoc(1);
+let dbPromise;
+function assetDb(){if(!dbPromise)dbPromise=new Promise((ok,fail)=>{const req=indexedDB.open('character-file',1);req.onupgradeneeded=()=>req.result.createObjectStore('images');req.onsuccess=()=>ok(req.result);req.onerror=()=>fail(req.error)});return dbPromise}
+async function storeAsset(key,value){const db=await assetDb();await new Promise((ok,fail)=>{const tx=db.transaction('images','readwrite');tx.objectStore('images').put(value,key);tx.oncomplete=ok;tx.onerror=()=>fail(tx.error)})}
+async function measureImage(key,reset=false){const img=new Image();img.src=assets[key];await img.decode();imageSizes[key]={w:img.naturalWidth,h:img.naturalHeight};if(key==='char'){const canvas=document.createElement('canvas'),scale=Math.min(1,256/Math.max(img.naturalWidth,img.naturalHeight));canvas.width=Math.max(1,Math.round(img.naturalWidth*scale));canvas.height=Math.max(1,Math.round(img.naturalHeight*scale));const ctx=canvas.getContext('2d');ctx.drawImage(img,0,0,canvas.width,canvas.height);const pixels=ctx.getImageData(0,0,canvas.width,canvas.height).data;imageSizes.char.hasAlpha=false;for(let i=3;i<pixels.length;i+=4)if(pixels[i]<255){imageSizes.char.hasAlpha=true;break}}geometry(key,reset)}
+async function restoreAssets(){const version=dataVersion;try{const db=await assetDb();for(const key of ['bg','char','intro','finished']){const saved=await new Promise((ok,fail)=>{const q=db.transaction('images').objectStore('images').get(key);q.onsuccess=()=>ok(q.result||'');q.onerror=()=>fail(q.error)});if(version!==dataVersion)return;if(!assets[key]&&saved){assets[key]=saved;await measureImage(key)}}if(version!==dataVersion)return;keep();draw()}catch{$('imageStatus').textContent='이미지 보관을 사용할 수 없어요. 현재 화면과 파일 저장은 사용할 수 있어요.'}}
+async function readImage(file){if(!/^image\/(png|jpeg|webp)$/.test(file.type))throw Error('PNG · JPG · WebP 이미지를 골라 주세요.');if(file.size>30*1024*1024)throw Error('30MB보다 작은 이미지를 골라 주세요.');const data=await new Promise((ok,fail)=>{const r=new FileReader();r.onload=()=>ok(r.result);r.onerror=fail;r.readAsDataURL(file)});const img=new Image();img.src=data;await img.decode();const scale=Math.min(1,3000/Math.max(img.width,img.height));if(scale===1)return data;const canvas=document.createElement('canvas');canvas.width=Math.round(img.width*scale);canvas.height=Math.round(img.height*scale);canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);return canvas.toDataURL(file.type==='image/jpeg'?'image/jpeg':'image/png',.93)}
+$('layerFile').onchange=async e=>{const version=dataVersion;const file=e.target.files[0],key=settings.b.layer;if(!file)return;try{const image=await readImage(file);if(version!==dataVersion)return;assets[key]=image;await measureImage(key,['intro','finished'].includes(key));keep();draw();await storeAsset(key,assets[key]);$('imageStatus').textContent='이미지를 넣었어요.'}catch(err){$('imageStatus').textContent=err.message||'이미지를 읽거나 보관하지 못했어요.'}finally{e.target.value=''}};
+$('removeLayer').onclick=async()=>{const key=settings.b.layer;assets[key]='';delete settings.b.layers[key];delete imageSizes[key];keep();draw();try{await storeAsset(key,'');$('imageStatus').textContent='이미지를 지웠어요.'}catch{$('imageStatus').textContent='화면에서 지웠어요. 이미지 보관은 사용할 수 없어요.'}};
+function download(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name.replace(/[\\/:*?"<>|]/g,'_');document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000)}
+async function toData(url){const r=await fetch(url);if(!r.ok)throw Error('글꼴을 불러오지 못했어요. 인터넷 연결을 확인해 주세요.');const b=await r.blob();return new Promise((ok,fail)=>{const f=new FileReader();f.onload=()=>ok(f.result);f.onerror=fail;f.readAsDataURL(b)})}
+const fontCache=new Map(),customFaceMap=new Map(),fontDataCache=new Map();
+function webFontUrl(value,baseUrl=location.href){const u=new URL(value,baseUrl);if(!['https:','http:'].includes(u.protocol))throw Error('http 또는 https 글꼴 주소를 넣어 주세요.');return u.href}
+function parseFontRules(css,baseUrl){const faces=[];for(const match of css.matchAll(/@font-face\s*\{([^}]+)\}/gi)){const sheet=new CSSStyleSheet();sheet.replaceSync('@font-face{'+match[1]+'}');const rule=sheet.cssRules[0]?.style;if(!rule)continue;const urls=[...rule.getPropertyValue('src').matchAll(/url\(\s*["']?([^"')]+)["']?\s*\)/gi)].map(m=>webFontUrl(m[1].trim(),baseUrl));if(!urls.length)continue;faces.push({sourceName:rule.getPropertyValue('font-family').replace(/^["']|["']$/g,'').trim(),url:urls[0],weight:rule.getPropertyValue('font-weight')||'400',style:rule.getPropertyValue('font-style')||'normal',range:rule.getPropertyValue('unicode-range')||''})}return faces}
+async function collectFontRules(input,baseUrl=location.href,seen=new Set(),depth=0){if(depth>4)throw Error('글꼴 주소가 너무 여러 번 연결돼 있어요. @font-face 코드를 직접 넣어 주세요.');let text=input.trim();if(text.startsWith('<')){const doc=new DOMParser().parseFromString(text,'text/html'),href=doc.querySelector('link[href]')?.getAttribute('href');if(href)text=href;else text=doc.querySelector('style')?.textContent||text}if(/^https?:\/\/\S+$/i.test(text)){const url=webFontUrl(text,baseUrl);if(/\.(woff2?|ttf|otf)$/i.test(new URL(url).pathname))return [{sourceName:'',url,weight:'100 900',style:'normal',range:''}];if(seen.has(url))return [];seen.add(url);const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),15000);try{const r=await fetch(url,{signal:controller.signal});if(!r.ok)throw Error('CSS 주소를 읽지 못했어요.');return await collectFontRules(await r.text(),url,seen,depth+1)}finally{clearTimeout(timer)}}const faces=parseFontRules(text,baseUrl);for(const m of text.matchAll(/@import\s+(?:url\(\s*)?["']?([^"'\s);]+)["']?\s*\)?[^;]*;/gi))faces.push(...await collectFontRules(webFontUrl(m[1],baseUrl),baseUrl,seen,depth+1));return faces}
+function installCustomFont(entry){if(!/^user-[a-z0-9-]+$/i.test(entry.key)||!/^CharacterUser[a-z0-9]+$/i.test(entry.family)||!Array.isArray(entry.faces)||!entry.faces.length)throw Error('저장된 글꼴 정보가 올바르지 않아요.');const loaded=[];try{for(const face of entry.faces){face.url=webFontUrl(face.url);const f=new FontFace(entry.family,'url('+JSON.stringify(face.url)+')',{weight:face.weight||'400',style:face.style||'normal',...(face.range?{unicodeRange:face.range}:{})});document.fonts.add(f);loaded.push(f)}}catch(e){loaded.forEach(f=>document.fonts.delete(f));throw e}customFaceMap.set(entry.key,loaded);FONT[entry.key]=JSON.stringify(entry.family)+',sans-serif'}
+function updateFontLists(){for(const id of ['sloganFont','nameFont']){const select=$(id);select.querySelectorAll('option[data-custom]').forEach(o=>o.remove());for(const entry of settings.customFonts){const option=document.createElement('option');option.value=entry.key;option.textContent=entry.label;option.dataset.custom='';select.append(option)}select.value=settings.b[id]}$('customFontList').innerHTML=settings.customFonts.map(entry=>`<div class="webfont-row"><span>${esc(entry.label)}</span><button type="button" data-remove-font="${esc(entry.key)}">지우기</button></div>`).join('')}
+function customFontCss(entries=settings.customFonts){return entries.flatMap(entry=>entry.faces.map(face=>'@font-face{font-family:'+JSON.stringify(entry.family)+';src:url('+JSON.stringify(face.url)+');font-weight:'+face.weight+';font-style:'+face.style+';font-display:swap;'+(face.range?'unicode-range:'+face.range+';':'')+'}')).join('\n')}
+$('addFont').onclick=async()=>{const version=dataVersion;const source=$('fontSource').value.trim();if(!source){$('fontStatus').textContent='웹폰트 주소나 @font-face 코드를 넣어 주세요.';return}$('addFont').disabled=true;$('fontStatus').textContent='글꼴을 불러오는 중…';let entry;try{let faces=await collectFontRules(source);if(!faces.length)throw Error('웹폰트 주소를 찾지 못했어요. CSS 주소나 @font-face 코드를 확인해 주세요.');const firstName=faces[0].sourceName;faces=faces.filter(f=>f.sourceName===firstName);const id=crypto.randomUUID().replaceAll('-','');entry={key:'user-'+id,family:'CharacterUser'+id,label:$('fontLabel').value.trim()||firstName||'내 웹폰트',faces};if(version!==dataVersion)return;installCustomFont(entry);const loaded=await document.fonts.load('24px '+JSON.stringify(entry.family),(settings.b.name||base?.name||'')+' 가나다 ABC');if(!loaded.length)throw Error('현재 문구에 쓸 글자를 불러오지 못했어요.');if(version!==dataVersion){(customFaceMap.get(entry.key)||[]).forEach(f=>document.fonts.delete(f));return}settings.customFonts.push(entry);fontCache.clear();keep();updateFontLists();$('fontStatus').textContent=entry.label+'를 추가했어요. 위의 글꼴 목록에서 골라 주세요.';$('fontSource').value='';$('fontLabel').value=''}catch(e){if(entry){(customFaceMap.get(entry.key)||[]).forEach(f=>document.fonts.delete(f));customFaceMap.delete(entry.key);delete FONT[entry.key]}$('fontStatus').textContent=(e.name==='TypeError'||e.name==='NetworkError')?'이 주소는 브라우저에서 읽을 수 없어요. 글꼴 파일 주소나 @font-face 코드를 확인해 주세요.':e.message||'글꼴을 불러오지 못했어요.'}finally{$('addFont').disabled=false}};
+$('customFontList').onclick=e=>{const btn=e.target.closest('[data-remove-font]');if(!btn)return;const key=btn.dataset.removeFont;(customFaceMap.get(key)||[]).forEach(f=>document.fonts.delete(f));customFaceMap.delete(key);delete FONT[key];settings.customFonts=settings.customFonts.filter(f=>f.key!==key);for(const field of ['sloganFont','nameFont'])if(settings.b[field]===key)settings.b[field]=DEFAULTS.b[field];fontCache.clear();keep();updateFontLists();draw()};
+function rangeHasText(range,text){if(!range)return true;const points=[...text].map(c=>c.codePointAt(0));return range.split(',').some(part=>{let [lo,hi]=part.trim().replace(/^U\+/i,'').split('-');if(lo.includes('?')){hi=lo.replaceAll('?','F');lo=lo.replaceAll('?','0')}const a=parseInt(lo,16),b=parseInt(hi||lo,16);return points.some(p=>p>=a&&p<=b)})}
+async function fontCss(text,node){const used=node?.querySelector('.banner')?settings.customFonts.filter(f=>[settings.b.sloganFont,settings.b.nameFont].includes(f.key)):[],key=used.map(f=>f.key).join(',')+':'+[...new Set(text)].sort().join('');if(fontCache.has(key))return fontCache.get(key);const r=await fetch(FONT_URL+'&text='+encodeURIComponent([...new Set(text)].join('')));if(!r.ok)throw Error('글꼴을 불러오지 못했어요.');const css=await r.text(),urls=[...new Set([...css.matchAll(/url\(([^)]+)\)/g)].map(m=>m[1].replace(/["']/g,'')))];const data=await Promise.all(urls.map(toData));let embedded=css;urls.forEach((u,i)=>embedded=embedded.split(u).join(data[i]));for(const entry of used){for(const face of entry.faces){if(!rangeHasText(face.range,text))continue;let value=fontDataCache.get(face.url);if(!value){value=await toData(face.url);fontDataCache.set(face.url,value)}embedded+=customFontCss([{...entry,faces:[{...face,url:value}]}])}}fontCache.set(key,embedded);return embedded}
+// 1920×1080 PC 화면의 결과 영역 너비. PNG는 화면 크기와 무관하게 이 배치를 쓴다.
+const PNG_RECORD_WIDTH=1218,PNG_PADDING=24;
+function cloneForSave(mode){const copy=stripEditor($('out').querySelector('.record').cloneNode(true));copy.classList.add('for-print');copy.style.width=PNG_RECORD_WIDTH+'px';copy.style.maxWidth='none';if(mode==='skills'){copy.querySelector('.banner')?.remove();const body=copy.querySelector('.record-body');body?.classList.add('only-details');const title=document.createElement('header');title.style.marginBottom='28px';title.innerHTML=`<p class="eyebrow">SKILL DETAILS</p><h1 class="char-name" style="font-size:32px">${esc(base.name)}</h1>`;body?.prepend(title);for(const el of copy.querySelectorAll('.skill:not(.has-detail)'))el.remove()}
+ for(const d of copy.querySelectorAll('details')){d.open=mode!=='intro';delete d.dataset.pinned;if(mode==='intro')d.querySelector('.skill-detail')?.remove();else d.querySelector('.skill-detail')?.removeAttribute('style')}if(mode==='intro')copy.querySelector('.strategy')?.remove();return copy}
+async function pngBlob(node,bannerOnly=false){if(!window.htmlToImage)throw Error('PNG 저장 도구를 불러오지 못했어요. 인터넷 연결을 확인해 주세요.');const holder=document.createElement('div');holder.style.cssText='position:fixed;left:-100000px;top:0';const frame=document.createElement('div');frame.style.cssText=bannerOnly?'width:'+settings.b.canvasW+'px;height:'+settings.b.canvasH+'px;':'width:'+(PNG_RECORD_WIDTH+PNG_PADDING*2)+'px;padding:'+PNG_PADDING+'px;background:'+theme.bg;frame.append(node);holder.append(frame);document.body.append(holder);try{await Promise.all([...frame.querySelectorAll('img')].map(img=>img.decode().catch(()=>{})));const css=await fontCss(frame.textContent+'0123456789',frame);await document.fonts.ready;const opt={pixelRatio:bannerOnly?1:2,fontEmbedCSS:css,cacheBust:false};await htmlToImage.toCanvas(frame,opt);return await htmlToImage.toBlob(frame,opt)}finally{holder.remove()}}
+async function splitPngSections(mode){
+ const full=cloneForSave(mode),body=full.querySelector('.record-body'),list=body.querySelector('.skill-list'),title=list.previousElementSibling,skills=[...list.children];
+ let cuts=[skills.length];
+ if(mode!=='intro'&&skills.some(el=>el.classList.contains('has-detail'))&&skills.length>1){
+  const holder=document.createElement('div');holder.style.cssText='position:fixed;left:-100000px;top:0;width:'+PNG_RECORD_WIDTH+'px';holder.append(full);document.body.append(holder);
+  try{await document.fonts.ready;const heights=skills.map(el=>el.getBoundingClientRect().height),half=heights.reduce((a,b)=>a+b,0)/2;let best=1,diff=Infinity,sum=0;for(let i=1;i<skills.length;i++){sum+=heights[i-1];if(Math.abs(sum-half)<diff){best=i;diff=Math.abs(sum-half)}}cuts=[best,skills.length]}finally{holder.remove()}
+ }
+ if(mode==='skills'){let start=0;return cuts.map((end,i)=>{const node=full.cloneNode(true),l=node.querySelector('.skill-list');[...l.children].forEach((el,n)=>{if(n<start||n>=end)el.remove()});if(i<cuts.length-1){let el=l.nextElementSibling;while(el){const next=el.nextElementSibling;el.remove();el=next}}start=end;return {label:String(i+1).padStart(2,'0')+'-skills',node}})}
+ const intro=full.cloneNode(true),introBody=intro.querySelector('.record-body');let reached=false;for(const el of [...introBody.children]){if(el.classList.contains('section-title'))reached=true;if(reached)el.remove()}
+ const tail=full.cloneNode(true);tail.querySelector('.banner')?.remove();const tailBody=tail.querySelector('.record-body');for(const el of [...tailBody.children]){el.remove();if(el.classList.contains('skill-list'))break}
+ const parts=[{label:'01-intro',node:intro}];let start=0;
+ for(const [i,end] of cuts.entries()){const node=full.cloneNode(true);node.querySelector('.banner')?.remove();const b=node.querySelector('.record-body'),section=list.cloneNode(false);for(let n=start;n<end;n++)section.append(skills[n].cloneNode(true));b.replaceChildren(title.cloneNode(true),section);parts.push({label:String(i+2).padStart(2,'0')+'-skills'+(cuts.length>1?'-'+(i+1):''),node});start=end}
+ parts.push({label:String(parts.length+1).padStart(2,'0')+'-voices',node:tail});return parts;
+}
+async function savePng(bannerOnly=false){if(saving||(!base&&!bannerOnly))return;saving=true;draw();$('saveStatus').classList.add('busy');$('saveStatus').textContent='PNG를 만드는 중…';try{if(!bannerOnly&&$('splitPng').checked){const parts=await splitPngSections($('saveMode').value);const blobs=[];for(const [i,part]of parts.entries()){$('saveStatus').textContent='PNG '+(i+1)+' / '+parts.length+'장 만드는 중…';const blob=await pngBlob(part.node);if(!blob)throw Error('PNG를 만들지 못했어요.');blobs.push(blob)}for(const [i,blob]of blobs.entries()){if(i)await new Promise(ok=>setTimeout(ok,700));download(blob,'character-file-'+base.name+'-'+parts[i].label+'.png')}$('saveStatus').textContent='PNG '+parts.length+'장을 저장했어요.';return}let node;if(bannerOnly){const box=document.createElement('div');box.innerHTML=bannerHtml(true);node=box.firstElementChild}else node=cloneForSave($('saveMode').value);const blob=await pngBlob(node,bannerOnly);if(!blob)throw Error('PNG를 만들지 못했어요.');download(blob,'character-file-'+(base?.name||'banner')+(bannerOnly?'-banner':'-'+$('saveMode').value)+'.png');$('saveStatus').textContent='PNG를 저장했어요.'}catch(e){$('saveStatus').textContent=e.message||'PNG를 만들지 못했어요.'}finally{saving=false;$('saveStatus').classList.remove('busy');draw()}}
+let psdLibraryPromise;
+function psdLibrary(){if(window.agPsd)return Promise.resolve(window.agPsd);if(!psdLibraryPromise)psdLibraryPromise=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='https://cdn.jsdelivr.net/npm/ag-psd@33.0.0/dist/bundle.js';script.onload=()=>resolve(window.agPsd);script.onerror=()=>{psdLibraryPromise=null;script.remove();reject(Error('PSD 저장 도구를 불러오지 못했어요. 인터넷 연결을 확인해 주세요.'))};document.head.append(script)});return psdLibraryPromise}
+function renderedTextLines(el){const node=el.firstChild,text=el.textContent;if(!node||node.nodeType!==Node.TEXT_NODE)return text;const lines=[''];let offset=0,top=null;for(const char of text){if(char==='\r'){offset++;continue}if(char==='\n'){lines.push('');top=null;offset++;continue}const range=document.createRange();range.setStart(node,offset);range.setEnd(node,offset+char.length);const rect=range.getClientRects()[0];if(rect&&top!==null&&Math.abs(rect.top-top)>1){lines.push('');top=rect.top}else if(rect&&top===null)top=rect.top;lines[lines.length-1]+=char;offset+=char.length}return lines.join('\n')}
+function psdTextMetadata(el,root,key){const style=getComputedStyle(el),r=el.getBoundingClientRect(),bounds=root.getBoundingClientRect(),fontSize=parseFloat(style.fontSize),leading=parseFloat(style.lineHeight)||fontSize*1.4;const canvas=document.createElement('canvas'),ctx=canvas.getContext('2d');ctx.font=style.fontWeight+' '+style.fontSize+' '+style.fontFamily;const metrics=ctx.measureText(el.textContent||'가나다'),ascent=metrics.fontBoundingBoxAscent||fontSize*.8,descent=metrics.fontBoundingBoxDescent||fontSize*.2;const entry=settings.customFonts.find(f=>f.key===key),family=entry?(entry.faces[0].sourceName||entry.label):key==='serif'?'Noto Serif KR':key==='display'?'Black Han Sans':'Noto Sans KR';const rgb=style.color.match(/[\d.]+/g)||['255','255','255'];return {text:renderedTextLines(el),transform:[1,0,0,1,r.left-bounds.left,r.top-bounds.top+(leading-ascent-descent)/2+ascent],orientation:'horizontal',antiAlias:'smooth',shapeType:'point',style:{font:{name:family},fontSize,leading,autoLeading:false,tracking:(parseFloat(style.letterSpacing)||0)/fontSize*1000,fauxBold:parseInt(style.fontWeight,10)>=600&&key!=='display',fillColor:{r:+rgb[0],g:+rgb[1],b:+rgb[2]}},paragraphStyle:{justification:'left'}}}
+async function bannerPsdBytes(){
+ const lib=await psdLibrary();if(!window.htmlToImage)throw Error('이미지 저장 도구를 불러오지 못했어요.');
+ const holder=document.createElement('div');holder.style.cssText='position:fixed;left:-100000px;top:0';holder.innerHTML=bannerHtml(true);document.body.append(holder);const root=holder.firstElementChild;
+ try{
+  await Promise.all([...root.querySelectorAll('img')].map(img=>img.decode()));await document.fonts.ready;
+  const opt={pixelRatio:1,fontEmbedCSS:await fontCss(root.textContent+'0123456789',holder)},slogan=psdTextMetadata(root.querySelector('.banner-slogan'),root,settings.b.sloganFont),name=psdTextMetadata(root.querySelector('.banner-name'),root,settings.b.nameFont);
+  await htmlToImage.toCanvas(root,opt);const composite=await htmlToImage.toCanvas(root,opt);
+  async function piece(kind){
+   const clone=root.cloneNode(true);if(kind!=='bg')clone.style.background='transparent';
+   const selectors={bg:'.banner-char,.banner-glow,.banner-copy,.banner-finished',char:'.banner-glow,.banner-bg,.banner-shade,.banner-copy,.banner-finished',finished:'.banner-glow,.banner-bg,.banner-shade,.banner-copy,.banner-char',slogan:'.banner-glow,.banner-bg,.banner-shade,.banner-char,.banner-finished',name:'.banner-glow,.banner-bg,.banner-shade,.banner-char,.banner-finished'};
+   clone.querySelectorAll(selectors[kind]).forEach(el=>el.remove());
+   if(kind==='slogan'||kind==='name')clone.querySelector(kind==='slogan'?'.banner-name':'.banner-slogan').style.visibility='hidden';
+   holder.append(clone);try{await htmlToImage.toCanvas(clone,opt);return await htmlToImage.toCanvas(clone,opt)}finally{clone.remove()}
+  }
+  const bg={name:'배경',canvas:await piece('bg')},char={name:'캐릭터',canvas:await piece('char')};
+  if(settings.b.glowOn&&imageSizes.char?.hasAlpha)char.effects={outerGlow:{enabled:true,present:true,showInDialog:true,blendMode:settings.b.glowBlend.replaceAll('-',' '),opacity:(settings.b.glowAlpha??100)/100,size:{units:'Pixels',value:settings.b.glowSize},color:{r:hexRgb(settings.b.glowColor)[0],g:hexRgb(settings.b.glowColor)[1],b:hexRgb(settings.b.glowColor)[2]},source:'edge',technique:'softer',range:50,choke:{units:'Pixels',value:0},noise:0,jitter:0}};
+  // ag-psd 33 serializes children from the bottom layer upward.
+  const layers=[bg,char];if(assets.finished&&!settings.b.finishedAbove)layers.push({name:'완성 배너',canvas:await piece('finished')});
+  layers.push({name:'이명 + 이름',canvas:await piece('name'),text:name},{name:'슬로건',canvas:await piece('slogan'),text:slogan});
+  if(assets.finished&&settings.b.finishedAbove)layers.push({name:'완성 배너',canvas:await piece('finished')});
+  return lib.writePsd({width:Math.round(settings.b.canvasW),height:Math.round(settings.b.canvasH),canvas:composite,children:layers},{trimImageData:true,generateThumbnail:true});
+ }finally{holder.remove()}
+}
+async function saveBannerPsd(){if(saving||!settings.banner)return;saving=true;draw();$('saveStatus').classList.add('busy');$('saveStatus').textContent='PSD 레이어를 만드는 중…';try{const bytes=await bannerPsdBytes();download(new Blob([bytes],{type:'image/vnd.adobe.photoshop'}),'character-file-'+(base?.name||'banner')+'-banner.psd');$('saveStatus').textContent='PSD를 저장했어요. 편집 앱에도 같은 글꼴이 필요해요.'}catch(e){$('saveStatus').textContent=e.message||'PSD를 만들지 못했어요.'}finally{saving=false;$('saveStatus').classList.remove('busy');draw()}}
+$('savePsd').onclick=saveBannerPsd;
+$('cancelReset').onclick=()=>setReset(false);$('confirmReset').onclick=async()=>{if(saving)return;$('confirmReset').disabled=true;dataVersion++;try{const db=await assetDb();await new Promise((ok,fail)=>{const tx=db.transaction('images','readwrite');tx.objectStore('images').clear();tx.oncomplete=ok;tx.onerror=()=>fail(tx.error)});for(const key of ['character-file.settings','character-file.input','character-file.extra'])localStorage.removeItem(key);location.reload()}catch(e){$('resetStatus').textContent='초기화하지 못했어요. '+(e.message||'');$('confirmReset').disabled=false}};
+function htmlFile(){const node=stripEditor($('out').querySelector('.record').cloneNode(true));node.querySelectorAll('details').forEach(d=>{d.open=false;d.querySelector('.skill-detail')?.removeAttribute('style')});const css=$('card-css').textContent;return '<!doctype html>\n<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(base.name)+' · CHARACTER FILE</title><link rel="stylesheet" href="'+FONT_URL.replaceAll('&','&amp;')+'"><style>html{background:'+theme.bg+'}body{margin:0;padding:24px 16px 32px}article.record{max-width:1100px;margin:auto}'+customFontCss()+css+'</style></head><body>'+node.outerHTML+'<script>('+setupSkills.toString()+')(document);<\/script></body></html>'}
+$('savePng').onclick=()=>savePng();$('saveBanner').onclick=()=>savePng(true);$('saveHtml').onclick=()=>{if(!base||saving)return;download(new Blob([htmlFile()],{type:'text/html'}),'character-file-'+base.name+'.html');$('saveStatus').textContent='HTML을 저장했어요.'};$('saveMode').onchange=e=>{settings.saveMode=e.target.value;keep()};$('splitPng').onchange=e=>{settings.split=e.target.checked;keep()};
+const SAMPLE=`@에일라
+이명: 성도의 현신
+슬로건: 밤하늘을 펼쳐 전장을 재우는 별의 자리
+인용: 에일라가 별 그려 줄게. 저기 반짝이는 거 보이면, 이제 하나도 안 아파요.
+소개: 아스테리아 각인으로 등록된 테미스 뮤즈 소속 가이드이나, 실제 본질은 인간의 그릇에 내려앉은 별이라는 관념 그 자체다. 평상시에는 평지에서 제 발에 걸려 넘어지고 스킨십을 조르는 어수룩한 모습이지만, 가이딩에 돌입하는 순간 경이로운 집중력으로 밤하늘의 성도를 펼쳐 폭주 직전의 센티넬조차 잠재운다. 본래의 격을 인간의 육체가 온전히 감당하지 못해 출력을 높일수록 몸에 균열이 가는 부하를 겪으며, 쉬면 저절로 아물지만 주변에서는 이를 위험 징후로 오해하기도 한다. 때때로 인간의 상식과 어긋난 시선을 내비치면서도 오늘 만나는 사람들의 손을 잡고 온기를 나누는 일을 가장 좋아한다.
+[프로필]
+코드명: ASTRA
+본명: 에일라
+국적: 불명
+소속: MUSE
+연령: 불명
+능력: 대상의 에코에 밤하늘의 별자리를 직접 투영해 그 별자리가 지닌 신화적 의미를 구현하는 능력.
+[포지션]
+포지션: 서포터
+역할: 성도 영역을 전개해 아군을 보호하고 적의 공세를 무력화하는 고출력 영역형 서포터
+정체성: 체력을 대가로 별자리를 중첩해 버프 효율을 극대화하는 하이리스크 광역 지원가
+메커니즘: LC와 Shift+LC로 지면에 별점을 남긴 뒤 RC나 LC+RC로 이를 이어 성도를 완성하면 범위와 회복량이 대폭 증가하며, 그만큼 자신의 최대 체력이 일시적으로 깎입니다.
+약점: 자체 공격 능력과 근접 저항 수단이 전무하며, 스킬 연속 사용으로 육체 부하가 누적되면 이동 속도가 느려지고 넘어지는 판정이 발생합니다.
+[스킬 LC]
+이름: 별점 찍기
+설명: 손끝으로 허공을 톡톡 짚어 전방에 작은 은빛 탄환을 날립니다. 탄환이 닿은 지면에는 잠시 동안 작은 별점이 남습니다.
+대사: 반짝.
+대사: 여기 하나.
+[스킬 RC]
+이름: 성도 투영 - 안식
+설명: 지정한 위치에 별자리를 그려 영역 내 아군의 체력을 지속적으로 회복시키고 적의 공격 속도를 늦춥니다. 지면에 남은 별점 위에서 시전하면 별점들이 선으로 이어지며 영역이 넓어집니다.
+대사: 여긴 안 아픈 밤이에요.
+대사: 눈 감아도 돼.
+[스킬 LC+RC]
+이름: 성도 투영 - 수호의 자리
+설명: 자신의 현재 체력을 소모해 전방의 별점들을 한꺼번에 연결하여 신화적 보호를 구현합니다. 영역 안의 아군에게 피해를 흡수하는 두꺼운 보호막을 씌우고, 영역을 밟은 적을 바깥으로 밀쳐냅니다.
+대사: 다치면 안 돼요.
+대사: 별이 막아 줄 거야.
+[스킬 Shift+LC]
+이름: 발걸음 헛디디기
+설명: 앞으로 급히 달려가다 제 발에 걸려 넘어지며 전방의 적을 함께 쓰러뜨립니다. 넘어지는 자리 주변에 별점 세 개가 흩뿌려지지만 자신도 잠시 바닥에 엎드린 상태가 됩니다.
+대사: 앗, 또 걸렸어!
+대사: 바닥이 이상해.
+[스킬 Shift+RC]
+이름: 별똥별 떨구기
+설명: 넘어져 있는 적의 머리 위로 작은 별빛 덩어리를 떨어뜨려 추가 피해를 입히고 짧은 경직을 줍니다.
+대사: 자, 네 별이야.
+[스킬 F]
+이름: 두 손 꼭 잡기
+설명: 전방 대상의 손을 양손으로 마주 잡습니다. 아군일 경우 자신의 체력을 나눠 즉시 회복시키고, 적군일 경우 짧은 시간 동안 제자리에 붙잡아 이동할 수 없게 만듭니다.
+대사: 손, 따뜻하다.
+[스킬 Space]
+이름: 품으로 숨어들기
+설명: 가장 가까운 아군에게 재빠르게 달려가 폭 안기며 짧은 시간 동안 모든 공격 판정을 회피합니다. 도착한 지점의 아군과 자신에게 소량의 이동 속도 상승을 부여합니다.
+대사: 안아 줘요!
+대사: 여기 숨을래.
+[스킬 Scroll]
+이름: 영혼 색깔 읽기
+설명: 제자리에서 가만히 눈을 깜빡이며 전방 대상의 내면을 들여다봅니다. 대상의 궁극기 준비 여부를 파악하고 자신의 육체 부하 수치를 소량 낮춥니다.
+대사: 오늘은 파란색이네.
+[스킬 E1]
+이름: 밤하늘 지휘
+설명: 자신의 체력을 대량 소모해 전장 전체에 거대한 성도를 펼쳐냅니다. 범위 내 모든 아군의 상태 이상을 해제하고 높은 피해 감소를 부여하며, 적들의 시야를 밤하늘로 덮어 제한합니다. 시전 직후 육체 부하로 인해 잠시 자리에 주저앉아 행동할 수 없습니다.
+대사: 이만큼만 더 빛낼게. 다들 아프지 마요.
+대사: 별들아, 전부 이리로 와.
+[보이스]
+등장: 에일라 왔어. 근데 여기 바닥은 안 미끄러워요?
+전투: 많이 아프면 말해 줘요. 내가 별 그려 줄게.
+승리: 다 끝났어? 그럼 이제 손잡고 밥 먹으러 가요!
+패배: 몸이 조금 금 갔어… 잠깐 자고 일어나면 다시 붙어요.
+[플레이버]
+평가: 가이딩 들어가기 삼 초 전까지는 평지에서 제 발에 걸려 넘어지는 애예요. 바닥에 전선 같은 거 미리 치워 두세요, 무릎 까집니다. — 테미스 뮤즈부 관계자
+평가: 폭주 직전이었는데 눈앞에 밤하늘이 쫙 깔리더군. 정신 차려 보니 바닥에 누워 있었어. 저 작은 체구에서 어떻게 그런 출력이 나오는지 아직도 모르겠다. — 테미스 소속 센티넬
+평가: 출력 올릴 때 손끝부터 하얗게 바래며 금 가는 거, 전락 징후 아니냐고 위에서 말이 나왔었지. 본인은 한숨 자면 낫는다고 태연하게 굴던데, 그게 더 사람 속을 태운단 말이야. — 테미스 의료반 관계자`;
+const SAMPLE_EXTRA=`@에일라
+[스킬 LC]
+이름: 별점 찍기
+쿨타임: 0.7초
+대미지: 45+0.25×공격력 (1타)
+효과수치: 지면 별점 6초간 유지 (최대 5개)
+공격판정: 원거리
+다운 유발: OFF
+잡기 판정: 없음
+잡기 면역: 없음
+슈퍼아머: 없음
+무적: 없음
+운용 메모: 사거리가 짧고 탄속이 느려 견제용보다는 RC와 LC+RC 연계를 위한 지면 별점 사전 설치용으로 사용합니다.
+[스킬 RC]
+이름: 성도 투영 - 안식
+쿨타임: 9초
+대미지: 없음
+효과수치: 영역 지속 4초, 범위 내 아군 초당 60+에일라 최대 체력의 3% 지속 회복, 범위 내 적군 공격 속도 15% 감소 / 별점 위 시전 시 연결된 별점 1개당 영역 반경 15% 및 초당 회복량 20% 증가, 연결된 별점 1개당 에일라 최대 체력 8초간 3% 감소(육체 부하)
+공격판정: 없음
+다운 유발: OFF
+잡기 판정: 없음
+잡기 면역: 없음
+슈퍼아머: 없음
+무적: 없음
+운용 메모: 별점 3개 이상을 이으면 아군 전열 전체를 덮는 넓은 회복 장판이 생성되지만, 본인의 최대 체력도 함께 깎이므로 후방 안전을 확보한 뒤 펼쳐야 합니다.
+[스킬 LC+RC]
+이름: 성도 투영 - 수호의 자리
+쿨타임: 14초
+대미지: 80+0.35×공격력 (밀쳐내기 1회, 대인 보정 -20%)
+효과수치: 시전 시 에일라 현재 체력의 8% 즉시 소모, 영역 내 아군에게 5초간 220+에일라 최대 체력의 12% 보호막 부여 / 연결된 별점 1개당 보호막 수치 15% 증가 및 에일라 최대 체력 8초간 4% 감소(육체 부하)
+공격판정: 원거리
+다운 유발: 조건부 (영역 가장자리 적중 시 밀쳐내며 다운)
+잡기 판정: 없음
+잡기 면역: 없음
+슈퍼아머: 일반 슈퍼아머·전방·발동 후 0.2초부터 장판 생성 완료까지 0.4초간
+무적: 없음
+운용 메모: 돌진해 오는 적 근거리 딜러를 밀쳐내며 아군에게 두꺼운 보호막을 씌울 수 있으나, 선딜레이 첫 0.2초에는 슈퍼아머가 없어 빠른 타격에 끊길 수 있습니다.
+[스킬 Shift+LC]
+이름: 발걸음 헛디디기
+쿨타임: 8초
+대미지: 95+0.4×공격력 (1타)
+효과수치: 주변에 별점 3개 생성(6초 유지), 시전 후 에일라 본인 1.1초간 다운 상태 및 육체 부하 1중첩 누적
+공격판정: 근거리
+다운 유발: ON
+잡기 판정: 없음
+잡기 면역: 없음
+슈퍼아머: 없음
+무적: 없음
+운용 메모: 별점 세 개를 한 번에 깔고 근접한 적을 넘어뜨릴 수 있지만 본인도 함께 엎어져 긴 후딜레이가 발생하므로 단독 상황에서는 자살기가 됩니다.
+[스킬 Shift+RC]
+이름: 별똥별 떨구기
+쿨타임: 5초
+대미지: 110+0.45×공격력 (1타, 다운된 대상에게만 적중 시 대미지 20% 증가)
+공격판정: 원거리
+다운 유발: OFF (경직 0.6초)
+잡기 판정: 없음
+잡기 면역: 없음
+슈퍼아머: 없음
+무적: 없음
+운용 메모: 에일라의 키트에서 유일하게 딜링 비중이 있는 추격기로, 아군이 눕힌 적의 기상 타이밍을 늦추는 용도로 보탭니다.
+[스킬 F]
+이름: 두 손 꼭 잡기
+쿨타임: 10초
+대미지: 60+0.2×공격력 (적군 대상 잡기 성공 시 1회)
+효과수치: 아군 대상 시 에일라 현재 체력의 10% 소모하여 대상 체력 280+에일라 최대 체력의 15% 즉시 회복 / 적군 대상 시 1.2초간 이동 불가
+공격판정: 근거리
+다운 유발: OFF
+잡기 판정: 잡기 레벨 1·발동 후 0.15초 시점·손을 맞잡은 1.2초간 유지
+잡기 면역: 잡기 레벨 1·대상을 붙잡고 있는 1.2초간
+슈퍼아머: 없음
+무적: 없음
+운용 메모: 아군에게 쓰면 즉발 고효율 힐이 되지만 적에게 쓸 경우 슈퍼아머가 없어 주변 적의 타격에 쉽게 끊깁니다.
+[스킬 Space]
+이름: 품으로 숨어들기
+쿨타임: 13초
+대미지: 없음
+효과수치: 도착 지점 아군과 에일라의 이동 속도 3초간 12% 증가
+공격판정: 없음
+다운 유발: OFF
+잡기 판정: 없음
+잡기 면역: 없음
+슈퍼아머: 없음
+무적: 일반 무적·전체 방향·도약 시작 후 0.1초부터 아군에게 안기는 0.5초간 (착지 후 0.3초 후딜레이 구간은 무적 해제)
+운용 메모: 주변 범위 내에 아군이 없으면 발동 자체가 불가능하므로 고립 시 생존 수단이 완전히 사라집니다.
+[스킬 Scroll]
+이름: 영혼 색깔 읽기
+쿨타임: 16초
+대미지: 없음
+효과수치: 시전 완료 시 에일라의 누적된 육체 부하(최대 체력 감소 디버프) 1중첩 해제, 4초간 시야 반경 15% 증가
+공격판정: 없음
+다운 유발: OFF
+잡기 판정: 없음
+잡기 면역: 없음
+슈퍼아머: 없음
+무적: 없음
+운용 메모: 제자리에서 1초간 무방비로 서 있어야 하므로 교전 중에는 절대 금물이며 한타 전후 정비 구간에 사용합니다.
+[스킬 E1]
+이름: 밤하늘 지휘
+쿨타임: 105초
+대미지: 없음
+효과수치: 시전 시 에일라 현재 체력의 30% 소모, 6초간 범위 내 아군 상태 이상 1회 즉시 해제 및 받는 피해 35% 감소, 범위 내 적군 시야 반경 60% 제한 / 시전 종료 후 에일라 1.8초간 행동 불가(주저앉음)
+공격판정: 원거리
+다운 유발: OFF
+잡기 판정: 없음
+잡기 면역: 잡기 레벨 2·시전 시작부터 성도 전개 완료까지 1.2초간
+슈퍼아머: 일반 슈퍼아머·전체 방향·시전 시작부터 성도 전개 완료까지 1.2초간 (이후 주저앉는 1.8초간은 무방비)
+무적: 없음
+운용 메모: 한타 판도를 뒤집는 광역 보호 및 시야 차단기이나, 시전 직후 1.8초간 완전히 무방비 상태가 되므로 아군의 보호 없이는 시전 직후 사망하기 쉽습니다.
+[강점]
+메모: 별점 연계를 마친 뒤의 광역 지속 회복량과 보호막 수치가 최상위권이며, E1을 통한 아군 전체 세이브 능력이 탁월합니다.
+메모: 공격력 투자 효율이 낮고 회복·보호막이 본인 최대 체력 비례라 방어 장비만으로도 최고 효율의 지원 성능을 냅니다.
+[대응]
+메모: Space가 아군 대상 지정형이라 아군과 떨어뜨려 고립시키면 회피기 자체가 봉인되며, 기본 이동 속도와 근접 판정이 매우 취약합니다.
+메모: 스킬 연사로 육체 부하가 쌓여 최대 체력이 깎인 타이밍이나 Shift+LC, E1 시전 후의 긴 행동 불가 후딜레이를 노리면 순식간에 제압할 수 있습니다.`;
+$('sample').onclick=()=>{$('src').value=SAMPLE;render()};$('sampleExtra').onclick=()=>{$('extra').value=SAMPLE_EXTRA;render()};
+try{const src=localStorage.getItem('character-file.input')||'',extra=localStorage.getItem('character-file.extra')||'';$('src').value=src===SAMPLE?'':src;$('extra').value=extra===SAMPLE_EXTRA?'':extra}catch{}
+settings.customFonts=settings.customFonts.filter(entry=>{try{installCustomFont(entry);return true}catch{return false}});for(const key of ['sloganFont','nameFont'])if(!FONT[settings.b[key]])settings.b[key]=DEFAULTS.b[key];updateFontLists();
+if(settings.saveMode==='split'){settings.saveMode='full';settings.split=true}$('saveMode').value=['intro','full','skills'].includes(settings.saveMode)?settings.saveMode:'full';$('splitPng').checked=settings.split!==false;applyTheme();updateOoc();showExtra(settings.extraOpen||!!$('extra').value);render();restoreAssets();
+</script>
+</body>
+</html>
