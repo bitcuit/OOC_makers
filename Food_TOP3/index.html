@@ -547,7 +547,7 @@ document.getElementById('copyOoc').onclick=()=>{
 };
 
 let saved='';try{saved=localStorage.getItem('taste-input')||''}catch(e){}
-src.value=saved;
+src.value=saved===SAMPLE?'':saved;   // 손대지 않은 예시는 새로고침 때 비운다
 render();
 </script>
 </body>
