@@ -9,6 +9,7 @@
 
 | 도구 | 하는 일 |
 |---|---|
+| [BETWEEN US](Between_Us/index.html) | 두 캐릭터의 문답과 서로 남기는 댓글. 사진·모나 이모지·시간·색 조합을 꾸미고, 드래그 넘겨보기 또는 가로·세로 일괄 보기로 PNG · HTML을 저장합니다 |
 | [CHARACTER FILE](Character_File/index.html) | 캐릭터 소개와 스킬을 보여 줍니다. 선택 판정 상세, 이미지와 글꼴을 고르는 가로 배너, 기준색 자동 변형을 지원하고 PNG · 반응형 HTML로 저장합니다 |
 | [FOOD TOP3](Food_TOP3/index.html) | 캐릭터마다 좋아하는 음식 · 음료 · 과일 · 과자 TOP3를 뽑는 OOC. 챗봇 출력을 붙여넣으면 캐릭터별 4칸 도시락 카드로 보여 주고, PNG · HTML로 저장합니다 |
 | [FOODIE GUIDE](Foodie_Guide/index.html) | 캐릭터마다 자주 가는 맛집을 뽑는 OOC. 챗봇 출력을 붙여넣으면 캐릭터별로 영수증(늘 시키는 메뉴 · 가격 · 합계)과 메모 한 장(시그니처 · 맛 묘사 · 별점 · 한줄평)을 나란히 보여 주고, PNG · HTML로 저장합니다 |
