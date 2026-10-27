@@ -118,7 +118,7 @@ body{font-size:16px}button,input,select,textarea{font-size:14px}#copyOoc,#castBt
 
 칭호는 공백 포함 10자 이내의 1~2어절 명사구, 한마디는 평소 말투로 짧게 쓴다. 영문 이름은 기존 표기를 우선하고 없으면 로마자로 옮긴다. 동료 포켓몬은 6마리를 고른다. 강함이나 외형만이 아니라 생활 방식과 서로 맞물리는 성격으로 고르고, 같은 기준을 반복하지 않는다. 성격은 서로 다른 짧은 키워드 5개로 쓴다. 성격 묘사는 그 성향이 드러나는 평소 행동을 한두 문장으로 쓰되, 키워드를 풀어 반복하지 말고 개체마다 다른 습관을 담는다. 이는 이야기 속 개성이며 게임의 보정 성격과 다르다. 인연은 첫 만남과 가까워진 과정을 두세 문장으로 쓰고, 기존 서사가 있으면 따른다. 별명은 어울릴 때만 쓴다. 에이스는 기존 설정을 우선해 트레이너와의 호흡으로 한 마리만 고르고, 그 [포켓몬] 이름 뒤에만 ★를 붙인다. 동행 문구는 트레이너와 파티 전체의 관계가 드러나는 짧은 영어 한 줄로, 모든 파티를 같은 우정으로 뭉뚱그리지 않는다.
 
-포켓몬과 볼은 한국어 정식 명칭을 쓴다. 번호는 확실한 전국도감 번호만, 다른 모습은 확인 가능한 영문 API 식별자만 쓰고 불확실하면 그 줄을 생략한다. 기술은 배울 수 있다고 확인된 것만 최대 4개 쓴다. 성별·레벨·관계를 근거 없이 확정하지 않는다.
+실재하는 포켓몬과 볼의 한국어 정식 명칭을 쓴다. Ultra Ball은 하이퍼볼, Great Ball은 슈퍼볼이다. 한국어 '울트라볼'은 울트라비스트 포켓몬을 잡는 볼이라 다른 포켓몬에게 쓰지 않는다. 번호는 확실한 전국도감 번호만, 다른 모습은 확인 가능한 영문 API 식별자만 쓰고 불확실하면 그 줄을 생략한다. 기술은 배울 수 있다고 확인된 것만 최대 4개 쓴다. 성별·레벨·관계를 근거 없이 확정하지 않는다.
 
 다음 양식으로 [포켓몬] 묶음을 동료 수만큼 반복한다. 트레이너가 여럿이면 @이름부터 반복한다. 표시마다 새 줄에서 시작하고 큰따옴표·표·코드 블록·HTML·양식 밖 해설은 넣지 않는다.
 
@@ -205,7 +205,8 @@ const SPECIES=JSON.parse($('species-data').textContent),speciesByKey=new Map();
 const normalize=s=>String(s).toLowerCase().replace(/[\s.'’:_-]/g,'');
 for(const row of SPECIES)for(const k of row)speciesByKey.set(normalize(k),row);
 const BALLS=[['poke-ball','몬스터볼'],['great-ball','슈퍼볼'],['ultra-ball','하이퍼볼'],['master-ball','마스터볼'],['premier-ball','프리미어볼'],['luxury-ball','럭셔리볼'],['heal-ball','힐볼'],['net-ball','네트볼'],['dive-ball','다이브볼'],['nest-ball','네스트볼'],['repeat-ball','리피트볼'],['timer-ball','타이머볼'],['quick-ball','퀵볼'],['dusk-ball','다크볼'],['safari-ball','사파리볼'],['sport-ball','컴퍼티션볼'],['fast-ball','스피드볼'],['level-ball','레벨볼'],['lure-ball','루어볼'],['heavy-ball','헤비볼'],['love-ball','러브러브볼'],['friend-ball','프렌드볼'],['moon-ball','문볼'],['dream-ball','드림볼'],['beast-ball','울트라볼']];
-const ballKey=s=>BALLS.find(b=>b.some(x=>normalize(x)===normalize(s)))?.[0]||'';
+const BALL_ALIASES={'그레이트볼':'great-ball'};
+const ballKey=s=>BALL_ALIASES[normalize(s)]||BALLS.find(b=>b.some(x=>normalize(x)===normalize(s)))?.[0]||'';
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function remember(){try{localStorage.setItem(KEY+'.settings',JSON.stringify(settings))}catch(e){$('saveStatus').textContent='설정을 브라우저에 보관하지 못했어요.'}}
 function keepInput(){try{if(src.value===SAMPLE)localStorage.removeItem(KEY+'.input');else localStorage.setItem(KEY+'.input',src.value)}catch(e){$('parseStatus').textContent='입력을 보관하지 못했어요. 글을 따로 복사해 두세요.'}}
