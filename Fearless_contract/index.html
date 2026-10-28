@@ -871,9 +871,37 @@ const DEF_HAND={'강태환':'OOCHand GangInHanWiRo','서재훈':'OOCHand MiRaeNa
 if(!load('fix.seojaehoon',false)){hands['서재훈']=Object.assign({},hands['서재훈'],{name:'OOCHand MiRaeNaMu',sign:'OOCHand MiRaeNaMu'});store('hands',hands);store('fix.seojaehoon',true)}
 const SIGN_POOL=HANDS.filter(h=>h[6]===2).map(h=>h[1]);
 function hash(s){let h=7;for(const c of s)h=(h*31+c.codePointAt(0))>>>0;return h}
+// 처음 나온 인물은 성별 · 나이 · 분류 · 성격을 보고 어울리는 손글씨를 한 번 골라 둔다(autoHand). 직접 고르면 그것이 먼저
+const autoHand=load('autoHand',{});
+const HAND_RULES=[
+  [/귀엽|발랄|명랑|해맑|순수|애교|활발|천진|밝은|밝음/,{'귀여운':2,'동글동글':2,'둥근_손글씨':2}],
+  [/무심|무뚝뚝|냉정|냉철|차분|과묵|절제|침착|이성적|원칙|건조|무관심|관찰/,{'또박또박':2,'펜':2,'손글씨_고딕':2,'각진_손글씨':2,'귀여운':-2}],
+  [/오만|거칠|호쾌|자유|여유|능글|장난|대담|자신만만|통제|지배|조롱|도발/,{'필기체':2,'기울어진':2,'캘리그라피':2,'두꺼운':1,'귀여운':-1}],
+  [/다정|섬세|감성|예민|상냥|온화|부드|따뜻/,{'감성적인':2,'둥근_손글씨':1}],
+  [/괴짜|독특|엉뚱|4차원|자유분방|변덕/,{'독특한':2,'삐뚤빼뚤':2}],
+  [/남/,{'두꺼운':1,'각진_손글씨':1,'귀여운':-1}],
+  [/여/,{'감성적인':1,'둥근_손글씨':1}]
+];
+function pickHand(who,p){
+  const txt=[p.kw,p.pers].filter(Boolean).join(' '),age=parseInt(p.age)||0,kid=age&&age<14;
+  const rank=HANDS.filter(h=>/^https?:|^@/.test(h[2])).map(h=>{const t=h[7].split(' ');let sc=h[6]*.5+(t.includes('어른_손글씨')&&!kid?1:0);
+    if(kid)sc+=t.includes('아이_손글씨')?4:0;else if(h[5]==='아이 손글씨'||t.includes('아이_손글씨'))sc-=10;
+    for(const [re,w] of HAND_RULES.slice(0,5))if(re.test(txt))for(const k in w)if(t.includes(k))sc+=w[k];
+    const sex=String(p.sex||'');for(const [re,w] of HAND_RULES.slice(5))if(re.test(sex))for(const k in w)if(t.includes(k))sc+=w[k];
+    return [sc,h[1]]}).sort((a,b)=>b[0]-a[0]).slice(0,6);
+  return rank[hash(who)%rank.length][1];
+}
+// 계약서 인물(성격이 있는 곳)과 지금 서류 인물 중 처음 보는 이름만. 정보가 하나도 없으면 고르지 않는다
+function assignAutoHands(){
+  const C=parse(inputs.contract||'').people;let n=0;
+  for(const p of [...C,...current.people]){const who=(p&&p.name||'').trim();
+    if(!who||autoHand[who]||DEF_HAND[who]||(hands[who]||{}).name||!(p.sex||p.age||p.kw||p.pers))continue;
+    autoHand[who]=pickHand(who,p);n++}
+  if(n)store('autoHand',autoHand);
+}
 function handOf(who){
   const h=hands[who]||{};
-  const def=DEF_HAND[who]||SIGN_POOL[hash(who)%SIGN_POOL.length];
+  const def=DEF_HAND[who]||(byFam.has(autoHand[who])?autoHand[who]:SIGN_POOL[hash(who)%SIGN_POOL.length]);
   return {name:byFam.has(h.name)?h.name:def,sign:byFam.has(h.sign)?h.sign:(byFam.has(h.name)?h.name:def),img:h.img||0};
 }
 // 글자가 유난히 작게 그려지는 손글씨는 같은 크기에서 눈으로 맞게 키운다
@@ -1071,7 +1099,8 @@ const DEFAULT_CLAUSES=['상기 2인은 FEARLESS 소속 전담 페어로서 모�
 const ORG='<p class="org">센티넬관리국 한국 지부 FEARLESS</p>';
 function contract(d){
   const P=[d.people[0],d.people[1]];
-  const rows=P.map((p,i)=>({p,i,k:(p&&p.kind)||(i?'가이드':'센티넬')})).sort((a,b)=>(a.k.includes('가이드')?1:0)-(b.k.includes('가이드')?1:0));
+  // 서명 줄은 위 표 순서 그대로(위에 쓴 사람이 위에)
+  const rows=P.map((p,i)=>({p,i,k:(p&&p.kind)||(i?'가이드':'센티넬')}));
   return `<div class="pp"><h1 class="ttl">FEARLESS 전담 페어 계약서</h1>${pblock(P[0],0,false)}${pblock(P[1],1,true)}
 <div class="cl">${DEFAULT_CLAUSES.map(c=>`<p>${v(c)}</p>`).join('')}</div>
 <p class="oath">“${OATH}”</p>
@@ -1157,6 +1186,7 @@ function render(){
     }
   }
   current=applyEdits(current);
+  assignAutoHands();
   const st=$('parseStatus');
   st.textContent=text.trim()&&!filled(current)?'양식을 읽지 못했어요. [인물] 줄과 이름: · 날짜: 같은 줄이 필요해요.':
     (current.type&&current.type!==DOCS[tab]?`${current.type} 출력이에요. ${current.type} 탭에 붙여넣어 주세요.`:'');
@@ -1954,7 +1984,7 @@ const setResetPip=makePip($('resetPip'),$('resetBtn'),'#resetNo');
 $('resetNo').onclick=()=>setResetPip(false);
 // 묶음마다 [저장 이름, 이미지 키 머리]
 const RESET={text:[['input.','dates','edits','log','signers','cast'],[]],photo:[['photos'],['photo:']],stk:[['stickers'],['stk:']],
-  hand:[['hands','fonts','handTag','place'],['sign:','seal:','font:']],view:[['settings'],[]]};
+  hand:[['hands','fonts','handTag','place','autoHand'],['sign:','seal:','font:']],view:[['settings'],[]]};
 const resetBoxes=[...$('resetPip').querySelectorAll('[data-r]')];
 resetBoxes.forEach(b=>b.onchange=()=>{$('resetYes').disabled=!resetBoxes.some(x=>x.checked)});
 $('resetYes').onclick=async()=>{
