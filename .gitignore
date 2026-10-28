@@ -29,9 +29,16 @@ REFERENCES.md
 HANDOFF.json
 요청.md
 도구틀.md
+글꼴저작권.md
 
 # 도구 기획 문서
 /Character_File/기획.md
 
 # OOC · 예시 txt 원본(페이지에 옮겨 씀, 글꼴 라이선스 txt 는 fonts/ 안이라 해당 없음)
 /*/*.txt
+
+# FEARLESS FILE 예시 그림(사용자가 준 참고용, 도구에 필요 없음)
+/Fearless_contract/예시.png
+/Fearless_contract/전담계약서(센-센).png
+# 직인 원본(흰 바탕 · 2MB). 페이지는 바탕을 투명하게 줄인 seal.png 를 쓴다
+/Fearless_contract/stamp.png

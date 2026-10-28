@@ -1,0 +1,1956 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FEARLESS 서류철</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Crect x='1' y='2' width='6' height='2' fill='%23a88d58'/%3E%3Crect x='1' y='4' width='14' height='11' fill='%23a88d58'/%3E%3Crect x='2' y='5' width='12' height='9' fill='%23d2bb8c'/%3E%3Crect x='4' y='3' width='9' height='10' fill='%23ffffff'/%3E%3Crect x='5' y='5' width='7' height='1' fill='%236b6f75'/%3E%3Crect x='5' y='7' width='7' height='1' fill='%23b9bcc1'/%3E%3Crect x='5' y='9' width='5' height='1' fill='%23b9bcc1'/%3E%3Crect x='10' y='10' width='2' height='2' fill='%23b3261e'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-kr@5.2.8/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-kr@5.2.8/700.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-sans-kr@5.2.8/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-sans-kr@5.2.8/600.css">
+<script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.js" defer></script>
+<style id="card-css">
+/* 서류철 · 종이 — 저장물에 그대로 들어가는 규칙만 */
+/* 서류철 좌표: 펼친 판 1784 × 1245(오른쪽 20px 은 색인이 삐져나오는 자리). 뒤판은 x 882 · y 42 에서 882 × 1203, 표지는 뒤판 왼쪽 끝을 경첩으로 펼친다 */
+.folder{--ink:#17191c;--kraft:#d2bb8b;--kraftd:#a88c58;position:relative;width:1784px;height:1245px;font-family:"Noto Serif KR",serif;color:var(--ink);perspective:3200px}
+.kraft{background-color:var(--kraft);background-image:url("img/kraft.jpg");background-size:520px 520px}
+.board{position:absolute;left:882px;top:42px;width:882px;height:1203px;border-radius:0 12px 12px 12px;box-shadow:inset 0 0 0 1px rgba(96,74,36,.28),inset 0 -3px 8px rgba(96,74,36,.14),0 22px 44px rgba(0,0,0,.42),0 3px 8px rgba(0,0,0,.3)}
+/* 접는 금(경첩 쪽 두 줄) */
+.board::before,.inside::after{content:"";position:absolute;top:0;bottom:0;width:10px;border-left:1px solid rgba(96,74,36,.22);border-right:1px solid rgba(255,250,235,.28)}
+.board::before{left:12px}
+.inside::after{right:12px}
+/* 서류 색인: 종이 오른쪽 끝에 붙인 색인 필름. 덮어도 표지 밖으로 끝이 보인다 */
+/* 색인은 서류마다 그 종이에 붙어 있다: 맨 위 서류의 색인만 종이 위, 나머지는 붙인 부분이 맨 위 종이에 가려진다 */
+.tabs{position:absolute;left:1688px;top:168px;display:flex;flex-direction:column;gap:12px}
+.tab{position:relative;z-index:1;width:80px;height:118px;padding:0 4px 0 32px;border:0;border-radius:0 9px 9px 0;writing-mode:vertical-rl;font:700 15px/1 "Noto Serif KR",serif;letter-spacing:.32em;color:rgba(30,26,20,.8);cursor:pointer;background:linear-gradient(to right,#fff 0 32px,var(--tc) 32px);filter:brightness(.94);box-shadow:inset 0 0 0 1px rgba(40,30,15,.18),0 1px 2px rgba(40,30,15,.22)}
+.tab[data-tab="contract"]{--tc:#dcb25a}
+.tab[data-tab="recommend"]{--tc:#8fb1cf}
+.tab[data-tab="review"]{--tc:#a7bf8e}
+.tab[aria-selected="true"]{z-index:3;filter:none;color:#1d1a14;box-shadow:inset 0 0 0 1px rgba(40,30,15,.22),0 2px 5px rgba(40,30,15,.3)}
+.fmark{position:absolute;right:44px;bottom:14px;font:400 12px/1 "Noto Serif KR",serif;letter-spacing:.18em;color:rgba(84,64,30,.62)}
+.paper{position:absolute;z-index:2;left:926px;top:78px;width:794px;height:1123px;background:#fff;overflow:hidden;box-shadow:0 1px 0 rgba(70,52,20,.22),0 8px 22px rgba(70,52,20,.22)}
+/* 밑에 깔린 두 장(색인 붙은 서류들) */
+.under{position:absolute;z-index:0;left:926px;top:78px;width:794px;height:1123px;background:#fbfbf9;box-shadow:0 0 0 1px rgba(70,52,20,.14),0 2px 6px rgba(70,52,20,.16)}
+.under.u1{transform:translate(4px,5px) rotate(.25deg)}
+.under.u2{transform:translate(8px,9px) rotate(-.2deg)}
+/* 두 구멍 집게: 종이 위쪽 가운데 */
+.clip{position:absolute;left:1173px;top:74px;width:300px;pointer-events:none;user-select:none;-webkit-user-drag:none;z-index:3}
+.cover{position:absolute;left:882px;top:48px;width:866px;height:1197px;transform-origin:0 50%;transform-style:preserve-3d;z-index:4}
+.folder[data-open="true"] .cover{transform:rotateY(-180deg)}
+.face{position:absolute;inset:0;border-radius:0 12px 12px 0;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden}
+.front{box-shadow:inset 0 0 0 1px rgba(96,74,36,.3),0 4px 12px rgba(40,28,10,.35);cursor:pointer}
+.inside{transform:rotateY(180deg);border-radius:12px 0 0 12px;box-shadow:inset 0 0 0 1px rgba(96,74,36,.28),inset 0 -3px 8px rgba(96,74,36,.14),0 22px 44px rgba(0,0,0,.42),0 3px 8px rgba(0,0,0,.3)}
+.inside.kraft,.front.kraft{background-color:#cdb585}
+/* 표지 앞면 인쇄 */
+.cv{position:absolute;inset:0}
+.cv-org{position:absolute;right:56px;text-align:right;margin:0;top:54px;font-size:13px;letter-spacing:.22em;color:rgba(70,52,22,.78)}
+.cv-label{position:absolute;left:50%;top:236px;width:500px;margin-left:-250px;padding:34px 40px 30px;background:#fbfaf6;box-shadow:0 1px 2px rgba(40,28,10,.28);text-align:center}
+.cv-label::before{content:"";position:absolute;inset:8px;border:1px solid rgba(23,25,28,.55);pointer-events:none}
+.cv-label .t1{margin:0;font-size:44px;font-weight:700;letter-spacing:.08em;line-height:1.1}
+.cv-label .t2{margin:12px 0 0;font-size:18px;letter-spacing:.3em}
+.cv-label .who .bar{color:rgba(23,25,28,.45);letter-spacing:0}
+.cv-label .who{margin:26px 0 0;padding-top:20px;border-top:1px solid rgba(23,25,28,.35);display:flex;justify-content:center;gap:28px;font-size:24px;letter-spacing:.12em;line-height:1.2}
+/* 표지 안쪽 인쇄: 열람 기록 */
+.cvi-log{position:absolute;left:64px;right:64px;bottom:72px;color:#3b2c12}
+.cvi-log h3{margin:0 0 10px;font-size:16px;font-weight:700;letter-spacing:.3em}
+.cvi-log table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:14px}
+.cvi-log th,.cvi-log td{height:42px;border:1px solid rgba(70,52,22,.55);padding:0 12px;text-align:center;font-weight:400}
+.cvi-log .nm{font-size:calc(var(--lgz,30px) * var(--fk,1))}
+.cvi-log td{position:relative}
+/* 편집 모드: 첫 빈 줄 첫 칸에 투명한 작은 단추(칸 · 선 그대로) */
+.cvi-log .logadd{height:30px;padding:0 12px;border:1px dashed var(--sel);border-radius:6px;background:transparent;color:var(--sel);font:600 14px "IBM Plex Sans KR",sans-serif;cursor:pointer;vertical-align:middle}
+.cvi-log .logadd:hover{background:rgba(47,111,214,.08)}
+.cvi-log th{height:34px;background:rgba(255,248,230,.25);letter-spacing:.2em}
+.cv-stamp{width:560px;z-index:3;opacity:.85;mix-blend-mode:multiply}
+.cv-stamp>img{display:block;width:100%;pointer-events:none;-webkit-user-drag:none}
+.pp{--k:1;--f:calc(13.5px * var(--k));position:absolute;inset:0;display:flex;flex-direction:column;padding:40px 70px 40px;   /* 위 · 아래 여백 같게 */font-size:var(--f);line-height:1.6}
+.ttl{margin:0 0 18px;text-align:center;font-size:34px;font-weight:700;letter-spacing:.02em;line-height:1.2}
+.pt{width:100%;border-collapse:collapse;table-layout:fixed}
+.pt td,.pt th{border:1px solid var(--ink);padding:calc(5px * var(--k)) 10px;vertical-align:middle;font-weight:400;word-break:keep-all;overflow-wrap:anywhere;line-height:1.45}
+.pt .lb{padding:0 12px;white-space:nowrap}
+.sp{display:flex;justify-content:space-between}
+.pt .c{text-align:center;padding-left:4px;padding-right:4px}
+.pt .hd{text-align:center;letter-spacing:1.6em;padding-left:1.6em}
+.pt th{font-weight:700;text-align:center}
+.pre{white-space:pre-line}
+/* 계약서 표: 이름 ~ 성격 머리까지는 칸 높이 고정(두 사람 같게), 성격 본문만 늘어난다. 넘치면 칸 안 글자를 줄인다 */
+.pt tr.fx>td{height:28px;padding-top:0;padding-bottom:0}
+.pt .one{white-space:nowrap;overflow:hidden}
+.pt .abx{height:58px;overflow:hidden;display:flex;flex-direction:column;justify-content:center;line-height:1.4}
+.pt tr.fx .abx{white-space:pre-line}
+.pb{display:grid;grid-template-columns:200px minmax(0,1fr)}
+.pb+.pb{margin-top:10px}
+.pb.rev{grid-template-columns:minmax(0,1fr) 200px}
+/* 계약서 사진 칸: 칸 안에 3:4 증명사진 자리 */
+.phc{display:flex;align-items:center;justify-content:center;padding:14px;border:1px solid var(--ink);border-right:0}
+.pb.rev .phc{order:2;border-left:0;border-right:1px solid var(--ink)}
+.phc .ph{width:100%;aspect-ratio:3/4;border-color:#8d9096}
+/* 칸에 맞추기: 사진이 계약서 사진 칸 전체를 채운다 */
+.paper.phfill .phc{padding:0}
+.paper.phfill .phc .ph{aspect-ratio:auto;height:100%;border:0}
+.ph{position:relative;overflow:hidden;background:#ecebe7;border:1px solid var(--ink)}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;user-select:none;-webkit-user-drag:none}
+.pers{padding:calc(8px * var(--k)) 18px !important}
+.kw{margin:0 0 4px;text-align:center}
+.pers .pre{margin:0}
+.persb{height:92px;overflow:hidden;display:flex;flex-direction:column;justify-content:center}
+.cl{margin-top:14px;text-align:center;line-height:1.8}
+.cl p,.oath,.pledge,.date{margin:0}
+.oath{margin-top:10px;text-align:center}
+.pledge{margin-top:10px;text-align:center}
+.date{margin-top:12px;text-align:center;font-size:17px}
+.signs{margin:6px 0 0 auto;width:max-content;display:grid;gap:0}
+.sr{display:grid;grid-template-columns:minmax(60px,max-content) 172px;column-gap:8px;align-items:center;min-height:46px}
+.sr .lbl{text-align:center;line-height:1.3}
+.sr .lbl small{display:block;white-space:nowrap;font-size:11px;color:#55595f;letter-spacing:0}
+.sr .lbl b{font-weight:400;letter-spacing:.35em;padding-left:.35em}
+/* 서명 줄: 구분 · 손글씨 이름 · (인). 서명 · 직인은 (인) 위에 얹고 끌어 옮긴다 */
+.slot{position:relative;height:46px}
+.slot .nm{position:absolute;left:4px;top:50%;transform:translateY(-50%);font-size:calc(var(--nmz,26px) * var(--fk,1));line-height:1;white-space:nowrap}
+.slot .in{position:absolute;right:0;top:calc(50% - 9px);font-size:13.5px;line-height:18px;color:#2b2e33}
+.mv{position:absolute;left:0;top:0;transform-origin:50% 50%;touch-action:none;user-select:none;cursor:grab}
+.sig,.seal,.pseal{left:0;top:0}
+.sig .sgt{display:block;font-size:var(--sgz,32px);line-height:1.1;white-space:nowrap;color:#131417}
+.sig img{display:block;height:calc(var(--sgz,32px) * 1.44);mix-blend-mode:multiply;pointer-events:none;-webkit-user-drag:none}
+.seal{width:52px;height:52px}
+/* 이름으로 찍는 도장(그림이 없을 때) */
+.pseal{display:grid;grid-template-columns:1fr 1fr;place-items:center;width:50px;height:50px;padding:4px;border:3px solid #b3261e;border-radius:5px;color:#b3261e;font-size:18px;font-weight:700;line-height:1;mix-blend-mode:multiply;opacity:.9}
+.pseal.v{display:flex;writing-mode:vertical-rl;justify-content:center;letter-spacing:.06em}
+.pseal img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none}
+.pseal.has{border:0;padding:0}
+.pseal.has>span{visibility:hidden}
+.seal img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply;pointer-events:none;-webkit-user-drag:none}
+.seal.none{display:none}
+.org{margin:auto 0 0;padding-top:10px;text-align:center;font-size:28px;font-weight:700;letter-spacing:.02em;line-height:1.2}
+.sec{margin:calc(15px * var(--k)) 0 calc(6px * var(--k));padding-bottom:3px;border-bottom:1.5px solid var(--ink);font-size:calc(15px * var(--k));font-weight:700;letter-spacing:.04em;line-height:1.3}
+.pt.fitbox2{width:200px;margin:8px 0 0 auto}
+.pt.fitbox2 td{height:38px}
+.pt .fitv{text-align:center;font-size:20px;font-weight:700}
+.box{white-space:pre-line;line-height:1.7;padding:0 2px}
+.pt.ft,.pt.ev,.pt.pr{margin-top:8px}
+.pr td{text-align:center}
+.pr th{height:28px;padding:0 12px}
+.pt td.tx{padding:7px 12px;vertical-align:middle}
+.txb{height:calc(var(--n) * 22.3px);overflow:hidden;white-space:pre-line;line-height:1.65;display:flex;flex-direction:column;justify-content:center}   /* 13.5px × 1.65 줄. 글자를 줄여도 칸 높이는 그대로 */
+.mini{display:grid;grid-template-columns:120px minmax(0,1fr)}
+.mini+.mini{margin-top:8px}
+.mini .ph{border-right:0;height:151px;width:113px}
+/* 추천서 사진: 칸을 꽉 채우는 3:4(138 × 표 높이 약 184) */
+.pcard.rc{grid-template-columns:136px minmax(0,1fr)}
+.pair2:has(.rc){gap:10px}
+.pcard.rc>.ph{height:auto;aspect-ratio:auto;border:1px solid var(--ink);border-right:0}
+.pcard.rc .pt .lb{padding:0 8px}
+.pcard.rc .pt .c{padding-left:2px;padding-right:2px}
+.pt .abx.ab2{height:58px}
+.pt .abx.tm2{height:38px}
+.paper.nowrapf .abx.tm2,.paper.nowrapf .abx.ab2{overflow:hidden}
+.paper.nowrapf .abx.tm2>div,.paper.nowrapf .abx.ab2>div{white-space:nowrap}
+
+.fit{margin-top:calc(10px * var(--k))}
+.pair2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:calc(12px * var(--k))}
+/* 평가서 인물 칸: 3:4 증명사진 + 이름 · 코드네임 · 분류 · 등급 표(줄 높이 고정) */
+.pcard{display:grid;grid-template-columns:auto minmax(0,1fr)}
+.pcard .ph{border-right:0;height:calc(124px * var(--k));aspect-ratio:3/4}
+.ev td:nth-child(1),.ev td:nth-child(2){text-align:center}
+.pt tr.evr>td,.pt tr.evr>th{height:66px;padding-top:0;padding-bottom:0}
+.pt .abx.ev2{height:62px;line-height:1.5}   /* 평가 세 줄 */
+.ev tr.total td:nth-child(2){font-size:20px;font-weight:700}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.res{position:relative}
+.rstamp{position:absolute;right:6px;top:50%;width:150px;transform:translateY(-50%) rotate(-7deg);opacity:.85;mix-blend-mode:multiply;pointer-events:none}
+.pno{position:absolute;left:70px;right:70px;bottom:6px;margin:0;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#6b6f75;letter-spacing:.1em}   /* 쪽 넘김은 양 끝 — 가운데 기관 이름을 가리지 않게 */
+.pgb{width:calc(32px * var(--inv,1));height:calc(32px * var(--inv,1));border:1px solid #c3c8cd;border-radius:calc(7px * var(--inv,1));background:#fff;color:#2b2e33;font-size:calc(18px * var(--inv,1));line-height:1;cursor:pointer;display:inline-grid;place-items:center;padding:0}
+.pgb svg{width:55%;height:55%;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.pgb:hover{border-color:#1a1d21}
+.pgb:disabled{opacity:.3;cursor:default}
+.stks{position:absolute;inset:0;pointer-events:none;z-index:3}
+.stks[data-layer="board"]{inset:auto;left:882px;top:42px;width:882px;height:1203px}
+.stk{pointer-events:auto}
+.stk img{display:block;width:100%;pointer-events:none;-webkit-user-drag:none}
+.stk.sticker img{filter:drop-shadow(1.6px 0 0 #fff) drop-shadow(-1.6px 0 0 #fff) drop-shadow(0 1.6px 0 #fff) drop-shadow(0 -1.6px 0 #fff) drop-shadow(0 1px 2px rgba(30,24,14,.3))}
+.stk.photo{background:#fff;padding:7px 7px 9px;box-shadow:0 1px 3px rgba(30,24,14,.28)}
+.stk .tx{display:block;white-space:pre;line-height:1.2;font-size:40px}
+</style>
+<style>
+/* 페이지 */
+/* 관공서 서식철처럼 차가운 회색 창 + 짙은 책상. 붉은색은 도장에만 */
+:root{--desk:#25292d;--side:#e6e8ea;--line:#c2c7cc;--edge:#aeb4ba;--ink:#1a1d21;--sub:#555b62;--go:#1f2b40;--sel:#2f6fd6}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0;height:100%}
+body{background:var(--desk);color:var(--ink);font:400 14px/1.5 "IBM Plex Sans KR","Malgun Gothic",sans-serif}
+button{font:inherit;color:inherit}
+.app{height:100vh}
+.main{height:100vh}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.btn{height:32px;padding:0 12px;border:1px solid var(--edge);border-radius:6px;background:#fff;cursor:pointer;white-space:nowrap}
+.btn:hover{border-color:var(--ink)}
+.btn.go{background:var(--go);border-color:var(--go);color:#fff}
+.btn.go:hover{background:#2c3d5e}
+.btn:disabled{opacity:.45;cursor:default}
+.btn:focus-visible,.chip:focus-visible,.tab:focus-visible,.cell:focus-visible{outline:2px dashed var(--sel);outline-offset:2px}
+.status{font-size:12.5px;color:var(--sub)}
+.status:empty{display:none}
+.badge{display:inline-block;margin-left:6px;padding:0 7px;border-radius:9px;background:#d3d7db;font-size:11.5px;color:#4b4f55;vertical-align:1px}
+.peek{margin-top:8px}
+.peek summary{cursor:pointer;font-size:12.5px;color:var(--sub);width:max-content}
+pre.ooc{margin:8px 0 0;max-height:260px;overflow:auto;padding:10px 12px;border:1px solid var(--line);border-radius:6px;background:#fff;white-space:pre-wrap;font:12px/1.6 "IBM Plex Sans KR",sans-serif}
+textarea{flex:1;width:100%;min-height:120px;margin-top:8px;padding:10px 12px;border:1px solid var(--edge);border-radius:6px;background:#fff;resize:none;font:12.5px/1.6 "IBM Plex Sans KR",sans-serif;color:var(--ink)}
+textarea:focus{outline:0;border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+.seg{display:inline-flex;border:1px solid var(--edge);border-radius:6px;overflow:hidden;background:#fff}
+.seg button{height:30px;padding:0 11px;border:0;background:none;cursor:pointer;white-space:nowrap}
+.seg button+button{border-left:1px solid #d9d4c8}
+.seg button[aria-pressed="true"]{background:var(--go);color:#fff}
+.main{position:relative;min-width:0;min-height:0;display:flex;flex-direction:column}
+.stage{flex:1;min-height:0;overflow:auto;padding:78px 24px 88px;background:radial-gradient(ellipse 70% 60% at 55% 42%,rgba(255,236,200,.07),rgba(0,0,0,.38) 100%),url("img/desk.jpg") 0 0/512px 512px,var(--desk)}
+.stage.fitmode{overflow:hidden}
+.fitbox{position:relative;margin:0 auto}
+.fitbox>.folder{position:absolute;left:0;top:0;transform-origin:0 0;z-index:1}
+/* 책상 물건: 서류철과 같은 좌표 · 배율로, 서류철 밑. 저장물에는 안 들어간다 */
+.desk{position:absolute;left:0;top:0;width:1784px;height:1245px;transform-origin:0 0;pointer-events:none;z-index:0}
+.ditem{position:absolute;user-select:none;-webkit-user-drag:none;filter:drop-shadow(12px 16px 14px rgba(0,0,0,.42)) drop-shadow(2px 3px 3px rgba(0,0,0,.35))}
+.desk.off{display:none}
+.fitbox.editing .desk{pointer-events:auto}
+.fitbox.editing .desk [data-zone]{cursor:grab;outline:1px dashed rgba(156,192,255,.55);outline-offset:6px}
+/* 책상 위 증명사진 두 장: 흰 테두리 인화지, 조금 겹쳐 흩어 둔다 */
+.dphotos{position:absolute;width:300px;height:230px}
+.dph{position:absolute;width:132px;height:176px;padding:7px 7px 9px;background:#fbfbf8;box-shadow:6px 10px 12px rgba(0,0,0,.4),1px 2px 3px rgba(0,0,0,.3);overflow:hidden}
+.dph:nth-child(1){left:0;top:10px;transform:rotate(-9deg)}
+.dph:nth-child(2){left:120px;top:30px;transform:rotate(7deg)}
+.dph img{width:100%;height:100%;object-fit:cover;display:block}
+.drow{display:grid;grid-template-columns:72px 32px minmax(0,1fr) 32px;align-items:center;gap:6px}
+.drow b{font-size:12.5px;font-weight:600;color:var(--sub)}
+.drow span{text-align:center;font-size:13px}
+.drow .btn{width:32px;padding:0}
+/* 움직임은 덮기 · 펼치기를 누를 때만(처음 열 때는 없음) */
+.fitbox.anim{transition:width .75s cubic-bezier(.3,.7,.2,1)}
+.fitbox.anim>.folder,.fitbox.anim>.desk,.fitbox.anim .cover{transition:transform .75s cubic-bezier(.3,.7,.2,1)}
+@media (prefers-reduced-motion:reduce){.fitbox.anim,.fitbox.anim>.folder,.fitbox.anim>.desk,.fitbox.anim .cover{transition:none}}
+.dline{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:8px;margin-top:10px}
+.dline span{width:40px;font-size:12.5px;font-weight:600;color:var(--sub)}
+.dline2{margin-top:8px;padding-left:48px;flex-wrap:nowrap}
+.sizes{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:12px;font-size:12.5px;color:var(--sub)}
+.sizes label{display:flex;align-items:center;gap:8px}
+.sizes input{width:110px;accent-color:var(--go)}
+.chk2{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--sub);cursor:pointer;margin-right:4px}
+.setlist{display:grid;gap:10px;padding-top:6px}
+.setlist small{color:var(--sub);font-size:11.5px;margin-left:2px}
+.chk2 input{margin:0;width:15px;height:15px;accent-color:var(--go)}
+.askzoom{width:320px;text-align:center}
+.resetlist{display:grid;gap:6px;text-align:left;margin:0 0 10px}
+.resetnote{margin:0 0 12px;font-size:12.5px;color:var(--sub);line-height:1.6}
+.btn.danger{background:#b3261e;border-color:#b3261e;color:#fff}
+.btn.danger:hover{background:#9c2019}
+/* 제목 · 단추 모두 가운데. 닫기(×)는 오른쪽 위에 겹쳐 둔다 */
+.askzoom .pip-bar{position:relative;justify-content:center;padding:16px 40px 6px}
+.askzoom .pip-x{position:absolute;right:8px;top:8px}
+.askzoom .row{justify-content:center}
+.fadd{margin-top:14px;padding-top:4px;border-top:1px solid var(--line)}
+.fadd .status{margin:6px 0 0}
+/* 1 · 2 · 3 단계 단추: 책상 왼쪽 위에 떠 있다 */
+.steps{position:fixed;left:20px;top:18px;z-index:12;display:flex;align-items:center;gap:6px}
+.brand{margin-right:8px;font:700 17px/1 "Noto Serif KR",serif;letter-spacing:.14em;color:#e9e1cf}
+.stepbtn,.iconbtn{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 14px 0 11px;border:1px solid rgba(255,255,255,.16);border-radius:10px;background:rgba(32,35,40,.86);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:#eef0f2;cursor:pointer;white-space:nowrap}
+.iconbtn{width:40px;padding:0;justify-content:center}
+.stepbtn:hover,.iconbtn:hover{border-color:rgba(255,255,255,.5)}
+.stepbtn[aria-expanded="true"],.iconbtn[aria-expanded="true"]{background:#eef0f2;color:#1c1e22}
+.stepbtn svg,.iconbtn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.stepbtn b{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:rgba(255,255,255,.16);font-size:11px;font-weight:600}
+.stepbtn[aria-expanded="true"] b{background:rgba(0,0,0,.1)}
+/* OOC 덩어리: 서류 고르기 | 바꾸기 | 1 OOC 복사 — 하는 순서대로 한 상자 안에 */
+.stepgrp{display:inline-flex;align-items:center;height:40px;padding:3px;gap:0;border:1px solid rgba(255,255,255,.16);border-radius:10px;background:rgba(32,35,40,.86);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.stepgrp>.in{height:32px;border:0;background:none;backdrop-filter:none;-webkit-backdrop-filter:none;border-radius:7px}
+.stepgrp>.in+.in{margin-left:7px;position:relative}
+.stepgrp>.in+.in::before{content:"";position:absolute;left:-4px;top:6px;bottom:6px;width:1px;background:rgba(255,255,255,.18)}
+.stepgrp>.docseg.in{padding:0;height:32px}
+.stepgrp>.iconbtn.in{width:34px}
+.stepgrp>.stepbtn.in{padding:0 12px 0 9px}
+.stepgrp>.in:hover{background:rgba(255,255,255,.08)}
+.stepgrp>.in[aria-expanded="true"]{background:#eef0f2;color:#1c1e22}
+.docseg{display:inline-flex;height:40px;padding:3px;gap:2px;border:1px solid rgba(255,255,255,.16);border-radius:10px;background:rgba(32,35,40,.86);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.docseg button{padding:0 11px;border:0;border-radius:7px;background:none;color:#cfd4d9;font-size:13px;cursor:pointer;white-space:nowrap}
+.docseg button:hover{color:#fff}
+.docseg button[aria-pressed="true"]{background:#eef0f2;color:#1c1e22}
+.docseg button:focus-visible{outline:2px dashed #9cc0ff;outline-offset:1px}
+.stepbtn em{font-style:normal;font-size:11.5px;padding:1px 7px;border-radius:9px;background:rgba(255,255,255,.14);color:#dfe3e7}
+.steps .status{margin-left:6px;padding:4px 10px;border-radius:7px;background:rgba(20,22,26,.85);color:#fff}
+.stepbtn:focus-visible,.iconbtn:focus-visible{outline:2px dashed #9cc0ff;outline-offset:2px}
+#pastePip{width:420px}
+.paste-in{display:flex;flex-direction:column}
+.paste-in textarea{flex:none;height:min(46vh,440px)}
+.tools{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);display:flex;align-items:center;gap:6px;padding:7px;border:1px solid rgba(255,255,255,.14);border-radius:10px;background:rgba(32,35,40,.86);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:#eef0f2;white-space:nowrap;z-index:10}
+.tools .btn{background:transparent;border-color:rgba(255,255,255,.22);color:#eef0f2}
+.tools .btn:hover{border-color:#fff}
+.tools .btn[aria-pressed="true"]{background:#eef0f2;color:#1c1e22}
+/* 덮기 ↔ 펼치기 글자 수가 달라도 단추 폭은 그대로 */
+#coverBtn{width:72px;text-align:center}
+/* 편집 모드: 고칠 수 있는 글에 점선, 누르면 그 자리에서 고친다 */
+.editing .ed{outline:1px dashed rgba(47,111,214,.5);outline-offset:1px;cursor:text;min-width:1em;display:inline-block}
+.editing .ed:empty::before{content:"＋";color:rgba(47,111,214,.6)}
+.editing .ed:focus{outline:2px solid var(--sel);background:rgba(47,111,214,.07)}
+.addbtn{display:block;margin:calc(8px * var(--inv,1)) auto 0;padding:calc(6px * var(--inv,1)) calc(16px * var(--inv,1));border:1px dashed var(--sel);border-radius:calc(8px * var(--inv,1));background:rgba(255,255,255,.9);color:var(--sel);font:600 calc(14px * var(--inv,1)) "IBM Plex Sans KR",sans-serif;cursor:pointer}
+.rowx{position:absolute;right:4px;top:50%;margin-top:calc(-14px * var(--inv,1));width:calc(28px * var(--inv,1));height:calc(28px * var(--inv,1));border:0;border-radius:50%;background:rgba(179,38,30,.14);color:#b3261e;font-size:calc(18px * var(--inv,1));line-height:1;cursor:pointer}
+#phZoom{width:110px;accent-color:#eef0f2}
+.tools .chk{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 8px;font-size:13px;color:#dfe3e7;cursor:pointer}
+.tools .chk input{width:15px;height:15px;margin:0;accent-color:#eef0f2}
+.front.noclick,.inside.noclick{cursor:default}
+.folder[data-open="true"] .inside{cursor:pointer}
+.editing .inside{cursor:default}
+.tools .sep{width:1px;height:22px;background:rgba(255,255,255,.2);margin:0 3px}
+.tools .seg{background:transparent;border-color:rgba(255,255,255,.22)}
+.tools .seg button{color:#eef0f2}
+.tools .seg button+button{border-left-color:rgba(255,255,255,.16)}
+.tools .seg button[aria-pressed="true"]{background:#eef0f2;color:#1c1e22}
+.selbar{display:flex;align-items:center;gap:6px}
+.selbar[hidden]{display:none}
+.ink{width:22px;height:22px;border-radius:50%;border:2px solid rgba(255,255,255,.35);cursor:pointer;padding:0}
+.ink[aria-pressed="true"]{border-color:#fff;box-shadow:0 0 0 2px rgba(255,255,255,.35)}
+.toast{position:absolute;left:50%;bottom:70px;transform:translateX(-50%);padding:6px 12px;border-radius:7px;background:rgba(20,22,26,.9);color:#fff;font-size:12.5px;white-space:nowrap;z-index:11;pointer-events:none}
+.toast:empty{display:none}
+/* 화면에서만: 고르기 테두리 · 손잡이 · 빈 사진 안내 */
+.mv.sel{outline:1.5px dashed var(--sel);outline-offset:4px}
+.mv:not(.sel)>.hdl{display:none}
+.hdl{position:absolute;width:14px;height:14px;border:2px solid var(--sel);border-radius:50%;background:#fff;touch-action:none}
+.hdl.rs{right:-11px;bottom:-11px;cursor:nwse-resize}
+.hdl.rt{left:50%;top:-30px;margin-left:-7px;cursor:grab}
+.ph{cursor:pointer}
+.ph.has{cursor:grab}
+.ph.sel{outline:2px solid var(--sel);outline-offset:-2px}
+.ph-add{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#8d9096;font:400 calc(13px * var(--inv,1)) "IBM Plex Sans KR",sans-serif;pointer-events:none}
+.ph.dragover{outline:2px dashed var(--sel);outline-offset:-4px}
+.stk .tx[contenteditable="true"]{outline:1px solid var(--sel);cursor:text}
+/* 작은 창 */
+.pip{position:fixed;z-index:30;width:380px;max-width:calc(100vw - 32px);max-height:calc(100vh - 32px);display:flex;flex-direction:column;border:1px solid var(--edge);border-radius:10px;background:rgba(240,242,245,.78);backdrop-filter:blur(20px) saturate(1.2);-webkit-backdrop-filter:blur(20px) saturate(1.2);box-shadow:0 12px 32px rgba(10,12,16,.28)}
+.pip[hidden]{display:none}
+.pip-bar{display:flex;align-items:center;justify-content:space-between;padding:10px 12px 6px 16px}
+.pip-bar b{font-size:13.5px}
+.pip-x{width:28px;height:28px;border:0;border-radius:6px;background:none;font-size:18px;cursor:pointer}
+.pip-x:hover{background:rgba(0,0,0,.08)}
+.pip-in{padding:4px 16px 16px;overflow:auto;min-height:0}
+.line{display:grid;grid-template-columns:64px minmax(0,1fr);align-items:center;gap:8px;margin-top:10px}
+.line .seg{justify-self:start}
+.seg button{flex:none;text-align:center}
+#castPip{width:420px}
+.line b{font-size:12.5px;font-weight:600;color:var(--sub)}
+.name-in{height:30px;padding:0 9px;border:1px solid var(--edge);border-radius:6px;background:#fff;font:inherit;min-width:0}
+.name-in:focus{outline:0;border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+.name-in::placeholder{color:#a3a6ab}
+#handPip{width:min(820px,calc(100vw - 32px))}
+@media (min-width:901px){#handPip{width:clamp(380px,calc(40vw - 200px),640px)}}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{height:30px;padding:0 12px;border:1px solid var(--edge);border-radius:15px;background:#fff;cursor:pointer;white-space:nowrap}
+.chip[aria-pressed="true"]{background:var(--go);border-color:var(--go);color:#fff}
+.hand-top{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(176px,1fr));gap:8px;margin-top:12px}
+.cell{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:2px;height:84px;padding:8px 10px;border:1px solid #cfd3d8;border-radius:8px;background:#fff;cursor:pointer;text-align:left;overflow:hidden}
+.cell:hover{border-color:var(--ink)}
+.cell[aria-pressed="true"]{border-color:var(--go);box-shadow:0 0 0 1px var(--go)}
+.cell .pv{font-size:30px;line-height:1.25;white-space:nowrap;color:#111}
+.cell .fn{margin-top:auto;font-size:11px;color:var(--sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.credit{margin-top:14px;font-size:11.5px;color:var(--sub);line-height:1.6}
+.credit summary{cursor:pointer;width:max-content}
+.plist{display:grid;gap:6px;margin-top:8px}
+.prow{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:6px}
+.prow span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sub-h{margin:14px 0 0;font-size:12.5px;font-weight:600;color:var(--sub)}
+@media (max-width:900px){
+  .app{display:block;height:auto}
+  .steps{position:static;flex-wrap:wrap;padding:12px 16px 0;background:var(--desk)}
+  .brand{width:100%;margin-bottom:4px}
+  .step.grow{min-height:240px}
+  .main{height:auto}
+  .stage{padding:16px 16px 84px;overflow:visible}
+  .stage.fitmode{overflow:visible}
+  .tools{position:fixed;bottom:12px;max-width:calc(100vw - 24px);overflow-x:auto}
+  #handPip{width:calc(100vw - 32px)}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="steps" id="steps">
+    <span class="brand">FEARLESS</span>
+    <div class="stepgrp" role="group" aria-label="OOC">
+    <span class="docseg in" id="docSeg" role="group" aria-label="복사할 서류"><button type="button" data-doc="contract">계약서</button><button type="button" data-doc="recommend">추천서</button><button type="button" data-doc="review">평가서</button></span>
+    <button class="iconbtn in" id="castBtn" type="button" aria-expanded="false" aria-controls="castPip" title="바꾸기 — 이름 · 키워드 · 추천인 · OOC 내용"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg></button>
+    <button class="stepbtn in" id="copyOoc" type="button" title="OOC 복사 — 캐릭터 대화에 붙여넣기"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h8"/></svg><b>1</b>OOC 복사</button>
+    </div>
+    <div class="stepgrp" role="group" aria-label="붙여넣기">
+    <button class="stepbtn in" id="pasteBtn" type="button" aria-expanded="false" aria-controls="pastePip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3.5h6v3H9z"/><path d="M15 5h2a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2"/><path d="M9 12h6M9 16h4"/></svg><b>2</b>붙여넣기</button>
+    <button class="iconbtn in" id="setBtn" type="button" aria-expanded="false" aria-controls="setPip" title="서류 설정"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M8.5 12h7M8.5 16.5h7"/><circle cx="10.5" cy="12" r="1.3"/><circle cx="13.5" cy="16.5" r="1.3"/></svg></button>
+    </div>
+    <button class="stepbtn" id="saveBtn" type="button" aria-expanded="false" aria-controls="savePip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/></svg><b>3</b>저장</button>
+    <button class="iconbtn" id="resetBtn" type="button" aria-expanded="false" aria-controls="resetPip" title="전체 초기화"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg></button>
+    <span class="status" id="copyStatus" aria-live="polite"></span>
+  </div>
+  <main class="main">
+    <div class="stage fitmode" id="stage">
+      <div class="fitbox" id="fitbox">
+        <div class="desk" id="desk" aria-hidden="true"></div>
+        <div class="folder" id="folder">
+          <div class="tabs" role="tablist" aria-label="서류">
+            <button class="tab" type="button" role="tab" data-tab="contract">계약서</button>
+            <button class="tab" type="button" role="tab" data-tab="recommend">추천서</button>
+            <button class="tab" type="button" role="tab" data-tab="review">평가서</button>
+          </div>
+          <div class="board kraft"><span class="fmark">SENTINEL MANAGEMENT BUREAU · KOREA BRANCH</span></div>
+          <div class="under u2"></div><div class="under u1"></div>
+          <div class="paper" id="paper"></div>
+          <img class="clip" src="img/fastener.png" alt="" draggable="false">
+          <div class="stks" data-layer="board" id="stks"></div>
+          <div class="cover" id="cover">
+            <div class="face front kraft" id="front"><div class="cv" id="coverFace"></div><div class="stks" data-layer="front"></div></div>
+            <div class="face inside kraft"><div class="cv" id="insideFace"></div><div class="stks" data-layer="inside"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="toast" id="toast" aria-live="polite"></div>
+    <div class="tools" id="tools">
+      <button class="btn" id="handBtn" type="button" aria-expanded="false" aria-controls="handPip">손글씨</button>
+      <button class="btn" id="photoBtn" type="button" aria-expanded="false" aria-controls="photoPip">사진 · 스티커</button>
+      <!-- 꾸미기 -->
+      <button class="btn" id="textBtn" type="button">글씨 붙이기</button>
+      <button class="btn" id="deskBtn" type="button" aria-expanded="false" aria-controls="deskPip">책상</button>
+      <span class="selbar" id="phbar" hidden><span class="sep"></span><input type="range" id="phZoom" min="1" max="4" step=".02" aria-label="사진 확대" title="확대"><button class="btn" id="phSwap" type="button">사진 바꾸기</button><button class="btn" id="phDel" type="button">빼기</button></span>
+      <span class="selbar" id="selbar" hidden>
+        <span class="sep"></span>
+        <span class="seg" id="finSeg" role="group" aria-label="스티커 모양"><button type="button" data-fin="sticker">스티커</button><button type="button" data-fin="plain">원본</button><button type="button" data-fin="photo">사진</button></span>
+        <span id="inkSeg" role="group" aria-label="글씨 색" style="display:flex;gap:5px"></span>
+        <button class="btn" id="frontBtn" type="button" title="맨 앞으로">앞으로</button>
+        <button class="btn" id="delBtn" type="button" title="삭제 (Delete)">삭제</button>
+      </span>
+      <span class="sep"></span>
+      <button class="btn" id="editBtn" type="button" aria-pressed="false" title="종이 위 글을 눌러 고치기 · + 로 더하기">편집</button>
+      <button class="btn" id="undoBtn" type="button" title="되돌리기 (Ctrl+Z)" disabled>되돌리기</button>
+      <button class="btn" id="redoBtn" type="button" title="다시 하기 (Ctrl+Shift+Z)" disabled>다시 하기</button>
+      <span class="sep"></span>
+      <button class="btn" id="coverBtn" type="button" aria-pressed="false">덮기</button>
+      <label class="chk" title="끄면 표지를 눌러도 그대로 · 표지 꾸밀 때"><input type="checkbox" id="clickOpen">표지 눌러 열고 닫기</label>
+      <span class="sep"></span>
+      <span class="seg" id="zoomSeg" role="group" aria-label="보기 크기"><button type="button" data-z="fit">맞춤</button><button type="button" data-z="1">100%</button></span>
+    </div>
+  </main>
+</div>
+
+<!-- 붙여넣은 뒤 한 번: 확대할까 -->
+<div class="pip askzoom" id="zoomAsk" role="dialog" aria-label="확대" hidden>
+  <div class="pip-bar"><b>자세히 보려면 확대할까요?</b><button class="pip-x" type="button" aria-label="닫기" title="닫기 (Esc)">×</button></div>
+  <div class="pip-in"><div class="row"><button class="btn go" id="zoomYes" type="button">확대</button><button class="btn" id="zoomNo" type="button">그대로</button></div></div>
+</div>
+
+<!-- 바꾸기 -->
+<div class="pip" id="castPip" role="dialog" aria-label="바꾸기" hidden>
+  <div class="pip-bar"><b>바꾸기</b><button class="pip-x" type="button" aria-label="닫기" title="닫기 (Esc)">×</button></div>
+  <div class="pip-in">
+    <div class="line"><b>이름</b><div class="seg" id="castPreset" role="group" aria-label="이름 한 번에 바꾸기"><button type="button" data-preset="tag">{{user}} · {{char}}</button><button type="button" data-preset="word">PC · NPC</button><button type="button" data-preset="custom">직접 입력</button></div></div>
+    <div class="line"><b>PC</b><input class="name-in" id="pcIn" placeholder="이름" spellcheck="false" aria-label="PC 이름"></div>
+    <div class="line"><b>NPC</b><input class="name-in" id="npcIn" placeholder="이름" spellcheck="false" aria-label="NPC 이름"></div>
+    <div class="line" id="kwLine"><b>키워드</b><div class="seg" id="kwSeg" role="group" aria-label="성격 키워드"><button type="button" data-kw="on">넣기</button><button type="button" data-kw="off">빼기</button></div></div>
+    <div class="line" id="recLine"><b>추천인</b><div class="seg" id="recSeg" role="group" aria-label="추천인"><button type="button" data-rec="third">제3자</button><button type="button" data-rec="pc">PC가 NPC를</button><button type="button" data-rec="npc">NPC가 PC를</button></div></div>
+    <details class="peek"><summary>OOC 내용 보기</summary><pre class="ooc" id="ooc"></pre></details>
+  </div>
+</div>
+
+<!-- 2 · 붙여넣기 -->
+<div class="pip" id="pastePip" role="dialog" aria-label="챗봇 출력 붙여넣기" hidden>
+  <div class="pip-bar"><b>챗봇 출력 붙여넣기</b><button class="pip-x" type="button" aria-label="닫기" title="닫기 (Esc)">×</button></div>
+  <div class="pip-in paste-in">
+    <div class="row">
+      <button class="btn" id="sample" type="button">예시</button>
+      <button class="btn" id="clear" type="button">비우기</button>
+      <span class="status" id="parseStatus" aria-live="polite"></span>
+    </div>
+    <label class="dline"><span>날짜</span><input class="name-in" id="dateIn" spellcheck="false" aria-label="서류 날짜"></label>
+    <div id="signerBox">
+      <label class="dline"><span id="signerLbl">추천인</span><input class="name-in" id="signerName" spellcheck="false" aria-label="이름"></label>
+      <label class="dline"><span>직위</span><input class="name-in" id="signerPos" spellcheck="false" aria-label="직위"></label>
+      <div class="row dline2"><span class="seg" id="signerMode" role="group" aria-label="서명 방식"><button type="button" data-m="sign">서명 쓰기</button><button type="button" data-m="seal">도장 넣기</button></span></div>
+      <div class="row dline2"><button class="btn" id="signerFont" type="button">글꼴</button><button class="btn" id="signerImg" type="button">이미지</button><button class="btn" id="signerImgDel" type="button">이미지 빼기</button></div>
+    </div>
+    <textarea id="src" spellcheck="false" aria-label="챗봇 출력" placeholder="@계약서&#10;날짜: …&#10;[인물]&#10;이름: …"></textarea>
+  </div>
+</div>
+
+<!-- 전체 초기화 확인 -->
+<div class="pip askzoom" id="resetPip" role="dialog" aria-label="전체 초기화" hidden>
+  <div class="pip-bar"><b>초기화</b><button class="pip-x" type="button" aria-label="닫기" title="닫기 (Esc)">×</button></div>
+  <div class="pip-in"><div class="resetlist"><label class="chk2"><input type="checkbox" data-r="text" checked>서류 글 · 날짜 · 이름</label><label class="chk2"><input type="checkbox" data-r="photo" checked>사진</label><label class="chk2"><input type="checkbox" data-r="stk" checked>스티커 · 글씨 붙이기</label><label class="chk2"><input type="checkbox" data-r="hand" checked>손글씨 · 서명 · 도장</label><label class="chk2"><input type="checkbox" data-r="view" checked>책상 · 설정</label></div><p class="resetnote">되돌릴 수 없음</p><div class="row"><button class="btn danger" id="resetYes" type="button">지우기</button><button class="btn" id="resetNo" type="button">그만두기</button></div></div>
+</div>
+
+<!-- 서류 설정 -->
+<div class="pip" id="setPip" role="dialog" aria-label="서류 설정" hidden>
+  <div class="pip-bar"><b>서류 설정</b><button class="pip-x" type="button" aria-label="닫기" title="닫기 (Esc)">×</button></div>
+  <div class="pip-in setlist">
+    <label class="chk2"><input type="checkbox" id="tightWrap">끝줄 한두 글자면 줄이기</label>
+    <label class="chk2"><input type="checkbox" id="noWrap">줄바꿈 없이 넣기 <small>소속 · 능력</small></label>
+    <label class="chk2" id="syncRow"><input type="checkbox" id="syncCard">인물 칸은 계약서대로 <small>추천서 · 평가서</small></label>
+  </div>
+</div>
+
+<!-- 3 · 저장 -->
+<div class="pip" id="savePip" role="dialog" aria-label="저장" hidden>
+  <div class="pip-bar"><b>저장</b><button class="pip-x" type="button" aria-label="닫기" title="닫기 (Esc)">×</button></div>
+  <div class="pip-in">
+    <div class="row"><button class="btn go" id="saveFolder" type="button">파일철째 PNG</button><label class="chk2"><input type="checkbox" id="withDesk">책상까지</label><label class="chk2" title="끄면 화면이 덮여 있어도 펼쳐서 저장"><input type="checkbox" id="saveShut">덮은 채로</label><button class="btn" id="savePaper" type="button">종이만 PNG</button></div>
+    <p class="status" id="saveStatus" aria-live="polite"></p>
+  </div>
+</div>
+
+<!-- 책상 물건 -->
+<div class="pip" id="deskPip" role="dialog" aria-label="책상 물건" hidden>
+  <div class="pip-bar"><b>책상 물건</b><button class="pip-x" type="button" aria-label="닫기" title="닫기 (Esc)">×</button></div>
+  <div class="pip-in">
+    <div class="plist" id="deskList"></div>
+    <label class="dline" style="grid-template-columns:auto 1fr"><input type="checkbox" id="deskOn"><span style="width:auto">책상에 물건 놓기</span></label>
+    <div class="row" style="margin-top:10px"><button class="btn" id="deskReset" type="button" title="편집에서 옮긴 자리를 처음대로">자리 처음대로</button></div>
+  </div>
+</div>
+
+<!-- 손글씨 -->
+<div class="pip" id="handPip" role="dialog" aria-label="손글씨" hidden>
+  <div class="pip-bar"><b>손글씨</b><button class="pip-x" type="button" aria-label="닫기" title="닫기 (Esc)">×</button></div>
+  <div class="pip-in">
+    <div class="hand-top">
+      <div class="chips" id="whoChips" role="group" aria-label="인물"></div>
+    </div>
+    <div class="hand-top" style="margin-top:10px">
+      <div class="seg" id="aimSeg" role="group" aria-label="바꿀 글씨"><button type="button" data-aim="name">이름</button><button type="button" data-aim="sign">서명</button></div>
+      <span class="row" id="signImgRow"><button class="btn" id="signImgBtn" type="button">서명 이미지</button><button class="btn" id="signImgDel" type="button">이미지 빼기</button></span>
+    </div>
+    <div class="sizes" role="group" aria-label="글씨 크기">
+      <label>이름 크기<input type="range" min="16" max="44" step="1" data-size="nmz"></label>
+      <label>서명 크기<input type="range" min="20" max="56" step="1" data-size="sgz"></label>
+      <label>열람 기록 크기<input type="range" min="16" max="48" step="1" data-size="lgz"></label>
+    </div>
+    <div class="chips" id="tagChips" role="group" aria-label="묶음" style="margin-top:12px"></div>
+    <div class="grid" id="handGrid"></div>
+    <div class="fadd">
+      <p class="sub-h">글꼴 더하기</p>
+      <div class="row" style="margin-top:8px;flex-wrap:nowrap"><input class="name-in" id="fontUrl" style="flex:1" spellcheck="false" placeholder="@font-face 코드 · CSS 주소" aria-label="웹 글꼴 코드나 주소"><button class="btn" id="fontAdd" type="button">더하기</button><button class="btn" id="fontFileBtn" type="button">파일</button></div>
+      <p class="status" id="fontSt" aria-live="polite"></p>
+    </div>
+    <details class="credit">
+      <summary>글꼴 출처</summary>
+      <div id="creditList"></div>
+    </details>
+  </div>
+</div>
+
+<!-- 사진 · 스티커 -->
+<div class="pip" id="photoPip" role="dialog" aria-label="사진 · 스티커" hidden>
+  <div class="pip-bar"><b>사진 · 스티커</b><button class="pip-x" type="button" aria-label="닫기" title="닫기 (Esc)">×</button></div>
+  <div class="pip-in">
+    <p class="sub-h" style="margin-top:0">증명사진</p>
+    <div class="row" style="margin-top:8px"><span class="seg" id="phFitSeg" role="group" aria-label="계약서 사진 칸"><button type="button" data-fit="id">증명사진 비율</button><button type="button" data-fit="fill">칸에 맞추기</button></span></div>
+    <div class="plist" id="photoList"></div>
+    <p class="sub-h">스티커</p>
+    <div class="row" style="margin-top:8px"><button class="btn" id="stkAdd" type="button">이미지 붙이기</button></div>
+  </div>
+</div>
+
+<input type="file" id="photoFile" accept="image/*" hidden>
+<input type="file" id="stkFile" accept="image/*" multiple hidden>
+<input type="file" id="signFile" accept="image/*" hidden>
+<input type="file" id="signerFile" accept="image/*" hidden>
+<input type="file" id="fontFile" accept=".ttf,.otf,.woff,.woff2" hidden>
+
+<pre id="ooc-contract" hidden>[OOC: 롤플레이를 잠시 멈추고, 지금까지의 설정과 대화를 바탕으로 PC와 NPC의 FEARLESS 전담 페어 계약서를 아래 양식으로만 출력한다.
+
+- [인물] 묶음을 두 번 쓴다. 첫째는 PC, 둘째는 NPC.
+- 이름 · 나이 · 성별 · 코드네임 · 분류 · 등급 · 소속 · 능력은 설정에 있는 값을 그대로 쓴다. 설정에 없는 값은 지어내지 않고 ? 로 둔다. 분류는 센티넬 또는 가이드.
+- 능력 설명은 실제 효과와 범위가 보이게 1~2문장.
+- 성격 키워드는 #을 붙인 낱말 5개. 성격은 3~5문장으로, 공식 기록처럼 실제로 보인 행동 · 말투 · 태도를 쓴다. 감정을 설정보다 키우지 않는다.
+- 날짜는 계약 시점의 세계관 날짜, 모르면 20xx년 00월 00일.
+- 큰따옴표 · 표 · 굵게는 쓰지 않는다.
+
+@계약서
+날짜:
+[인물]
+이름:
+나이:
+성별:
+코드네임:
+분류:
+등급:
+소속:
+능력:
+능력 설명:
+성격 키워드:
+성격:
+]</pre>
+<pre id="ooc-recommend" hidden>[OOC: 롤플레이를 잠시 멈추고, 지금까지의 설정과 대화를 바탕으로 PC와 NPC를 FEARLESS 전담 페어로 추천하는 추천서를 아래 양식으로만 출력한다.
+
+- 이 추천서의 시점은 두 사람이 전담 페어가 되기 전이다. 아직 페어가 아닌 관계와 그때까지 있었던 일만 근거로 쓴다.
+- 추천인은 ＠추천인. 두 사람을 지켜본 제3자로서, 추천서는 추천인의 시선과 문체로 쓴다.
+- [인물] 묶음을 두 번 쓴다(첫째 PC, 둘째 NPC). 값은 설정에 있는 것을 그대로 쓰고, 없으면 ? 로 둔다.
+- 추천 사유는 3~4문장. 두 사람의 능력이 맞물리는 지점과 실제로 있었던 일을 근거로 든다.
+- 적합률은 두 사람의 설정과 지금까지의 관계를 바탕으로 정한 페어 적합률을 % 로 쓴다.
+- 기대는 페어로 묶었을 때 달라질 점 2~3문장, 우려는 이 페어의 약점이나 마찰 지점 1~2문장. 추천인이 아는 만큼만 쓴다.
+- 날짜는 세계관 날짜, 모르면 20xx년 00월 00일. 큰따옴표 · 표 · 굵게는 쓰지 않는다.
+
+@추천서
+날짜:
+[인물]
+이름:
+코드네임:
+분류:
+등급:
+소속:
+능력:
+적합률:
+추천 사유:
+기대:
+우려:
+]</pre>
+<pre id="ooc-review" hidden>[OOC: 롤플레이를 잠시 멈추고, 지금까지의 설정과 대화를 바탕으로 PC와 NPC 전담 페어의 FEARLESS 임무 평가서를 아래 양식으로만 출력한다.
+
+- 이 평가서의 시점은 지금(대화의 현재)이다. 두 사람은 이미 전담 페어이며, 지금까지의 관계와 일을 근거로 쓴다.
+- 평가할 임무는 두 사람이 가장 최근에 함께 수행한 임무. 대화에 임무가 없으면 두 사람의 능력과 소속에 맞는 임무를 하나 정한다.
+- 평가자는 ＠평가자. 그 임무를 보고받아 평가하는 사람이다.
+- [인물] 묶음을 두 번 쓴다(첫째 PC, 둘째 NPC). 값은 설정에 있는 것을 그대로 쓰고, 없으면 ? 로 둔다.
+- 임무 등급과 항목 등급은 S · A · B · C · D 중 하나, 결과는 성공 · 부분 성공 · 실패 중 하나.
+- 평가는 연계 · 능력 운용 · 가이딩 안정도 · 상황 판단 네 줄로, 한 줄에 항목 - 등급 - 한 줄 평. 임무에서 실제로 보인 행동을 근거로 하고 잘한 점만 쓰지 않는다. 두 사람의 분류에 맞지 않는 항목은 맞는 항목으로 바꾼다.
+- 경과는 시간 순서로 3~5문장. 피해 · 특이 사항이 없으면 없음.
+- 소견은 평가자의 시선과 문체로 2~3문장.
+- 작성일은 세계관 날짜, 모르면 20xx년 00월 00일. 큰따옴표 · 표 · 굵게는 쓰지 않는다.
+
+@평가서
+임무명:
+임무 등급:
+일시:
+장소:
+결과:
+[인물]
+이름:
+코드네임:
+분류:
+등급:
+개요:
+경과:
+평가: 연계 - 등급 - 한 줄 평
+(네 줄)
+종합: 등급 - 한 줄 총평
+피해:
+특이 사항:
+소견:
+작성일:
+]</pre>
+
+<script>
+'use strict';
+const KEY='fearless';
+const DOCS={contract:'계약서',recommend:'추천서',review:'평가서'};
+const CHIEF='강태환';
+const $=id=>document.getElementById(id);
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+const load=(k,d)=>{try{const v=JSON.parse(localStorage.getItem(KEY+'.'+k)||'null');return v==null?d:v}catch(e){return d}};
+const store=(k,v)=>{try{localStorage.setItem(KEY+'.'+k,JSON.stringify(v))}catch(e){}};
+const toast=$('toast');
+function say(t,ms){toast.textContent=t;clearTimeout(say.t);if(ms)say.t=setTimeout(()=>{if(toast.textContent===t)toast.textContent=''},ms)}
+
+// ── 설정 ──
+const settings=Object.assign({tab:'contract',rec:'third',zoom:'fit',open:true},load('settings',{}));
+if(!DOCS[settings.tab])settings.tab='contract';
+const saveSettings=()=>store('settings',settings);
+let tab=settings.tab;
+
+// ── 손글씨 목록: [보이는 이름, 글꼴 이름, 주소(@ = 저장소의 나눔 조각), 형식, 굵기, 묶음, 서명다움 0~2, 태그, 만든 곳] ──
+const HANDS=[
+["그리운 국한박 오춘기 김작가", "GriunXHangeulOCHUNGIKIM-Regular", "https://cdn.jsdelivr.net/gh/Project-Noonnu/2607161334@griunxhangeulochungikim-regular/griunxhangeulochungikim-regular/GriunXHangeulOCHUNGIKIM-Regular.woff2", "woff2", "400", "흘림·캘리", 2, "귀여운 동글동글 어른_손글씨 캘리그라피", "그리운 X 국립한글박물관"],
+["그리운X국한박 송글손글 감성 흘림체", "GriunXHangeul_SongleSongeulHeullim-Rg", "https://cdn.jsdelivr.net/gh/Project-Noonnu/2607161334@x-3/x/GriunXHangeul_SongleSongeulHeullim-Rg.woff2", "woff2", "400", "흘림·캘리", 2, "어른_손글씨 필기체 캘리그라피 감성적인", "그리운 X 국립한글박물관"],
+["그리운 사막의 연우체", "Griun_YEONWOO-Rg", "https://cdn.jsdelivr.net/gh/projectnoonnu/2508-2@1.0/Griun_YEONWOO-Rg.woff2", "woff2", "400", "흘림·캘리", 2, "어른_손글씨 필기체 펜", "압둘라 X 그리운"],
+["KCC임권택체", "KCCImkwontaek", "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202@1.0/KCCImkwontaek.woff", "woff", "400", "흘림·캘리", 2, "어른_손글씨 캘리그라피 기울어진", "한국저작권위원회"],
+["학교안심 가을소풍", "HakgyoansimGaeulsopungB", "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimGaeulsopungB.woff2", "woff2", "700", "흘림·캘리", 2, "어른_손글씨 캘리그라피", "Keris(한국교육학술정보원)"],
+["그리운X국한박 이꼴체", "GriunXHangeul_Equal-Rg", "https://cdn.jsdelivr.net/gh/Project-Noonnu/2607161334@x-9/x/GriunXHangeul_Equal-Rg.woff2", "woff2", "400", "흘림·캘리", 2, "어른_손글씨 독특한 캘리그라피 붓글씨", "그리운 X 국립한글박물관"],
+["한용운체", "HAN-YONG-UN", "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/HAN-YONG-UN.woff", "woff", "400", "흘림·캘리", 2, "어른_손글씨 삐뚤빼뚤 캘리그라피", "GS칼텍스"],
+["온글잎 위씨리스트", "Ownglyph_wiseelist-Rg", "https://cdn.jsdelivr.net/gh/projectnoonnu/2501-1@1.1/Ownglyph_wiseelist-Rg.woff2", "woff2", "400", "흘림·캘리", 2, "캘리그라피 펜", "온글잎"],
+["쿨가이", "CoolGuy-Medium", "https://cdn.jsdelivr.net/gh/projectnoonnu/2403@1.0/CoolGuy-Medium.woff2", "woff2", "400", "흘림·캘리", 2, "캘리그라피 펜", "캘리폰트"],
+["온글잎 바닷바람", "Ownglyph_the_sea_breeze-Rg", "https://cdn.jsdelivr.net/gh/projectnoonnu/2510-1@1.0/Ownglyph_the_sea_breeze-Rg.woff2", "woff2", "400", "흘림·캘리", 2, "어른_손글씨 필기체 캘리그라피", "온글잎"],
+["코트라 손글씨체", "KOTRA_SONGEULSSI", "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/KOTRA_SONGEULSSI.woff", "woff", "400", "흘림·캘리", 2, "캘리그라피 펜", "Kotra"],
+["인천교육자람체", "iceJaram-Rg", "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/iceJaram-Rg.woff2", "woff2", "400", "흘림·캘리", 2, "캘리그라피 펜 기울어진", "인천광역시교육청"],
+["ylee 추억은 잠들지 않는다", "yleeMortalHeartImmortalMemory", "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/yleeMortalHeartImmortalMemory.woff2", "woff2", "400", "흘림·캘리", 2, "캘리그라피 펜", "이요셉"],
+["갈맷글", "OOCHand GarMaesGeur", "@GarMaesGeur", "woff2", "400", "흘림·캘리", 2, "캘리그라피 붓글씨 두꺼운", "네이버"],
+["나무정원", "OOCHand NaMuJeongWeon", "@NaMuJeongWeon", "woff2", "400", "흘림·캘리", 2, "필기체 감성적인 기울어진 어른_손글씨", "네이버"],
+["대광유리", "OOCHand DaeGwangYuRi", "@DaeGwangYuRi", "woff2", "400", "흘림·캘리", 2, "필기체 기울어진 감성적인 어른_손글씨", "네이버"],
+["바른정신", "OOCHand BaReunJeongSin", "@BaReunJeongSin", "woff2", "400", "흘림·캘리", 2, "필기체 기울어진 어른_손글씨 감성적인", "네이버"],
+["소미체", "OOCHand SoMiCe", "@SoMiCe", "woff2", "400", "흘림·캘리", 2, "캘리그라피 붓글씨 두꺼운 기울어진", "네이버"],
+["손편지체", "OOCHand SonPyeonJiCe", "@SonPyeonJiCe", "woff2", "400", "흘림·캘리", 2, "필기체 기울어진 감성적인 어른_손글씨", "네이버"],
+["아빠의 연애편지", "OOCHand ABbaEuiYeonAePyeonJi", "@ABbaEuiYeonAePyeonJi", "woff2", "400", "흘림·캘리", 2, "필기체 기울어진 감성적인", "네이버"],
+["야채장수 백금례", "OOCHand YaCaeJangSuBaegGeumRye", "@YaCaeJangSuBaegGeumRye", "woff2", "400", "흘림·캘리", 2, "필기체 기울어진 어른_손글씨", "네이버"],
+["여름글씨", "OOCHand YeoReumGeurSsi", "@YeoReumGeurSsi", "woff2", "400", "흘림·캘리", 2, "필기체 독특한 삐뚤빼뚤 감성적인", "네이버"],
+["와일드", "OOCHand WaIrDeu", "@WaIrDeu", "woff2", "400", "흘림·캘리", 2, "삐뚤빼뚤 캘리그라피 붓글씨", "네이버"],
+["철필글씨", "OOCHand CeorPirGeurSsi", "@CeorPirGeurSsi", "woff2", "400", "흘림·캘리", 2, "필기체 펜 기울어진 감성적인", "네이버"],
+["하람체", "OOCHand HaRamCe", "@HaRamCe", "woff2", "400", "흘림·캘리", 2, "필기체 기울어진 감성적인 펜", "네이버"],
+["혁이체", "OOCHand HyeogICe", "@HyeogICe", "woff2", "400", "흘림·캘리", 2, "필기체 기울어진 독특한 펜", "네이버"],
+["고려글꼴", "OOCHand GoRyeoGeurGgor", "@GoRyeoGeurGgor", "woff2", "400", "흘림·캘리", 1, "붓글씨 두꺼운 독특한 장식_손글씨", "네이버"],
+["끄트머리체", "OOCHand GgeuTeuMeoRiCe", "@GgeuTeuMeoRiCe", "woff2", "400", "흘림·캘리", 1, "붓글씨 두꺼운 독특한", "네이버"],
+["대한민국 열사체", "OOCHand DaeHanMinGugYeorSaCe", "@DaeHanMinGugYeorSaCe", "woff2", "400", "흘림·캘리", 1, "붓글씨 두꺼운 독특한 장식_손글씨", "네이버"],
+["미래나무", "OOCHand MiRaeNaMu", "@MiRaeNaMu", "woff2", "400", "흘림·캘리", 1, "필기체 두꺼운 기울어진 독특한", "네이버"],
+["할아버지의나눔", "OOCHand HarABeoJi", "@HarABeoJi", "woff2", "400", "흘림·캘리", 1, "붓글씨 두꺼운 캘리그라피", "네이버"],
+["강인한 위로", "OOCHand GangInHanWiRo", "@GangInHanWiRo", "woff2", "400", "어른 손글씨", 2, "어른_손글씨 감성적인 필기체", "네이버"],
+["규리의 일기", "OOCHand GyuRiEuiIrGi", "@GyuRiEuiIrGi", "woff2", "400", "어른 손글씨", 2, "어른_손글씨 감성적인 펜 기울어진", "네이버"],
+["김유이체", "OOCHand GimYuICe", "@GimYuICe", "woff2", "400", "어른 손글씨", 2, "어른_손글씨 감성적인 펜", "네이버"],
+["나는 이겨낸다", "OOCHand NaNeunIGyeoNaenDa", "@NaNeunIGyeoNaenDa", "woff2", "400", "어른 손글씨", 2, "어른_손글씨 감성적인 기울어진 필기체", "네이버"],
+["나의 아내 손글씨", "OOCHand NaEuiANaeSonGeurSsi", "@NaEuiANaeSonGeurSsi", "woff2", "400", "어른 손글씨", 2, "어른_손글씨 펜 감성적인", "네이버"],
+["다진체", "OOCHand DaJinCe", "@DaJinCe", "woff2", "400", "어른 손글씨", 2, "어른_손글씨 감성적인 삐뚤빼뚤", "네이버"],
+["둥근인연", "OOCHand DungGeunInYeon", "@DungGeunInYeon", "woff2", "400", "어른 손글씨", 2, "어른_손글씨 둥근_손글씨 감성적인", "네이버"],
+["따뜻한 작별", "OOCHand DdaDdeusHanJagByeor", "@DdaDdeusHanJagByeor", "woff2", "400", "어른 손글씨", 2, "어른_손글씨 감성적인 펜", "네이버"],
+["딸에게 엄마가", "OOCHand DdarEGeEomMaGa", "@DdarEGeEomMaGa", "woff2", "400", "어른 손글씨", 2, "어른_손글씨 감성적인 펜 기울어진", "네이버"],
+["마고체", "OOCHand MaGoCe", "@MaGoCe", "woff2", "400", "어른 손글씨", 2, "어른_손글씨 감성적인 필기체", "네이버"],
+["무진장체", "OOCHand MuJinJangCe", "@MuJinJangCe", "woff2", "400", "어른 손글씨", 2, "어른_손글씨 감성적인 가로로_긴", "네이버"],
+["북극성", "OOCHand BugGeugSeong", "@BugGeugSeong", "woff2", "400", "어른 손글씨", 2, "어른_손글씨 펜 감성적인", "네이버"],
+["세아체", "OOCHand SeACe", "@SeACe", "woff2", "400", "어른 손글씨", 2, "어른_손글씨 필기체 기울어진 감성적인", "네이버"],
+["소방관의 기도", "OOCHand SoBangGwanEuiGiDo", "@SoBangGwanEuiGiDo", "woff2", "400", "어른 손글씨", 2, "어른_손글씨 펜 필기체", "네이버"],
+["아름드리 꽃나무", "OOCHand AReumDeuRiGgocNaMu", "@AReumDeuRiGgocNaMu", "woff2", "400", "어른 손글씨", 2, "어른_손글씨 감성적인 펜", "네이버"],
+["아빠글씨", "OOCHand ABbaGeurSsi", "@ABbaGeurSsi", "woff2", "400", "어른 손글씨", 2, "어른_손글씨 기울어진 펜", "네이버"],
+["안쌍체", "OOCHand AnSsangCe", "@AnSsangCe", "woff2", "400", "어른 손글씨", 2, "어른_손글씨 펜 기울어진", "네이버"],
+["야근하는 김주임", "OOCHand YaGeunHaNeunGimJuIm", "@YaGeunHaNeunGimJuIm", "woff2", "400", "어른 손글씨", 2, "어른_손글씨 펜 기울어진", "네이버"],
+["엉겅퀴체", "OOCHand EongGeongKwiCe", "@EongGeongKwiCe", "woff2", "400", "어른 손글씨", 2, "어른_손글씨 필기체 기울어진 감성적인", "네이버"],
+["외할머니글씨", "OOCHand OeHarMeoNiGeurSsi", "@OeHarMeoNiGeurSsi", "woff2", "400", "어른 손글씨", 2, "어른_손글씨 감성적인 펜", "네이버"],
+["정은체", "OOCHand JeongEunCe", "@JeongEunCe", "woff2", "400", "어른 손글씨", 2, "어른_손글씨 감성적인 펜", "네이버"],
+["한윤체", "OOCHand HanYunCe", "@HanYunCe", "woff2", "400", "어른 손글씨", 2, "어른_손글씨 펜 감성적인", "네이버"],
+["교보문고 손글씨 2025 이유빈", "KyoboHandwriting2025lyb", "https://cdn.jsdelivr.net/gh/projectnoonnu/2604-1@1.1/KyoboHandwriting2025lyb.woff2", "woff2", "400", "어른 손글씨", 1, "또박또박 어른_손글씨 손글씨_고딕 각진_손글씨", "교보문고"],
+["교보손글씨 2020 박도연", "KyoboHandwriting2020A", "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/KyoboHandwriting2020A.woff", "woff", "400", "어른 손글씨", 1, "어른_손글씨 장식_손글씨", "교보문고"],
+["그리운X국한박 낯선손글", "GriunXHangeulAForeignHand-Regular", "https://cdn.jsdelivr.net/gh/Project-Noonnu/2607161334@x-5/x/GriunXHangeulAForeignHand-Regular.woff2", "woff2", "400", "어른 손글씨", 1, "또박또박 어른_손글씨 손글씨_고딕", "그리운 X 국립한글박물관"],
+["그리운 단정한 손글씨", "Griun_NeatHandwriting-Rg", "https://cdn.jsdelivr.net/gh/Project-Noonnu/2609271756@griun-neathandwriting-rg/griun-neathandwriting-rg/Griun_NeatHandwriting-Rg.woff2", "woff2", "400", "어른 손글씨", 1, "어른_손글씨 펜 감성적인", "그리운"],
+["그리운 푸하체", "Griun_PuhaFont-Rg", "https://cdn.jsdelivr.net/gh/Project-Noonnu/2607151654@griun-puhafont-rg/griun-puhafont-rg/Griun_PuhaFont-Rg.woff2", "woff2", "400", "어른 손글씨", 1, "어른_손글씨 펜", "그리운"],
+["그리운 오미리 손글씨", "Griun_OMIRI-Rg", "https://cdn.jsdelivr.net/gh/Project-Noonnu/2607161334@griun-omiri-rg/griun-omiri-rg/Griun_OMIRI-Rg.woff2", "woff2", "400", "어른 손글씨", 1, "또박또박 어른_손글씨 손글씨_고딕 펜", "그리운"],
+["심경하체", "SimKyungha", "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/SimKyungha.woff", "woff", "400", "어른 손글씨", 1, "또박또박 어른_손글씨", "흥국생명"],
+["카페24 고운밤", "Cafe24Oneprettynight", "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Cafe24Oneprettynight.woff", "woff", "400", "어른 손글씨", 1, "어른_손글씨 펜 감성적인", "Cafe24"],
+["그리운 묘은흘림체", "Griun_MyoeunHeullim-Rg", "https://cdn.jsdelivr.net/gh/projectnoonnu/2601-1@1.0/Griun_MyoeunHeullim-Rg.woff2", "woff2", "400", "어른 손글씨", 1, "어른_손글씨", "그리운 X 묘은"],
+["강원교육현옥샘체", "GangwonEduHyeonokT_OTFMediumA", "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduHyeonokT_OTFMediumA.woff", "woff", "400", "어른 손글씨", 1, "또박또박 어른_손글씨", "강원도교육청 X 헤움디자인"],
+["학교안심 받아쓰기", "HakgyoansimBadasseugiTTF-L", "https://cdn.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimBadasseugiTTF-L.woff2", "woff2", "400", "어른 손글씨", 1, "또박또박 어른_손글씨", "Keris(한국교육학술정보원)"],
+["강부장님체", "OOCHand GangBuJangNimCe", "@GangBuJangNimCe", "woff2", "400", "어른 손글씨", 1, "어른_손글씨 펜 또박또박", "네이버"],
+["다행체", "OOCHand DaHaengCe", "@DaHaengCe", "woff2", "400", "어른 손글씨", 1, "어른_손글씨 펜 두꺼운", "네이버"],
+["버드나무", "OOCHand BeoDeuNaMu", "@BeoDeuNaMu", "woff2", "400", "어른 손글씨", 1, "어른_손글씨 펜 기울어진", "네이버"],
+["범솜체", "OOCHand BeomSomCe", "@BeomSomCe", "woff2", "400", "어른 손글씨", 1, "어른_손글씨 펜 감성적인", "네이버"],
+["빵구니맘 손글씨", "OOCHand BbangGuNiMamSonGeurSsi", "@BbangGuNiMamSonGeurSsi", "woff2", "400", "어른 손글씨", 1, "어른_손글씨 삐뚤빼뚤 펜", "네이버"],
+["사랑해 아들", "OOCHand SaRangHaeADeur", "@SaRangHaeADeur", "woff2", "400", "어른 손글씨", 1, "어른_손글씨 펜 감성적인", "네이버"],
+["열아홉의 반짝임", "OOCHand YeorAHobEuiBanJjagIm", "@YeorAHobEuiBanJjagIm", "woff2", "400", "어른 손글씨", 1, "어른_손글씨 펜 감성적인", "네이버"],
+["예당체", "OOCHand YeDangCe", "@YeDangCe", "woff2", "400", "어른 손글씨", 1, "어른_손글씨 펜 또박또박", "네이버"],
+["옥비체", "OOCHand OgBiCe", "@OgBiCe", "woff2", "400", "어른 손글씨", 1, "어른_손글씨 펜 가로로_긴", "네이버"],
+["의미있는 한글", "OOCHand EuiMiIssNeunHanGeur", "@EuiMiIssNeunHanGeur", "woff2", "400", "어른 손글씨", 1, "어른_손글씨 또박또박 감성적인", "네이버"],
+["잘하고 있어", "OOCHand JarHaGoIssEo", "@JarHaGoIssEo", "woff2", "400", "어른 손글씨", 1, "어른_손글씨 감성적인 펜", "네이버"],
+["진주 박경아체", "OOCHand JinJuBagGyeongACe", "@JinJuBagGyeongACe", "woff2", "400", "어른 손글씨", 1, "어른_손글씨 또박또박 감성적인", "네이버"],
+["칼국수", "OOCHand KarGugSu", "@KarGugSu", "woff2", "400", "어른 손글씨", 1, "어른_손글씨 펜 독특한", "네이버"],
+["하나되어 손글씨", "OOCHand HaNaDoeEoSonGeurSsi", "@HaNaDoeEoSonGeurSsi", "woff2", "400", "어른 손글씨", 1, "어른_손글씨 감성적인 펜", "네이버"],
+["흰꼬리수리", "OOCHand HeuinGgoRiSuRi", "@HeuinGgoRiSuRi", "woff2", "400", "어른 손글씨", 1, "어른_손글씨 독특한 펜", "네이버"],
+["마포꽃섬", "MapoFlowerIsland", "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoFlowerIslandA.woff", "woff", "400", "어른 손글씨", 0, "펜 감성적인", "마포구"],
+["가람연꽃", "OOCHand GaRamYeonGgoc", "@GaRamYeonGgoc", "woff2", "400", "또박또박", 1, "또박또박 어른_손글씨", "네이버"],
+["금은보화", "OOCHand GeumEunBoHwa", "@GeumEunBoHwa", "woff2", "400", "또박또박", 1, "또박또박 펜 손글씨_고딕", "네이버"],
+["꽃내음", "OOCHand GgocNaeEum", "@GgocNaeEum", "woff2", "400", "또박또박", 1, "또박또박 펜 어른_손글씨", "네이버"],
+["다채사랑", "OOCHand DaCaeSaRang", "@DaCaeSaRang", "woff2", "400", "또박또박", 1, "또박또박 어른_손글씨 펜", "네이버"],
+["몽돌", "OOCHand MongDor", "@MongDor", "woff2", "400", "또박또박", 1, "또박또박 둥근_손글씨 어른_손글씨", "네이버"],
+["바른히피", "OOCHand BaReunHiPi", "@BaReunHiPi", "woff2", "400", "또박또박", 1, "또박또박 펜 어른_손글씨", "네이버"],
+["배은혜체", "OOCHand BaeEunHyeCe", "@BaeEunHyeCe", "woff2", "400", "또박또박", 1, "또박또박 어른_손글씨 펜", "네이버"],
+["백의의 천사", "OOCHand BaegEuiEuiCeonSa", "@BaegEuiEuiCeonSa", "woff2", "400", "또박또박", 1, "또박또박 어른_손글씨", "네이버"],
+["성실체", "OOCHand SeongSirCe", "@SeongSirCe", "woff2", "400", "또박또박", 1, "또박또박 어른_손글씨 펜", "네이버"],
+["아인맘 손글씨", "OOCHand AInMamSonGeurSsi", "@AInMamSonGeurSsi", "woff2", "400", "또박또박", 1, "또박또박 어른_손글씨 펜", "네이버"],
+["암스테르담", "OOCHand AmSeuTeReuDam", "@AmSeuTeReuDam", "woff2", "400", "또박또박", 1, "또박또박 어른_손글씨 각진_손글씨", "네이버"],
+["엄마사랑", "OOCHand EomMaSaRang", "@EomMaSaRang", "woff2", "400", "또박또박", 1, "또박또박 어른_손글씨 펜", "네이버"],
+["연지체", "OOCHand YeonJiCe", "@YeonJiCe", "woff2", "400", "또박또박", 1, "또박또박 어른_손글씨 펜", "네이버"],
+["왼손잡이도 예뻐", "OOCHand OenSonJabIDoYeBbeo", "@OenSonJabIDoYeBbeo", "woff2", "400", "또박또박", 1, "또박또박 어른_손글씨", "네이버"],
+["행복한 도비", "OOCHand HaengBogHanDoBi", "@HaengBogHanDoBi", "woff2", "400", "또박또박", 1, "또박또박 어른_손글씨 감성적인", "네이버"],
+["혜준체", "OOCHand HyeJunCe", "@HyeJunCe", "woff2", "400", "또박또박", 1, "또박또박 어른_손글씨 펜", "네이버"],
+["온글잎 의연체", "Uiyeun", "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105@1.1/Uiyeun.woff", "woff", "400", "또박또박", 0, "또박또박 손글씨_고딕", "온글잎"],
+["고딕 아니고 고딩", "OOCHand GoDigANiGoGoDing", "@GoDigANiGoGoDing", "woff2", "400", "또박또박", 0, "손글씨_고딕 또박또박 아이_손글씨", "네이버"],
+["다시 시작해", "OOCHand DaSiSiJagHae", "@DaSiSiJagHae", "woff2", "400", "또박또박", 0, "또박또박 두꺼운 손글씨_고딕", "네이버"],
+["달의궤도", "OOCHand DarEuiGweDo", "@DarEuiGweDo", "woff2", "400", "또박또박", 0, "또박또박 두꺼운 각진_손글씨", "네이버"],
+["따악단단", "OOCHand DdaAgDanDan", "@DdaAgDanDan", "woff2", "400", "또박또박", 0, "또박또박 각진_손글씨 손글씨_고딕", "네이버"],
+["또박또박", "OOCHand DdoBagDdoBag", "@DdoBagDdoBag", "woff2", "400", "또박또박", 0, "또박또박 펜 손글씨_고딕", "네이버"],
+["무궁화", "OOCHand MuGungHwa", "@MuGungHwa", "woff2", "400", "또박또박", 0, "또박또박 펜 손글씨_고딕", "네이버"],
+["미니 손글씨", "OOCHand MiNiSonGeurSsi", "@MiNiSonGeurSsi", "woff2", "400", "또박또박", 0, "또박또박 펜 손글씨_고딕", "네이버"],
+["그리운 오엔손글씨체", "Griun_OnHandwriting-Rg", "https://cdn.jsdelivr.net/gh/Project-Noonnu/2607161334@griun-onhandwriting-rg/griun-onhandwriting-rg/Griun_OnHandwriting-Rg.woff2", "woff2", "400", "귀여운", 1, "귀여운 또박또박 어른_손글씨 손글씨_고딕 펜", "그리운 및 각 폰트명에 명시된 개인 창작자"],
+["부산단디손글씨", "부산단디손글씨", "https://cdn.jsdelivr.net/gh/Project-Noonnu/2610132210@font-342/font-342/부산단디손글씨.woff2", "woff2", "400", "귀여운", 1, "귀여운 동글동글 어른_손글씨 펜 둥근_손글씨", "부산시청"],
+["그리운X국한박 사랑스러운", "GriunXHangeulSarangseureoun-Regular", "https://cdn.jsdelivr.net/gh/Project-Noonnu/2607161334@x-10/x/GriunXHangeulSarangseureoun-Regular.woff2", "woff2", "400", "귀여운", 1, "귀여운 또박또박 어른_손글씨 손글씨_고딕 펜", "그리운 X 국립한글박물관"],
+["온글잎 영롱", "Ownglyph_brilliant-Rg", "https://cdn.jsdelivr.net/gh/projectnoonnu/2412-1@1.0/Ownglyph_brilliant-Rg.woff2", "woff2", "400", "귀여운", 1, "귀여운 어른_손글씨", "온글잎"],
+["곰신체", "OOCHand GomSinCe", "@GomSinCe", "woff2", "400", "귀여운", 1, "귀여운 어른_손글씨 펜", "네이버"],
+["기쁨밝음", "OOCHand GiBbeumBarkEum", "@GiBbeumBarkEum", "woff2", "400", "귀여운", 1, "귀여운 어른_손글씨 펜", "네이버"],
+["온글잎 박다현체", "Ownglyph_ParkDaHyun", "https://cdn.jsdelivr.net/gh/projectnoonnu/2411-3@1.0/Ownglyph_ParkDaHyun.woff2", "woff2", "400", "귀여운", 0, "귀여운 동글동글 장식_손글씨", "온글잎"],
+["히피체", "hippie_히피체", "https://cdn.jsdelivr.net/gh/Project-Noonnu/2610081905@hippie/hippie/hippie_히피체.woff2", "woff2", "400", "귀여운", 0, "귀여운 동글동글 삐뚤빼뚤 손글씨_고딕 두꺼운", "AI올컷"],
+["온글잎 콘콘체", "Ownglyph_corncorn-Rg", "https://cdn.jsdelivr.net/gh/projectnoonnu/2412-1@1.0/Ownglyph_corncorn-Rg.woff2", "woff2", "400", "귀여운", 0, "귀여운 또박또박 동글동글 둥근_손글씨", "온글잎"],
+["강원교육새음체", "GangwonEduSaeeum_OTFMediumA", "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduSaeeum_OTFMediumA.woff", "woff", "400", "귀여운", 0, "귀여운 또박또박 동글동글", "강원도교육청 X 헤움디자인"],
+["그리운 2019년도 아영의 손글씨", "Griun_AhyoungsHandwriteIn2019-Rg", "https://cdn.jsdelivr.net/gh/Project-Noonnu/2607161334@2019/2019/Griun_AhyoungsHandwriteIn2019-Rg.woff2", "woff2", "400", "귀여운", 0, "귀여운 또박또박 동글동글 손글씨_고딕 둥근_손글씨", "그리운"],
+["스스로넷 손글씨체", "SSRONETHandwritten", "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_1@1.0/SSRONETHandwritten.woff2", "woff2", "400", "귀여운", 0, "귀여운 삐뚤빼뚤", "스스로넷"],
+["온글잎 대롱체", "Ownglyph_daelong-Rg", "https://cdn.jsdelivr.net/gh/projectnoonnu/2507-2@1.0/Ownglyph_daelong-Rg.woff2", "woff2", "400", "귀여운", 0, "귀여운 동글동글", "온글잎"],
+["교보손글씨 2023 우선아", "KyoboHandwriting2023wsa", "https://cdn.jsdelivr.net/gh/projectnoonnu/2404-2@1.0/KyoboHandwriting2023wsa.woff2", "woff2", "400", "귀여운", 0, "귀여운 동글동글 기울어진", "교보문고"],
+["그리운 세종대왕바라기 김채은", "Griun_SejongBaragiKimChaeeun-Rg", "https://cdn.jsdelivr.net/gh/Project-Noonnu/2609271756@griun-sejongbaragikimchaeeun-rg/griun-sejongbaragikimchaeeun-rg/Griun_SejongBaragiKimChaeeun-Rg.woff2", "woff2", "400", "귀여운", 0, "귀여운 또박또박 동글동글 펜 감성적인", "그리운 X 국립세계문자박물관"],
+["온글잎 언즈체", "Ownglyph_UNZ-Rg", "https://cdn.jsdelivr.net/gh/projectnoonnu/2406-1@1.0/Ownglyph_UNZ-Rg.woff2", "woff2", "400", "귀여운", 0, "귀여운 동글동글", "온글잎"],
+["그리운 미가 손글씨", "Griun_MIGA-Handwriting-Rg", "https://cdn.jsdelivr.net/gh/Project-Noonnu/2609271756@2026/2026/Griun_MIGA-Handwriting-Rg.woff2", "woff2", "400", "귀여운", 0, "귀여운 동글동글 삐뚤빼뚤", "그리운 X 국립세계문자박물관"],
+["온글잎 지우쏘낭", "Ownglyph_jiwoosonang", "https://cdn.jsdelivr.net/gh/projectnoonnu/2408@1.0/Ownglyph_jiwoosonang.woff2", "woff2", "400", "귀여운", 0, "귀여운", "온글잎"],
+["그리운 프롬솔", "Griun_Fromsol-Rg", "https://cdn.jsdelivr.net/gh/Project-Noonnu/2607161334@griun-fromsol-rg/griun-fromsol-rg/Griun_Fromsol-Rg.woff2", "woff2", "400", "귀여운", 0, "또박또박 동글동글 손글씨_고딕 둥근_손글씨", "그리운"],
+["그리운 몽토리체", "Griun_Mongtori-Rg", "https://cdn.jsdelivr.net/gh/projectnoonnu/2601-1@1.0/Griun_Mongtori-Rg.woff2", "woff2", "400", "귀여운", 0, "귀여운 또박또박 동글동글", "그리운 X 세히"],
+["밑미 폰트", "Ownglyph_meetme-Rg", "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_1@1.0/Ownglyph_meetme-Rg.woff2", "woff2", "400", "귀여운", 0, "귀여운 동글동글", "밑미 X 보이저엑스"],
+["오뮤 다예쁨체", "omyu_pretty", "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2", "woff2", "400", "귀여운", 0, "귀여운 또박또박 동글동글 손글씨_고딕", "오뮤다이어리 x 보이저엑스"],
+["그리운 예은체", "Griun_Yeeun-Rg", "https://cdn.jsdelivr.net/gh/Project-Noonnu/2609271945@griun-yeeun-rg/griun-yeeun-rg/Griun_Yeeun-Rg.woff2", "woff2", "400", "귀여운", 0, "귀여운 또박또박 동글동글 손글씨_고딕", "그리운"],
+["느릿느릿체", "OOCHand NeuRisNeuRisCe", "@NeuRisNeuRisCe", "woff2", "400", "귀여운", 0, "귀여운 동글동글 두꺼운", "네이버"],
+["동화또박", "OOCHand DongHwaDdoBag", "@DongHwaDdoBag", "woff2", "400", "귀여운", 0, "귀여운 동글동글 또박또박 둥근_손글씨", "네이버"],
+["맛있는체", "OOCHand MasIssNeunCe", "@MasIssNeunCe", "woff2", "400", "귀여운", 0, "귀여운 두꺼운 동글동글", "네이버"],
+["반짝반짝 별", "OOCHand BanJjagBanJjagByeor", "@BanJjagBanJjagByeor", "woff2", "400", "귀여운", 0, "귀여운 아이_손글씨 펜", "네이버"],
+["상해찬미체", "OOCHand SangHaeCanMiCe", "@SangHaeCanMiCe", "woff2", "400", "귀여운", 0, "귀여운 두꺼운 독특한", "네이버"],
+["세화체", "OOCHand SeHwaCe", "@SeHwaCe", "woff2", "400", "귀여운", 0, "귀여운 동글동글 펜", "네이버"],
+["수줍은 대학생", "OOCHand SuJubEunDaeHagSaeng", "@SuJubEunDaeHagSaeng", "woff2", "400", "귀여운", 0, "귀여운 두꺼운 펜", "네이버"],
+["시우 귀여워", "OOCHand SiUGwiYeoWeo", "@SiUGwiYeoWeo", "woff2", "400", "귀여운", 0, "귀여운 아이_손글씨 삐뚤빼뚤", "네이버"],
+["신혼부부", "OOCHand SinHonBuBu", "@SinHonBuBu", "woff2", "400", "귀여운", 0, "귀여운 동글동글 감성적인", "네이버"],
+["아기사랑체", "OOCHand AGiSaRangCe", "@AGiSaRangCe", "woff2", "400", "귀여운", 0, "귀여운 동글동글 아이_손글씨", "네이버"],
+["예쁜 민경체", "OOCHand YeBbeunMinGyeongCe", "@YeBbeunMinGyeongCe", "woff2", "400", "귀여운", 0, "귀여운 두꺼운 동글동글", "네이버"],
+["유니 띵땅띵땅", "OOCHand YuNiDdingDdangDdingDdang", "@YuNiDdingDdangDdingDdang", "woff2", "400", "귀여운", 0, "귀여운 아이_손글씨 삐뚤빼뚤", "네이버"],
+["장미체", "OOCHand JangMiCe", "@JangMiCe", "woff2", "400", "귀여운", 0, "귀여운 두꺼운 장식_손글씨", "네이버"],
+["점꼴체", "OOCHand JeomGgorCe", "@JeomGgorCe", "woff2", "400", "귀여운", 0, "귀여운 독특한 삐뚤빼뚤", "네이버"],
+["코코체", "OOCHand KoKoCe", "@KoKoCe", "woff2", "400", "귀여운", 0, "귀여운 삐뚤빼뚤 독특한", "네이버"],
+["하나손글씨", "OOCHand HaNaSonGeurSsi", "@HaNaSonGeurSsi", "woff2", "400", "귀여운", 0, "귀여운 두꺼운 둥근_손글씨", "네이버"],
+["효남 늘 화이팅", "OOCHand HyoNamNeurHwaITing", "@HyoNamNeurHwaITing", "woff2", "400", "귀여운", 0, "귀여운 삐뚤빼뚤 독특한", "네이버"],
+["희망누리", "OOCHand HeuiMangNuRi", "@HeuiMangNuRi", "woff2", "400", "귀여운", 0, "귀여운 삐뚤빼뚤 아이_손글씨", "네이버"],
+["힘내라는 말보단", "OOCHand HimNaeRaNeunMarBoDan", "@HimNaeRaNeunMarBoDan", "woff2", "400", "귀여운", 0, "귀여운 두꺼운 삐뚤빼뚤", "네이버"],
+["그리운X국한박 뚜레", "GriunXHangeulDDURAE-Regular", "https://cdn.jsdelivr.net/gh/Project-Noonnu/2607161334@x-7/x/GriunXHangeulDDURAE-Regular.woff2", "woff2", "400", "삐뚤빼뚤", 1, "어른_손글씨 삐뚤빼뚤 펜", "그리운 X 국립한글박물관"],
+["KCC김환기체", "KCC-Kimhwanki", "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202@1.0/KCC-Kimhwanki.woff", "woff", "400", "삐뚤빼뚤", 1, "어른_손글씨 삐뚤빼뚤", "한국저작권위원회"],
+["윤봉길체", "YUN-BONG-GIL", "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/YUN-BONG-GIL.woff", "woff", "400", "삐뚤빼뚤", 1, "어른_손글씨 삐뚤빼뚤", "GS칼텍스"],
+["열일체", "OOCHand YeorIrCe", "@YeorIrCe", "woff2", "400", "삐뚤빼뚤", 1, "삐뚤빼뚤 어른_손글씨 펜", "네이버"],
+["노력하는 동희", "OOCHand NoRyeogHaNeunDongHeui", "@NoRyeogHaNeunDongHeui", "woff2", "400", "삐뚤빼뚤", 0, "삐뚤빼뚤 아이_손글씨 펜", "네이버"],
+["부장님 눈치체", "OOCHand BuJangNimNunCiCe", "@BuJangNimNunCiCe", "woff2", "400", "삐뚤빼뚤", 0, "삐뚤빼뚤 두꺼운 독특한", "네이버"],
+["비상체", "OOCHand BiSangCe", "@BiSangCe", "woff2", "400", "삐뚤빼뚤", 0, "삐뚤빼뚤 두꺼운 독특한", "네이버"],
+["세계적인 한글", "OOCHand SeGyeJeogInHanGeur", "@SeGyeJeogInHanGeur", "woff2", "400", "삐뚤빼뚤", 0, "삐뚤빼뚤 아이_손글씨", "네이버"],
+["아줌마 자유", "OOCHand AJumMaJaYu", "@AJumMaJaYu", "woff2", "400", "삐뚤빼뚤", 0, "삐뚤빼뚤 두꺼운 독특한 각진_손글씨", "네이버"],
+["자부심지우", "OOCHand JaBuSimJiU", "@JaBuSimJiU", "woff2", "400", "삐뚤빼뚤", 0, "삐뚤빼뚤 아이_손글씨 독특한", "네이버"],
+["온글잎 윤탱체", "온글잎 윤탱체", "https://cdn.jsdelivr.net/gh/Project-Noonnu/2608211801@font-160/font-160/온글잎 윤탱체.woff2", "woff2", "400", "아이 손글씨", 0, "귀여운 동글동글 아이_손글씨 둥근_손글씨", "온글잎"],
+["신비는일곱살", "SangSangShinb7", "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_three@1.1/SangSangShinb7.woff", "woff", "400", "아이 손글씨", 0, "귀여운 아이_손글씨", "상상토끼"],
+["손맛체", "Kim Sonmat", "https://cdn.jsdelivr.net/gh/projectnoonnu/2512-1@1.0/Kim Sonmat.woff2", "woff2", "400", "아이 손글씨", 0, "귀여운 아이_손글씨 각진_손글씨", "김씨폰트공방"],
+["교보손글씨 2019", "KyoboHand", "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/KyoboHand.woff", "woff", "400", "아이 손글씨", 0, "또박또박 아이_손글씨", "교보문고"],
+["온글잎 긍정", "Ownglyph_positive", "https://cdn.jsdelivr.net/gh/projectnoonnu/2604-1@1.1/Ownglyph_positive.woff2", "woff2", "400", "아이 손글씨", 0, "귀여운 또박또박 아이_손글씨", "온글잎"],
+["이서윤체", "LeeSeoyun", "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/LeeSeoyun.woff", "woff", "400", "아이 손글씨", 0, "귀여운 또박또박 아이_손글씨", "흥국생명"],
+["하루일기체 젤리펜", "CallifontDaynoteJellypen-Bold", "https://cdn.jsdelivr.net/gh/projectnoonnu/2606-1@1.1/CallifontDaynoteJellypen-Bold.woff2", "woff2", "600", "아이 손글씨", 0, "귀여운 삐뚤빼뚤 아이_손글씨 펜", "캘리폰트"],
+["우리딸 손글씨", "OOCHand URiDdarSonGeurSsi", "@URiDdarSonGeurSsi", "woff2", "400", "아이 손글씨", 0, "아이_손글씨 귀여운 두꺼운", "네이버"],
+["중학생", "OOCHand JungHagSaeng", "@JungHagSaeng", "woff2", "400", "아이 손글씨", 0, "아이_손글씨 두꺼운 또박또박", "네이버"],
+["초딩희망", "OOCHand CoDingHeuiMang", "@CoDingHeuiMang", "woff2", "400", "아이 손글씨", 0, "아이_손글씨 귀여운 또박또박", "네이버"]
+];
+const RANGES=["U+20-7E,U+B7,U+2013-2015,U+2018-2019,U+201C-201D,U+2026,U+203B,U+25A0-25A1,U+25B2-25B3,U+25BC-25BD,U+25C6-25C7,U+25CB,U+25CE-25CF,U+2605-2606,U+2661,U+2665,U+3001-3002,U+3008-3011,U+FF5E", "U+AC00-AC01,U+AC04,U+AC07-AC0A,U+AC10-AC17,U+AC19-AC1D,U+AC20,U+AC24,U+AC2C-AC2D,U+AC2F-AC31,U+AC38-AC39,U+AC3C,U+AC40,U+AC4B,U+AC4D,U+AC54,U+AC58,U+AC5C,U+AC70-AC71,U+AC74,U+AC77-AC78,U+AC7A,U+AC80-AC81,U+AC83-AC86,U+AC89-AC8C,U+AC90,U+AC94,U+AC9C-AC9D,U+AC9F-ACA1,U+ACA8-ACAA,U+ACAC,U+ACAF-ACB0,U+ACB8-ACB9,U+ACBB-ACBD,U+ACC1,U+ACC4,U+ACC8,U+ACCC,U+ACD5,U+ACD7,U+ACE0-ACE1,U+ACE4,U+ACE7-ACE8,U+ACEA,U+ACEC,U+ACEF-ACF1,U+ACF3,U+ACF5-ACF6,U+ACFC-ACFD,U+AD00,U+AD04,U+AD06,U+AD0C-AD0D,U+AD0F,U+AD11", "U+AD18,U+AD1C,U+AD20,U+AD29,U+AD2C-AD2D,U+AD34-AD35,U+AD38,U+AD3C,U+AD44-AD45,U+AD47,U+AD49,U+AD50,U+AD54,U+AD58,U+AD61,U+AD63,U+AD6C-AD6D,U+AD70,U+AD73-AD76,U+AD7B-AD7D,U+AD7F,U+AD81-AD82,U+AD88-AD89,U+AD8C,U+AD90,U+AD9C-AD9D,U+ADA4,U+ADB7,U+ADC0-ADC1,U+ADC4,U+ADC8,U+ADD0-ADD1,U+ADD3,U+ADDC,U+ADE0,U+ADE4,U+ADF8-ADF9,U+ADFC,U+ADFF-AE01,U+AE08-AE09,U+AE0B,U+AE0D,U+AE14,U+AE30-AE31,U+AE34,U+AE37-AE38,U+AE3A,U+AE40-AE41,U+AE43,U+AE45-AE46,U+AE4A,U+AE4C-AE4E,U+AE50,U+AE54,U+AE56,U+AE5C-AE5D,U+AE5F-AE61,U+AE65,U+AE68-AE69,U+AE6C,U+AE70,U+AE78-AE79,U+AE7B-AE7D,U+AE84-AE85,U+AE8C,U+AEBC", "U+AEBD-AEBE,U+AEC0,U+AEC4,U+AECC-AECD,U+AECF-AED1,U+AED8-AED9,U+AEDC,U+AEE8,U+AEEB,U+AEED,U+AEF4,U+AEF8,U+AEFC,U+AF07-AF08,U+AF0D,U+AF10,U+AF2C-AF2D,U+AF30,U+AF32,U+AF34,U+AF3C-AF3D,U+AF3F,U+AF41-AF43,U+AF48-AF49,U+AF50,U+AF5C-AF5D,U+AF64-AF65,U+AF79,U+AF80,U+AF84,U+AF88,U+AF90-AF91,U+AF95,U+AF9C,U+AFB8-AFB9,U+AFBC,U+AFC0,U+AFC7-AFC9,U+AFCB,U+AFCD-AFCE,U+AFD4,U+AFDC,U+AFE8-AFE9,U+AFF0-AFF1,U+AFF4,U+AFF8,U+B000-B001,U+B004,U+B00C,U+B010,U+B014,U+B01C-B01D,U+B028,U+B044-B045,U+B048,U+B04A,U+B04C,U+B04E,U+B053-B055,U+B057,U+B059,U+B05D,U+B07C-B07D,U+B080,U+B084,U+B08C-B08D,U+B08F,U+B091,U+B098-B09A", "U+B09C,U+B09F-B0A2,U+B0A8-B0A9,U+B0AB-B0AF,U+B0B1,U+B0B3-B0B5,U+B0B8,U+B0BC,U+B0C4-B0C5,U+B0C7-B0C9,U+B0D0-B0D1,U+B0D4,U+B0D8,U+B0E0,U+B0E5,U+B108-B109,U+B10B-B10C,U+B110,U+B112-B113,U+B118-B119,U+B11B-B11D,U+B123-B125,U+B128,U+B12C,U+B134-B135,U+B137-B139,U+B140-B141,U+B144,U+B148,U+B150-B151,U+B154-B155,U+B158,U+B15C,U+B160,U+B178-B179,U+B17C,U+B180,U+B182,U+B188-B189,U+B18B,U+B18D,U+B192-B194,U+B198,U+B19C,U+B1A8,U+B1CC,U+B1D0,U+B1D4,U+B1DC-B1DD,U+B1DF,U+B1E8-B1E9,U+B1EC,U+B1F0,U+B1F9,U+B1FB,U+B1FD,U+B204-B205,U+B208,U+B20B-B20C,U+B214-B215,U+B217", "U+B219,U+B220,U+B234,U+B23C,U+B258,U+B25C,U+B260,U+B268-B269,U+B274-B275,U+B27C,U+B284-B285,U+B289,U+B290-B291,U+B294,U+B298-B29A,U+B2A0-B2A1,U+B2A3,U+B2A5-B2A6,U+B2AA,U+B2AC,U+B2B0,U+B2B4,U+B2C8-B2C9,U+B2CC,U+B2D0,U+B2D2,U+B2D8-B2D9,U+B2DB,U+B2DD,U+B2E2,U+B2E4-B2E6,U+B2E8,U+B2EB-B2EF,U+B2F3-B2F5,U+B2F7-B2FB,U+B2FF-B301,U+B304,U+B308,U+B310-B311,U+B313-B315,U+B31C,U+B354-B356,U+B358,U+B35B-B35C,U+B35E-B35F,U+B364-B365,U+B367,U+B369,U+B36B,U+B36E,U+B370-B371,U+B374,U+B378,U+B380-B381,U+B383-B385,U+B38C,U+B390,U+B394,U+B3A0-B3A1,U+B3A8,U+B3AC", "U+B3C4-B3C5,U+B3C8,U+B3CB-B3CC,U+B3CE,U+B3D0,U+B3D4-B3D5,U+B3D7,U+B3D9,U+B3DB,U+B3DD,U+B3E0,U+B3E4,U+B3E8,U+B3FC,U+B410,U+B418,U+B41C,U+B420,U+B428-B429,U+B42B,U+B434,U+B450-B451,U+B454,U+B458,U+B460-B461,U+B463,U+B465,U+B46C,U+B480,U+B488,U+B49D,U+B4A4,U+B4A8,U+B4AC,U+B4B5,U+B4B7,U+B4B9,U+B4C0,U+B4C4,U+B4C8,U+B4D0,U+B4D5,U+B4DC-B4DD,U+B4E0,U+B4E3-B4E4,U+B4E6,U+B4EC-B4ED,U+B4EF,U+B4F1,U+B4F8,U+B514-B515,U+B518,U+B51B-B51C,U+B524-B525,U+B527-B52A,U+B530-B531,U+B534,U+B538,U+B540-B541,U+B543-B545,U+B54B-B54D,U+B550,U+B554,U+B55C-B55D,U+B55F-B561,U+B5A0-B5A1,U+B5A4,U+B5A8,U+B5AA-B5AB,U+B5B0-B5B1,U+B5B3", "U+B5B4-B5B5,U+B5BB-B5BD,U+B5C0,U+B5C4,U+B5CC-B5CD,U+B5CF-B5D1,U+B5D8,U+B5EC,U+B610-B611,U+B614,U+B618,U+B625,U+B62C,U+B634,U+B648,U+B664,U+B668,U+B69C-B69D,U+B6A0,U+B6A4,U+B6AB-B6AC,U+B6B1,U+B6D4,U+B6F0,U+B6F4,U+B6F8,U+B700-B701,U+B705,U+B728-B729,U+B72C,U+B72F-B730,U+B738-B739,U+B73B,U+B744,U+B748,U+B74C,U+B754-B755,U+B760,U+B764,U+B768,U+B770-B771,U+B773,U+B775,U+B77C-B77D,U+B780,U+B784,U+B78C-B78D,U+B78F-B792,U+B796-B799,U+B79C,U+B7A0,U+B7A8-B7A9,U+B7AB-B7AD,U+B7B4-B7B5,U+B7B8,U+B7C7,U+B7C9,U+B7EC-B7ED,U+B7F0,U+B7F4,U+B7FC-B7FD,U+B7FF-B801,U+B807-B809,U+B80C,U+B810", "U+B818-B819,U+B81B,U+B81D,U+B824-B825,U+B828,U+B82C,U+B834-B835,U+B837-B839,U+B840,U+B844,U+B851,U+B853,U+B85C-B85D,U+B860,U+B864,U+B86C-B86D,U+B86F,U+B871,U+B878,U+B87C,U+B88D,U+B8A8,U+B8B0,U+B8B4,U+B8B8,U+B8C0-B8C1,U+B8C3,U+B8C5,U+B8CC,U+B8D0,U+B8D4,U+B8DD,U+B8DF,U+B8E1,U+B8E8-B8E9,U+B8EC,U+B8F0,U+B8F8-B8F9,U+B8FB,U+B8FD,U+B904,U+B918,U+B920,U+B93C-B93D,U+B940,U+B944,U+B94C,U+B94F,U+B951,U+B958-B959,U+B95C,U+B960,U+B968-B969,U+B96B,U+B96D,U+B974-B975,U+B978,U+B97C,U+B984-B985,U+B987,U+B989-B98A,U+B98D-B98E,U+B9AC-B9AD,U+B9B0,U+B9B4,U+B9BC-B9BD,U+B9BF,U+B9C1,U+B9C8-B9C9,U+B9CC,U+B9CE-B9D2,U+B9D8-B9D9,U+B9DB", "U+B9DD-B9DE,U+B9E1,U+B9E3-B9E5,U+B9E8,U+B9EC,U+B9F4-B9F5,U+B9F7-B9FA,U+BA00-BA01,U+BA08,U+BA15,U+BA38-BA39,U+BA3C,U+BA40,U+BA42,U+BA48-BA49,U+BA4B,U+BA4D-BA4E,U+BA53-BA55,U+BA58,U+BA5C,U+BA64-BA65,U+BA67-BA69,U+BA70-BA71,U+BA74,U+BA78,U+BA83-BA85,U+BA87,U+BA8C,U+BAA8-BAA9,U+BAAB-BAAC,U+BAB0,U+BAB2,U+BAB8-BAB9,U+BABB,U+BABD,U+BAC4,U+BAC8,U+BAD8-BAD9,U+BAFC,U+BB00,U+BB04,U+BB0D,U+BB0F,U+BB11,U+BB18,U+BB1C,U+BB20,U+BB29,U+BB2B,U+BB34-BB36,U+BB38,U+BB3B-BB3E,U+BB44-BB45,U+BB47,U+BB49,U+BB4D,U+BB4F-BB50,U+BB54,U+BB58,U+BB61,U+BB63,U+BB6C,U+BB88,U+BB8C,U+BB90,U+BBA4,U+BBA8,U+BBAC", "U+BBB4,U+BBB7,U+BBC0,U+BBC4,U+BBC8,U+BBD0,U+BBD3,U+BBF8-BBF9,U+BBFC,U+BBFF-BC00,U+BC02,U+BC08-BC09,U+BC0B-BC0D,U+BC0F,U+BC11,U+BC14-BC18,U+BC1B-BC1F,U+BC24-BC25,U+BC27,U+BC29,U+BC2D,U+BC30-BC31,U+BC34,U+BC38,U+BC40-BC41,U+BC43-BC45,U+BC49,U+BC4C-BC4D,U+BC50,U+BC5D,U+BC84-BC85,U+BC88,U+BC8B-BC8C,U+BC8E,U+BC94-BC95,U+BC97,U+BC99-BC9A,U+BCA0-BCA1,U+BCA4,U+BCA7-BCA8,U+BCB0-BCB1,U+BCB3-BCB5,U+BCBC-BCBD,U+BCC0,U+BCC4,U+BCCD,U+BCCF-BCD1,U+BCD5,U+BCD8,U+BCDC,U+BCF4-BCF6,U+BCF8,U+BCFC,U+BD04-BD05,U+BD07,U+BD09,U+BD10,U+BD14,U+BD24,U+BD2C,U+BD40,U+BD48-BD49,U+BD4C", "U+BD50,U+BD58-BD59,U+BD64,U+BD68,U+BD80-BD81,U+BD84,U+BD87-BD8A,U+BD90-BD91,U+BD93,U+BD95,U+BD99-BD9A,U+BD9C,U+BDA4,U+BDB0,U+BDB8,U+BDD4-BDD5,U+BDD8,U+BDDC,U+BDE9,U+BDF0,U+BDF4,U+BDF8,U+BE00,U+BE03,U+BE05,U+BE0C-BE0D,U+BE10,U+BE14,U+BE1C-BE1D,U+BE1F,U+BE44-BE45,U+BE48,U+BE4C,U+BE4E,U+BE54-BE55,U+BE57,U+BE59-BE5B,U+BE60-BE61,U+BE64,U+BE68,U+BE6A,U+BE70-BE71,U+BE73-BE75,U+BE7B-BE7D,U+BE80,U+BE84,U+BE8C-BE8D,U+BE8F-BE91,U+BE98-BE99,U+BEA8,U+BED0-BED1,U+BED4,U+BED7-BED8,U+BEE0,U+BEE3-BEE5,U+BEEC,U+BF01,U+BF08-BF09,U+BF18-BF19,U+BF1B-BF1D,U+BF40-BF41,U+BF44,U+BF48,U+BF50-BF51", "U+BF55,U+BF94,U+BFB0,U+BFC5,U+BFCC-BFCD,U+BFD0,U+BFD4,U+BFDC,U+BFDF,U+BFE1,U+C03C,U+C051,U+C058,U+C05C,U+C060,U+C068-C069,U+C090-C091,U+C094,U+C098,U+C0A0-C0A1,U+C0A3,U+C0A5,U+C0AC-C0AD,U+C0AF-C0B0,U+C0B3-C0B6,U+C0BC-C0BD,U+C0BF-C0C1,U+C0C5,U+C0C8-C0C9,U+C0CC,U+C0D0,U+C0D8-C0D9,U+C0DB-C0DD,U+C0E4-C0E5,U+C0E8,U+C0EC,U+C0F4-C0F5,U+C0F7,U+C0F9,U+C100,U+C104,U+C108,U+C110,U+C115,U+C11C-C120,U+C123-C124,U+C126-C127,U+C12C-C12D,U+C12F-C131,U+C136,U+C138-C139,U+C13C,U+C140,U+C148-C149,U+C14B-C14D,U+C154-C155,U+C158,U+C15C,U+C164-C165,U+C167-C169,U+C170,U+C174,U+C178", "U+C185,U+C18C-C18E,U+C190,U+C194,U+C196,U+C19C-C19D,U+C19F,U+C1A1,U+C1A5,U+C1A8-C1A9,U+C1AC,U+C1B0,U+C1BD,U+C1C4,U+C1C8,U+C1CC,U+C1D4,U+C1D7-C1D8,U+C1E0,U+C1E4,U+C1E8,U+C1F0-C1F1,U+C1F3,U+C1FC-C1FD,U+C200,U+C204,U+C20C-C20D,U+C20F,U+C211,U+C218-C219,U+C21C,U+C21F-C220,U+C228-C229,U+C22B,U+C22D,U+C22F,U+C231-C232,U+C234,U+C248,U+C250-C251,U+C254,U+C258,U+C260,U+C265,U+C26C-C26D,U+C270,U+C274,U+C27C-C27D,U+C27F,U+C281,U+C288-C289,U+C290,U+C298,U+C29B,U+C29D,U+C2A4-C2A5,U+C2A8,U+C2AC-C2AD,U+C2B4-C2B5,U+C2B7,U+C2B9,U+C2DC-C2DD,U+C2E0,U+C2E3-C2E4,U+C2EB-C2ED,U+C2EF,U+C2F1,U+C2F6,U+C2F8-C2F9,U+C2FB-C2FC,U+C300,U+C308-C309", "U+C30C-C30D,U+C313-C315,U+C318,U+C31C,U+C324-C325,U+C328-C329,U+C345,U+C368-C369,U+C36C,U+C370,U+C372,U+C378-C379,U+C37C-C37D,U+C384,U+C388,U+C38C,U+C3C0,U+C3D8-C3D9,U+C3DC,U+C3DF-C3E0,U+C3E2,U+C3E8-C3E9,U+C3ED,U+C3F4-C3F5,U+C3F8,U+C408,U+C410,U+C424,U+C42C,U+C430,U+C434,U+C43C-C43D,U+C448,U+C464-C465,U+C468,U+C46C,U+C474-C475,U+C479,U+C480,U+C494,U+C49C,U+C4B8,U+C4BC,U+C4E9,U+C4F0-C4F1,U+C4F4,U+C4F8,U+C4FA,U+C4FF-C501,U+C50C,U+C510,U+C514,U+C51C,U+C528-C529,U+C52C,U+C530,U+C538-C539,U+C53B,U+C53D,U+C544-C545,U+C548-C54A,U+C54C-C54E,U+C553-C555,U+C557-C559,U+C55D-C55E,U+C560-C561,U+C564", "U+C568,U+C570-C571,U+C573-C575,U+C57C-C57D,U+C580,U+C584,U+C587,U+C58C-C58D,U+C58F,U+C591,U+C595,U+C597-C598,U+C59C,U+C5A0,U+C5A9,U+C5B4-C5B5,U+C5B8-C5B9,U+C5BB-C5BE,U+C5C4-C5CA,U+C5CC,U+C5CE,U+C5D0-C5D1,U+C5D4,U+C5D8,U+C5E0-C5E1,U+C5E3,U+C5E5,U+C5EC-C5EE,U+C5F0,U+C5F4,U+C5F6-C5F7,U+C5FC-C601,U+C605-C608,U+C60C,U+C610,U+C618-C619,U+C61B-C61C,U+C624-C625,U+C628,U+C62C-C62E,U+C630,U+C633-C635,U+C637,U+C639,U+C63B,U+C640-C641,U+C644,U+C648,U+C650-C651,U+C653-C655,U+C65C-C65D,U+C660,U+C66C,U+C66F,U+C671,U+C678", "U+C679,U+C67C,U+C680,U+C688-C689,U+C68B,U+C68D,U+C694-C695,U+C698,U+C69C,U+C6A4-C6A5,U+C6A7,U+C6A9,U+C6B0-C6B1,U+C6B4,U+C6B8-C6BA,U+C6C0-C6C1,U+C6C3,U+C6C5,U+C6CC-C6CD,U+C6D0,U+C6D4,U+C6DC-C6DD,U+C6E0-C6E1,U+C6E8-C6E9,U+C6EC,U+C6F0,U+C6F8-C6F9,U+C6FD,U+C704-C705,U+C708,U+C70C,U+C714-C715,U+C717,U+C719,U+C720-C721,U+C724,U+C728,U+C730-C731,U+C733,U+C735,U+C737,U+C73C-C73D,U+C740,U+C744,U+C74A,U+C74C-C74D,U+C74F,U+C751-C758,U+C75C,U+C760,U+C768,U+C76B,U+C774-C775,U+C778,U+C77C-C77E,U+C783-C785,U+C787-C78A,U+C78E,U+C790-C791,U+C794,U+C796-C798,U+C79A", "U+C7A0-C7A1,U+C7A3-C7A6,U+C7AC-C7AD,U+C7B0,U+C7B4,U+C7BC-C7BD,U+C7BF-C7C1,U+C7C8-C7C9,U+C7CC,U+C7CE,U+C7D0,U+C7D8,U+C7DD,U+C7E4,U+C7E8,U+C7EC,U+C800-C801,U+C804,U+C808,U+C80A,U+C810-C811,U+C813,U+C815-C816,U+C81C-C81D,U+C820,U+C824,U+C82C-C82D,U+C82F,U+C831,U+C838,U+C83C,U+C840,U+C848-C849,U+C84C-C84D,U+C854,U+C870-C871,U+C874,U+C878,U+C87A,U+C880-C881,U+C883,U+C885-C887,U+C88B-C88D,U+C894,U+C89D,U+C89F,U+C8A1,U+C8A8,U+C8BC-C8BD,U+C8C4,U+C8C8,U+C8CC,U+C8D4-C8D5,U+C8D7,U+C8D9,U+C8E0-C8E1,U+C8E4,U+C8F5,U+C8FC-C8FD,U+C900,U+C904-C906,U+C90C-C90D,U+C90F,U+C911,U+C918,U+C92C,U+C934,U+C950-C951", "U+C954,U+C958,U+C960-C961,U+C963,U+C96C,U+C970,U+C974,U+C97C,U+C988-C989,U+C98C,U+C990,U+C998-C999,U+C99B,U+C99D,U+C9C0-C9C1,U+C9C4,U+C9C7-C9C8,U+C9CA,U+C9D0-C9D1,U+C9D3,U+C9D5-C9D6,U+C9D9-C9DA,U+C9DC-C9DD,U+C9E0,U+C9E2,U+C9E4,U+C9E7,U+C9EC-C9ED,U+C9EF-C9F1,U+C9F8-C9F9,U+C9FC,U+CA00,U+CA08-CA09,U+CA0B-CA0D,U+CA14,U+CA18,U+CA29,U+CA4C-CA4D,U+CA50,U+CA54,U+CA5C-CA5D,U+CA5F-CA61,U+CA68,U+CA7D,U+CA84,U+CA98,U+CABC-CABD,U+CAC0,U+CAC4,U+CACC-CACD,U+CACF,U+CAD1,U+CAD3,U+CAD8-CAD9,U+CAE0,U+CAEC,U+CAF4,U+CB08,U+CB10,U+CB14,U+CB18,U+CB20-CB21,U+CB41,U+CB48-CB49,U+CB4C,U+CB50,U+CB58-CB59,U+CB5D,U+CB64,U+CB78-CB79,U+CB9C", "U+CBB8,U+CBD4,U+CBE4,U+CBE7,U+CBE9,U+CC0C-CC0D,U+CC10,U+CC14,U+CC1C-CC1D,U+CC21-CC22,U+CC27-CC29,U+CC2C,U+CC2E,U+CC30,U+CC38-CC39,U+CC3B-CC3E,U+CC44-CC45,U+CC48,U+CC4C,U+CC54-CC55,U+CC57-CC59,U+CC60,U+CC64,U+CC66,U+CC68,U+CC70,U+CC75,U+CC98-CC99,U+CC9C,U+CCA0,U+CCA8-CCA9,U+CCAB-CCAD,U+CCB4-CCB5,U+CCB8,U+CCBC,U+CCC4-CCC5,U+CCC7,U+CCC9,U+CCD0,U+CCD4,U+CCE4,U+CCEC,U+CCF0,U+CD01,U+CD08-CD09,U+CD0C,U+CD10,U+CD18-CD19,U+CD1B,U+CD1D,U+CD24,U+CD28,U+CD2C,U+CD39,U+CD5C,U+CD60,U+CD64,U+CD6C-CD6D,U+CD6F,U+CD71,U+CD78,U+CD88,U+CD94-CD95,U+CD98,U+CD9C,U+CDA4-CDA5,U+CDA7,U+CDA9,U+CDB0,U+CDC4,U+CDCC,U+CDD0,U+CDE8,U+CDEC", "U+CDF0,U+CDF8-CDF9,U+CDFB,U+CDFD,U+CE04,U+CE08,U+CE0C,U+CE14,U+CE19,U+CE20-CE21,U+CE24,U+CE28,U+CE30-CE31,U+CE33,U+CE35,U+CE58-CE59,U+CE5C,U+CE5F-CE61,U+CE68-CE69,U+CE6B,U+CE6D,U+CE74-CE75,U+CE78,U+CE7C,U+CE84-CE85,U+CE87,U+CE89,U+CE90-CE91,U+CE94,U+CE98,U+CEA0-CEA1,U+CEA3-CEA5,U+CEAC-CEAD,U+CEC1,U+CEE4-CEE5,U+CEE8,U+CEEB-CEEC,U+CEF4-CEF5,U+CEF7-CEF9,U+CF00-CF01,U+CF04,U+CF08,U+CF10-CF11,U+CF13,U+CF15,U+CF1C,U+CF20,U+CF24,U+CF2C-CF2D,U+CF2F-CF31,U+CF38,U+CF54-CF55,U+CF58,U+CF5C,U+CF64-CF65,U+CF67,U+CF69,U+CF70-CF71,U+CF74,U+CF78,U+CF80,U+CF85,U+CF8C,U+CFA1,U+CFA8,U+CFB0,U+CFC4,U+CFE0-CFE1,U+CFE4,U+CFE8", "U+CFF0-CFF1,U+CFF3,U+CFF5,U+CFFC,U+D000,U+D004,U+D011,U+D018,U+D02D,U+D034-D035,U+D038,U+D03C,U+D044-D045,U+D047,U+D049,U+D050,U+D054,U+D058,U+D060,U+D06C-D06D,U+D070,U+D074,U+D07C-D07D,U+D081,U+D0A4-D0A5,U+D0A8,U+D0AC,U+D0B4-D0B5,U+D0B7,U+D0B9,U+D0C0-D0C1,U+D0C4,U+D0C8-D0C9,U+D0D0-D0D1,U+D0D3-D0D5,U+D0DC-D0DD,U+D0E0,U+D0E4,U+D0EC-D0ED,U+D0EF-D0F1,U+D0F8,U+D10D,U+D130-D131,U+D134,U+D138,U+D13A,U+D140-D141,U+D143-D145,U+D14C-D14D,U+D150,U+D154,U+D15C-D15D,U+D15F,U+D161,U+D168,U+D16C,U+D17C,U+D184,U+D188,U+D1A0-D1A1,U+D1A4,U+D1A8,U+D1B0-D1B1,U+D1B3,U+D1B5,U+D1BA,U+D1BC,U+D1C0,U+D1D8,U+D1F4,U+D1F8,U+D207,U+D209,U+D210", "U+D22C-D22D,U+D230,U+D234,U+D23C-D23D,U+D23F,U+D241,U+D248,U+D25C,U+D264,U+D280-D281,U+D284,U+D288,U+D290-D291,U+D295,U+D29C,U+D2A0,U+D2A4,U+D2AC,U+D2B1,U+D2B8-D2B9,U+D2BC,U+D2BF-D2C0,U+D2C2,U+D2C8-D2C9,U+D2CB,U+D2D4,U+D2D8,U+D2DC,U+D2E4-D2E5,U+D2F0-D2F1,U+D2F4,U+D2F8,U+D300-D301,U+D303,U+D305,U+D30C-D30E,U+D310,U+D314,U+D316,U+D31C-D31D,U+D31F-D321,U+D325,U+D328-D329,U+D32C,U+D330,U+D338-D339,U+D33B-D33D,U+D344-D345,U+D37C-D37D,U+D380,U+D384,U+D38C-D38D,U+D38F-D391,U+D398-D399,U+D39C,U+D3A0,U+D3A8-D3A9,U+D3AB,U+D3AD,U+D3B4,U+D3B8,U+D3BC,U+D3C4-D3C5,U+D3C8-D3C9,U+D3D0,U+D3D8,U+D3E1,U+D3E3,U+D3EC-D3ED", "U+D3F0,U+D3F4,U+D3FC-D3FD,U+D3FF,U+D401,U+D408,U+D41D,U+D440,U+D444,U+D45C,U+D460,U+D464,U+D46D,U+D46F,U+D478-D479,U+D47C,U+D47F-D480,U+D482,U+D488-D489,U+D48B,U+D48D,U+D494,U+D4A9,U+D4CC,U+D4D0,U+D4D4,U+D4DC,U+D4DF,U+D4E8,U+D4EC,U+D4F0,U+D4F8,U+D4FB,U+D4FD,U+D504,U+D508,U+D50C,U+D514-D515,U+D517,U+D53C-D53D,U+D540,U+D544,U+D54C-D54D,U+D54F,U+D551,U+D558-D559,U+D55C,U+D560,U+D565,U+D568-D569,U+D56B,U+D56D,U+D574-D575,U+D578,U+D57C,U+D584-D585,U+D587-D589,U+D590,U+D5A5,U+D5C8-D5C9,U+D5CC,U+D5D0,U+D5D2,U+D5D8-D5D9,U+D5DB,U+D5DD,U+D5E4-D5E5,U+D5E8,U+D5EC,U+D5F4-D5F5,U+D5F7,U+D5F9,U+D600-D601,U+D604,U+D608,U+D610-D611,U+D613-D615", "U+D61C,U+D620,U+D624,U+D62D,U+D638-D639,U+D63C,U+D640,U+D645,U+D648-D649,U+D64B,U+D64D,U+D651,U+D654-D655,U+D658,U+D65C,U+D667,U+D669,U+D670-D671,U+D674,U+D683,U+D685,U+D68C-D68D,U+D690,U+D694,U+D69D,U+D69F,U+D6A1,U+D6A8,U+D6AC,U+D6B0,U+D6B9,U+D6BB,U+D6C4-D6C5,U+D6C8,U+D6CC,U+D6D1,U+D6D4,U+D6D7,U+D6D9,U+D6E0,U+D6E4,U+D6E8,U+D6F0,U+D6F5,U+D6FC-D6FD,U+D700,U+D704,U+D711,U+D718-D719,U+D71C,U+D720,U+D728-D729,U+D72B,U+D72D,U+D734-D735,U+D738,U+D73C,U+D744,U+D747,U+D749,U+D750-D751,U+D754,U+D756-D759,U+D760-D761,U+D763,U+D765,U+D769,U+D76C,U+D770,U+D774,U+D77C-D77D,U+D781,U+D788-D789,U+D78C,U+D790,U+D798-D799,U+D79B,U+D79D"];
+const GROUPS=['흘림·캘리','어른 손글씨','또박또박','귀여운','삐뚤빼뚤','아이 손글씨'];
+// 직접 더한 글꼴: fearless.fonts = [{n,fam,css}](웹 글꼴) · {n,fam,file:true}(파일 → IndexedDB font:<이름>)
+const myFonts=load('fonts',[]);
+function myRow(f){const r=[f.n,f.fam,f.file?'#file':'#web','','400','내 글꼴',1,'','직접 더함'];r.css=f.css||'';return r}
+myFonts.forEach(f=>HANDS.push(myRow(f)));
+const byFam=new Map(HANDS.map(h=>[h[1],h]));
+// 나눔 조각 주소: 파일로 바로 열면 옆 폴더 글꼴이 막혀서 배포 주소로
+const HAND_BASE=location.protocol==='file:'?'https://bitcuit.github.io/OOC_makers/fonts/hand/':new URL('../fonts/hand/',location.href).href;
+const NAVER_TTF='https://ssl.pstatic.net/static/clova/service/clova_ai/event/handwriting/download/';
+const fontStyle=document.createElement('style');document.head.append(fontStyle);
+const loadedFam=new Set();
+function faceCss(h){
+  if(h[2]==='#web')return h.css;
+  if(h[2]==='#file'){getImg('font:'+h[1]).then(d=>{if(d)fontStyle.textContent+=`@font-face{font-family:"${h[1]}";src:url("${d}")}`});return ''}
+  if(h[2][0]==='@'){
+    const short=h[2].slice(1);
+    // 2350자 밖의 글자만 원본 TTF 로(먼저 적은 규칙이 나중에 확인된다)
+    let css=`@font-face{font-family:"${h[1]}";src:url("${NAVER_TTF+encodeURIComponent('나눔손글씨 '+h[0])}.ttf") format("truetype");unicode-range:U+AC00-D7A3;font-display:swap}`;
+    RANGES.forEach((r,i)=>{css+=`@font-face{font-family:"${h[1]}";src:url("${HAND_BASE+short}.${i}.woff2") format("woff2");unicode-range:${r};font-display:swap}`});
+    return css;
+  }
+  return `@font-face{font-family:"${h[1]}";src:url("${h[2]}") format("${h[3]}");font-weight:${h[4]};font-display:swap}`;
+}
+function ensureFont(fam){if(!fam||loadedFam.has(fam)||!byFam.has(fam))return;loadedFam.add(fam);fontStyle.textContent+=faceCss(byFam.get(fam))}
+
+// ── 인물마다 글씨: hands[이름] = {name:글꼴, sign:글꼴, img:true(서명 이미지)} ──
+const hands=load('hands',{});
+// 인물별 기본 손글씨(고르지 않았을 때). 지부장은 고정, 서재훈은 사용자가 정함(2026-10-28)
+const DEF_HAND={'강태환':'OOCHand GangInHanWiRo','서재훈':'OOCHand MiRaeNaMu'};
+// 한 번만: 전에 골라 둔 서재훈 글꼴이 있어도 미래나무로(그 뒤에 고른 것은 그대로)
+if(!load('fix.seojaehoon',false)){hands['서재훈']=Object.assign({},hands['서재훈'],{name:'OOCHand MiRaeNaMu',sign:'OOCHand MiRaeNaMu'});store('hands',hands);store('fix.seojaehoon',true)}
+const SIGN_POOL=HANDS.filter(h=>h[6]===2).map(h=>h[1]);
+function hash(s){let h=7;for(const c of s)h=(h*31+c.codePointAt(0))>>>0;return h}
+function handOf(who){
+  const h=hands[who]||{};
+  const def=DEF_HAND[who]||SIGN_POOL[hash(who)%SIGN_POOL.length];
+  return {name:byFam.has(h.name)?h.name:def,sign:byFam.has(h.sign)?h.sign:(byFam.has(h.name)?h.name:def),img:h.img||0};
+}
+// 글자가 유난히 작게 그려지는 손글씨는 같은 크기에서 눈으로 맞게 키운다
+const FONT_K={'OOCHand GangInHanWiRo':1.3};
+const cssStr=s=>String(s).replace(/\\/g,'\\\\').replace(/"/g,'\\"');
+const handStyle=document.createElement('style');document.head.append(handStyle);
+function applyHands(){
+  const whos=new Set([...document.querySelectorAll('#folder [data-who]')].map(e=>e.dataset.who));
+  let css='';
+  for(const w of whos){const h=handOf(w);ensureFont(h.name);ensureFont(h.sign);
+    css+=`.folder .nm[data-who="${cssStr(w)}"]{font-family:"${cssStr(h.name)}",serif;--fk:${FONT_K[h.name]||1}}.folder .sig[data-who="${cssStr(w)}"] .sgt{font-family:"${cssStr(h.sign)}",serif}`}
+  for(const s of stickers[tab]||[])if(s.kind==='text'&&s.font)ensureFont(s.font);
+  handStyle.textContent=css;
+}
+
+// ── 바꾸기: 이름 ──
+const PRESETS={tag:['{{user}}','{{char}}'],word:['PC','NPC']};
+const cast=Object.assign({mode:'tag',pc:'{{user}}',npc:'{{char}}',saved:null},load('cast',{}));
+const pcIn=$('pcIn'), npcIn=$('npcIn');
+function drawCast(){
+  pcIn.value=cast.pc;npcIn.value=cast.npc;
+  document.querySelectorAll('#castPreset [data-preset]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.preset===cast.mode)));
+  document.querySelectorAll('#recSeg [data-rec]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.rec===settings.rec)));
+  $('recLine').hidden=tab!=='recommend';$('kwLine').hidden=tab!=='contract';
+  document.querySelectorAll('#kwSeg [data-kw]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.kw===(settings.kw===false?'off':'on'))));
+}
+$('castPreset').addEventListener('click',e=>{const b=e.target.closest('[data-preset]');if(!b)return;const m=b.dataset.preset;if(m===cast.mode)return;
+  if(cast.mode==='custom')cast.saved={pc:cast.pc,npc:cast.npc};
+  if(m==='custom'){const s=cast.saved||{pc:'',npc:''};cast.pc=s.pc;cast.npc=s.npc}else[cast.pc,cast.npc]=PRESETS[m];
+  cast.mode=m;castChanged();drawCast();if(m==='custom')(cast.pc?npcIn:pcIn).focus()});
+[pcIn,npcIn].forEach(inp=>inp.addEventListener('input',()=>{cast[inp===pcIn?'pc':'npc']=inp.value;cast.mode='custom';castChanged();
+  document.querySelectorAll('#castPreset [data-preset]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.preset==='custom')))}));
+$('kwSeg').addEventListener('click',e=>{const b=e.target.closest('[data-kw]');if(!b)return;settings.kw=b.dataset.kw==='on';saveSettings();drawCast();showOoc();render()});
+$('recSeg').addEventListener('click',e=>{const b=e.target.closest('[data-rec]');if(!b)return;settings.rec=b.dataset.rec;saveSettings();drawCast();showOoc();render();drawSigner()});
+function castChanged(){store('cast',cast);showOoc()}
+
+// 받침에 맞춰 조사를 고른다. {{user}} 처럼 읽을 수 없는 이름은 두 꼴을 같이
+const JOSA={'을':['을','를'],'를':['을','를'],'이':['이','가'],'가':['이','가'],'은':['은','는'],'는':['은','는'],'과':['과','와'],'와':['과','와'],'으로':['으로','로'],'로':['으로','로']};
+function josa(word,j){const p=JOSA[j];if(!p)return j;const c=word.charCodeAt(word.length-1);
+  if(c>=0xAC00&&c<=0xD7A3){const jong=(c-0xAC00)%28;if(p[0]==='으로')return jong&&jong!==8?'으로':'로';return jong?p[0]:p[1]}
+  if(/[}\]]$/.test(word))return p[0]==='으로'?'(으)로':p[0]+'('+p[1]+')';
+  return /[LMNRlmnr136780]$/.test(word)?p[0]:p[1];
+}
+// ── 추천인 · 평가자: 왼쪽 창에서 따로 쓴다. 비우면 기본 인물(도구가 지은 사람) ──
+const SIGNER_DEF={recommend:{name:'한도윤',pos:'',mode:'seal'},review:{name:'민서진',pos:'FEARLESS 작전평가실 수석평가관',mode:'sign'}};
+const DEF_IMG={'한도윤':{seal:'img/seal-handoyun.png'},'민서진':{sign:'img/sign-minseojin.png'}};
+const signers=Object.assign({recommend:{},review:{}},load('signers',{}));
+function signerOf(t){
+  const f=signers[t]||{},d=SIGNER_DEF[t];
+  if(t==='recommend'&&settings.rec!=='third'){const n=(settings.rec==='pc'?cast.pc:cast.npc).trim()||'이름';return {name:n,pos:(f.pos||'').trim(),mode:f.mode||'sign'}}
+  const own=(f.name||'').trim();
+  return {name:own||d.name,pos:(f.pos||'').trim()||(own?'':d.pos),mode:f.mode||d.mode};
+}
+const REC_LINES={
+  third:null,
+  pc:'- 추천인은 PC. PC가 NPC를 자신의 전담 페어로 추천하며, 추천서는 PC의 시선과 문체로 쓴다.',
+  npc:'- 추천인은 NPC. NPC가 PC를 자신의 전담 페어로 추천하며, 추천서는 NPC의 시선과 문체로 쓴다.'
+};
+function oocText(t){
+  let s=$('ooc-'+t).textContent;
+  if(t==='recommend'&&REC_LINES[settings.rec])s=s.replace(/^- 추천인은 ＠추천인.*$/m,REC_LINES[settings.rec]);
+  if(t==='contract'&&settings.kw===false)s=s.replace('성격 키워드는 #을 붙인 낱말 5개. ','').replace('성격 키워드:\n','');
+  const who=k=>{const g=signerOf(k);return g.name+(g.pos?'('+g.pos+')':'')};
+  s=s.replace('＠추천인',()=>who('recommend')).replace('＠평가자',()=>who('review'));
+  const pc=cast.pc.trim()||'이름', npc=cast.npc.trim()||'이름';
+  return s.replace(/\b(NPC|PC)(으로|로|을|를|이|가|은|는|과|와)?/g,(m,w,j)=>{const n=w==='PC'?pc:npc;return n+(j?josa(n,j):'')});
+}
+const pre=$('ooc');
+function showOoc(){pre.textContent=oocText(tab);document.querySelectorAll('#docSeg [data-doc]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.doc===tab)))}
+// OOC 복사 옆에서 서류를 고르면 색인과 같이 그 서류로 넘어간다
+$('docSeg').addEventListener('click',e=>{const b=e.target.closest('[data-doc]');if(b&&b.dataset.doc!==tab)setTab(b.dataset.doc)});
+$('copyOoc').onclick=()=>{
+  const s=$('copyStatus');
+  if(!cast.pc.trim()||!cast.npc.trim()){s.textContent='PC · NPC 이름을 입력해 주세요.';setCast(true);(cast.pc.trim()?npcIn:pcIn).focus();return}
+  showOoc();
+  const sel=()=>{setCast(true);pre.closest('details').open=true;const r=document.createRange();r.selectNodeContents(pre);const w=getSelection();w.removeAllRanges();w.addRange(r);s.textContent='선택해 뒀어요. Ctrl+C로 복사하세요.'};
+  const done=()=>{s.textContent='복사했어요.';clearTimeout(s._t);s._t=setTimeout(()=>{if(s.textContent==='복사했어요.')s.textContent=''},3000)};
+  try{navigator.clipboard.writeText(pre.textContent).then(done,sel)}catch(e){sel()}
+};
+
+// ── 작은 창 ──
+const pips=[];
+function makePip(box,btn,focusSel){
+  function place(){
+    const r=btn.getBoundingClientRect(),w=box.offsetWidth,h=box.offsetHeight,gap=10;
+    // 손글씨 창은 왼쪽 창 위로 — 고르는 동안 서류가 보이게
+    // 손글씨 창은 어디서 열든 같은 자리: 왼쪽, 위 단추 바로 아래(높이는 그 아래 화면 안으로)
+    if(box.id==='handPip'&&innerWidth>900){const t=$('steps').getBoundingClientRect().bottom+12;box.style.left='16px';box.style.top=t+'px';box.style.maxHeight=(innerHeight-t-16)+'px';return}
+    box.style.left=Math.max(16,Math.min(r.left+r.width/2-w/2,innerWidth-w-16))+'px';
+    if(btn.closest('.tools,.steps'))box.style.left=Math.max(16,Math.min(r.left,innerWidth-w-16))+'px';
+    const below=r.bottom+gap,above=r.top-gap-h;
+    box.style.top=(below+h<=innerHeight-16||above<16?Math.max(16,Math.min(below,innerHeight-h-16)):above)+'px';
+  }
+  function set(open){
+    if(open)pips.forEach(p=>p!==set&&p(false));
+    box.hidden=!open;btn.setAttribute('aria-expanded',String(open));
+    if(open){place();const t=focusSel&&box.querySelector(focusSel);if(t)t.focus()}else if(box.contains(document.activeElement))btn.focus();
+  }
+  btn.addEventListener('click',()=>set(box.hidden));
+  box.querySelector('.pip-x').addEventListener('click',()=>set(false));
+  addEventListener('resize',()=>{if(!box.hidden)place()});
+  set.place=place;pips.push(set);return set;
+}
+const setCast=makePip($('castPip'),$('castBtn'),null);
+$('castBtn').addEventListener('click',drawCast);
+const setPaste=makePip($('pastePip'),$('pasteBtn'),'textarea');
+const setSave=makePip($('savePip'),$('saveBtn'),null);
+
+// ── 읽기: 기호로 가른 줄 ──
+const PERSON_KEYS={'이름':'name','나이':'age','성별':'sex','코드네임':'code','분류':'kind','등급':'rank','소속':'team','능력':'ab','능력 설명':'abd','성격 키워드':'kw','성격':'pers'};
+const DOC_KEYS={'날짜':'date','작성일':'date','조항':'clause','맹세':'oath','추천인':'rec','추천인 직위':'recPos','적합률':'fit','추천 사유':'why','기대':'hope','우려':'worry','임무명':'mission','임무 등급':'mrank','일시':'when','장소':'where','결과':'result','평가자':'evr','평가자 직위':'evrPos','개요':'brief','경과':'flow','평가':'eval','종합':'total','피해':'damage','특이 사항':'notes','특이사항':'notes','소견':'opinion'};
+const LABELS=Object.keys({...PERSON_KEYS,...DOC_KEYS,'코드 네임':1}).sort((a,b)=>b.length-a.length).map(s=>s.replace(/ /g,'[\\s\\u0001]*')).join('|');
+const LINE_RE=new RegExp('^('+LABELS+')\\s*[:：]\\s*(.*)$');
+// 두 낱말 라벨(임무 등급 · 능력 설명 …)은 사이 빈칸을 잠시 묶어 둔다 — 안 그러면 '등급:' 앞에서 잘린다
+const PAIRS=Object.keys({...PERSON_KEYS,...DOC_KEYS,'코드 네임':1}).filter(k=>k.includes(' ')).map(k=>new RegExp(k.replace(' ','[ \\t]+')+'(?=\\s*[:：])','g'));
+function split(text){
+  PAIRS.forEach(r=>{text=text.replace(r,m=>m.replace(/[ \t]+/,'\u0001'))});
+  return text.replace(/\r/g,'')
+    .replace(/[ \t]+(?=@\s*(?:계약서|추천서|평가서))/g,'\n')
+    .replace(/[ \t]*(\[(?:인물|PC|NPC|센티넬|가이드)\s*\d*\])[ \t]*/gi,'\n$1\n')
+    .replace(new RegExp('[ \\t]+(?=(?:'+LABELS+')\\s*[:：])','g'),'\n')
+    .replace(/\u0001/g,' ');
+}
+function clean(l){return l.replace(/\*\*|__|`/g,'').replace(/^\s*[-•·]\s+/,'').replace(/^#{1,6}\s+(?=\S)/,'').trim()}
+function parse(text){
+  const d={type:null,people:[],clause:[],eval:[]};let p=null,last=null;
+  for(const raw of split(text).split('\n')){
+    if(/^\s*```/.test(raw))continue;
+    const l=clean(raw);if(!l)continue;
+    let m;
+    if((m=l.match(/^@\s*(계약서|추천서|평가서)/))){d.type=m[1];p=null;last=null;continue}
+    if(/^\[(?:인물|PC|NPC|센티넬|가이드)\s*\d*\]$/i.test(l)){p={};d.people.push(p);last=null;continue}
+    if((m=l.match(LINE_RE))){
+      const label=m[1].replace(/\s+/g,' ').replace('코드 네임','코드네임'), val=m[2].trim();
+      if(p&&PERSON_KEYS[label]){const k=PERSON_KEYS[label];p[k]=val;last=[p,k];continue}
+      const k=DOC_KEYS[label];if(!k)continue;p=null;
+      if(k==='clause'||k==='eval'){if(val)d[k].push(val);last=[d,k,'list'];continue}
+      d[k]=val;last=[d,k];continue;
+    }
+    if(!last)continue;
+    if(last[2]==='list'){d[last[1]].push(l);continue}   // 조항 · 평가는 이어지는 줄도 한 줄씩
+    const [o,k]=last;o[k]=o[k]?o[k]+'\n'+l:l;
+  }
+  d.people=d.people.filter(x=>Object.keys(x).length);
+  return d;
+}
+const filled=d=>d.people.length||d.date||d.clause.length||d.why||d.mission;
+
+// ── 그리기 ──
+const paper=$('paper');
+const inputs={};for(const t in DOCS)inputs[t]=load('input.'+t,'');
+const src=$('src');
+const q=s=>String(s||'').replace(/^[“”"'‘’「『]+|[“”"'‘’」』]+$/g,'').trim();
+const v=s=>esc(s||'');
+const whoOf=(p,i)=>(p&&p.name&&p.name!=='?')?p.name:(i?'NPC':'PC');
+function ph(who){return `<div class="ph" data-who="${esc(who)}"><span class="ph-add so">사진</span></div>`}
+function pblock(p,i,rev){
+  const who=whoOf(p,i);p=p||{};
+  return `<div class="pb${rev?' rev':''}"><div class="phc">${ph(who)}</div><table class="pt"><colgroup><col style="width:82px"><col><col style="width:46px"><col style="width:66px"><col style="width:46px"><col style="width:66px"></colgroup>
+<tr class="fx"><td class="lb">${L('이름')}</td><td><div class="one">${E(`p${i}.name`,p.name)}</div></td><td class="c">나이</td><td class="c"><div class="one">${E(`p${i}.age`,p.age)}</div></td><td class="c">성별</td><td class="c"><div class="one">${E(`p${i}.sex`,p.sex)}</div></td></tr>
+<tr class="fx"><td class="lb">${L('코드네임')}</td><td><div class="one">${E(`p${i}.code`,p.code)}</div></td><td class="c">분류</td><td class="c"><div class="one">${E(`p${i}.kind`,p.kind)}</div></td><td class="c">등급</td><td class="c"><div class="one">${E(`p${i}.rank`,p.rank)}</div></td></tr>
+<tr class="fx"><td class="lb">${L('소속')}</td><td colspan="5"><div class="one">${E(`p${i}.team`,p.team)}</div></td></tr>
+<tr class="fx"><td class="lb">${L('능력')}</td><td colspan="5"><div class="abx"><div class="pre">${E(`p${i}.ab`,p.ab)}${p.abd?'\n'+v(p.abd):''}</div></div></td></tr>
+<tr class="fx"><td colspan="6" class="hd">성격</td></tr>
+<tr><td colspan="6" class="pers"><div class="persb">${settings.kw===false?'':`<p class="kw">${E(`p${i}.kw`,p.kw)}</p>`}<p class="pre">${E(`p${i}.pers`,p.pers)}</p></div></td></tr></table></div>`;
+}
+const HDL='<i class="hdl rs so" aria-hidden="true"></i><i class="hdl rt so" aria-hidden="true"></i>';
+function sigRow(label,who,opt={}){
+  return `<div class="sr"><div class="lbl">${label}</div><div class="slot"><span class="nm" data-who="${esc(who)}">${esc(who)}</span><span class="in">(인)</span>${opt.mode==='seal'?pseal(who):opt.seal?`<span class="mv seal" data-mv="seal"><img src="img/seal.png" alt="직인" draggable="false" onerror="this.parentNode.classList.add('none')">${HDL}</span>`:`<span class="mv sig" data-mv="sig:${esc(who)}" data-who="${esc(who)}"><span class="sgt">${esc(who)}</span>${HDL}</span>`}</div></div>`;
+}
+function pseal(who){
+  const c=[...who.replace(/\s+/g,'')];
+  const body=c.length===3?[c[2],c[0],'印',c[1]].map(x=>`<span>${esc(x)}</span>`).join(''):esc(who);
+  return `<span class="mv pseal${c.length===3?'':' v'}" data-mv="pseal:${esc(who)}" data-who="${esc(who)}">${body}${HDL}</span>`;
+}
+// 편집 모드: 종이 위 글을 바로 고친다. 고친 값은 edits[탭][키](OOC 출력보다 먼저)
+let editMode=false;
+const edits=load('edits',{});
+const logRows=load('log',[]);   // 열람 기록에 더한 줄 [{d,pos,name}]
+const EV=(key,val)=>{const o=edits[tab]||{};return key in o?o[key]:(val||'')};
+function E(key,val){return `<span class="ed" data-f="${esc(key)}"${editMode?' contenteditable="true"':''}>${v(EV(key,val))}</span>`}
+// 이름 · 분류처럼 다른 자리(서명 줄 · 사진)에도 쓰이는 값은 그리기 전에 데이터에 덮는다
+function applyEdits(d,t=tab){
+  const o=edits[t]||{};
+  for(const [k,val] of Object.entries(o)){const m=k.match(/^p(\d)\.(\w+)$/);if(!m)continue;
+    const i=+m[1];while(d.people.length<=i)d.people.push({});d.people[i][m[2]]=val}
+  return d;
+}
+const L=s=>`<span class="sp">${[...s.replace(/\s+/g,'')].map(c=>`<span>${esc(c)}</span>`).join('')}</span>`;
+const spaced=s=>`<b>${esc(s)}</b>`;
+const approve=()=>sigRow(spaced('승인'),CHIEF,{seal:true});
+// FEARLESS 계약서의 고정 문구 — 맹세 · 조항(챗봇이 쓰지 않는다 · 고치지 않는다)
+const OATH='뼈를 삼키고, 살을 불태우며, 숨을 이어. 너에게 내일을 약속하지.';
+const DEFAULT_CLAUSES=['상기 2인은 FEARLESS 소속 전담 페어로서 모든 공식 임무를 함께 수행함을 원칙으로 한다.','페어는 상호 신뢰를 바탕으로, 임무 중 발생할 수 있는 모든 위험에 공동으로 대응할 의무를 진다.','본 계약은 양측의 합의 또는 지부장의 공식 명령 없이는 파기될 수 없다.'];
+const ORG='<p class="org">센티넬관리국 한국 지부 FEARLESS</p>';
+function contract(d){
+  const P=[d.people[0],d.people[1]];
+  const rows=P.map((p,i)=>({p,i,k:(p&&p.kind)||(i?'가이드':'센티넬')})).sort((a,b)=>(a.k.includes('가이드')?1:0)-(b.k.includes('가이드')?1:0));
+  return `<div class="pp"><h1 class="ttl">FEARLESS 전담 페어 계약서</h1>${pblock(P[0],0,false)}${pblock(P[1],1,true)}
+<div class="cl">${DEFAULT_CLAUSES.map(c=>`<p>${v(c)}</p>`).join('')}</div>
+<p class="oath">“${OATH}”</p>
+<p class="pledge">상기 내용은 모두 사실이며, FEARLESS의 일원으로서 위 계약을 성실히 이행할 것을 서약합니다.</p>
+<p class="date">${v(dateOf())}</p>
+<div class="signs">${rows.map(r=>sigRow(esc(r.k),whoOf(r.p,r.i))).join('')}${approve()}</div>${ORG}</div>`;
+}
+// 추천서 인물 칸: 두 사람을 한 줄에 나란히(평가서와 같은 모양). 사진 3:4 + 이름 ~ 능력
+function mini(p,i){
+  const who=whoOf(p,i);p=p||{};
+  return `<div class="pcard rc">${ph(who)}<table class="pt"><colgroup><col style="width:70px"><col></colgroup>
+<tr class="fx"><td class="lb">${L('이름')}</td><td><div class="one">${E(`p${i}.name`,p.name)}</div></td></tr>
+<tr class="fx"><td class="lb">${L('코드네임')}</td><td><div class="one">${E(`p${i}.code`,p.code)}</div></td></tr>
+<tr class="fx"><td class="lb">${L('분류')}</td><td><div class="one">${E(`p${i}.kind`,p.kind)}${p.rank||EV(`p${i}.rank`)?' · ':''}${E(`p${i}.rank`,p.rank)}</div></td></tr>
+<tr class="fx"><td class="lb">${L('소속')}</td><td><div class="abx tm2"><div>${E(`p${i}.team`,p.team)}</div></div></td></tr>
+<tr class="fx"><td class="lb">${L('능력')}</td><td><div class="abx ab2"><div class="pre">${E(`p${i}.ab`,p.ab)}</div></div></td></tr></table></div>`;
+}
+function recommend(d){
+  const S=signerOf('recommend');
+  return `<div class="pp"><h1 class="ttl">FEARLESS 전담 페어 추천서</h1>
+<div class="pair2">${mini(d.people[0],0)}${mini(d.people[1],1)}</div>
+${ftable([['추천 사유','why',d.why],['기대 효과','hope',d.hope],['우려 사항','worry',d.worry]])}
+<table class="pt fitbox2"><colgroup><col style="width:104px"><col style="width:96px"></colgroup><tr><td class="lb">${L('페어 적합률')}</td><td class="fitv"><div class="one">${E('fit',d.fit)}</div></td></tr></table>
+<p class="pledge">위 2인을 FEARLESS 전담 페어로 추천합니다.</p>
+<p class="date">${v(dateOf())}</p>
+<div class="signs">${sigRow(spaced('추천인')+(S.pos?`<small>${v(S.pos)}</small>`:''),S.name,{mode:S.mode})}${approve()}</div>${ORG}</div>`;
+}
+// 공문서 칸: 왼쪽 이름칸 + 오른쪽 내용(여러 줄). [이름, 내용, 한 줄이면 1]
+// 글 칸마다 기본 줄 수(내용과 상관없이 표 모양을 고정)
+const LINES={why:11,hope:5,worry:5,brief:4,flow:10,damage:4,notes:4,opinion:8};
+function ftable(rows){
+  return `<table class="pt ft"><colgroup><col style="width:104px"><col></colgroup>${rows.map(([l,k,t,one])=>`<tr${one?' class="fx"':''}><td class="lb">${L(l)}</td><td class="${one?'':'tx'}">${one?`<div class="one">${E(k,t)}</div>`:`<div class="txb" style="--n:${LINES[k]||3}">${E(k,t)}</div>`}</td></tr>`).join('')}</table>`;
+}
+// 평가서의 두 사람: 사진 없이 한 표에 한 줄씩(작전 기록이라 인적 사항만)
+function ptable(ps){
+  const row=i=>{const p=ps[i]||{};return `<tr class="fx">${['name','code','kind','rank'].map(k=>`<td><div class="one">${E(`p${i}.${k}`,p[k])}</div></td>`).join('')}</tr>`};
+  return `<table class="pt pr"><colgroup><col><col><col style="width:110px"><col style="width:90px"></colgroup>
+<tr><th>이름</th><th>코드네임</th><th>분류</th><th>등급</th></tr>${row(0)}${row(1)}</table>`;
+}
+// 평가서는 두 장: 1쪽 = 임무 정보 · 두 사람 · 개요 · 경과 · 항목별 평가, 2쪽 = 피해 · 특이 사항 · 소견 · 날짜 · 서명
+let page=1;
+const RESULT_STAMP={'성공':'success','부분 성공':'partial','부분성공':'partial','실패':'failed'};
+function review(d){
+  const S=signerOf('review');
+  if(page===2)return `<div class="pp"><h1 class="ttl">FEARLESS 임무 평가서</h1>
+${ftable([['피해','damage',d.damage],['특이 사항','notes',d.notes],['평가자 소견','opinion',d.opinion]])}
+<p class="date">${v(dateOf())}</p>
+<div class="signs">${sigRow(spaced('평가자'),S.name,{mode:S.mode})}${approve()}</div>${ORG}<p class="pno"><button class="pgb so" type="button" data-pg="-1" aria-label="앞 쪽"${page===1?' disabled':''}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button><span>${page} / 2</span><button class="pgb so" type="button" data-pg="1" aria-label="다음 쪽"${page===2?' disabled':''}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button></p></div>`;
+  const ev=d.eval.map(l=>{const f=l.split(/\s+[-–—]\s+/);return f.length>=3?[f[0],f[1],f.slice(2).join(' - ')]:f.length===2?[f[0],f[1],'']:[l,'','']});
+  const st=RESULT_STAMP[String(EV('result',d.result)).trim()];
+  // 종합: '등급 - 총평'
+  const tot=(()=>{const f=String(d.total||'').split(/\s+[-–—]\s+/);return [f[0]||'',f.slice(1).join(' - ')]})();
+  return `<div class="pp"><h1 class="ttl">FEARLESS 임무 평가서</h1>
+<table class="pt"><colgroup><col style="width:92px"><col><col style="width:92px"><col></colgroup>
+<tr class="fx"><td class="lb">${L('임무명')}</td><td colspan="3"><div class="one">${E('mission',d.mission)}</div></td></tr>
+<tr class="fx"><td class="lb">${L('임무 등급')}</td><td><div class="one">${E('mrank',d.mrank)}</div></td><td class="lb">${L('결과')}</td><td class="res"><div class="one">${E('result',d.result)}</div>${st?`<img class="rstamp" src="img/stamp-${st}.png" alt="" draggable="false">`:''}</td></tr>
+<tr class="fx"><td class="lb">${L('일시')}</td><td><div class="one">${E('when',d.when)}</div></td><td class="lb">${L('장소')}</td><td><div class="one">${E('where',d.where)}</div></td></tr>
+<tr class="fx"><td class="lb">${L('평가자')}</td><td colspan="3"><div class="one">${v(S.name)}${S.pos?' · '+v(S.pos):''}</div></td></tr></table>
+${ptable(d.people)}
+${ftable([['임무 개요','brief',d.brief],['경과','flow',d.flow]])}
+<table class="pt ev"><colgroup><col style="width:128px"><col style="width:58px"><col></colgroup><tr><th colspan="3" class="hd">항목별 평가</th></tr><tr><th>항목</th><th>등급</th><th>평가</th></tr>
+${(ev.length?ev:[['연계','',''],['능력 운용','',''],['가이딩 안정도','',''],['상황 판단','','']]).map((r,j)=>`<tr class="evr"><td><div class="one">${E('ev.'+j+'.0',r[0])}</div></td><td><div class="one">${E('ev.'+j+'.1',r[1])}</div></td><td><div class="abx ev2"><div>${E('ev.'+j+'.2',r[2])}</div></div></td></tr>`).join('')}
+<tr class="evr total"><th>종합</th><td><div class="one">${E('total',tot[0])}</div></td><td><div class="abx ev2"><div>${E('totalNote',tot[1])}</div></div></td></tr></table>
+<p class="pno"><button class="pgb so" type="button" data-pg="-1" aria-label="앞 쪽"${page===1?' disabled':''}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button><span>${page} / 2</span><button class="pgb so" type="button" data-pg="1" aria-label="다음 쪽"${page===2?' disabled':''}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button></p></div>`;
+}
+const DRAW={contract,recommend,review};
+let current=parse('');
+// 날짜: 칸에 쓴 것이 먼저, 비면 챗봇 출력의 날짜. 서류마다 fearless.dates[탭]
+const dates=load('dates',{});
+const dateOf=()=>(dates[tab]||'').trim()||current.date||'20xx년 00월 00일';
+const dateIn=$('dateIn');
+dateIn.addEventListener('input',()=>{dates[tab]=dateIn.value;store('dates',dates);render();changed()});
+function render(){
+  const text=src.value;inputs[tab]=text;store('input.'+tab,text);
+  current=parse(text);
+  // 체크하면(추천서 · 평가서) 종이의 인물 칸을 계약서 내용으로 — 같은 이름끼리, 이름이 없으면 순서대로. OOC 와는 상관없다
+  if(tab!=='contract'&&(settings.sync||{})[tab]){
+    const C=applyEdits(parse(inputs.contract||''),'contract').people;
+    if(C.length){
+      while(current.people.length<Math.min(2,C.length))current.people.push({});
+      current.people.forEach((p,i)=>{const c=C.find(x=>x.name&&x.name===p.name)||C[i];if(!c)return;
+        for(const k of ['name','code','kind','rank','team','ab'])if(c[k])p[k]=c[k]});
+    }
+  }
+  current=applyEdits(current);
+  const st=$('parseStatus');
+  st.textContent=text.trim()&&!filled(current)?'양식을 읽지 못했어요. [인물] 줄과 이름: · 날짜: 같은 줄이 필요해요.':
+    (current.type&&current.type!==DOCS[tab]?`${current.type} 출력이에요. ${current.type} 탭에 붙여넣어 주세요.`:'');
+  if(tab!=='review')page=1;
+  paper.innerHTML=DRAW[tab](current);
+  dateIn.placeholder=current.date||'20xx년 00월 00일';drawCover();
+  applyHands();mountPhotos();mountMovers();mountStickers();fitText();
+}
+// 종이를 넘치면 글자를 조금씩 줄인다(0.72배까지)
+function fitText(){
+  const pp=paper.querySelector('.pp');if(!pp)return;let k=1;pp.style.setProperty('--k',k);
+  // 칸 높이가 고정이라 페이지 전체 글자를 줄이지 않는다(넘치면 그 칸 글자만 fitCells 가 줄인다)
+  fitCells();
+}
+// 높이 고정 칸: 넘치면 그 칸 글자만 0.5px 씩 줄인다(9px 까지)
+function fitCells(){
+  paper.classList.toggle('nowrapf',!!settings.noWrap);
+  paper.querySelectorAll('.pt .one,.pt .abx,.persb,.txb').forEach(el=>{
+    el.style.fontSize='';let f=parseFloat(getComputedStyle(el).fontSize);
+    const nw=settings.noWrap&&(el.classList.contains('tm2')||el.classList.contains('ab2'));
+    const inner=el.firstElementChild||el;   // 줄바꿈 없이: 안쪽 글 상자가 칸 폭을 넘는지
+    const over=()=>el.classList.contains('one')?el.scrollWidth>el.clientWidth+1:nw?inner.scrollWidth>el.clientWidth+1:el.scrollHeight>el.clientHeight+1;
+    inner.style.whiteSpace='';
+    while(over()&&f>9){f-=.5;el.style.fontSize=f+'px'}
+    // 줄바꿈 없이 넣어도 9px 로 안 들어가면 잘리지 않게 그 칸만 줄바꿈으로 되돌린다
+    if(nw&&over()){inner.style.whiteSpace='normal';el.style.fontSize='';f=parseFloat(getComputedStyle(el).fontSize);while(el.scrollHeight>el.clientHeight+1&&f>9){f-=.5;el.style.fontSize=f+'px'}}
+    // 끝줄에 한두 글자만 넘어가면 글자를 조금(최대 8%) 줄여 한 줄 위로. 8% 로도 안 되면 그대로
+    if(settings.tightWrap!==false&&!el.classList.contains('one')&&!nw){
+      const n0=lineCount(el);if(n0<2)return;
+      for(const k of [.98,.96,.94,.92]){el.style.fontSize=(f*k)+'px';if(lineCount(el)<n0)return}
+      el.style.fontSize=f+'px';
+    }
+  });
+}
+// 글 줄 수: 글자 조각들의 윗변이 몇 가지인지
+function lineCount(el){const r=document.createRange();r.selectNodeContents(el);const tops=new Set();for(const b of r.getClientRects())if(b.width>1)tops.add(Math.round(b.top));return tops.size}
+src.addEventListener('input',()=>{render();askZoom();changed()});
+// 붙여넣은 뒤(새로고침 전 처음 한 번만) 확대를 묻는다. 이미 100% 면 묻지 않는다
+let zoomAsked=false;
+function askZoom(){
+  if(zoomAsked||settings.zoom!=='fit'||!filled(current))return;zoomAsked=true;
+  const b=$('zoomAsk');pips.forEach(p=>p(false));b.hidden=false;
+  const st=$('stage').getBoundingClientRect();b.style.left=Math.round(st.left+st.width/2-b.offsetWidth/2)+'px';b.style.top=Math.round(st.top+st.height/2-b.offsetHeight/2)+'px';
+  $('zoomYes').focus();
+}
+const closeAsk=()=>{$('zoomAsk').hidden=true};
+$('zoomNo').onclick=closeAsk;$('zoomAsk').querySelector('.pip-x').onclick=closeAsk;
+$('zoomYes').onclick=()=>{closeAsk();settings.zoom='1';saveSettings();fit();$('paper').scrollIntoView({block:'start'})};
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('zoomAsk').hidden)closeAsk()});
+paper.addEventListener('click',e=>{const b=e.target.closest('[data-pg]');if(!b||b.disabled)return;page=Math.min(2,Math.max(1,page+(+b.dataset.pg)));select(null);render()});
+// 비우기: 지금 서류에 넣은 내용(붙여넣은 글 · 날짜 · 추천인/평가자 이름 · 직위 · 종이 위 편집)을 모두. 꾸밈(사진 · 스티커 · 손글씨 · 서명 방식)은 그대로
+$('clear').onclick=()=>{
+  src.value='';dates[tab]='';store('dates',dates);dateIn.value='';
+  if(signers[tab])signers[tab]={mode:signers[tab].mode};store('signers',signers);
+  edits[tab]={};store('edits',edits);
+  render();if(typeof drawSigner==='function')drawSigner();remember();src.focus();
+};
+
+// ── 탭 ──
+function setTab(t){
+  tab=t;settings.tab=t;saveSettings();
+  document.querySelectorAll('.tab').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.tab===t)));
+  src.value=inputs[t]||'';dateIn.value=dates[t]||'';src.placeholder=`@${DOCS[t]}\n${t==='review'?'임무명: …':'날짜: …'}\n[인물]\n이름: …`;
+  select(null);showOoc();drawCast();render();drawSigner();
+}
+document.querySelector('.tabs').addEventListener('click',e=>{const b=e.target.closest('.tab');if(b&&b.dataset.tab!==tab)setTab(b.dataset.tab)});
+
+// ── 이미지 저장소(IndexedDB fearless / images): photo:<이름> · stk:<id> · sign:<이름> — 모두 data URL ──
+const idb=(()=>{let p;const open=()=>p||(p=new Promise((ok,no)=>{const r=indexedDB.open('fearless',1);r.onupgradeneeded=()=>r.result.createObjectStore('images');r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)}));
+  const tx=async(mode,fn)=>{try{const db=await open();return await new Promise(ok=>{const t=db.transaction('images',mode),s=t.objectStore('images'),q=fn(s);t.oncomplete=()=>ok(q&&q.result);t.onerror=()=>ok(null)})}catch(e){return null}};
+  return {get:k=>tx('readonly',s=>s.get(k)),set:(k,v)=>tx('readwrite',s=>{s.put(v,k)}),del:k=>tx('readwrite',s=>{s.delete(k)})}})();
+const imgCache=new Map();
+async function getImg(k){if(imgCache.has(k))return imgCache.get(k);const v=await idb.get(k);imgCache.set(k,v||null);return v||null}
+async function setImg(k,v){imgCache.set(k,v);if(v)await idb.set(k,v);else await idb.del(k)}
+const readFile=f=>new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>ok(r.result);r.onerror=no;r.readAsDataURL(f)});
+// 큰 사진은 긴 변 1600px 로 줄여 둔다
+async function shrink(dataUrl,max=1600){
+  const im=await new Promise((ok,no)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=no;i.src=dataUrl});
+  const k=Math.min(1,max/Math.max(im.width,im.height));if(k===1&&dataUrl.length<2.5e6)return {src:dataUrl,ar:im.width/im.height};
+  const c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);
+  const png=/^data:image\/(png|gif|webp)/.test(dataUrl);
+  return {src:c.toDataURL(png?'image/png':'image/jpeg',.9),ar:im.width/im.height};
+}
+
+// ── 되돌리기(Ctrl+Z): 자리 · 스티커 · 사진 · 글씨를 통째로 찍어 둔다. 이미지는 지우지 않고 판 번호만 바꿔 되살릴 수 있게 ──
+const photos=load('photos',{});
+const place=load('place',{});
+const stickers=Object.assign({contract:[],recommend:[],review:[]},load('stickers',{}));
+const undoList=[],redoList=[];
+// 붙여넣은 글 · 날짜 · 추천인/평가자도 기록에 넣는다(비우기 · 붙여넣기도 되돌릴 수 있게)
+const snap=()=>JSON.stringify({place,stickers,photos,hands,edits,logRows,signers,inputs,dates});
+let lastSnap=snap();
+function remember(){const now=snap();if(now===lastSnap)return;undoList.push(lastSnap);if(undoList.length>80)undoList.shift();redoList.length=0;lastSnap=now;drawUndo()}
+function changed(){clearTimeout(changed.t);changed.t=setTimeout(remember,300)}   // 휠 확대처럼 잇달아 바뀌면 한 번으로
+function restore(str){
+  const o=JSON.parse(str);
+  for(const k of Object.keys(DOCS)){inputs[k]=(o.inputs||{})[k]||'';store('input.'+k,inputs[k])}
+  src.value=inputs[tab];
+  for(const [obj,key] of [[place,'place'],[photos,'photos'],[hands,'hands'],[edits,'edits'],[signers,'signers'],[dates,'dates']]){Object.keys(obj).forEach(k=>delete obj[k]);Object.assign(obj,o[key]||{});store(key,obj)}
+  logRows.length=0;logRows.push(...(o.logRows||[]));store('log',logRows);
+  for(const k of Object.keys(DOCS))stickers[k]=o.stickers[k]||[];store('stickers',stickers);
+  dateIn.value=dates[tab]||'';
+  lastSnap=str;select(null);render();if(typeof drawSigner==='function')drawSigner();drawUndo();
+}
+function undo(){if(!undoList.length)return;clearTimeout(changed.t);remember();if(!undoList.length)return;redoList.push(lastSnap);restore(undoList.pop());say('되돌렸어요.',1500)}
+function redoIt(){if(!redoList.length)return;undoList.push(lastSnap);restore(redoList.pop());say('다시 했어요.',1500)}
+function drawUndo(){$('undoBtn').disabled=!undoList.length;$('redoBtn').disabled=!redoList.length}
+$('undoBtn').onclick=undo;
+$('redoBtn').onclick=redoIt;
+const savePlace=()=>{store('place',place);changed()}, saveStk=()=>{store('stickers',stickers);changed()};
+const savePhotos=()=>{store('photos',photos);changed()}, saveHands=()=>{store('hands',hands);changed()};
+
+// ── 증명사진: 칸마다 이름으로. 자리 · 확대 · 판은 photos[이름] = {x,y,z,v}, 그림은 photo:<이름>:<v> ──
+let selPh=null;
+const photoKey=who=>'photo:'+who+':'+((photos[who]||{}).v||0);
+async function mountPhotos(){
+  for(const el of paper.querySelectorAll('.ph')){
+    const who=el.dataset.who, data=await getImg(photoKey(who));
+    if(!el.isConnected)return;
+    el.classList.toggle('has',!!data);el.querySelector('img')?.remove();
+    if(data){const im=document.createElement('img');im.alt='';im.draggable=false;im.src=data;el.prepend(im);placePhoto(el)}
+    el.querySelector('.ph-add').hidden=!!data;
+  }
+  drawPhotoList();if(typeof drawDesk==='function')drawDesk();
+}
+function placePhoto(el){const im=el.querySelector('img');if(!im)return;const p=photos[el.dataset.who]||{x:50,y:50,z:1};
+  im.style.objectPosition=`${p.x}% ${p.y}%`;im.style.transformOrigin=`${p.x}% ${p.y}%`;im.style.transform=`scale(${p.z})`}
+let photoFor=null;
+function pickPhoto(who){photoFor=who;$('photoFile').click()}
+$('photoFile').onchange=async e=>{const f=e.target.files[0];e.target.value='';if(f&&photoFor)await putPhoto(photoFor,f)};
+async function putPhoto(who,f){const {src:s}=await shrink(await readFile(f));const v=Date.now();await setImg('photo:'+who+':'+v,s);photos[who]={x:50,y:50,z:1,v};savePhotos();await mountPhotos();say('끌어서 자리 · 한 번 누른 뒤 휠로 확대',3000)}
+paper.addEventListener('pointerdown',e=>{
+  const el=e.target.closest('.ph');if(!el||e.button)return;
+  if(!el.classList.contains('has')||editMode){e.preventDefault();pickPhoto(el.dataset.who);return}
+  e.preventDefault();select(null);selPh=el;paper.querySelectorAll('.ph.sel').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');
+  el.setPointerCapture(e.pointerId);
+  const who=el.dataset.who,p=photos[who]=photos[who]||{x:50,y:50,z:1},r=el.getBoundingClientRect(),x0=e.clientX,y0=e.clientY,px=p.x,py=p.y;
+  const mv=ev=>{p.x=Math.max(0,Math.min(100,px-(ev.clientX-x0)/r.width*100/p.z));p.y=Math.max(0,Math.min(100,py-(ev.clientY-y0)/r.height*100/p.z));placeAll(who)};
+  const up=()=>{el.removeEventListener('pointermove',mv);el.removeEventListener('pointerup',up);el.removeEventListener('pointercancel',up);savePhotos()};
+  el.addEventListener('pointermove',mv);el.addEventListener('pointerup',up);el.addEventListener('pointercancel',up);
+});
+const placeAll=who=>paper.querySelectorAll('.ph').forEach(x=>{if(x.dataset.who===who)placePhoto(x)});
+paper.addEventListener('wheel',e=>{const el=e.target.closest('.ph.has.sel');if(!el)return;e.preventDefault();
+  const p=photos[el.dataset.who];p.z=Math.max(1,Math.min(4,p.z*(e.deltaY<0?1.08:1/1.08)));placeAll(el.dataset.who);savePhotos()},{passive:false});
+paper.addEventListener('dragstart',e=>e.preventDefault());
+paper.addEventListener('dragover',e=>{const el=e.target.closest('.ph');if(!el)return;e.preventDefault();el.classList.add('dragover')});
+paper.addEventListener('dragleave',e=>{const el=e.target.closest('.ph');if(el)el.classList.remove('dragover')});
+paper.addEventListener('drop',e=>{const el=e.target.closest('.ph');if(!el)return;e.preventDefault();e.stopPropagation();el.classList.remove('dragover');
+  const f=[...e.dataTransfer.files].find(f=>f.type.startsWith('image/'));if(f)putPhoto(el.dataset.who,f)});
+function drawPhotoList(){
+  const whos=[...new Set([...paper.querySelectorAll('.ph')].map(e=>e.dataset.who))];
+  $('photoList').innerHTML=whos.map(w=>`<div class="prow"><span>${esc(w)}</span><button class="btn" type="button" data-pick="${esc(w)}">고르기</button><button class="btn" type="button" data-unpick="${esc(w)}"${imgCache.get(photoKey(w))?'':' disabled'}>빼기</button></div>`).join('');
+}
+$('photoList').addEventListener('click',async e=>{const a=e.target.closest('[data-pick]'),b=e.target.closest('[data-unpick]');
+  if(a)pickPhoto(a.dataset.pick);if(b){photos[b.dataset.unpick]={x:50,y:50,z:1,v:0};savePhotos();await mountPhotos()}});
+const setPhotoPip=makePip($('photoPip'),$('photoBtn'),null);
+function drawPhFit(){const f=settings.phFit==='id'?'id':'fill';   // 기본 = 칸에 맞추기
+  paper.classList.toggle('phfill',f==='fill');
+  $('phFitSeg').querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.fit===f)))}
+$('phFitSeg').addEventListener('click',e=>{const b=e.target.closest('[data-fit]');if(!b)return;settings.phFit=b.dataset.fit;saveSettings();drawPhFit()});
+drawPhFit();
+
+// ── 옮기는 것: 서명 · 직인(place[탭][키] = {x,y,r,s}, 칸 기준) · 스티커(stickers[탭], 판마다 그 판 기준) ──
+// 스티커 판: board = 뒤판(종이 포함) · inside = 표지 안쪽(펼쳤을 때 왼쪽) · front = 표지 앞면(덮었을 때)
+const BX=882,BY=42,CW=866,CY=48;
+const LAYER={board:[BX,BY],inside:[BX-CW,CY],front:[BX,CY]};
+const layerEl=l=>document.querySelector(`#folder .stks[data-layer="${l}"]`);
+const tf=o=>`translate(${o.x||0}px,${o.y||0}px) rotate(${o.r||0}deg) scale(${o.s||1})`;
+// 옮긴 적 없으면 그 줄의 (인) 가운데
+function defPos(el){if(el.dataset.mv==='cvstamp')return {...CV_STAMP};const inn=el.parentNode.querySelector('.in');if(!inn)return {x:0,y:0,r:0,s:1};
+  return {x:inn.offsetLeft+inn.offsetWidth/2-el.offsetWidth/2,y:inn.offsetTop+inn.offsetHeight/2-el.offsetHeight/2,r:0,s:1}}
+function placeMover(el){const P=place[tab]||{};el.style.transform=tf(P[el.dataset.mv]||defPos(el))}
+async function mountMovers(){
+  for(const el of paper.querySelectorAll('.mv[data-mv]')){
+    const who=el.dataset.who,h=who?handOf(who):{},def=DEF_IMG[who]||{},raw=hands[who]||{};
+    if(el.classList.contains('sig')){
+      // 그림 서명: 직접 넣은 것 → 없으면 기본 인물 그림(글꼴을 고르면 끈다)
+      const data=h.img?await getImg('sign:'+who+':'+h.img):(!raw.sign&&!raw.noDef&&def.sign)||null;if(!el.isConnected)return;
+      el.querySelector('img')?.remove();el.querySelector('.sgt').hidden=!!data;
+      if(data){const im=document.createElement('img');im.alt='';im.draggable=false;im.onload=()=>placeMover(el);im.src=data;el.prepend(im)}
+    }
+    if(el.classList.contains('pseal')){
+      const data=raw.sealImg?await getImg('seal:'+who+':'+raw.sealImg):(!raw.noDef&&def.seal)||null;if(!el.isConnected)return;
+      el.querySelector('img')?.remove();el.classList.toggle('has',!!data);
+      if(data){const im=document.createElement('img');im.alt='';im.draggable=false;im.src=data;el.prepend(im)}
+    }
+    placeMover(el);
+  }
+  if(sel&&sel.dataset&&sel.dataset.mv){const again=paper.querySelector(`.mv[data-mv="${cssStr(sel.dataset.mv)}"]`);select(again||null)}
+}
+const INKS=[['#17191c','검정'],['#1d3f8f','파랑'],['#b3261e','빨강']];
+const stkHtml=s=>`<div class="mv stk ${s.kind==='text'?'text':s.fin||'sticker'}" data-stk="${s.id}" style="width:${s.kind==='text'?'auto':s.w+'px'};transform:${tf(s)};z-index:${s.z||1}">${s.kind==='text'?`<span class="tx" style="font-family:'${cssStr(s.font||'')}',serif;color:${s.color||INKS[0][0]}">${esc(s.text)}</span>`:'<img alt="" draggable="false">'}${HDL}</div>`;
+async function mountStickers(){
+  const list=stickers[tab]||[];
+  for(const l in LAYER)layerEl(l).innerHTML=list.filter(s=>(s.layer||'board')===l).map(stkHtml).join('');
+  for(const s of list){if(s.kind==='text'){ensureFont(s.font);continue}
+    const data=await getImg('stk:'+s.id);const el=document.querySelector(`#folder [data-stk="${s.id}"] img`);if(el&&data)el.src=data}
+  if(sel&&sel.dataset&&sel.dataset.stk){select(document.querySelector(`#folder [data-stk="${sel.dataset.stk}"]`)||null)}
+}
+const findStk=id=>(stickers[tab]||[]).find(s=>s.id===id);
+let sel=null;
+function select(el){
+  if(sel&&sel.isConnected)sel.classList.remove('sel');
+  sel=el;if(el)el.classList.add('sel');
+  if(el){paper.querySelectorAll('.ph.sel').forEach(x=>x.classList.remove('sel'));selPh=null}
+  const s=el&&el.dataset.stk&&findStk(el.dataset.stk);
+  $('selbar').hidden=!s;
+  $('finSeg').hidden=!(s&&s.kind!=='text');$('inkSeg').hidden=!(s&&s.kind==='text');
+  if(s&&s.kind!=='text')$('finSeg').querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.fin===(s.fin||'sticker'))));
+  if(s&&s.kind==='text')$('inkSeg').querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.ink===(s.color||INKS[0][0]))));
+  if(!$('handPip').hidden)drawHandPip();
+}
+$('inkSeg').innerHTML=INKS.map(([c,n])=>`<button class="ink" type="button" data-ink="${c}" style="background:${c}" aria-label="${n}" title="${n}"></button>`).join('');
+// 현재 보기 배율(끌기 거리 → 서류 px)
+let scale=1;
+function stateOf(el){
+  if(el.dataset.stk)return findStk(el.dataset.stk);
+  const P=place[tab]=place[tab]||{};return P[el.dataset.mv]=P[el.dataset.mv]||defPos(el);
+}
+// 펼친 채로 표지 안쪽 ↔ 뒤판을 넘나들면 놓은 자리의 판으로 옮긴다
+function rehome(el,s){
+  const l=s.layer||'board';if(!settings.open||l==='front')return false;
+  const r=el.getBoundingClientRect(),fr=$('folder').getBoundingClientRect(),fx=(r.left+r.width/2-fr.left)/scale;
+  const to=fx<BX?'inside':'board';if(to===l)return false;
+  s.x+=LAYER[l][0]-LAYER[to][0];s.y+=LAYER[l][1]-LAYER[to][1];s.layer=to;return true;
+}
+function commit(el){if(el.dataset.stk){const s=findStk(el.dataset.stk);const moved=s&&rehome(el,s);saveStk();if(moved)mountStickers()}else savePlace()}
+$('folder').addEventListener('pointerdown',e=>{
+  if(e.button)return;
+  const h=e.target.closest('.hdl'), el=e.target.closest('.mv');
+  if(!el){if(!e.target.closest('.ph')){select(null);paper.querySelectorAll('.ph.sel').forEach(x=>x.classList.remove('sel'));selPh=null}return}
+  if(e.target.closest('[contenteditable="true"]'))return;
+  e.preventDefault();e.stopPropagation();select(el);
+  const o=stateOf(el);if(!o)return;
+  el.setPointerCapture(e.pointerId);
+  const r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2,x0=e.clientX,y0=e.clientY;
+  const o0={...o};let moved=false;
+  const kind=h?(h.classList.contains('rs')?'rs':'rt'):'mv';
+  const d0=Math.hypot(x0-cx,y0-cy)||1,a0=Math.atan2(y0-cy,x0-cx);
+  el.style.cursor=kind==='mv'?'grabbing':'';
+  const move=ev=>{moved=true;
+    if(kind==='mv'){o.x=o0.x+(ev.clientX-x0)/scale;o.y=o0.y+(ev.clientY-y0)/scale}
+    else if(kind==='rs'){o.s=Math.max(.2,Math.min(6,(o0.s||1)*Math.hypot(ev.clientX-cx,ev.clientY-cy)/d0))}
+    else{let a=(o0.r||0)+(Math.atan2(ev.clientY-cy,ev.clientX-cx)-a0)*180/Math.PI;if(ev.shiftKey)a=Math.round(a/15)*15;o.r=Math.round(a*10)/10}
+    el.style.transform=tf(o);
+  };
+  const up=()=>{el.removeEventListener('pointermove',move);el.removeEventListener('pointerup',up);el.removeEventListener('pointercancel',up);el.style.cursor='';if(moved)commit(el)};
+  el.addEventListener('pointermove',move);el.addEventListener('pointerup',up);el.addEventListener('pointercancel',up);
+});
+// 글씨 스티커: 두 번 눌러 고치기
+$('folder').addEventListener('dblclick',e=>{const t=e.target.closest('.stk.text .tx');if(!t)return;const s=findStk(t.parentNode.dataset.stk);
+  t.contentEditable='true';t.focus();const r=document.createRange();r.selectNodeContents(t);const w=getSelection();w.removeAllRanges();w.addRange(r);
+  t.addEventListener('blur',()=>{t.contentEditable='false';s.text=t.innerText.replace(/\n$/,'')||'메모';saveStk();mountStickers()},{once:true})});
+const typing=t=>t.closest&&t.closest('input,textarea,[contenteditable="true"]');
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){if(document.activeElement&&document.activeElement.isContentEditable){document.activeElement.blur();return}
+    if(document.querySelector('.pip:not([hidden])'))pips.forEach(p=>p(false));else select(null);return}
+  // 글 칸 안에서는 그 칸의 되돌리기를 쓴다
+  if((e.ctrlKey||e.metaKey)&&!typing(e.target)){
+    const k=e.key.toLowerCase();
+    if(k==='z'&&!e.shiftKey){e.preventDefault();undo();return}
+    if((k==='z'&&e.shiftKey)||k==='y'){e.preventDefault();redoIt();return}
+  }
+  if((e.key==='Delete'||e.key==='Backspace')&&sel&&sel.dataset.stk&&!typing(e.target)){e.preventDefault();delStk()}
+});
+// 지운 스티커 그림은 남겨 둔다(Ctrl+Z 로 되살리게)
+function delStk(){if(!sel||!sel.dataset.stk)return;const id=sel.dataset.stk;stickers[tab]=stickers[tab].filter(s=>s.id!==id);saveStk();select(null);mountStickers()}
+$('delBtn').onclick=delStk;
+$('frontBtn').onclick=()=>{const s=sel&&findStk(sel.dataset.stk);if(!s)return;s.z=Math.max(0,...stickers[tab].map(x=>x.z||0))+1;saveStk();mountStickers()};
+$('finSeg').addEventListener('click',e=>{const b=e.target.closest('[data-fin]'),s=sel&&findStk(sel.dataset.stk);if(!b||!s)return;s.fin=b.dataset.fin;saveStk();mountStickers()});
+$('inkSeg').addEventListener('click',e=>{const b=e.target.closest('[data-ink]'),s=sel&&findStk(sel.dataset.stk);if(!b||!s)return;s.color=b.dataset.ink;saveStk();mountStickers()});
+// 새 스티커는 지금 보이는 서류철 가운데쯤, 그 자리의 판에
+function centerSpot(){const st=$('stage').getBoundingClientRect(),f=$('folder').getBoundingClientRect();
+  const fx=((Math.min(st.right,f.right)+Math.max(st.left,f.left))/2-f.left)/scale,fy=((Math.min(st.bottom-80,f.bottom)+Math.max(st.top,f.top))/2-f.top)/scale;
+  // 펼친 판에서는 표지 안쪽이 확실히 더 보일 때만 안쪽에, 아니면 종이 가운데 쪽으로
+  const layer=!settings.open?'front':fx<BX-200?'inside':'board';
+  const lx=fx-LAYER[layer][0];
+  return {layer,x:Math.max(120,Math.min(CW-200,lx)),y:fy-LAYER[layer][1]}}
+async function addStickers(files){
+  const imgs=[...files].filter(f=>f.type.startsWith('image/'));if(!imgs.length)return;
+  const c=centerSpot();let z=Math.max(0,...stickers[tab].map(s=>s.z||0)),last=null;
+  for(const [i,f] of imgs.entries()){
+    const {src:s,ar}=await shrink(await readFile(f),1200);const id=Date.now().toString(36)+i;await setImg('stk:'+id,s);
+    const w=Math.round(ar>=1?200:200*ar);last={id,kind:'img',fin:'sticker',layer:c.layer,w,x:c.x-w/2+i*16,y:c.y-w/ar/2+i*16,r:Math.round(Math.random()*10-5),s:1,z:++z};
+    stickers[tab].push(last);
+  }
+  saveStk();await mountStickers();select(document.querySelector(`#folder [data-stk="${last.id}"]`));say('끌어서 옮기고, 모서리 동그라미로 크기 · 위 동그라미로 회전',4000);
+}
+$('stkAdd').onclick=()=>$('stkFile').click();
+$('stkFile').onchange=e=>{addStickers(e.target.files);e.target.value='';setPhotoPip(false)};
+$('stage').addEventListener('dragover',e=>{if(e.target.closest('.ph'))return;e.preventDefault()});
+$('stage').addEventListener('drop',e=>{if(e.target.closest('.ph'))return;e.preventDefault();addStickers(e.dataTransfer.files)});
+document.addEventListener('paste',e=>{if(typing(e.target))return;const f=[...e.clipboardData.files];if(f.length){e.preventDefault();addStickers(f)}});
+$('textBtn').onclick=async()=>{
+  const c=centerSpot(),z=Math.max(0,...stickers[tab].map(s=>s.z||0))+1;
+  const s={id:Date.now().toString(36),kind:'text',text:'메모',font:handOf(cast.pc.trim()||'PC').sign,color:INKS[0][0],layer:c.layer,x:c.x-40,y:c.y-24,r:-4,s:1,z};
+  stickers[tab].push(s);saveStk();await mountStickers();select(document.querySelector(`#folder [data-stk="${s.id}"]`));say('두 번 눌러 고치기 · 손글씨에서 글꼴',4000);
+};
+
+// ── 표지: 덮기 · 펼치기 ──
+// 대외비 도장: 처음엔 제목 라벨 아래쪽에 걸쳐 찍힘. 끌어서 옮기고 크기 · 회전(place[탭].cvstamp)
+const CV_STAMP={x:230,y:448,r:-6,s:1};
+function coverHtml(){
+  const P=[0,1].map(i=>whoOf(current.people[i],i));
+  return `<p class="cv-org">SENTINEL MANAGEMENT BUREAU · KOREA BRANCH</p>
+<div class="cv-label"><p class="t1">FEARLESS</p><p class="t2">전담 페어 ${DOCS[tab]}</p><p class="who">${P.map(w=>`<span>${esc(w)}</span>`).join('<span class="bar">|</span>')}</p></div>
+<div class="mv cv-stamp" data-mv="cvstamp" style="transform:${tf((place[tab]||{}).cvstamp||CV_STAMP)}"><img src="img/confidential.png" alt="대외비" draggable="false">${HDL}</div>`;
+}
+function contractDate(){return (dates.contract||'').trim()||(tab==='contract'?current.date:parse(inputs.contract||'').date)||'20xx년 00월 00일'}
+// 열람 기록: 서류철 하나에 하나. 첫 줄은 계약서 날짜 · 지부장 강태환(그 사람 손글씨), 그 아래는 편집 모드에서 더한다
+function insideHtml(){
+  const ce=editMode?' contenteditable="true"':'';
+  const cell=(i,f,val)=>`<span class="ed" data-l="${i}.${f}"${ce}>${v(val)}</span>`;
+  const rows=[`<tr><td>${v(contractDate())}</td><td>지부장</td><td><span class="nm" data-who="${CHIEF}">${CHIEF}</span></td></tr>`,
+    ...logRows.map((r,i)=>`<tr><td>${cell(i,'d',r.d)}</td><td>${cell(i,'pos',r.pos)}</td><td>${editMode?cell(i,'name',r.name):`<span class="nm" data-who="${esc(r.name||'')}">${v(r.name)}</span>`}${editMode?`<button class="rowx so" type="button" data-delrow="${i}" aria-label="줄 빼기" title="줄 빼기">×</button>`:''}</td></tr>`)];
+  // 편집 모드: 첫 빈 줄에 '+ 추가하기'(표 아래에 단추를 붙이면 표가 밀려 올라간다)
+  if(editMode&&rows.length<6)rows.push('<tr class="addrow"><td><button class="logadd so" type="button" data-add="log">+ 추가하기</button></td><td></td><td></td></tr>');
+  while(rows.length<6)rows.push('<tr><td></td><td></td><td></td></tr>');
+  return `<div class="cvi-log"><h3>열람 기록</h3><table><colgroup><col style="width:34%"><col style="width:26%"><col></colgroup><tr><th>일자</th><th>직위</th><th>열람자</th></tr>${rows.join('')}</table></div>`;
+}
+function drawCover(){
+  $('coverFace').innerHTML=coverHtml();$('insideFace').innerHTML=insideHtml();
+  $('folder').dataset.open=String(!!settings.open);
+  $('coverBtn').textContent=settings.open?'덮기':'펼치기';
+}
+function setOpen(o){setTimeout(()=>typeof drawDesk==='function'&&drawDesk(),0);const box=$('fitbox');box.classList.add('anim');clearTimeout(setOpen.t);setOpen.t=setTimeout(()=>box.classList.remove('anim'),850);settings.open=o;saveSettings();select(null);drawCover();applyHands();fit()}
+$('coverBtn').onclick=()=>setOpen(!settings.open);
+$('front').addEventListener('click',e=>{if(!settings.open&&settings.clickOpen!==false&&!e.target.closest('.mv'))setOpen(true)});
+// 펼친 채 표지 안쪽(왼쪽)을 누르면 닫힌다. 붙인 것 · 편집 중인 칸 · 편집 모드에서는 그대로
+$('folder').querySelector('.inside').addEventListener('click',e=>{if(settings.open&&settings.clickOpen!==false&&!editMode&&!e.target.closest('.mv,.ed,button'))setOpen(false)});
+$('clickOpen').checked=settings.clickOpen!==false;
+$('clickOpen').onchange=e=>{settings.clickOpen=e.target.checked;saveSettings();$('front').classList.toggle('noclick',!e.target.checked);$('folder').querySelector('.inside').classList.toggle('noclick',!e.target.checked)};
+$('front').classList.toggle('noclick',settings.clickOpen===false);$('folder').querySelector('.inside').classList.toggle('noclick',settings.clickOpen===false);
+
+// ── 손글씨 고르기 ──
+let pickWho=null, aim='name', tagSel=load('handTag','전체');
+const tagList=()=>['전체','서명용',...GROUPS,...(HANDS.some(h=>h[5]==='내 글꼴')?['내 글꼴']:[])];
+function whosNow(){
+  const ws=[...new Set([...paper.querySelectorAll('.nm[data-who]')].map(e=>e.dataset.who))];
+  const s=sel&&sel.dataset.stk&&findStk(sel.dataset.stk);
+  return s&&s.kind==='text'?['＊글씨',...ws]:ws;
+}
+function drawHandPip(){
+  const ws=whosNow();if(!ws.includes(pickWho))pickWho=ws[0];
+  $('whoChips').innerHTML=ws.map(w=>`<button class="chip" type="button" data-who="${esc(w)}" aria-pressed="${w===pickWho}">${w==='＊글씨'?'붙인 글씨':esc(w)}</button>`).join('');
+  const isText=pickWho==='＊글씨';
+  $('aimSeg').hidden=isText;$('signImgRow').hidden=isText||aim!=='sign';
+  $('aimSeg').querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.aim===aim)));
+  $('signImgDel').disabled=!(handOf(pickWho).img);
+  if(!tagList().includes(tagSel))tagSel='전체';
+  $('tagChips').innerHTML=tagList().map(t=>`<button class="chip" type="button" data-tag="${t}" aria-pressed="${t===tagSel}">${t}</button>`).join('');
+  const list=HANDS.filter(h=>tagSel==='전체'||(tagSel==='서명용'?h[6]===2:h[5]===tagSel));
+  const s=isText&&findStk(sel.dataset.stk);
+  const cur=isText?s.text.split('\n')[0].slice(0,8):pickWho;
+  const now=isText?s.font:handOf(pickWho)[aim];
+  const grid=$('handGrid');
+  grid.innerHTML=list.map(h=>`<button class="cell" type="button" data-fam="${esc(h[1])}" aria-pressed="${h[1]===now}" title="${esc(h[0])} · ${esc(h[7].replace(/_/g,' ').split(' ').join(' · '))}"><span class="pv" style="font-family:'${cssStr(h[1])}',serif">${esc(cur)}</span><span class="fn">${esc(h[0])}</span></button>`).join('');
+  observeCells();
+}
+let io=null;
+function observeCells(){
+  if(io)io.disconnect();
+  io=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){ensureFont(en.target.dataset.fam);io.unobserve(en.target)}}),{root:$('handPip').querySelector('.pip-in'),rootMargin:'120px'});
+  $('handGrid').querySelectorAll('.cell').forEach(c=>io.observe(c));
+}
+const setHandPip=makePip($('handPip'),$('handBtn'),null);
+$('handBtn').addEventListener('click',()=>{if(!$('handPip').hidden){drawHandPip();setHandPip.place()}});
+$('whoChips').addEventListener('click',e=>{const b=e.target.closest('[data-who]');if(!b)return;pickWho=b.dataset.who;drawHandPip()});
+$('aimSeg').addEventListener('click',e=>{const b=e.target.closest('[data-aim]');if(!b)return;aim=b.dataset.aim;drawHandPip()});
+$('tagChips').addEventListener('click',e=>{const b=e.target.closest('[data-tag]');if(!b)return;tagSel=b.dataset.tag;store('handTag',tagSel);drawHandPip();$('handPip').querySelector('.pip-in').scrollTop=0});
+$('handGrid').addEventListener('click',e=>{const c=e.target.closest('.cell');if(!c)return;const fam=c.dataset.fam;
+  if(pickWho==='＊글씨'){const s=findStk(sel.dataset.stk);s.font=fam;saveStk();mountStickers()}
+  else{const h=hands[pickWho]=Object.assign({},hands[pickWho]);const cur=handOf(pickWho);h.name=cur.name;h.sign=cur.sign;h[aim]=fam;if(aim==='sign')h.img=0;saveHands();applyHands();mountMovers().then(fitText)}
+  $('handGrid').querySelectorAll('.cell').forEach(x=>x.setAttribute('aria-pressed',String(x===c)));$('signImgDel').disabled=!handOf(pickWho).img});
+$('signImgBtn').onclick=()=>$('signFile').click();
+$('signFile').onchange=async e=>{const f=e.target.files[0];e.target.value='';if(!f||!pickWho)return;
+  const {src:s}=await shrink(await readFile(f),900);const iv=Date.now();await setImg('sign:'+pickWho+':'+iv,s);
+  hands[pickWho]=Object.assign({},hands[pickWho],{img:iv});saveHands();await mountMovers();drawHandPip();say('흰 바탕은 종이에 묻혀요',3000)};
+$('signImgDel').onclick=async()=>{hands[pickWho]=Object.assign({},hands[pickWho],{img:0});saveHands();await mountMovers();drawHandPip()};
+// 글꼴 출처(KCC 체는 저작자 표시가 조건)
+$('creditList').innerHTML=`<p>나눔손글씨 109종: 네이버 · 네이버문화재단, SIL Open Font License 1.1. 이 도구에서는 2350자로 잘라 이름을 바꾼 판(OOCHand)을 씁니다. <a href="../fonts/hand/OFL.txt" target="_blank" rel="noopener">라이선스</a></p>
+<p>그 밖의 손글씨: 눈누 웹폰트 — ${[...new Set(HANDS.filter(h=>/^https?:/.test(h[2])).map(h=>h[0]+' ('+h[8]+')'))].map(esc).join(', ')}</p>
+<p>직접 더한 글꼴은 그 글꼴의 라이선스를 따릅니다.</p>`;
+
+// ── 글꼴 더하기: 웹 글꼴(@font-face 코드 · CSS 주소)은 fearless.fonts, 파일은 IndexedDB font:<이름> ──
+const fontSt=$('fontSt');
+function addMy(f){
+  if(byFam.has(f.fam)){fontSt.textContent=`이미 있어요: ${f.n}`;return}
+  myFonts.push(f);store('fonts',myFonts);const r=myRow(f);HANDS.push(r);byFam.set(f.fam,r);
+  tagSel='내 글꼴';drawHandPip();fontSt.textContent=`더했어요: ${f.n}`;
+}
+$('fontAdd').onclick=async()=>{
+  const raw=$('fontUrl').value.trim();if(!raw){$('fontUrl').focus();return}
+  let css=raw,base=location.href;
+  if(!/@font-face/i.test(raw)){
+    const m=raw.match(/https?:\/\/[^\s"'<>)]+/);if(!m){fontSt.textContent='@font-face 코드나 CSS 주소를 넣어 주세요.';return}
+    try{css=await (await fetch(m[0])).text();base=m[0]}catch(e){fontSt.textContent='그 주소를 읽지 못했어요. @font-face 코드를 붙여 넣어 주세요.';return}
+  }
+  const blocks=[...css.matchAll(/@font-face\s*\{[^}]*\}/gi)].map(b=>b[0].replace(/url\(\s*['"]?([^'")]+)['"]?\s*\)/g,(x,u)=>`url("${new URL(u,base).href}")`));
+  const fams=[...new Set(blocks.map(b=>(b.match(/font-family:\s*['"]?([^'";]+)/i)||[])[1]).filter(Boolean).map(s=>s.trim()))];
+  if(!fams.length){fontSt.textContent='@font-face 를 찾지 못했어요.';return}
+  for(const fam of fams)addMy({n:fam,fam,css:blocks.filter(b=>(b.match(/font-family:\s*['"]?([^'";]+)/i)||[])[1].trim()===fam).join('\n')});
+  $('fontUrl').value='';
+};
+const FONT_FMT={ttf:'truetype',otf:'opentype',woff:'woff',woff2:'woff2'};
+$('fontFileBtn').onclick=()=>$('fontFile').click();
+$('fontFile').onchange=async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;
+  const ext=(f.name.split('.').pop()||'').toLowerCase();if(!FONT_FMT[ext]){fontSt.textContent='ttf · otf · woff · woff2 파일만 돼요.';return}
+  const data=await readFile(f),n=f.name.replace(/\.[^.]+$/,''),fam='내 글꼴 '+n;
+  try{await new FontFace('check-'+Date.now(),`url("${data}")`).load()}catch(err){fontSt.textContent='글꼴 파일을 읽지 못했어요.';return}
+  await setImg('font:'+fam,data);addMy({n,fam,file:true});
+};
+
+// ── 보기 크기: 늘 펼친 판 1784 폭 기준. 덮으면 표지가 뒤판 위로 접힐 뿐 자리는 그대로 ──
+const FW=1784,FH=1245;
+function fit(){
+  const st=$('stage'),box=$('fitbox'),f=$('folder');
+  const cs=getComputedStyle(st),aw=st.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight),ah=st.clientHeight-parseFloat(cs.paddingTop)-parseFloat(cs.paddingBottom);
+  const phone=matchMedia('(max-width:900px)').matches, W=FW;   // 덮어도 펼친 자리 그대로(뒤판 · 책상 물건이 움직이지 않게)
+  scale=settings.zoom==='fit'?Math.min(1,aw/W,phone?9:ah/FH):1;
+  // 맞춤: 서류철 보이는 부분(뒤판 윗변 42 ~ 아래 1245)을 위 단추와 아래 막대 사이 한가운데에
+  let mt=0;
+  if(settings.zoom==='fit'&&!phone){
+    const top=$('steps').getBoundingClientRect().bottom+20,bot=$('tools').getBoundingClientRect().top-20,vis=FH-42;
+    scale=Math.min(1,aw/W,(bot-top)/vis);
+    const y0=st.getBoundingClientRect().top+parseFloat(cs.paddingTop);
+    mt=(top+bot)/2-y0-(42+vis/2)*scale;
+  }
+  box.style.marginTop=mt+'px';
+  st.classList.toggle('fitmode',settings.zoom==='fit');
+  box.style.width=W*scale+'px';box.style.height=FH*scale+'px';f.style.transform=`scale(${scale})`;f.style.setProperty('--inv',(1/scale).toFixed(3));$('desk').style.transform=f.style.transform;
+  $('zoomSeg').querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.z===settings.zoom)));
+}
+$('zoomSeg').addEventListener('click',e=>{const b=e.target.closest('[data-z]');if(!b)return;settings.zoom=b.dataset.z;saveSettings();fit()});
+addEventListener('resize',fit);
+
+// ── 저장(PNG) ──
+const FS='https://cdn.jsdelivr.net/npm/@fontsource/';
+const SERIF=[['Noto Serif KR',FS+'noto-serif-kr@5.2.8/400.css'],['Noto Serif KR',FS+'noto-serif-kr@5.2.8/700.css']];
+const cssText={},fontData={};
+const toData=async url=>{const b=await (await fetch(url)).blob();return await new Promise(r=>{const fr=new FileReader();fr.onload=()=>r(fr.result);fr.readAsDataURL(b)})};
+function inRange(range,cps){
+  return range.split(',').some(part=>{let [a,b]=part.trim().replace(/^U\+/i,'').split('-');
+    if(a.includes('?')){b=a.replace(/\?/g,'F');a=a.replace(/\?/g,'0')}
+    const lo=parseInt(a,16),hi=parseInt(b||a,16);for(const c of cps)if(c>=lo&&c<=hi)return true;return false});
+}
+// 복제본 글자를 글꼴마다 모아, 그 글자가 든 조각만 data URL 로
+async function embedCss(root){
+  const used=new Map();
+  const tw=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
+  while(tw.nextNode()){const n=tw.currentNode;if(!n.nodeValue.trim())continue;
+    const fam=getComputedStyle(n.parentElement).fontFamily.split(',')[0].trim().replace(/^["']|["']$/g,'');
+    if(!used.has(fam))used.set(fam,new Set());n.nodeValue.split('').forEach(c=>used.get(fam).add(c.codePointAt(0)))}
+  const out=[];
+  for(const [fam,cps] of used){
+    try{
+      if(fam==='Noto Serif KR'){
+        for(const [,url] of SERIF){const css=cssText[url]||(cssText[url]=await (await fetch(url)).text());
+          for(const [,body] of css.matchAll(/@font-face\s*\{([^}]*)\}/g)){
+            const ur=(body.match(/unicode-range:\s*([^;]+)/)||[])[1];if(ur&&!inRange(ur,cps))continue;
+            const u=(body.match(/url\(\s*['"]?([^'")]+?\.woff2)['"]?\s*\)/)||[])[1];if(!u)continue;
+            const file=new URL(u,url).href,w=(body.match(/font-weight:\s*(\d+)/)||[,400])[1];
+            out.push(`@font-face{font-family:"Noto Serif KR";src:url("${fontData[file]||(fontData[file]=await toData(file))}") format("woff2");font-weight:${w};${ur?`unicode-range:${ur};`:''}}`)}}
+        continue;
+      }
+      const h=byFam.get(fam);if(!h)continue;
+      if(h[2]==='#file'){const d=await getImg('font:'+fam);if(d)out.push(`@font-face{font-family:"${fam}";src:url("${d}")}`);continue}
+      if(h[2]==='#web'){
+        for(const b of h.css.match(/@font-face\s*\{[^}]*\}/gi)||[]){
+          const ur=(b.match(/unicode-range:\s*([^;}]+)/)||[])[1];if(ur&&!inRange(ur,cps))continue;
+          const urls=[...b.matchAll(/url\("([^"]+)"\)/g)].map(m=>m[1]);let nb=b;
+          for(const u of urls.slice(0,1)){const d=fontData[u]||(fontData[u]=await toData(u));nb=nb.replace(/src:[^;}]+/,`src:url("${d}")`)}
+          out.push(nb)}
+        continue;
+      }
+      if(h[2][0]==='@'){
+        const short=h[2].slice(1);let rest=new Set(cps);
+        for(const [i,r] of RANGES.entries()){if(!inRange(r,cps))continue;const file=HAND_BASE+short+'.'+i+'.woff2';
+          out.push(`@font-face{font-family:"${fam}";src:url("${fontData[file]||(fontData[file]=await toData(file))}") format("woff2");unicode-range:${r}}`);
+          for(const c of [...rest])if(inRange(r,[c]))rest.delete(c)}
+        if([...rest].some(c=>c>=0xAC00&&c<=0xD7A3)){const file=NAVER_TTF+encodeURIComponent('나눔손글씨 '+h[0])+'.ttf';
+          out.unshift(`@font-face{font-family:"${fam}";src:url("${fontData[file]||(fontData[file]=await toData(file))}") format("truetype");unicode-range:U+AC00-D7A3}`)}
+      }else out.push(`@font-face{font-family:"${fam}";src:url("${fontData[h[2]]||(fontData[h[2]]=await toData(h[2]))}") format("${h[3]}");font-weight:${h[4]}}`);
+    }catch(e){}   // 글꼴 하나를 못 받아도 나머지로 찍는다
+  }
+  return out.join('\n');
+}
+const saveSt=$('saveStatus');
+function download(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name.replace(/[\\/:*?"<>|]/g,'_');document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000)}
+let saving=false;
+// 저장용 그림 데이터: assets.js · desk-assets.js(스크립트 태그라 파일로 연 페이지에서도 읽힌다). 처음 저장할 때 불러온다
+const loadScript=src=>new Promise(ok=>{const e=document.createElement('script');e.src=src;e.onload=ok;e.onerror=ok;document.head.append(e)});
+async function ensureAssets(withDesk){
+  const A=window.FEARLESS_ASSETS||{};
+  if(!A['img/kraft.jpg'])await loadScript('assets.js');
+  if(withDesk&&!(window.FEARLESS_ASSETS||{})['img/desk/drink1.webp'])await loadScript('desk-assets.js');
+  return window.FEARLESS_ASSETS||{};
+}
+// 복제본의 그림 주소를 data URL 로 바꾼다(못 찾으면 그대로 두고, 그래도 못 읽으면 html-to-image 가 빈 그림으로)
+function inlineAssets(node,A){
+  node.querySelectorAll('img').forEach(im=>{const k=im.getAttribute('src');if(k&&A[k])im.setAttribute('src',A[k])});
+  if(A['img/kraft.jpg'])[node,...node.querySelectorAll('.kraft')].forEach(el=>{if(el.classList&&el.classList.contains('kraft'))el.style.backgroundImage=`url("${A['img/kraft.jpg']}")`});
+}
+const BLANK='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
+function strip(copy){copy.classList.remove('editing');copy.querySelectorAll('.editing').forEach(x=>x.classList.remove('editing'));copy.querySelectorAll('.so').forEach(x=>x.remove());copy.querySelectorAll('.sel').forEach(x=>x.classList.remove('sel'));copy.querySelectorAll('[contenteditable]').forEach(x=>x.removeAttribute('contenteditable'));copy.querySelectorAll('.seal.none').forEach(x=>x.remove())}
+async function savePng(whole,suffix=''){
+  if(saving)return;
+  if(!window.htmlToImage){saveSt.textContent='PNG 저장 도구를 못 불러왔어요. 인터넷 연결을 확인해 주세요.';return}
+  saving=true;document.querySelectorAll('#saveFolder,#savePaper').forEach(b=>b.disabled=true);saveSt.textContent='만드는 중…';
+  const holder=document.createElement('div');holder.style.cssText='position:fixed;left:-100000px;top:0';
+  try{
+    await document.fonts.ready;
+    await ensureAssets(whole&&settings.withDesk);
+    const f=$('folder');let node;
+    if(whole){
+      // 3D 를 풀어 평면으로: 펼침 = 표지 안쪽을 왼쪽에, 덮음 = 앞면만 뒤판 폭으로 잘라. 화면 상태와 상관없이 '덮은 채로' 체크를 따른다
+      const open=!settings.saveShut;
+      node=f.cloneNode(true);node.style.transform='none';node.style.perspective='none';
+      const cv=node.querySelector('.cover');cv.style.transition='none';cv.style.transform='none';
+      if(open){cv.style.left=(BX-CW)+'px';cv.querySelector('.front').remove();cv.querySelector('.inside').style.transform='none'}
+      else cv.querySelector('.inside').remove();
+      if(settings.withDesk){
+        // 책상까지: 물건이 다 들어가는 고정 범위에 책상 바탕 · 물건 · 서류철을 함께
+        const X0=-720,X1=FW+620,Y0=-30,Y1=FH+70;
+        const wrap=document.createElement('div');const dj=(window.FEARLESS_ASSETS||{})['img/desk.jpg']||'img/desk.jpg';
+        wrap.style.cssText=`position:relative;width:${X1-X0}px;height:${Y1-Y0}px;overflow:hidden;background:url("${dj}") 0 0/512px 512px,#25292d`;
+        const shade=document.createElement('div');shade.style.cssText='position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 55% 45%,rgba(255,236,200,.07),rgba(0,0,0,.34) 100%)';
+        const dk=$('desk').cloneNode(true);dk.removeAttribute('id');dk.style.cssText=`position:absolute;left:${-X0}px;top:${-Y0}px;transform:none`;
+        node.style.position='absolute';node.style.left=-X0+'px';node.style.top=-Y0+'px';
+        wrap.append(shade,dk,node);node=wrap;
+      }else if(!open){
+        const wrap=document.createElement('div');wrap.style.cssText=`position:relative;width:${FW-BX}px;height:${FH}px;overflow:hidden`;
+        node.style.position='absolute';node.style.left=-BX+'px';node.style.top='0';wrap.append(node);node=wrap;
+      }
+    }else{
+      // 종이만: 뒤판 스티커 중 종이에 걸친 것만 종이 좌표로 옮겨 붙인다(밖으로 나간 부분은 잘린다)
+      node=paper.cloneNode(true);node.style.cssText='position:relative;left:0;top:0;box-shadow:none';
+      const lay=document.createElement('div');lay.className='stks';node.append(lay);
+      const pr=paper.getBoundingClientRect();
+      layerEl('board').querySelectorAll('.stk').forEach(el=>{const r=el.getBoundingClientRect();
+        if(r.right<pr.left||r.left>pr.right||r.bottom<pr.top||r.top>pr.bottom)return;
+        const c=el.cloneNode(true),s=findStk(el.dataset.stk);c.style.transform=tf({...s,x:s.x-44,y:s.y-36});lay.append(c)});
+      const wrap=document.createElement('div');wrap.className='folder';wrap.style.cssText=$('folder').style.cssText.replace(/transform:[^;]+;?/,'')+';width:794px;height:1123px;perspective:none';wrap.append(node);node=wrap;
+    }
+    node.id='';node.querySelectorAll('[id]').forEach(x=>x.removeAttribute('id'));
+    inlineAssets(node,window.FEARLESS_ASSETS||{});
+    strip(node);holder.append(node);document.body.append(holder);
+    const opt={imagePlaceholder:BLANK,pixelRatio:whole&&settings.withDesk?1.5:2,fontEmbedCSS:await embedCss(node),cacheBust:false};
+    await htmlToImage.toCanvas(node,opt);   // 한 번 데운 뒤(첫 그림은 글꼴이 늦게 붙기도 한다)
+    const blob=await htmlToImage.toBlob(node,opt);
+    const names=current.people.map(p=>p.name).filter(Boolean).join('-');
+    download(blob,`fearless-${DOCS[tab]}${names?'-'+names:''}${whole?'':'-종이'}${suffix}.png`);saveSt.textContent='저장했어요.';
+  }catch(err){saveSt.textContent='PNG를 만들지 못했어요. '+(err&&err.message||'')}
+  finally{holder.remove();saving=false;document.querySelectorAll('#saveFolder,#savePaper').forEach(b=>b.disabled=false)}
+}
+$('saveFolder').onclick=()=>savePng(true);
+$('withDesk').checked=!!settings.withDesk;
+$('withDesk').onchange=e=>{settings.withDesk=e.target.checked;saveSettings()};
+$('saveShut').checked=!!settings.saveShut;
+$('saveShut').onchange=e=>{settings.saveShut=e.target.checked;saveSettings()};
+$('savePaper').onclick=async()=>{
+  if(tab!=='review'){savePng(false);return}
+  const keep=page;
+  for(const pg of [1,2]){page=pg;render();await document.fonts.ready;await new Promise(r=>setTimeout(r,300));await savePng(false,'-'+pg+'쪽');await new Promise(r=>setTimeout(r,400))}
+  page=keep;render();
+};
+
+// ── 예시(사용자가 준 계약서 예시의 두 사람) ──
+const SAMPLE={contract:`@계약서
+날짜: 2025년 08월 04일
+[인물]
+이름: 박준후
+나이: 34세
+성별: 남성
+코드네임: FLICKER
+분류: 가이드
+등급: S급
+소속: 제1 가이드 부서
+능력: 신경동조 완화
+능력 설명: 반경 10m 내 대상의 경계심을 풀거나, 강제적으로 나른함·이완 상태 유도 가능
+성격 키워드: #무심함 #무뚝뚝함 #관찰형 #반응 느림 #감정 동요 적음
+성격: 무관심하지만 필요할 때는 정확하게 개입. 감정 동요 드묾, 표현 절제.
+타인을 관찰하고 필요할 때만 움직임. 집중력은 높지만 반박자 느린 반응.
+대체로 상대에 맞추는 태도. 타인의 감정을 공감하지만 휩쓸리지 않음.
+통제하기보다는 제안하고 이끄는 타입.
+[인물]
+이름: 서재훈
+나이: 31세
+성별: 남성
+코드네임: MUSTANG
+분류: 센티넬
+등급: S급
+소속: 제4기동폭격부대
+능력: 전술 공중지배 [Sky Dominance]
+능력 설명: 부유 전함 VALKYRIE의 주인. 능력 사용 시, 상공 2km에서 포격 사전조준 마킹이 지상에 찍힘. 적 위치를 선제 탐지.
+성격 키워드: #호쾌 #오만 #통제 #상공의 지배자 #여유로움
+성격: 대화는 늘 반쯤 비웃는 듯한 미소와 함께. 상대의 눈을 똑바로 보며 상대를 장난감처럼 굴림. 모든 상황을 통제하려는 태도가 습관처럼 배어 있으며, 상대를 압도하면서도 여유롭게 조롱하는 게 일상. 감정의 진폭은 적지만, 위협과 유희의 경계를 미묘하게 넘나드는 언행.`,
+recommend:`@추천서
+날짜: 20xx년 00월 00일
+
+[인물]
+이름: 박준후
+코드네임: FLICKER
+분류: 가이드
+등급: S급
+소속: 제 1 가이드팀
+능력: 신경동조 완화
+
+[인물]
+이름: 서재훈
+코드네임: MUSTANG
+분류: 센티넬
+등급: S급
+소속:제4기동폭격부대
+능력: 전술 공중지배 [Sky Dominance]
+
+적합률: 98%
+
+추천 사유:
+서재훈 센티넬은 부유 전함 발키리를 단독 조종하며 상공 2km에서 초고도 정밀 감각을 유지해야 하므로 감각 과부하가 극심하지만, 가이딩을 굴욕이자 약점 노출로 여겨 여태껏 단 한 번도 제대로 된 페어를 받아들인 적이 없습니다. 반면 박준후 가이드는 반경 10m 내 대상의 경계심을 풀고 강제적 이완을 유도하는 신경동조 완화 능력을 보유하고 있어, 접촉을 극도로 꺼리는 서재훈의 방어기제를 물리적 충돌 없이 우회할 수 있는 유일한 인재입니다. 특히 두 사람은 10년 전 약 2년간 교제했던 이력이 있어 타인에게 곁을 내주지 않는 서재훈의 기질을 박준후가 이미 깊이 파악하고 있으며, 감정의 기복 없이 말보다 손이 먼저 나가는 박준후 특유의 무덤덤한 가이딩 방식은 서재훈의 오만한 통제욕을 자극하지 않고 폭주 직전의 상태를 안정화할 수 있습니다. 현재 지부 내에 서재훈을 감당할 수 있는 인원이 전무한 상황에서, 두 사람의 능력 구조와 과거의 라포르를 고려할 때 박준후 외의 대안은 존재하지 않습니다.
+
+기대:
+약물이라는 임시방편에 의존해 폭주 위험을 안고 단독 출격하던 서재훈 센티넬이 S급 가이드의 전담 관리를 받게 됨으로써, 제4기동폭격부대의 핵심 전력을 안정적으로 보존할 수 있을 것입니다. 또한 지휘관조차 무시하며 통제 불능이었던 서재훈의 전장 이탈이나 독단적 행동을 현장에서 즉각적으로 제어하고 서포트할 수 있는 최소한의 안전장치가 마련될 것으로 보입니다.
+
+우려:
+10년 전 서재훈 센티넬의 일방적인 가이딩 거부로 인해 두 사람의 관계가 파탄에 이르렀던 전적이 있는 만큼, 재결합 과정에서 서재훈이 보일 극심한 저항과 심리적 마찰이 초기 페어 운용에 큰 걸림돌이 될 수 있습니다. 더불어 S급 센티넬을 상대로 신경동조 완화 능력을 무리하게 사용할 경우 박준후 가이드에게 실신이나 출혈 등 심각한 신체적 과부하가 올 수 있어 세심한 모니터링이 필요합니다.`,
+review:`@평가서
+임무명: 서해 제3폐공단 차원문 봉쇄 및 침공 빌런 섬멸 작전
+임무 등급: S
+일시: 20xx년 10월 14일
+장소: 서해 제3폐공단 일대 및 상공 2km
+결과: 성공
+[인물]
+이름: 박준후
+코드네임: FLICKER
+분류: 가이드
+등급: S
+[인물]
+이름: 서재훈
+코드네임: MUSTANG
+분류: 센티넬
+등급: S
+개요: 서해 폐공단 구역에 발생한 대형 차원문에서 다수의 비행형 및 중장갑 빌런이 출현함에 따라 제4기동폭격부대 소속 머스탱과 전담 가이드 플리커를 투입하여 조기 진압을 시도함.
+경과: 작전 개시 직후 머스탱이 부유 전함 발키리를 전개하여 상공 2km에서 사전조준 마킹 후 플라즈마 레일건과 미사일로 빌런 군집의 80%를 선제 타격함. 잔존 빌런 일부가 발키리 하부 사각지대로 접근하자 지휘부의 대기 명령을 무시하고 머스탱이 출력 제한을 해제해 무차별 근접 폭격을 강행함. 이로 인해 머스탱의 감각 과부하 수치가 급상승했으나 동승 중이던 플리커가 즉각적인 신체 접촉과 신경동조 완화 능력을 개방하여 폭주 징후를 1분 내로 차단함. 이후 안정된 머스탱이 드론포드를 정밀 조작해 잔여 개체를 완전히 섬멸하며 교전 개시 22분 만에 상황을 종료함.
+평가: 연계 - A - 지휘 계통을 무시한 독단적 행동이 선행되었으나 페어 간의 무언의 호흡과 즉각적인 보조는 완벽에 가까움.
+능력 운용 - S - 전술 공중지배를 통한 압도적인 화력 투사와 신경동조 완화의 정밀한 출력 조절이 극한의 시너지를 발휘함.
+가이딩 안정도 - S - 고출력 폭격 직후임에도 전투 종료 시점의 가이딩 수치가 98%를 상회하며 센티넬의 활력징후가 평시보다 안정적임.
+상황 판단 - B - 적 섬멸 속도는 최상위권이나 아군 지원 부대의 진입 경로까지 폭격 범위에 포함시키는 등 주변 여건을 고려하지 않은 과잉 화력 투사가 지적됨.
+종합: A - 압도적인 무력과 완벽한 가이딩 통제로 임무 자체는 최단 시간 내 완수했으나 전술적 통제 불응에 대한 감점이 반영됨.
+피해: 폐공단 내 보존 예정이었던 구형 설비 3동 전파 및 지반 침하. 인명 피해 없음.
+특이 사항: 작전 종료 직후 교신 채널이 열려 있는 상태에서 센티넬이 가이드의 피로를 이유로 귀환을 일방 통보하고 통신을 강제 종료함.
+소견: 과거 가이딩 거부 이력으로 상시 폭주 위험군으로 분류되었던 머스탱이 플리커와의 전담 페어 결성 이후 놀라울 정도의 정서적, 육체적 안정세를 보이고 있다. 다만 센티넬의 오만한 독단 행동에 가이드가 제동을 걸기보다 무조건적으로 수용하고 뒷수습에 집중하는 경향이 있어, 향후 대규모 합동 작전 시 지휘부와의 마찰이 우려되므로 지속적인 관찰이 필요하다.
+작성일: 20xx년 10월 15일
+평가자: 민서진 (FEARLESS 작전평가실 수석평가관)`};
+// 예시: 추천인 · 평가자도 기본 인물로(이름 · 직위 · 서명/도장 · 빼 둔 기본 그림까지 되돌림)
+$('sample').onclick=()=>{src.value=SAMPLE[tab];
+  if(SIGNER_DEF[tab]){signers[tab]={};store('signers',signers);const n=SIGNER_DEF[tab].name,h=hands[n];if(h&&(h.noDef||h.img||h.sealImg||h.sign)){hands[n]=Object.assign({},h,{noDef:false,img:0,sealImg:0,sign:''});saveHands()}drawSigner()}
+  render();remember();askZoom()};
+
+// ── 편집 모드 ──
+function setEdit(on){editMode=on;$('editBtn').setAttribute('aria-pressed',String(on));$('folder').classList.toggle('editing',on);$('fitbox').classList.toggle('editing',on);render();
+  if(on)say('글을 눌러 고치기 · + 로 더하기',3000)}
+$('editBtn').onclick=()=>setEdit(!editMode);
+// 고친 글은 칸을 떠날 때 저장. 이름이 바뀌면 서명 줄 · 사진도 따라가게 다시 그린다
+$('folder').addEventListener('focusout',e=>{
+  const el=e.target.closest&&e.target.closest('.ed');if(!el)return;
+  const val=el.innerText.replace(/\n+$/,'');
+  if(el.dataset.f){const o=edits[tab]=edits[tab]||{};if(o[el.dataset.f]===val)return;o[el.dataset.f]=val;store('edits',edits);changed();
+    if(/^p\d\.(name|kind)$/.test(el.dataset.f))render();else{current=applyEdits(parse(src.value));drawCover();fitText()}}
+  else if(el.dataset.l){const [i,f]=el.dataset.l.split('.');if(logRows[i][f]===val)return;logRows[i][f]=val;store('log',logRows);changed()}
+});
+$('folder').addEventListener('keydown',e=>{const el=e.target.closest&&e.target.closest('.ed');if(!el)return;
+  if(e.key==='Enter'&&(el.closest('.one')||el.dataset.l||el.closest('tr.fx')))e.preventDefault();   // 한 줄 칸은 줄바꿈 대신 끝
+  if(e.key==='Escape')el.blur()});
+$('folder').addEventListener('click',e=>{
+  const add=e.target.closest('[data-add]'),del=e.target.closest('[data-delrow]');
+  if(add&&add.dataset.add==='log'){logRows.push({d:contractDate(),pos:'',name:''});store('log',logRows);changed();drawCover();applyHands();
+    const c=$('insideFace').querySelectorAll('[data-l$=".name"]');if(c.length)c[c.length-1].focus()}
+  if(del){logRows.splice(+del.dataset.delrow,1);store('log',logRows);changed();drawCover();applyHands()}
+});
+
+// ── 추천인 · 평가자 칸(추천서 · 평가서 탭에서만) ──
+const signerFile=$('signerFile');
+function drawSigner(){
+  const box=$('signerBox'),on=tab==='recommend'||tab==='review';box.hidden=!on;if(!on)return;
+  const f=signers[tab]=signers[tab]||{},g=signerOf(tab),d=SIGNER_DEF[tab],fixed=tab==='recommend'&&settings.rec!=='third';
+  $('signerLbl').textContent=tab==='recommend'?'추천인':'평가자';
+  const n=$('signerName');n.value=fixed?'':(f.name||'');n.placeholder=fixed?g.name+' (바꾸기에서 정함)':d.name;n.disabled=fixed;
+  const ps=$('signerPos');ps.value=f.pos||'';ps.placeholder=fixed?'':(d.pos||'없음');
+  $('signerMode').querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.m===g.mode)));
+  $('signerFont').hidden=g.mode!=='sign';
+  const raw=hands[g.name]||{},def=DEF_IMG[g.name]||{};
+  const hasImg=g.mode==='sign'?!!(raw.img||(!raw.sign&&!raw.noDef&&def.sign)):!!(raw.sealImg||(!raw.noDef&&def.seal));
+  $('signerImgDel').disabled=!hasImg;
+}
+$('tightWrap').checked=settings.tightWrap!==false;   // 기본 켜짐
+$('noWrap').checked=!!settings.noWrap;
+$('noWrap').onchange=e=>{settings.noWrap=e.target.checked;saveSettings();render()};
+const setSetPip=makePip($('setPip'),$('setBtn'),null);
+$('setBtn').addEventListener('click',()=>{$('syncCard').checked=!!(settings.sync||{})[tab];$('syncCard').disabled=tab==='contract'});
+$('tightWrap').onchange=e=>{settings.tightWrap=e.target.checked;saveSettings();fitText()};
+$('syncCard').onchange=e=>{settings.sync=Object.assign({},settings.sync,{[tab]:e.target.checked});saveSettings();render()};
+const signerChanged=()=>{store('signers',signers);changed();render();showOoc();drawSigner()};
+$('signerName').addEventListener('input',e=>{signers[tab].name=e.target.value;store('signers',signers);changed();render();showOoc()});
+$('signerPos').addEventListener('input',e=>{signers[tab].pos=e.target.value;store('signers',signers);changed();render();showOoc()});
+$('signerMode').addEventListener('click',e=>{const b=e.target.closest('[data-m]');if(!b)return;signers[tab].mode=b.dataset.m;signerChanged()});
+$('signerFont').onclick=()=>{pickWho=signerOf(tab).name;aim='sign';setHandPip(true);drawHandPip();setHandPip.place()};
+$('signerImg').onclick=()=>signerFile.click();
+signerFile.onchange=async e=>{const file=e.target.files[0];e.target.value='';if(!file)return;
+  const g=signerOf(tab),{src:img}=await shrink(await readFile(file),900),ver=Date.now(),h=hands[g.name]=Object.assign({},hands[g.name]);
+  if(g.mode==='sign'){await setImg('sign:'+g.name+':'+ver,img);h.img=ver}else{await setImg('seal:'+g.name+':'+ver,img);h.sealImg=ver}
+  saveHands();render();drawSigner()};
+$('signerImgDel').onclick=()=>{const g=signerOf(tab),h=hands[g.name]=Object.assign({},hands[g.name]);
+  if(g.mode==='sign')h.img=0;else h.sealImg=0;h.noDef=true;saveHands();render();drawSigner()};
+
+// ── 증명사진 막대: 고른 사진의 확대 · 바꾸기 · 빼기 ──
+function drawPhBar(){const el=selPh&&selPh.isConnected&&selPh.classList.contains('has')?selPh:null;$('phbar').hidden=!el;
+  if(el)$('phZoom').value=(photos[el.dataset.who]||{}).z||1}
+$('phZoom').addEventListener('input',e=>{if(!selPh)return;const p=photos[selPh.dataset.who];p.z=+e.target.value;placeAll(selPh.dataset.who);savePhotos()});
+$('phSwap').onclick=()=>{if(selPh)pickPhoto(selPh.dataset.who)};
+$('phDel').onclick=async()=>{if(!selPh)return;photos[selPh.dataset.who]={x:50,y:50,z:1,v:0};savePhotos();await mountPhotos();selPh=null;drawPhBar()};
+document.addEventListener('pointerup',()=>setTimeout(drawPhBar,0));
+
+// ── 글씨 크기: 서명 줄 이름 · 서명 · 열람 기록 이름(서류철 전체, settings.sizes) ──
+const SIZE_DEF={nmz:26,sgz:32,lgz:30};
+function applySizes(){const z=Object.assign({},SIZE_DEF,settings.sizes||{});if(z.nmz===20)z.nmz=26;if(z.lgz===22)z.lgz=30;
+  for(const k in SIZE_DEF)$('folder').style.setProperty('--'+k,z[k]+'px');
+  document.querySelectorAll('[data-size]').forEach(i=>i.value=z[i.dataset.size])}
+document.querySelector('.sizes').addEventListener('input',e=>{const i=e.target.closest('[data-size]');if(!i)return;
+  settings.sizes=Object.assign({},settings.sizes,{[i.dataset.size]:+i.value});saveSettings();applySizes();
+  paper.querySelectorAll('.mv[data-mv]').forEach(placeMover)});
+applySizes();
+
+// ── 책상 물건: 자리(갈래)마다 하나씩 고른다. 왼쪽 둘은 보이는 서류철 왼쪽 끝, 오른쪽 둘은 오른쪽 끝 기준 ──
+// 책상 물건: 큰 구역 넷(왼쪽 위 · 아래, 오른쪽 위 · 아래)에 아무 물건이나 하나씩. 구역 가운데에 놓는다
+// 물건 [이름, 폭(서류 px · A4 폭 794 = 210mm 기준 실제 크기에 가깝게), 기울기, 가로 옮김]. '@photo' = 서류에 넣은 증명사진 두 장
+const DESK_ITEMS={
+  drink1:['머그 커피',400,-8],drink4:['녹차(티백)',430,-6],drink5:['홍차',430,8],drink6:['코코아',400,-10],drink2:['테이크아웃 컵',330,0],drink3:['아이스 아메리카노',330,0],
+  pen1:['만년필',520,-24],pen4:['은색 볼펜',520,-28],pen5:['연필',580,-18],pen2:['볼펜',235,10],
+  note1:['가죽 수첩',330,-8,90],note2:['스프링 메모장',350,6],note3:['색인 카드',440,14],
+  office1:['포스트잇',290,187],office2:['인주 · 도장',630,-6],office3:['클립',250,0],
+  phone1:['휴대폰',275,9],phone2:['휴대폰(뒤집음)',275,-7],
+  item1:['안경',500,-12],item3:['손목시계',150,22],'@photo':['증명사진',300,0]
+};
+const POOL=Object.keys(DESK_ITEMS);
+// 구역 가운데(서류철 좌표): 왼쪽 여백 · 오른쪽 여백 각각 위 · 아래
+const ZONES=[{k:'lt',label:'왼쪽 위',x:-360,y:240,def:'drink1'},{k:'lb',label:'왼쪽 아래',x:-380,y:900,def:'pen1'},
+  {k:'rt',label:'오른쪽 위',x:FW+330,y:230,def:'office2'},{k:'rb',label:'오른쪽 아래',x:FW+300,y:1000,def:'item1'}];
+const deskOf=()=>Object.assign({on:true},...ZONES.map(z=>({[z.k]:z.def})),settings.desk2||{});
+function drawDesk(){
+  const d=deskOf(),box=$('desk');box.classList.toggle('off',!d.on);
+  box.innerHTML=ZONES.map(z=>{const id=d[z.k];const it=DESK_ITEMS[id];if(!it)return '';
+    const m=(settings.deskPos||{})[z.k]||{x:0,y:0};
+    const pos=`left:${z.x+(it[3]||0)+m.x}px;top:${z.y+m.y}px;transform:translate(-50%,-50%) rotate(${it[2]}deg)`;
+    if(id==='@photo')return `<div class="dphotos" data-zone="${z.k}" style="${pos}">${[0,1].map(n=>`<div class="dph" data-who="${esc(whoOf(current.people[n],n))}" hidden><img alt="" draggable="false"></div>`).join('')}</div>`;
+    return `<img class="ditem" data-zone="${z.k}" src="img/desk/${id}.webp" alt="" draggable="false" style="${pos};width:${it[1]}px">`}).join('');
+  // 증명사진: 서류에 넣은 사진이 있을 때만(없으면 그 자리는 비운다)
+  box.querySelectorAll('.dph').forEach(async el=>{const data=await getImg(photoKey(el.dataset.who));if(!data)return;
+    const p=photos[el.dataset.who]||{x:50,y:50,z:1},im=el.querySelector('img');im.src=data;im.style.objectPosition=`${p.x}% ${p.y}%`;im.style.transformOrigin=`${p.x}% ${p.y}%`;im.style.transform=`scale(${p.z})`;el.hidden=false});
+  $('deskList').innerHTML=ZONES.map(z=>{const it=DESK_ITEMS[d[z.k]];return `<div class="drow"><b>${z.label}</b><button class="btn" type="button" data-dk="${z.k}" data-step="-1" aria-label="${z.label} 이전">‹</button><span>${it?it[0]:'없음'}</span><button class="btn" type="button" data-dk="${z.k}" data-step="1" aria-label="${z.label} 다음">›</button></div>`}).join('');
+  $('deskOn').checked=d.on;
+}
+// ‹ › 로 물건 목록을 돈다(맨 끝 다음은 없음)
+$('deskList').addEventListener('click',e=>{const b=e.target.closest('[data-dk]');if(!b)return;
+  const d=deskOf(),list=[...POOL,''],i=list.indexOf(d[b.dataset.dk]??'');
+  settings.desk2=Object.assign({},settings.desk2,{[b.dataset.dk]:list[(i+(+b.dataset.step)+list.length)%list.length]});saveSettings();drawDesk()});
+$('deskReset').onclick=()=>{settings.deskPos={};saveSettings();drawDesk()};
+$('deskOn').onchange=e=>{settings.desk2=Object.assign({},settings.desk2,{on:e.target.checked});saveSettings();drawDesk()};
+const setDeskPip=makePip($('deskPip'),$('deskBtn'),null);
+
+// ── 책상 물건 옮기기(편집 모드) ──
+$('desk').addEventListener('pointerdown',e=>{
+  const el=e.target.closest('[data-zone]');if(!el||!editMode||e.button)return;
+  e.preventDefault();el.setPointerCapture(e.pointerId);
+  const k=el.dataset.zone,P=settings.deskPos=Object.assign({},settings.deskPos),m0=Object.assign({x:0,y:0},P[k]),x0=e.clientX,y0=e.clientY;
+  const l0=parseFloat(el.style.left),t0=parseFloat(el.style.top);let moved=false;
+  el.style.cursor='grabbing';
+  const mv=ev=>{moved=true;const dx=(ev.clientX-x0)/scale,dy=(ev.clientY-y0)/scale;el.style.left=l0+dx+'px';el.style.top=t0+dy+'px';P[k]={x:m0.x+dx,y:m0.y+dy}};
+  const up=()=>{el.removeEventListener('pointermove',mv);el.removeEventListener('pointerup',up);el.removeEventListener('pointercancel',up);el.style.cursor='';if(moved)saveSettings()};
+  el.addEventListener('pointermove',mv);el.addEventListener('pointerup',up);el.addEventListener('pointercancel',up);
+});
+$('desk').addEventListener('dragstart',e=>e.preventDefault());
+
+// ── 전체 초기화: 이 도구의 저장(localStorage fearless.* · IndexedDB fearless)만 지우고 새로 연다 ──
+const setResetPip=makePip($('resetPip'),$('resetBtn'),'#resetNo');
+$('resetNo').onclick=()=>setResetPip(false);
+// 묶음마다 [저장 이름, 이미지 키 머리]
+const RESET={text:[['input.','dates','edits','log','signers','cast'],[]],photo:[['photos'],['photo:']],stk:[['stickers'],['stk:']],
+  hand:[['hands','fonts','handTag','place'],['sign:','seal:','font:']],view:[['settings'],[]]};
+const resetBoxes=[...$('resetPip').querySelectorAll('[data-r]')];
+resetBoxes.forEach(b=>b.onchange=()=>{$('resetYes').disabled=!resetBoxes.some(x=>x.checked)});
+$('resetYes').onclick=async()=>{
+  const on=resetBoxes.filter(b=>b.checked).map(b=>RESET[b.dataset.r]);if(!on.length)return;
+  const ls=on.flatMap(g=>g[0]),im=on.flatMap(g=>g[1]);
+  try{Object.keys(localStorage).filter(k=>ls.some(n=>k===KEY+'.'+n||(n.endsWith('.')&&k.startsWith(KEY+'.'+n)))).forEach(k=>localStorage.removeItem(k))}catch(e){}
+  if(im.length)await new Promise(ok=>{try{const r=indexedDB.open('fearless',1);r.onupgradeneeded=()=>r.result.createObjectStore('images');r.onerror=()=>ok();
+    r.onsuccess=()=>{const db=r.result,t=db.transaction('images','readwrite'),st=t.objectStore('images'),q=st.getAllKeys();
+      q.onsuccess=()=>q.result.filter(k=>im.some(m=>String(k).startsWith(m))).forEach(k=>st.delete(k));t.oncomplete=t.onerror=()=>{db.close();ok()}}}catch(e){ok()}});
+  location.reload();
+};
+
+// ── 시작 ──
+setTab(tab);fit();drawDesk();
+document.fonts.ready.then(()=>{fitText();paper.querySelectorAll('.mv[data-mv]').forEach(placeMover)});
+document.fonts.addEventListener('loadingdone',()=>paper.querySelectorAll('.mv[data-mv]').forEach(placeMover));
+</script>
+</body>
+</html>
