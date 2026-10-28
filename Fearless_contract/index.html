@@ -495,6 +495,7 @@ textarea:focus{outline:0;border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)
   <div class="pip-in setlist">
     <label class="chk2"><input type="checkbox" id="tightWrap">끝줄 한두 글자면 줄이기</label>
     <label class="chk2"><input type="checkbox" id="noWrap">줄바꿈 없이 넣기 <small>소속 · 능력</small></label>
+    <label class="chk2"><input type="checkbox" id="swapPeople">두 사람 순서 바꾸기</label>
     <label class="chk2" id="syncRow"><input type="checkbox" id="syncCard">인물 칸은 계약서대로 <small>추천서 · 평가서</small></label>
   </div>
 </div>
@@ -1178,13 +1179,16 @@ function render(){
   current=parse(text);
   // 체크하면(추천서 · 평가서) 종이의 인물 칸을 계약서 내용으로 — 같은 이름끼리, 이름이 없으면 순서대로. OOC 와는 상관없다
   if(tab!=='contract'&&(settings.sync||{})[tab]){
-    const C=applyEdits(parse(inputs.contract||''),'contract').people;
+    const c0=parse(inputs.contract||'');if((settings.swap||{}).contract){while(c0.people.length<2)c0.people.push({});c0.people.reverse()}
+    const C=applyEdits(c0,'contract').people;
     if(C.length){
       while(current.people.length<Math.min(2,C.length))current.people.push({});
       current.people.forEach((p,i)=>{const c=C.find(x=>x.name&&x.name===p.name)||C[i];if(!c)return;
         for(const k of ['name','code','kind','rank','team','ab'])if(c[k])p[k]=c[k]});
     }
   }
+  // 두 사람 순서 바꾸기(서류마다). 고친 글(edits)은 보이는 자리 기준이라 바꿀 때 같이 옮긴다
+  if((settings.swap||{})[tab]){while(current.people.length<2)current.people.push({});[current.people[0],current.people[1]]=[current.people[1],current.people[0]]}
   current=applyEdits(current);
   assignAutoHands();
   const st=$('parseStatus');
@@ -1893,9 +1897,11 @@ function drawSigner(){
 }
 $('tightWrap').checked=settings.tightWrap!==false;   // 기본 켜짐
 $('noWrap').checked=!!settings.noWrap;
+$('swapPeople').onchange=e=>{settings.swap=Object.assign({},settings.swap,{[tab]:e.target.checked});saveSettings();
+  const E0=edits[tab]||{},E1={};for(const k in E0)E1[k.replace(/^p([01])\./,(m,i)=>'p'+(1-i)+'.')]=E0[k];edits[tab]=E1;store('edits',edits);render();remember()};
 $('noWrap').onchange=e=>{settings.noWrap=e.target.checked;saveSettings();render()};
 const setSetPip=makePip($('setPip'),$('setBtn'),null);
-$('setBtn').addEventListener('click',()=>{$('syncCard').checked=!!(settings.sync||{})[tab];$('syncCard').disabled=tab==='contract'});
+$('setBtn').addEventListener('click',()=>{$('swapPeople').checked=!!(settings.swap||{})[tab];$('syncCard').checked=!!(settings.sync||{})[tab];$('syncCard').disabled=tab==='contract'});
 $('tightWrap').onchange=e=>{settings.tightWrap=e.target.checked;saveSettings();fitText()};
 $('syncCard').onchange=e=>{settings.sync=Object.assign({},settings.sync,{[tab]:e.target.checked});saveSettings();render()};
 const signerChanged=()=>{store('signers',signers);changed();render();showOoc();drawSigner()};
