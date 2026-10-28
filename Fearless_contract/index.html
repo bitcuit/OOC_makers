@@ -168,7 +168,7 @@
 .stks[data-layer="board"]{inset:auto;left:882px;top:42px;width:882px;height:1203px}
 .stk{pointer-events:auto}
 .stk img{display:block;width:100%;pointer-events:none;-webkit-user-drag:none}
-.stk.sticker img{filter:drop-shadow(1.6px 0 0 #fff) drop-shadow(-1.6px 0 0 #fff) drop-shadow(0 1.6px 0 #fff) drop-shadow(0 -1.6px 0 #fff) drop-shadow(0 1px 2px rgba(30,24,14,.3))}
+.stk.sticker img{filter:drop-shadow(3.5px 0 0 #fff) drop-shadow(-3.5px 0 0 #fff) drop-shadow(0 3.5px 0 #fff) drop-shadow(0 -3.5px 0 #fff) drop-shadow(0 1px 2.5px rgba(30,24,14,.35))}
 .stk.photo{background:#fff;padding:7px 7px 9px;box-shadow:0 1px 3px rgba(30,24,14,.28)}
 .stk .tx{display:block;white-space:pre;line-height:1.2;font-size:40px}
 </style>
@@ -313,7 +313,7 @@ textarea:focus{outline:0;border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)
 .selbar[hidden]{display:none}
 .ink{width:22px;height:22px;border-radius:50%;border:2px solid rgba(255,255,255,.35);cursor:pointer;padding:0}
 .ink[aria-pressed="true"]{border-color:#fff;box-shadow:0 0 0 2px rgba(255,255,255,.35)}
-.toast{position:absolute;left:50%;bottom:70px;transform:translateX(-50%);padding:6px 12px;border-radius:7px;background:rgba(20,22,26,.9);color:#fff;font-size:12.5px;white-space:nowrap;z-index:11;pointer-events:none}
+.toast{position:fixed;left:50%;top:72px;transform:translateX(-50%);padding:6px 12px;border-radius:7px;background:rgba(20,22,26,.9);color:#fff;font-size:12.5px;white-space:nowrap;z-index:40;pointer-events:none}
 .toast:empty{display:none}
 /* 화면에서만: 고르기 테두리 · 손잡이 · 빈 사진 안내 */
 .mv.sel{outline:1.5px dashed var(--sel);outline-offset:4px}
@@ -358,6 +358,8 @@ textarea:focus{outline:0;border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)
 .credit{margin-top:14px;font-size:11.5px;color:var(--sub);line-height:1.6}
 .credit summary{cursor:pointer;width:max-content}
 .plist{display:grid;gap:6px;margin-top:8px}
+.stkrow{display:flex;align-items:center;justify-content:space-between;margin-top:14px}
+.stkrow .sub-h{margin:0}
 .prow{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:6px}
 .prow span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .sub-h{margin:14px 0 0;font-size:12.5px;font-weight:600;color:var(--sub)}
@@ -556,8 +558,7 @@ textarea:focus{outline:0;border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)
     <p class="sub-h" style="margin-top:0">증명사진</p>
     <div class="row" style="margin-top:8px"><span class="seg" id="phFitSeg" role="group" aria-label="계약서 사진 칸"><button type="button" data-fit="id">증명사진 비율</button><button type="button" data-fit="fill">칸에 맞추기</button></span></div>
     <div class="plist" id="photoList"></div>
-    <p class="sub-h">스티커</p>
-    <div class="row" style="margin-top:8px"><button class="btn" id="stkAdd" type="button">이미지 붙이기</button></div>
+    <div class="stkrow"><p class="sub-h">스티커</p><button class="btn" id="stkAdd" type="button">이미지 붙이기</button></div>
   </div>
 </div>
 
@@ -1687,10 +1688,13 @@ async function savePng(whole,suffix=''){
         node.style.position='absolute';node.style.left=-X0+'px';node.style.top=-Y0+'px';
         wrap.append(shade,dk,node);node=wrap;
       }else{
-        // 책상 없이: 서류철 위 빈칸(뒤판 y 42, 그림자는 그 8px 위부터)을 잘라 위아래를 맞춘다. 덮음 = 뒤판 폭만
-        const T=34,X=open?0:BX;
-        const wrap=document.createElement('div');wrap.style.cssText=`position:relative;width:${FW-X}px;height:${FH-T}px;overflow:hidden`;
-        node.style.position='absolute';node.style.left=-X+'px';node.style.top=-T+'px';wrap.append(node);node=wrap;
+        // 책상 없이: 서류처럼 서류철 바깥 그림자를 빼고 판 가장자리에 딱 맞춰 자른다(펼침 = 표지 안쪽 왼끝부터, 덮음 = 뒤판부터, 오른끝 = 색인)
+        const IN='inset 0 0 0 1px rgba(96,74,36,.28),inset 0 -3px 8px rgba(96,74,36,.14)';
+        node.querySelectorAll('.board,.inside').forEach(e=>e.style.boxShadow=IN);node.querySelectorAll('.front').forEach(e=>e.style.boxShadow='inset 0 0 0 1px rgba(96,74,36,.3)');
+        const fr=f.getBoundingClientRect(),tr=f.querySelector('.tabs').getBoundingClientRect();
+        const X0=open?BX-CW:BX,X1=Math.max(BX+882,Math.ceil((tr.right-fr.left)/scale)),Y0=BY;
+        const wrap=document.createElement('div');wrap.style.cssText=`position:relative;width:${X1-X0}px;height:${FH-Y0}px;overflow:hidden`;
+        node.style.position='absolute';node.style.left=-X0+'px';node.style.top=-Y0+'px';wrap.append(node);node=wrap;
       }
     }else{
       // 종이만: 뒤판 스티커 중 종이에 걸친 것만 종이 좌표로 옮겨 붙인다(밖으로 나간 부분은 잘린다)
