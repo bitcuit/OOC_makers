@@ -505,7 +505,7 @@ textarea:focus{outline:0;border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)
   <div class="pip-in">
     <div class="savegrid">
       <button class="btn go" id="saveFolder" type="button">파일철째</button><div class="opts"><label class="chk2"><input type="checkbox" id="withDesk">책상까지</label><label class="chk2" title="끄면 화면이 덮여 있어도 펼쳐서 저장"><input type="checkbox" id="saveShut">덮은 채로</label></div>
-      <button class="btn go" id="savePaper" type="button">종이만</button><div class="opts"><span class="hint" id="paperHint">A4</span></div>
+      <button class="btn go" id="savePaper" type="button">종이만</button><div class="opts"><span class="hint" id="paperHint"></span></div>
     </div>
     <p class="status" id="saveStatus" aria-live="polite"></p>
   </div>
@@ -1717,18 +1717,21 @@ async function savePng(whole,suffix=''){
   }catch(err){saveSt.textContent='PNG를 만들지 못했어요. '+(err&&err.message||'')}
   finally{holder.remove();saving=false;document.querySelectorAll('#saveFolder,#savePaper').forEach(b=>b.disabled=false)}
 }
-$('saveFolder').onclick=()=>savePng(true);
-$('saveBtn').addEventListener('click',()=>{$('paperHint').textContent=tab==='review'?'A4 · 1쪽 · 2쪽 따로':'A4'});
+// 평가서는 쪽마다 한 장씩(덮은 채로면 표지 한 장)
+async function saveDoc(whole){
+  if(tab!=='review'||(whole&&settings.saveShut)){await savePng(whole);return}
+  const keep=page;
+  for(const pg of [1,2]){page=pg;render();await document.fonts.ready;await new Promise(r=>setTimeout(r,300));await savePng(whole,'-'+pg+'쪽');await new Promise(r=>setTimeout(r,400))}
+  page=keep;render();
+}
+$('saveFolder').onclick=()=>saveDoc(true);
+const drawSaveHint=()=>{$('paperHint').textContent=tab==='review'?'1쪽 · 2쪽 두 장':''};
+$('saveBtn').addEventListener('click',drawSaveHint);
 $('withDesk').checked=!!settings.withDesk;
 $('withDesk').onchange=e=>{settings.withDesk=e.target.checked;saveSettings()};
 $('saveShut').checked=!!settings.saveShut;
-$('saveShut').onchange=e=>{settings.saveShut=e.target.checked;saveSettings()};
-$('savePaper').onclick=async()=>{
-  if(tab!=='review'){savePng(false);return}
-  const keep=page;
-  for(const pg of [1,2]){page=pg;render();await document.fonts.ready;await new Promise(r=>setTimeout(r,300));await savePng(false,'-'+pg+'쪽');await new Promise(r=>setTimeout(r,400))}
-  page=keep;render();
-};
+$('saveShut').onchange=e=>{settings.saveShut=e.target.checked;saveSettings();drawSaveHint()};
+$('savePaper').onclick=()=>saveDoc(false);
 
 // ── 예시(사용자가 준 계약서 예시의 두 사람) ──
 const SAMPLE={contract:`@계약서
