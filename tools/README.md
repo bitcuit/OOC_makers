@@ -3,7 +3,7 @@
 | 도구 | 하는 일 | 마지막 쓴 날 |
 |---|---|---|
 | [fearless-assets.mjs](fearless-assets.mjs) | FEARLESS FILE 그림(`img/` · `img/desk/`)을 data URL 로 담은 `assets.js` · `desk-assets.js` 를 만든다. 파일로 바로 연 페이지에서도 PNG 저장이 되게. 그림을 바꾸면 `node tools/fearless-assets.mjs` | 2026-10-28 |
-| [hand-sort-build.mjs](hand-sort-build.mjs) | `font-traits.json`의 165종 분류·6묶음·16태그를 PEPERO DAY의 글꼴 목록·OOC 태그 목록과 `글씨체정리.html`에 함께 반영한다. `node tools/hand-sort-build.mjs` | 2026-11-10 |
+| [hand-sort-build.mjs](hand-sort-build.mjs) | `font-traits.json`의 164종 분류·6묶음·16태그를 PEPERO DAY의 글꼴 목록·OOC 태그 목록과 `글씨체정리.html`에 함께 반영한다. `node tools/hand-sort-build.mjs` | 2026-11-10 |
 
 분류 원본은 [font-traits.json](font-traits.json)이다. 같은 문장·크기로 실제 글꼴을 띄워 보고 6개 묶음·16개 태그를 매겼으며, 글꼴마다 판단 근거를 담았다. 묶음은 가장 두드러진 형태 하나, 태그는 함께 보이는 특징이다. 인상은 글씨 모양에 관한 말만 쓴다. 다정함·자유로움처럼 글쓴이의 성격을 연상시키는 말은 붙이지 않는다.
 
