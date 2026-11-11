@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>글씨체 정리</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-kr@5.3.0/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-serif-kr@5.3.0/700.css">
+<style>
+:root{--bg:#f3efe9;--card:#fffdf9;--ink:#2a211c;--ink-2:#5e5048;--muted:#978a80;--hair:rgba(42,33,28,.12);--berry:#b5475f;--sel:#f6e3e7}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 14px/1.5 "Noto Serif KR",serif}
+button,input,select{font:inherit;color:inherit}
+.bar{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding:12px 20px;background:var(--bg);border-bottom:1px solid var(--hair)}
+.bar b.mark{font-size:16px;margin-right:6px}
+.bar input[type=text],.bar select{height:34px;padding:0 10px;border:1px solid var(--hair);border-radius:8px;background:#fff}
+#sample{flex:1 1 200px;min-width:160px}
+.btn{height:34px;padding:0 12px;border:0;border-radius:8px;background:transparent;box-shadow:inset 0 -1px 0 var(--hair);cursor:pointer;white-space:nowrap}
+.btn:hover{box-shadow:inset 0 -1px 0 var(--ink)}
+.btn.go{font-weight:700;box-shadow:inset 0 -2px 0 var(--berry)}
+.push{flex:1}
+.count{color:var(--muted);font-size:13px}
+/* 고른 것 고치기 줄 */
+.edit{position:sticky;top:var(--barH,59px);z-index:4;padding:10px 20px 16px;background:#fff;border-bottom:1px solid var(--hair);max-height:min(44vh,calc(100dvh - var(--barH,59px) - 120px));overflow:auto;scroll-padding:12px}
+.edit[hidden]{display:none}
+.edit-row{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin-top:6px}
+.edit .lab{font-size:12px;color:var(--ink-2);min-width:36px}
+#groups,.tag-set{display:contents}
+.edit-head{display:flex;align-items:center;justify-content:space-between}
+.edit-head button{height:28px}
+.chip{height:28px;padding:0 10px;border:1px solid var(--hair);border-radius:999px;background:#fff;cursor:pointer;font-size:13px}
+.chip[data-on="all"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.chip[data-on="some"]{background:repeating-linear-gradient(135deg,#e9e2db 0 4px,#fff 4px 8px);border-color:var(--ink-2)}
+.chip:focus-visible,.btn:focus-visible,.card:focus-visible{outline:2px solid var(--berry);outline-offset:3px}
+.edit input{height:28px;width:120px;padding:0 10px;border:1px solid var(--hair);border-radius:999px}
+.sep{width:1px;height:20px;background:var(--hair)}
+/* 격자 */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;padding:16px 20px 40px}
+.card{position:relative;padding:12px 14px 16px;background:var(--card);border-radius:10px;box-shadow:0 0 0 1px var(--hair);cursor:pointer;user-select:none;content-visibility:auto;contain-intrinsic-size:auto 150px;scroll-margin-top:var(--topH,75px)}
+.card[aria-selected="true"]{background:var(--sel);box-shadow:0 0 0 2px var(--berry)}
+.card .pv{font-size:24px;line-height:1.35;min-height:64px;overflow-wrap:anywhere}
+.card .nm{margin-top:6px;font-size:12px;color:var(--ink-2);display:flex;gap:6px;align-items:baseline}
+.card .nm .g{color:var(--berry);font-weight:700;white-space:nowrap}
+.card .tg{margin-top:4px;display:flex;flex-wrap:wrap;gap:4px}
+.card .tg span{padding:0 7px;border-radius:999px;background:#f1ebe4;font-size:11px;color:var(--ink-2)}
+.card .ch{position:absolute;top:8px;right:10px;font-size:11px;color:var(--berry)}
+.empty{padding:40px;color:var(--muted);text-align:center}
+#toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);padding:8px 14px;border-radius:8px;background:var(--ink);color:#fff;font-size:13px;opacity:0;transition:opacity .3s;pointer-events:none}
+#toast.on{opacity:1}
+@media(max-width:600px){.bar{gap:8px;padding:12px}.bar .mark{width:100%}#sample{flex-basis:100%;min-width:0}.bar select{flex:1 1 calc(50% - 4px);min-width:0}.bar #fName{flex:1;min-width:100px}.bar .push{display:none}.edit{padding:10px 12px 16px}.grid{padding:12px 12px 24px;grid-template-columns:minmax(0,1fr)}.edit-row{gap:6px}.count{font-size:12px}}
+</style>
+</head>
+<body>
+<header class="bar">
+  <b class="mark">글씨체 정리</b>
+  <input type="text" id="sample" value="오늘도 고마워. 함께 걷자." aria-label="미리보기 문장">
+  <select id="fGroup" aria-label="묶음으로 거르기"></select>
+  <select id="fTag" aria-label="태그로 거르기"></select>
+  <input type="text" id="fName" placeholder="글씨체 이름" aria-label="글씨체 이름" style="width:130px">
+  <span class="count" id="count"></span>
+  <i class="push"></i>
+  <button class="btn" id="previousBtn" type="button" hidden>이전 수정 저장</button>
+  <button class="btn" id="importBtn" type="button">불러오기</button>
+  <button class="btn" id="copyBtn" type="button">JSON 복사</button>
+  <button class="btn go" id="saveBtn" type="button">JSON 저장</button>
+  <input type="file" id="importFile" accept=".json,application/json" hidden>
+</header>
+<div class="edit" id="edit" hidden>
+  <div class="edit-head"><span id="selN"></span><button type="button" class="btn" id="clearSelection">선택 풀기</button></div>
+  <div class="edit-row"><span class="lab">묶음</span><span id="groups"></span><input id="newGroup" placeholder="새 묶음" aria-label="새 묶음"></div>
+  <div id="tagRows"></div>
+  <div class="edit-row"><span class="lab">추가</span><span id="customTags" class="tag-set"></span><input id="newTag" placeholder="새 태그" aria-label="새 태그"></div>
+</div>
+<main class="grid" id="grid" role="listbox" aria-label="글씨체" aria-multiselectable="true"></main>
+<div id="toast" role="status"></div>
+<script>
+// 데이터: tools/hand-sort-build.mjs 가 Pepero_Day/index.html 의 HANDS · RANGES 를 넣는다
+const HANDS=/*HANDS*/[];
+const RANGES=/*RANGES*/[];
+const HAND_BASE=new URL('../fonts/hand/',location.href).href;
+const KEY='handsort.v2';
+const $=id=>document.getElementById(id), esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+// 같은 문장·크기의 실물 견본으로 판단한 형태·획·분위기. 분류 원본은 별도로 관리한다.
+const TRAITS=/*TRAITS*/{};
+const ORIG=new Map(TRAITS.hands.map(h=>[h.family,{group:h.group,tags:[...h.tags],observation:h.observation}]));
+const TAG_DEFS=new Map(TRAITS.axes.flatMap(a=>a.tags.map(t=>[t.name,t])));
+const migrate=v=>({group:TRAITS.groupRenames?.[v.group]||v.group,tags:v.tags.filter(t=>!(TRAITS.removedTags||[]).includes(t))});
+let edits={},previous={};
+const clean=v=>v&&typeof v==='object'&&typeof v.group==='string'&&Array.isArray(v.tags)&&v.tags.every(t=>typeof t==='string');
+const validEdits=obj=>Object.fromEntries(Object.entries(obj&&typeof obj==='object'?obj:{}).filter(([f,v])=>ORIG.has(f)&&clean(v)).map(([f,v])=>[f,{group:v.group,tags:[...new Set(v.tags)]}]));
+try{const saved=JSON.parse(localStorage.getItem(KEY)||'{}');
+  if(saved?.taxonomy===TRAITS.id){edits=validEdits(saved.edits);previous=validEdits(saved.previous);
+    if((saved.revision||1)<(TRAITS.revision||1))for(const f of Object.keys(edits))edits[f]=migrate(edits[f]);
+    for(const f of Object.keys(edits)){const v=edits[f],o=ORIG.get(f);if(v.group===o.group&&v.tags.length===o.tags.length&&v.tags.every(t=>o.tags.includes(t)))delete edits[f];}}
+  else previous=validEdits(saved?.edits||saved);
+}catch(e){}
+$('previousBtn').hidden=!Object.keys(previous).length;
+function persist(){try{localStorage.setItem(KEY,JSON.stringify({taxonomy:TRAITS.id,revision:TRAITS.revision||1,edits,previous}));return true}catch(e){toast('브라우저에 저장하지 못했어요. JSON 저장을 눌러 주세요.');return false}}
+const cur=f=>edits[f]||ORIG.get(f);
+const changed=f=>Object.hasOwn(edits,f);
+function setCur(f,v){const o=ORIG.get(f);
+  if(v.group===o.group&&v.tags.length===o.tags.length&&v.tags.every(t=>o.tags.includes(t)))delete edits[f];else edits[f]=v;
+  persist()}
+
+// 글꼴 선언(보일 때 불러옴)
+const style=document.createElement('style');document.head.append(style);
+let css='';
+for(const h of HANDS){
+  if(h[2][0]!=='@')css+=`@font-face{font-family:"${h[1]}";src:url("${encodeURI(h[2])}") format("${h[3]}");font-weight:${h[4]};font-display:swap}`;
+  else RANGES.forEach((r,i)=>{css+=`@font-face{font-family:"${h[1]}";src:url("${HAND_BASE+h[2].slice(1)}.${i}.woff2") format("woff2");font-weight:400;unicode-range:${r};font-display:swap}`})
+}
+style.textContent=css;
+
+const allGroups=()=>[...new Set([...TRAITS.groups.map(g=>g.name),...HANDS.map(h=>cur(h[1]).group),...extraGroups])];
+const allTags=()=>{const c=new Map([...TAG_DEFS.keys()].map(t=>[t,0]));for(const h of HANDS)for(const t of cur(h[1]).tags)c.set(t,(c.get(t)||0)+1);for(const t of extraTags)if(!c.has(t))c.set(t,0);return [...c]};
+const extraTags=new Set(),extraGroups=new Set();
+
+// 거르기
+function drawFilters(){
+  const g=$('fGroup').value,t=$('fTag').value;
+  $('fGroup').innerHTML='<option value="">묶음 전체</option>'+[...new Set([...allGroups(),...extraGroups])].map(x=>`<option>${esc(x)}</option>`).join('')+'<option value="__changed">고친 것만</option>';
+  const counts=new Map(allTags()),option=x=>`<option value="${esc(x)}">${esc(x)} (${counts.get(x)||0})</option>`;
+  $('fTag').innerHTML='<option value="">태그 전체</option>'+TRAITS.axes.map(a=>`<optgroup label="${esc(a.name)}">${a.tags.map(t=>option(t.name)).join('')}</optgroup>`).join('')+([...counts.keys()].some(t=>!TAG_DEFS.has(t))?'<optgroup label="추가">'+[...counts.keys()].filter(t=>!TAG_DEFS.has(t)).map(option).join('')+'</optgroup>':'')+'<option value="__none">태그 없음</option>';
+  $('fGroup').value=g;$('fTag').value=t;
+}
+let shown=[];
+function visible(){
+  const g=$('fGroup').value,t=$('fTag').value,q=$('fName').value.trim();
+  return HANDS.filter(h=>{const v=cur(h[1]);
+    if(g==='__changed'){if(!changed(h[1]))return false}else if(g&&v.group!==g)return false;
+    if(t==='__none'){if(v.tags.length)return false}else if(t&&!v.tags.includes(t))return false;
+    return !q||h[0].includes(q)||h[1].toLowerCase().includes(q.toLowerCase());});
+}
+function cardHtml(h){const v=cur(h[1]);
+  return `<div class="card" role="option" tabindex="0" data-f="${esc(h[1])}" aria-label="${esc(h[0])}" aria-selected="${sel.has(h[1])}">${changed(h[1])?'<span class="ch">고침</span>':''}<div class="pv" style="font-family:${esc(JSON.stringify(h[1]))},cursive;font-weight:${h[4]}">${esc($('sample').value||'가나다 ABC 123')}</div><div class="nm"><span class="g">${esc(v.group)}</span><span>${esc(h[0])}</span></div><div class="tg">${v.tags.map(t=>`<span title="${esc(TAG_DEFS.get(t)?.rule||t)}">${esc(t)}</span>`).join('')}</div></div>`}
+function draw(){shown=visible();for(const f of sel)if(!shown.some(h=>h[1]===f))sel.delete(f);if(!sel.has(anchor))anchor=null;$('grid').innerHTML=shown.length?shown.map(cardHtml).join(''):'<p class="empty">맞는 글씨체가 없어요. 검색이나 태그를 바꿔 보세요.</p>';
+  $('count').textContent=`${shown.length} / ${HANDS.length} · 고친 것 ${Object.keys(edits).length}`;drawEdit()}
+function redrawCard(f){const el=$('grid').querySelector(`.card[data-f="${CSS.escape(f)}"]`);if(el)el.outerHTML=cardHtml(HANDS.find(h=>h[1]===f))}
+
+// 고르기: 클릭 · Ctrl+클릭 · Shift+클릭 · Ctrl+A · Esc
+const sel=new Set();let anchor=null;
+$('grid').addEventListener('click',e=>{const c=e.target.closest('.card');if(!c)return;const f=c.dataset.f;
+  if(e.shiftKey&&anchor){const a=shown.findIndex(h=>h[1]===anchor),b=shown.findIndex(h=>h[1]===f);if(!(e.ctrlKey||e.metaKey))sel.clear();
+    for(let i=Math.min(a,b);i<=Math.max(a,b);i++)sel.add(shown[i][1])}
+  else if(e.ctrlKey||e.metaKey){sel.has(f)?sel.delete(f):sel.add(f);anchor=f}
+  else{sel.clear();sel.add(f);anchor=f}
+  $('grid').querySelectorAll('.card').forEach(x=>x.setAttribute('aria-selected',String(sel.has(x.dataset.f))));drawEdit()});
+document.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT'||e.target.tagName==='SELECT')return;
+  if(e.target.classList.contains('card')&&(e.key==='Enter'||e.key===' ')){e.preventDefault();e.target.dispatchEvent(new MouseEvent('click',{bubbles:true,ctrlKey:e.ctrlKey,metaKey:e.metaKey,shiftKey:e.shiftKey}));return}
+  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='a'){e.preventDefault();shown.forEach(h=>sel.add(h[1]));draw()}
+  if(e.key==='Escape'){sel.clear();draw()}});
+
+// 고른 것 고치기
+function drawEdit(){
+  $('edit').hidden=!sel.size;if(!sel.size)return;
+  const vs=[...sel].map(cur);$('selN').textContent=`${sel.size}개 고름`;
+  const gs=[...new Set([...allGroups(),...extraGroups])];
+  $('groups').innerHTML=gs.map(g=>{const n=vs.filter(v=>v.group===g).length;return `<button class="chip" type="button" data-g="${esc(g)}" data-on="${n===vs.length?'all':n?'some':'none'}">${esc(g)}</button>`}).join(' ');
+  const chip=t=>{const n=vs.filter(v=>v.tags.includes(t)).length;return `<button class="chip" type="button" data-t="${esc(t)}" data-on="${n===vs.length?'all':n?'some':'none'}" aria-pressed="${n===vs.length?'true':n?'mixed':'false'}" title="${esc(TAG_DEFS.get(t)?.rule||t)}">${esc(t)}</button>`};
+  $('tagRows').innerHTML=TRAITS.axes.map(a=>`<div class="edit-row"><span class="lab">${esc(a.name)}</span>${a.tags.map(t=>chip(t.name)).join('')}</div>`).join('');
+  $('customTags').innerHTML=allTags().filter(([t])=>!TAG_DEFS.has(t)).map(([t])=>chip(t)).join('');
+}
+function applyAll(fn){const active=document.activeElement,focusTag=active?.dataset.t,focusGroup=active?.dataset.g;
+  for(const f of sel){const v=cur(f);setCur(f,fn({group:v.group,tags:[...v.tags]}))}drawFilters();draw();
+  const selector=focusTag!=null?`[data-t="${CSS.escape(focusTag)}"]`:focusGroup!=null?`[data-g="${CSS.escape(focusGroup)}"]`:'';
+  if(selector)$('edit').querySelector(selector)?.focus({preventScroll:true})}
+$('clearSelection').onclick=()=>{sel.clear();anchor=null;draw()};
+$('edit').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;
+  if(b.dataset.g!=null){const g=b.dataset.g;applyAll(v=>({...v,group:g}))}
+  else{const t=b.dataset.t,on=b.dataset.on!=='all';applyAll(v=>({...v,tags:on?[...new Set([...v.tags,t])]:v.tags.filter(x=>x!==t)}))}});
+$('newTag').addEventListener('keydown',e=>{if(e.key!=='Enter'||e.isComposing)return;const t=e.target.value.trim().replace(/^#/,'').replace(/\s+/g,' ');if(!t)return;
+  extraTags.add(t);e.target.value='';applyAll(v=>({...v,tags:[...new Set([...v.tags,t])]}))});
+$('newGroup').addEventListener('keydown',e=>{if(e.key!=='Enter'||e.isComposing)return;const g=e.target.value.trim();if(!g)return;
+  extraGroups.add(g);e.target.value='';applyAll(v=>({...v,group:g}))});
+
+// 거르기 · 문장
+function filterChanged(){sel.clear();anchor=null;draw()}
+for(const id of ['fGroup','fTag'])$(id).addEventListener('change',filterChanged);
+$('fName').addEventListener('input',filterChanged);
+let st=0;$('sample').addEventListener('input',()=>{clearTimeout(st);st=setTimeout(()=>{const t=esc($('sample').value||'가나다 ABC 123');$('grid').querySelectorAll('.pv').forEach(p=>p.innerHTML=t)},150)});
+
+// JSON: 모든 글씨체의 지금 값(이름 · 묶음 · 태그) + 고쳤는지
+function toJson(){return JSON.stringify({version:2,taxonomy:TRAITS.id,taxonomyRevision:TRAITS.revision||1,at:new Date().toISOString(),groups:TRAITS.groups,axes:TRAITS.axes,sample:TRAITS.sample,
+  hands:HANDS.map(h=>{const v=cur(h[1]);return {family:h[1],name:h[0],group:v.group,tags:v.tags,observation:changed(h[1])?'':ORIG.get(h[1]).observation,baselineObservation:ORIG.get(h[1]).observation,changed:changed(h[1])}})},null,2)}
+function toast(t){const el=$('toast');el.textContent=t;el.classList.add('on');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('on'),2200)}
+function download(json,name){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([json],{type:'application/json'}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),3000)}
+$('saveBtn').onclick=()=>{download(toJson(),'글씨체정리.json');toast('저장했어요.')};
+$('previousBtn').onclick=()=>download(JSON.stringify({version:1,hands:HANDS.filter(h=>previous[h[1]]).map(h=>({family:h[1],name:h[0],...previous[h[1]]}))},null,2),'글씨체정리-이전수정.json');
+$('copyBtn').onclick=()=>navigator.clipboard.writeText(toJson()).then(()=>toast('복사했어요.'),()=>toast('복사하지 못했어요.'));
+$('importBtn').onclick=()=>$('importFile').click();
+$('importFile').onchange=async e=>{const f=e.target.files[0];if(!f)return;
+  try{const d=JSON.parse(await f.text());if(!Array.isArray(d.hands)||d.hands.some(x=>!x||typeof x.family!=='string'||!clean(x)))throw Error('형식');const known=d.hands.filter(x=>ORIG.has(x.family));if(!known.length)throw Error('목록');for(const x of known){const v={group:x.group,tags:[...new Set(x.tags)]};setCur(x.family,(d.taxonomyRevision||d.revision||1)<(TRAITS.revision||1)?migrate(v):v)}
+    sel.clear();anchor=null;drawFilters();draw();toast(`${known.length}개를 불러왔어요.`)}catch(err){toast('글씨체 정리 JSON 파일을 골라 주세요.')}e.target.value=''};
+
+drawFilters();draw();
+// 위 막대가 두 줄이 돼도 고치기 줄이 그 밑에 붙게
+const measureBars=()=>{const barH=document.querySelector('.bar').getBoundingClientRect().height;document.documentElement.style.setProperty('--barH',barH+'px');document.documentElement.style.setProperty('--topH',(barH+($('edit').hidden?0:$('edit').getBoundingClientRect().height)+16)+'px')};
+const bars=new ResizeObserver(measureBars);bars.observe(document.querySelector('.bar'));bars.observe($('edit'));
+</script>
+</body>
+</html>

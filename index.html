@@ -110,6 +110,13 @@ body { min-height: 100vh; background: var(--c0); color: var(--c4); font-family: 
   </div>
 
   <ol class="list">
+    <li data-tags="기록" data-keywords="빼빼로 빼빼로데이 11월 11일 선물 태그 맛 토핑 편지 편지지 손글씨 글씨체 해시태그 수제 직접 만든 서로 주고받기 NPC">
+      <a class="item" href="Pepero_Day/index.html">
+        <div class="pic" data-icon="pepero" aria-hidden="true"></div>
+        <div><p class="name">PEPERO DAY</p><p class="what">서로 건넨 빼빼로 · 레시피나 영수증 쪽지 · 편지와 받은 반응</p></div>
+        <div class="tags"></div>
+      </a>
+    </li>
     <li data-tags="기록" data-keywords="센티넬버스 센티넬 가이드 전담 페어 계약서 추천서 임무 평가서 서류 파일철 서명 손글씨 직인 증명사진 스티커 A4">
       <a class="item" href="Fearless_contract/index.html">
         <div class="pic" data-icon="fearless" aria-hidden="true"></div>
@@ -186,6 +193,32 @@ document.getElementById('count').textContent = String(rows.length);
 
 // 도트 그림 — 24×24 칸. 글자 하나가 한 칸, "." 은 빈칸, 나머지는 pal 의 색. 같은 색이 가로로 이어지면 한 사각형으로 그린다.
 const ICONS = {
+  pepero: { pal: { c:'#5c3320', p:'#f08fb0', w:'#f3ead8', g:'#b8a68c', b:'#e0aa62', l:'#e07a98', k:'#c2456b', d:'#8f2c4c', r:'#fff3f6' }, rows: [
+    '........................',
+    '........................',
+    '...........pp...........',
+    '.......cc..pp...........',
+    '.......cc..pp..wg.......',
+    '.......cc..pp..wg.......',
+    '.......cc..pp..wg.......',
+    '.......cc..pp..wg.......',
+    '.......cc..bb..wg.......',
+    '.......bb..bb..bb.......',
+    '.......bb..bb..bb.......',
+    '....llllllrllrllllll....',
+    '....kkkkkrkrrkrkkkkd....',
+    '....kkkkkkkrrkkkkkkd....',
+    '....kkkkkkkrrkkkkkkd....',
+    '....kkkkkkkrrkkkkkkd....',
+    '....kkkkkkkrrkkkkkkd....',
+    '....kkkkkkkrrkkkkkkd....',
+    '....kkkkkkkrrkkkkkkd....',
+    '....kkkkkkkrrkkkkkkd....',
+    '....kkkkkkkrrkkkkkkd....',
+    '....dddddddddddddddd....',
+    '........................',
+    '........................',
+  ]},
   fearless: { pal: { e:'#9c8150', f:'#d3bd90', w:'#ffffff', l:'#8a8f96', s:'#b3261e' }, rows: [
     '........................',
     '........................',

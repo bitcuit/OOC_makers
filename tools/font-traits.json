@@ -1,0 +1,1931 @@
+{
+  "version": 1,
+  "id": "letterform-20261110",
+  "reviewedAt": "2026-11-10",
+  "sample": [
+    "가나다라마바사 아자차카타파하",
+    "오늘도 고마워. 함께 걷자.",
+    "꼭, 작은 마음을 전해요. 0123"
+  ],
+  "policy": "같은 문장과 크기의 실제 글꼴 견본을 보고 분류했다. 묶음은 가장 두드러지는 형태 하나, 태그는 함께 보이는 특징을 붙인다. 인상은 글씨 모양에서 읽히는 시각적 특징만 설명하고 글쓴이의 성격·감정은 추정하지 않는다. 글꼴 이름이나 기존 분류는 판정 근거로 삼지 않는다.",
+  "groups": [
+    {
+      "name": "정갈한 글씨",
+      "rule": "자소가 분명하고 글자 크기·줄 높이가 비교적 고른 필체"
+    },
+    {
+      "name": "둥근 글씨",
+      "rule": "둥근 자소와 부드러운 모서리가 먼저 보이는 필체"
+    },
+    {
+      "name": "각진 글씨",
+      "rule": "직선·뾰족한 꺾임·모난 자소가 먼저 보이는 필체"
+    },
+    {
+      "name": "흘려쓴 글씨",
+      "rule": "이어 쓰거나 생략한 획과 빠른 흐름이 먼저 보이는 필체"
+    },
+    {
+      "name": "삐뚤한 글씨",
+      "rule": "글자 크기·기울기·줄 높낮이의 변화가 먼저 보이는 필체"
+    },
+    {
+      "name": "꾸민 글씨",
+      "rule": "장식적인 획 끝이나 의도적으로 변형한 자소가 먼저 보이는 필체"
+    }
+  ],
+  "axes": [
+    {
+      "name": "형태",
+      "tags": [
+        {
+          "name": "또박또박",
+          "rule": "자소가 분명하게 나뉘고 글자 크기와 줄 높이가 비교적 고르다."
+        },
+        {
+          "name": "동글동글",
+          "rule": "곡선과 둥근 자소·모서리가 눈에 띈다."
+        },
+        {
+          "name": "각진",
+          "rule": "직선과 뾰족한 꺾임이 두드러진다. ㄱ이 있다는 이유만으로 붙이지 않는다."
+        },
+        {
+          "name": "삐뚤빼뚤",
+          "rule": "글자 크기·기울기·기준선이 자주 달라진다."
+        },
+        {
+          "name": "흘림",
+          "rule": "획을 생략하거나 이어 쓰며 한 방향으로 빠르게 흐른다. 기울기만으로 붙이지 않는다."
+        },
+        {
+          "name": "길쭉한",
+          "rule": "글자 몸통과 세로획이 상대적으로 높고 좁다."
+        },
+        {
+          "name": "납작한",
+          "rule": "글자 몸통이 상대적으로 낮고 옆으로 넓다."
+        },
+        {
+          "name": "꾸밈있는",
+          "rule": "획 끝 돌기·긴 꼬리·장식적인 자소 변형이 눈에 띈다."
+        }
+      ]
+    },
+    {
+      "name": "획",
+      "tags": [
+        {
+          "name": "가느다란",
+          "rule": "같은 크기의 견본에서 획이 얇고 가볍다."
+        },
+        {
+          "name": "도톰한",
+          "rule": "같은 크기의 견본에서 획이 굵고 면적을 많이 채운다."
+        },
+        {
+          "name": "강약있는",
+          "rule": "한 글자 안에서 획 굵기 차이나 눌린 획·가벼운 끝의 대비가 뚜렷하다."
+        },
+        {
+          "name": "거친",
+          "rule": "획이 끊기거나 가장자리와 연결이 매끈하지 않은 특징이 보인다."
+        }
+      ]
+    },
+    {
+      "name": "인상",
+      "tags": [
+        {
+          "name": "귀여운",
+          "rule": "작고 둥글거나 통통 튀는 자소가 장난스럽고 아기자기하게 느껴진다."
+        },
+        {
+          "name": "어른스러운",
+          "rule": "절제되거나 익숙하게 흐르는 획이 원숙하게 느껴진다. 실제 나이를 뜻하지 않는다."
+        },
+        {
+          "name": "힘있는",
+          "rule": "굵은 획이나 단단한 꺾임·강한 진행 방향이 선명하고 힘차게 느껴진다."
+        },
+        {
+          "name": "독특한",
+          "rule": "자소 구성이나 획 모양의 눈에 띄는 변형으로 개성이 강하게 느껴진다."
+        }
+      ]
+    }
+  ],
+  "hands": [
+    {
+      "family": "GriunXHangeulOCHUNGIKIM-Regular",
+      "name": "그리운 국한박 오춘기 김작가",
+      "group": "삐뚤한 글씨",
+      "tags": [
+        "삐뚤빼뚤",
+        "도톰한"
+      ],
+      "observation": "짧고 도톰한 획이 서로 다른 높이와 기울기로 놓여 글줄이 가볍게 들썩인다."
+    },
+    {
+      "family": "GriunXHangeul_SongleSongeulHeullim-Rg",
+      "name": "그리운X국한박 송글손글 감성 흘림체",
+      "group": "흘려쓴 글씨",
+      "tags": [
+        "흘림",
+        "강약있는",
+        "어른스러운"
+      ],
+      "observation": "가늘게 들어갔다 굵어지는 곡선과 길게 빠지는 끝획이 유연하게 이어진다."
+    },
+    {
+      "family": "Griun_YEONWOO-Rg",
+      "name": "그리운 사막의 연우체",
+      "group": "흘려쓴 글씨",
+      "tags": [
+        "흘림",
+        "길쭉한",
+        "가느다란",
+        "어른스러운"
+      ],
+      "observation": "좁고 긴 자소를 가는 획으로 이어 쓰며 세로획 끝과 받침이 길게 빠진다."
+    },
+    {
+      "family": "KCCImkwontaek",
+      "name": "KCC임권택체",
+      "group": "흘려쓴 글씨",
+      "tags": [
+        "흘림",
+        "각진",
+        "강약있는",
+        "힘있는",
+        "어른스러운"
+      ],
+      "observation": "오른쪽으로 뻗는 뾰족한 획과 굵은 눌림이 빠른 사선 흐름을 만든다."
+    },
+    {
+      "family": "HakgyoansimGaeulsopungB",
+      "name": "학교안심 가을소풍",
+      "group": "흘려쓴 글씨",
+      "tags": [
+        "흘림",
+        "도톰한",
+        "강약있는"
+      ],
+      "observation": "둥글고 도톰한 눌림 사이로 가는 연결획이 지나가며 글자마다 기울기가 조금씩 달라진다."
+    },
+    {
+      "family": "GriunXHangeul_Equal-Rg",
+      "name": "그리운X국한박 이꼴체",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "도톰한",
+        "힘있는"
+      ],
+      "observation": "넓은 속공간을 남긴 자소가 비슷한 크기로 놓이고 도톰한 세로획이 단단하게 선다."
+    },
+    {
+      "family": "HAN-YONG-UN",
+      "name": "한용운체",
+      "group": "흘려쓴 글씨",
+      "tags": [
+        "흘림",
+        "삐뚤빼뚤",
+        "강약있는",
+        "어른스러운"
+      ],
+      "observation": "긴 가로획과 휘어진 세로획이 높낮이를 달리하며 힘 있게 뻗는다."
+    },
+    {
+      "family": "Ownglyph_wiseelist-Rg",
+      "name": "온글잎 위씨리스트",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "길쭉한",
+        "가느다란"
+      ],
+      "observation": "가는 직선으로 나눈 자소가 비교적 일정한 높이를 지키며 세로로 여유 있게 선다."
+    },
+    {
+      "family": "CoolGuy-Medium",
+      "name": "쿨가이",
+      "group": "삐뚤한 글씨",
+      "tags": [
+        "흘림",
+        "삐뚤빼뚤",
+        "가느다란"
+      ],
+      "observation": "아주 가는 획이 옆으로 길게 뻗고 일부 자소가 짧게 생략되어 빠르게 적은 인상이 난다."
+    },
+    {
+      "family": "Ownglyph_the_sea_breeze-Rg",
+      "name": "온글잎 바닷바람",
+      "group": "흘려쓴 글씨",
+      "tags": [
+        "흘림",
+        "도톰한",
+        "힘있는",
+        "어른스러운"
+      ],
+      "observation": "진한 눌림과 오른쪽으로 밀어 쓴 짧은 연결획이 문장을 빠르게 이어 준다."
+    },
+    {
+      "family": "KOTRA_SONGEULSSI",
+      "name": "코트라 손글씨체",
+      "group": "꾸민 글씨",
+      "tags": [
+        "꾸밈있는",
+        "길쭉한",
+        "가느다란",
+        "어른스러운"
+      ],
+      "observation": "세로로 긴 글자에 휘어진 시작획과 섬세하게 뾰족해지는 끝획이 반복된다."
+    },
+    {
+      "family": "iceJaram-Rg",
+      "name": "인천교육자람체",
+      "group": "흘려쓴 글씨",
+      "tags": [
+        "흘림",
+        "납작한",
+        "가느다란"
+      ],
+      "observation": "가는 가로획이 길게 뻗고 글자 높이가 낮아져 문장이 가볍게 흘러간다."
+    },
+    {
+      "family": "yleeMortalHeartImmortalMemory",
+      "name": "ylee 추억은 잠들지 않는다",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "길쭉한",
+        "가느다란"
+      ],
+      "observation": "길고 가는 세로획과 좁은 동그라미가 자소를 분명하게 나누며 일정한 간격으로 놓인다."
+    },
+    {
+      "family": "OOCHand GarMaesGeur",
+      "name": "갈맷글",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "도톰한",
+        "힘있는"
+      ],
+      "observation": "둥근 끝의 도톰한 획이 자소를 선명하게 나누고 문장 높이도 비교적 일정하다."
+    },
+    {
+      "family": "OOCHand NaMuJeongWeon",
+      "name": "나무정원",
+      "group": "흘려쓴 글씨",
+      "tags": [
+        "흘림",
+        "가느다란",
+        "어른스러운"
+      ],
+      "observation": "가는 획이 오른쪽으로 기울며 받침과 마지막 획을 길게 빼는 흐름이 보인다."
+    },
+    {
+      "family": "OOCHand DaeGwangYuRi",
+      "name": "대광유리",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "납작한",
+        "가느다란"
+      ],
+      "observation": "낮고 넓게 벌어진 자소를 하나씩 나누어 쓰고 가는 획과 고른 줄 높이가 부드럽게 보인다."
+    },
+    {
+      "family": "OOCHand BaReunJeongSin",
+      "name": "바른정신",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "가느다란",
+        "어른스러운"
+      ],
+      "observation": "완만하게 휘는 가로획을 가늘게 쓰되 자소를 분리하고 일정한 높이를 유지해 차분하게 보인다."
+    },
+    {
+      "family": "OOCHand SoMiCe",
+      "name": "소미체",
+      "group": "흘려쓴 글씨",
+      "tags": [
+        "흘림",
+        "도톰한",
+        "강약있는",
+        "힘있는"
+      ],
+      "observation": "짙고 굵은 눌림과 가늘게 빠지는 끝획이 사선으로 속도감 있게 이어진다."
+    },
+    {
+      "family": "OOCHand SonPyeonJiCe",
+      "name": "손편지체",
+      "group": "흘려쓴 글씨",
+      "tags": [
+        "흘림",
+        "납작한",
+        "강약있는"
+      ],
+      "observation": "가로로 넓게 뻗는 획과 생략한 자소가 번갈아 나오며 글줄이 유연하게 흔들린다."
+    },
+    {
+      "family": "OOCHand ABbaEuiYeonAePyeonJi",
+      "name": "아빠의 연애편지",
+      "group": "흘려쓴 글씨",
+      "tags": [
+        "흘림",
+        "가느다란",
+        "어른스러운"
+      ],
+      "observation": "가는 곡선과 살짝 눌린 획이 연결되고 받침 끝이 완만하게 길어진다."
+    },
+    {
+      "family": "OOCHand YaCaeJangSuBaegGeumRye",
+      "name": "야채장수 백금례",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "가느다란",
+        "어른스러운"
+      ],
+      "observation": "약간 기운 가는 획이 자소를 분명히 나누며 문장 간격과 높이를 일정하게 유지한다."
+    },
+    {
+      "family": "OOCHand YeoReumGeurSsi",
+      "name": "여름글씨",
+      "group": "흘려쓴 글씨",
+      "tags": [
+        "흘림",
+        "가느다란",
+        "어른스러운"
+      ],
+      "observation": "가늘고 뾰족한 자소가 작은 연결획으로 이어지고 문장 끝이 길게 빠진다."
+    },
+    {
+      "family": "OOCHand WaIrDeu",
+      "name": "와일드",
+      "group": "흘려쓴 글씨",
+      "tags": [
+        "흘림",
+        "길쭉한",
+        "강약있는"
+      ],
+      "observation": "세로획이 높게 솟고 가는 연결획과 진한 눌림이 서로 다른 기울기로 이어진다."
+    },
+    {
+      "family": "OOCHand CeorPirGeurSsi",
+      "name": "철필글씨",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "길쭉한",
+        "가느다란"
+      ],
+      "observation": "가는 직선과 좁고 긴 속공간으로 자소를 세워 썼으며 글자 크기가 고르게 유지된다."
+    },
+    {
+      "family": "OOCHand HaRamCe",
+      "name": "하람체",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "길쭉한",
+        "가느다란"
+      ],
+      "observation": "가늘고 작은 자소가 세로로 분명하게 나뉘며 넉넉한 간격으로 가지런히 놓인다."
+    },
+    {
+      "family": "OOCHand HyeogICe",
+      "name": "혁이체",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "가느다란",
+        "어른스러운"
+      ],
+      "observation": "자소가 온전히 분리되고 줄 높이가 고르며 가는 획 끝을 조금 길게 뺀다."
+    },
+    {
+      "family": "OOCHand GoRyeoGeurGgor",
+      "name": "고려글꼴",
+      "group": "각진 글씨",
+      "tags": [
+        "각진",
+        "꾸밈있는",
+        "도톰한",
+        "힘있는",
+        "독특한"
+      ],
+      "observation": "굵은 사선과 마름모처럼 꺾인 자소가 반복되어 모서리와 방향 전환이 강하게 드러난다."
+    },
+    {
+      "family": "OOCHand DaeHanMinGugYeorSaCe",
+      "name": "대한민국 열사체",
+      "group": "꾸민 글씨",
+      "tags": [
+        "꾸밈있는",
+        "납작한",
+        "강약있는",
+        "힘있는",
+        "독특한"
+      ],
+      "observation": "낮고 넓은 자소의 획 끝이 삼각형처럼 굵어져 문장 곳곳에 독특한 점 모양을 만든다."
+    },
+    {
+      "family": "OOCHand MiRaeNaMu",
+      "name": "미래나무",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "강약있는",
+        "어른스러운"
+      ],
+      "observation": "자소를 또렷이 나누면서도 획 끝을 부드럽게 휘고 눌림의 굵기에 작은 차이가 난다."
+    },
+    {
+      "family": "OOCHand HarABeoJi",
+      "name": "할아버지의나눔",
+      "group": "흘려쓴 글씨",
+      "tags": [
+        "흘림",
+        "도톰한",
+        "어른스러운"
+      ],
+      "observation": "도톰한 세로획에 둥글게 이어지는 가로획과 짧게 생략한 자소가 섞인다."
+    },
+    {
+      "family": "OOCHand GangInHanWiRo",
+      "name": "강인한 위로",
+      "group": "삐뚤한 글씨",
+      "tags": [
+        "삐뚤빼뚤",
+        "납작한",
+        "강약있는",
+        "독특한"
+      ],
+      "observation": "낮고 넓은 자소가 서로 다른 높이로 흩어지고 작은 눌림과 길게 빠진 획이 대비된다."
+    },
+    {
+      "family": "OOCHand GyuRiEuiIrGi",
+      "name": "규리의 일기",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "가느다란"
+      ],
+      "observation": "가늘고 둥근 획을 자소마다 분리해 적어 속공간이 열려 있고 줄 높이도 안정적이다."
+    },
+    {
+      "family": "OOCHand GimYuICe",
+      "name": "김유이체",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "가느다란"
+      ],
+      "observation": "가는 직선과 작은 동그라미가 일정한 크기로 놓여 글자 사이 경계가 또렷하다."
+    },
+    {
+      "family": "OOCHand NaNeunIGyeoNaenDa",
+      "name": "나는 이겨낸다",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "가느다란"
+      ],
+      "observation": "힘을 뺀 가는 획으로 자소를 하나씩 나누고 둥근 받침을 넉넉히 벌려 놓았다."
+    },
+    {
+      "family": "OOCHand NaEuiANaeSonGeurSsi",
+      "name": "나의 아내 손글씨",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "가느다란"
+      ],
+      "observation": "가는 선으로 적은 자소가 일정한 높이와 간격을 지켜 문장 구조가 분명하다."
+    },
+    {
+      "family": "OOCHand DaJinCe",
+      "name": "다진체",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "길쭉한",
+        "가느다란"
+      ],
+      "observation": "가는 세로획이 조금 길게 서고 작은 동그라미와 받침이 서로 겹치지 않게 놓인다."
+    },
+    {
+      "family": "OOCHand DungGeunInYeon",
+      "name": "둥근인연",
+      "group": "둥근 글씨",
+      "tags": [
+        "또박또박",
+        "동글동글",
+        "가느다란",
+        "귀여운"
+      ],
+      "observation": "넓고 둥근 동그라미와 완만하게 돌아가는 모서리가 고른 간격으로 반복된다."
+    },
+    {
+      "family": "OOCHand DdaDdeusHanJagByeor",
+      "name": "따뜻한 작별",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "가느다란"
+      ],
+      "observation": "가늘고 균일한 획으로 자소를 똑바로 세우고 글자 안쪽과 사이를 넉넉하게 벌린다."
+    },
+    {
+      "family": "OOCHand DdarEGeEomMaGa",
+      "name": "딸에게 엄마가",
+      "group": "흘려쓴 글씨",
+      "tags": [
+        "흘림",
+        "가느다란",
+        "어른스러운"
+      ],
+      "observation": "오른쪽으로 기운 가는 획과 이어 쓴 받침이 문장을 부드럽게 연결한다."
+    },
+    {
+      "family": "OOCHand MaGoCe",
+      "name": "마고체",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "납작한",
+        "가느다란"
+      ],
+      "observation": "낮고 넓은 자소를 가는 획으로 나누어 적고 가로 방향의 여유가 크게 보인다."
+    },
+    {
+      "family": "OOCHand MuJinJangCe",
+      "name": "무진장체",
+      "group": "삐뚤한 글씨",
+      "tags": [
+        "삐뚤빼뚤",
+        "가느다란",
+        "어른스러운"
+      ],
+      "observation": "가는 자소의 높낮이와 기울기가 들쭉날쭉하고 긴 끝획이 글자 사이로 빠진다."
+    },
+    {
+      "family": "OOCHand BugGeugSeong",
+      "name": "북극성",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "길쭉한",
+        "가느다란"
+      ],
+      "observation": "세로로 긴 가는 획과 좁은 동그라미가 분명히 나뉘며 글줄이 차분하게 정돈된다."
+    },
+    {
+      "family": "OOCHand SeACe",
+      "name": "세아체",
+      "group": "둥근 글씨",
+      "tags": [
+        "동글동글",
+        "또박또박",
+        "가느다란"
+      ],
+      "observation": "넓은 동그라미와 둥글게 마무리한 자소가 반복되며 가는 선의 간격이 고르다."
+    },
+    {
+      "family": "OOCHand SoBangGwanEuiGiDo",
+      "name": "소방관의 기도",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "가느다란",
+        "어른스러운"
+      ],
+      "observation": "자소를 가는 획으로 분명히 구분하고 약간 휘어진 끝획을 규칙적으로 정리했다."
+    },
+    {
+      "family": "OOCHand AReumDeuRiGgocNaMu",
+      "name": "아름드리 꽃나무",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "가느다란"
+      ],
+      "observation": "가는 획으로 동그라미와 받침을 선명하게 나누고 글자 높낮이를 고르게 맞췄다."
+    },
+    {
+      "family": "OOCHand ABbaGeurSsi",
+      "name": "아빠글씨",
+      "group": "각진 글씨",
+      "tags": [
+        "또박또박",
+        "각진",
+        "가느다란",
+        "어른스러운"
+      ],
+      "observation": "네모난 자소와 직각으로 꺾인 가는 획이 두드러지며 문장 전체가 반듯하게 선다."
+    },
+    {
+      "family": "OOCHand AnSsangCe",
+      "name": "안쌍체",
+      "group": "흘려쓴 글씨",
+      "tags": [
+        "흘림",
+        "강약있는",
+        "어른스러운"
+      ],
+      "observation": "오른쪽으로 기울인 획이 자소 사이를 이어 가며 진한 눌림과 가는 끝획이 대비된다."
+    },
+    {
+      "family": "OOCHand YaGeunHaNeunGimJuIm",
+      "name": "야근하는 김주임",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "도톰한",
+        "힘있는"
+      ],
+      "observation": "둥근 끝의 도톰한 획으로 자소를 선명하게 나누고 비슷한 크기로 차곡차곡 놓았다."
+    },
+    {
+      "family": "OOCHand EongGeongKwiCe",
+      "name": "엉겅퀴체",
+      "group": "흘려쓴 글씨",
+      "tags": [
+        "흘림",
+        "가느다란",
+        "어른스러운"
+      ],
+      "observation": "기울기와 높이가 조금씩 다른 가는 획을 빠르게 이어 쓰며 끝획을 길게 흘린다."
+    },
+    {
+      "family": "OOCHand OeHarMeoNiGeurSsi",
+      "name": "외할머니글씨",
+      "group": "삐뚤한 글씨",
+      "tags": [
+        "삐뚤빼뚤",
+        "가느다란"
+      ],
+      "observation": "가는 자소가 크기와 높이를 조금씩 달리하고 받침의 위치도 자연스럽게 오르내린다."
+    },
+    {
+      "family": "OOCHand JeongEunCe",
+      "name": "정은체",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "가느다란"
+      ],
+      "observation": "둥근 동그라미와 곧은 획을 분리해 쓰고 글자 사이 간격을 고르게 남겼다."
+    },
+    {
+      "family": "OOCHand HanYunCe",
+      "name": "한윤체",
+      "group": "흘려쓴 글씨",
+      "tags": [
+        "흘림",
+        "납작한",
+        "강약있는",
+        "어른스러운"
+      ],
+      "observation": "옆으로 길게 뻗는 가로획과 생략된 자소가 빠른 사선 흐름으로 이어진다."
+    },
+    {
+      "family": "KyoboHandwriting2025lyb",
+      "name": "교보문고 손글씨 2025 이유빈",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "도톰한",
+        "힘있는"
+      ],
+      "observation": "굵기가 비교적 일정한 도톰한 획이 열린 속공간과 가지런한 글줄을 만든다."
+    },
+    {
+      "family": "KyoboHandwriting2020A",
+      "name": "교보손글씨 2020 박도연",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "강약있는",
+        "어른스러운"
+      ],
+      "observation": "자소를 하나씩 분명히 쓰고 세로획과 곡선에 굵기 차이를 주어 부드럽고 익숙한 손글씨처럼 보인다."
+    },
+    {
+      "family": "GriunXHangeulAForeignHand-Regular",
+      "name": "그리운X국한박 낯선손글",
+      "group": "각진 글씨",
+      "tags": [
+        "또박또박",
+        "각진"
+      ],
+      "observation": "네모진 자소와 곧은 세로획이 일정한 높이로 정렬되고 글자 사이가 분명하다."
+    },
+    {
+      "family": "Griun_NeatHandwriting-Rg",
+      "name": "그리운 단정한 손글씨",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "가느다란"
+      ],
+      "observation": "가는 획으로 작은 자소를 분명하게 나누고 글자 높이와 줄 간격을 비교적 고르게 맞춘다."
+    },
+    {
+      "family": "Griun_PuhaFont-Rg",
+      "name": "그리운 푸하체",
+      "group": "둥근 글씨",
+      "tags": [
+        "동글동글",
+        "또박또박"
+      ],
+      "observation": "둥글게 열린 모음과 넉넉한 속공간이 부드럽고 글자 형태는 각각 선명하다."
+    },
+    {
+      "family": "Griun_OMIRI-Rg",
+      "name": "그리운 오미리 손글씨",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "가느다란"
+      ],
+      "observation": "일정한 가는 획과 수평에 가까운 글줄로 자소를 차례차례 분명하게 쓴다."
+    },
+    {
+      "family": "SimKyungha",
+      "name": "심경하체",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "강약있는"
+      ],
+      "observation": "둥근 곡선과 얇아지는 획 끝을 갖추면서 글자마다 높이와 간격을 가지런히 유지한다."
+    },
+    {
+      "family": "Cafe24Oneprettynight",
+      "name": "카페24 고운밤",
+      "group": "꾸민 글씨",
+      "tags": [
+        "또박또박",
+        "꾸밈있는",
+        "가느다란",
+        "어른스러운"
+      ],
+      "observation": "가늘고 반듯한 골격에 획 끝의 작은 돌기와 부드러운 곡선을 더해 단정한 장식감을 준다."
+    },
+    {
+      "family": "Griun_MyoeunHeullim-Rg",
+      "name": "그리운 묘은흘림체",
+      "group": "흘려쓴 글씨",
+      "tags": [
+        "흘림",
+        "도톰한",
+        "강약있는",
+        "힘있는",
+        "어른스러운"
+      ],
+      "observation": "두툼한 획이 자소 안에서 부드럽게 꺾여 흐르고 굵기 차이와 눌린 획 끝이 두드러진다."
+    },
+    {
+      "family": "GangwonEduHyeonokT_OTFMediumA",
+      "name": "강원교육현옥샘체",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "가느다란"
+      ],
+      "observation": "작은 글자 안에서도 받침과 모음을 분리하고 가는 획을 일정한 높이에 맞춘다."
+    },
+    {
+      "family": "HakgyoansimBadasseugiTTF-L",
+      "name": "학교안심 받아쓰기",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "가느다란"
+      ],
+      "observation": "곧은 세로획과 분명한 자소가 고른 굵기와 높이로 배열되어 반듯한 인상을 준다."
+    },
+    {
+      "family": "OOCHand GangBuJangNimCe",
+      "name": "강부장님체",
+      "group": "흘려쓴 글씨",
+      "tags": [
+        "흘림",
+        "가느다란",
+        "어른스러운"
+      ],
+      "observation": "가는 획이 약간 기울고 자소의 꺾임과 끝맺음이 이어 쓰듯 부드럽게 빠진다."
+    },
+    {
+      "family": "OOCHand DaHaengCe",
+      "name": "다행체",
+      "group": "둥근 글씨",
+      "tags": [
+        "동글동글",
+        "납작한"
+      ],
+      "observation": "글자가 옆으로 넓고 둥근 획이 완만하게 이어져 편안하고 풀어진 인상을 준다."
+    },
+    {
+      "family": "OOCHand BeoDeuNaMu",
+      "name": "버드나무",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "가느다란"
+      ],
+      "observation": "획은 가볍고 가늘지만 각 자소와 받침을 알아보기 좋게 분리하며 간격도 고르다."
+    },
+    {
+      "family": "OOCHand BeomSomCe",
+      "name": "범솜체",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "길쭉한",
+        "가느다란"
+      ],
+      "observation": "세로로 선 자소와 길게 빠진 모음을 가는 획으로 고르게 배치한다."
+    },
+    {
+      "family": "OOCHand BbangGuNiMamSonGeurSsi",
+      "name": "빵구니맘 손글씨",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "가느다란"
+      ],
+      "observation": "매우 가는 획으로 네모 골격과 작은 받침을 분명하게 쓰고 글자 크기를 고르게 맞춘다."
+    },
+    {
+      "family": "OOCHand SaRangHaeADeur",
+      "name": "사랑해 아들",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "가느다란"
+      ],
+      "observation": "가느다란 곡선과 작은 동그라미를 또렷하게 나누어 쓰고 글줄이 안정적이다."
+    },
+    {
+      "family": "OOCHand YeorAHobEuiBanJjagIm",
+      "name": "열아홉의 반짝임",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "가느다란"
+      ],
+      "observation": "가는 직선과 간결한 자소를 비슷한 크기로 나열해 담백하고 질서 있는 인상을 준다."
+    },
+    {
+      "family": "OOCHand YeDangCe",
+      "name": "예당체",
+      "group": "흘려쓴 글씨",
+      "tags": [
+        "흘림",
+        "길쭉한",
+        "가느다란",
+        "어른스러운"
+      ],
+      "observation": "가늘고 긴 세로획 사이로 비스듬한 연결과 휘는 끝획이 흘러간다."
+    },
+    {
+      "family": "OOCHand OgBiCe",
+      "name": "옥비체",
+      "group": "각진 글씨",
+      "tags": [
+        "또박또박",
+        "각진"
+      ],
+      "observation": "자소의 직선과 네모난 속공간이 두드러지고 글자 높이와 간격이 일정하다."
+    },
+    {
+      "family": "OOCHand EuiMiIssNeunHanGeur",
+      "name": "의미있는 한글",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "가느다란"
+      ],
+      "observation": "가늘고 작은 획으로 받침까지 분명하게 나누고 고른 글줄을 이룬다."
+    },
+    {
+      "family": "OOCHand JarHaGoIssEo",
+      "name": "잘하고 있어",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "가느다란"
+      ],
+      "observation": "가는 획과 작은 둥근 자소를 여유 있게 배치해 가볍고 부드러운 정돈감을 준다."
+    },
+    {
+      "family": "OOCHand JinJuBagGyeongACe",
+      "name": "진주 박경아체",
+      "group": "흘려쓴 글씨",
+      "tags": [
+        "흘림",
+        "가느다란",
+        "어른스러운"
+      ],
+      "observation": "가는 획이 비스듬히 빠지고 모음과 받침의 끝맺음이 가볍게 이어지는 인상이다."
+    },
+    {
+      "family": "OOCHand KarGugSu",
+      "name": "칼국수",
+      "group": "각진 글씨",
+      "tags": [
+        "각진",
+        "납작한",
+        "가느다란"
+      ],
+      "observation": "가로로 길고 낮은 네모 골격과 곧은 수평획이 글자 전체의 인상을 만든다."
+    },
+    {
+      "family": "OOCHand HaNaDoeEoSonGeurSsi",
+      "name": "하나되어 손글씨",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "가느다란"
+      ],
+      "observation": "가는 획으로 작고 분명한 자소를 비슷한 높이에 맞추고 글자 사이를 고르게 띄운다."
+    },
+    {
+      "family": "OOCHand HeuinGgoRiSuRi",
+      "name": "흰꼬리수리",
+      "group": "각진 글씨",
+      "tags": [
+        "또박또박",
+        "각진"
+      ],
+      "observation": "직선 위주의 네모 골격이 뚜렷하며 모음과 받침도 곧게 나뉘어 정렬된다."
+    },
+    {
+      "family": "MapoFlowerIsland",
+      "name": "마포꽃섬",
+      "group": "꾸민 글씨",
+      "tags": [
+        "또박또박",
+        "꾸밈있는",
+        "가느다란",
+        "어른스러운"
+      ],
+      "observation": "반듯한 가는 골격에 곡선과 작은 획 끝 장식이 반복되어 단아한 인상을 준다."
+    },
+    {
+      "family": "OOCHand GaRamYeonGgoc",
+      "name": "가람연꽃",
+      "group": "흘려쓴 글씨",
+      "tags": [
+        "흘림",
+        "가느다란",
+        "어른스러운"
+      ],
+      "observation": "가는 직선이 약간 기울며 받침과 획 끝이 편안하게 휘어 이어진다."
+    },
+    {
+      "family": "OOCHand GeumEunBoHwa",
+      "name": "금은보화",
+      "group": "둥근 글씨",
+      "tags": [
+        "동글동글",
+        "가느다란",
+        "귀여운"
+      ],
+      "observation": "작은 둥근 자소와 넉넉하게 열린 곡선이 가는 획과 어울려 가벼운 인상을 준다."
+    },
+    {
+      "family": "OOCHand GgocNaeEum",
+      "name": "꽃내음",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "동글동글"
+      ],
+      "observation": "큰 둥근 속공간과 분명한 자소를 일정한 높이로 나열해 부드럽고 정돈되어 보인다."
+    },
+    {
+      "family": "OOCHand DaCaeSaRang",
+      "name": "다채사랑",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "가느다란"
+      ],
+      "observation": "가는 획과 넉넉한 속공간을 갖추고 모음과 받침을 분명하게 나누어 쓴다."
+    },
+    {
+      "family": "OOCHand MongDor",
+      "name": "몽돌",
+      "group": "삐뚤한 글씨",
+      "tags": [
+        "삐뚤빼뚤",
+        "가느다란"
+      ],
+      "observation": "자소의 높이와 기울기가 조금씩 바뀌고 작은 동그라미와 끝획이 가볍게 흔들린다."
+    },
+    {
+      "family": "OOCHand BaReunHiPi",
+      "name": "바른히피",
+      "group": "각진 글씨",
+      "tags": [
+        "또박또박",
+        "각진"
+      ],
+      "observation": "네모난 자소와 곧은 획이 선명하고 글자 높이와 받침 자리가 고르게 맞는다."
+    },
+    {
+      "family": "OOCHand BaeEunHyeCe",
+      "name": "배은혜체",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "길쭉한",
+        "가느다란"
+      ],
+      "observation": "작고 좁은 자소에 긴 세로획이 서 있으며 가는 획과 일정한 간격이 정돈감을 준다."
+    },
+    {
+      "family": "OOCHand BaegEuiEuiCeonSa",
+      "name": "백의의 천사",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "가느다란"
+      ],
+      "observation": "아주 가는 획으로 간결한 자소를 쓰고 크기와 간격을 일정하게 유지한다."
+    },
+    {
+      "family": "OOCHand SeongSirCe",
+      "name": "성실체",
+      "group": "둥근 글씨",
+      "tags": [
+        "동글동글",
+        "도톰한"
+      ],
+      "observation": "도톰한 곡선과 넓은 동그라미가 눈에 띄고 획 끝이 둥글게 돌아 부드럽다."
+    },
+    {
+      "family": "OOCHand AInMamSonGeurSsi",
+      "name": "아인맘 손글씨",
+      "group": "각진 글씨",
+      "tags": [
+        "또박또박",
+        "각진",
+        "납작한"
+      ],
+      "observation": "가로로 넓은 네모 골격과 곧은 수평획이 반복되고 받침을 분명하게 나눈다."
+    },
+    {
+      "family": "OOCHand AmSeuTeReuDam",
+      "name": "암스테르담",
+      "group": "각진 글씨",
+      "tags": [
+        "또박또박",
+        "각진",
+        "가느다란"
+      ],
+      "observation": "가는 직선과 각진 네모 자소가 일정한 높이와 간격으로 배열된다."
+    },
+    {
+      "family": "OOCHand EomMaSaRang",
+      "name": "엄마사랑",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박"
+      ],
+      "observation": "분명한 자소와 부드러운 동그라미를 고른 크기로 쓰고 글줄이 안정적이다."
+    },
+    {
+      "family": "OOCHand YeonJiCe",
+      "name": "연지체",
+      "group": "삐뚤한 글씨",
+      "tags": [
+        "삐뚤빼뚤",
+        "납작한"
+      ],
+      "observation": "낮고 넓은 글자들의 높이와 기울기가 조금씩 달라져 느슨한 리듬을 만든다."
+    },
+    {
+      "family": "OOCHand OenSonJabIDoYeBbeo",
+      "name": "왼손잡이도 예뻐",
+      "group": "각진 글씨",
+      "tags": [
+        "또박또박",
+        "각진",
+        "가느다란"
+      ],
+      "observation": "가는 직선과 낮은 네모 골격으로 자소를 나누어 또렷하고 차분하게 정렬한다."
+    },
+    {
+      "family": "OOCHand HaengBogHanDoBi",
+      "name": "행복한 도비",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "가느다란"
+      ],
+      "observation": "작고 가는 획으로 둥근 자소와 받침을 명확하게 나누어 가볍고 부드럽게 보인다."
+    },
+    {
+      "family": "OOCHand HyeJunCe",
+      "name": "혜준체",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "가느다란"
+      ],
+      "observation": "가느다란 획의 둥근 자소가 작고 고르게 놓이고 글자 사이에 여유가 있다."
+    },
+    {
+      "family": "Uiyeun",
+      "name": "온글잎 의연체",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "도톰한",
+        "귀여운"
+      ],
+      "observation": "짧고 도톰한 획과 작고 분명한 자소가 일정한 크기로 반복된다."
+    },
+    {
+      "family": "OOCHand GoDigANiGoGoDing",
+      "name": "고딕 아니고 고딩",
+      "group": "각진 글씨",
+      "tags": [
+        "각진",
+        "납작한",
+        "가느다란"
+      ],
+      "observation": "낮고 가로로 긴 네모 골격을 가느다란 직선으로 그려 담백하고 평평한 인상을 준다."
+    },
+    {
+      "family": "OOCHand DaSiSiJagHae",
+      "name": "다시 시작해",
+      "group": "각진 글씨",
+      "tags": [
+        "또박또박",
+        "각진",
+        "힘있는"
+      ],
+      "observation": "곧고 선명한 획과 단단한 네모 골격이 반복되어 힘 있게 정돈되어 보인다."
+    },
+    {
+      "family": "OOCHand DarEuiGweDo",
+      "name": "달의궤도",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "길쭉한"
+      ],
+      "observation": "세로획이 길고 자소가 좁은 편이며 곡선과 받침을 또렷하게 나누어 쓴다."
+    },
+    {
+      "family": "OOCHand DdaAgDanDan",
+      "name": "따악단단",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "가느다란"
+      ],
+      "observation": "작고 가는 획으로 분리된 자소를 비슷한 높이에 맞추어 담백하게 배열한다."
+    },
+    {
+      "family": "OOCHand DdoBagDdoBag",
+      "name": "또박또박",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "가느다란"
+      ],
+      "observation": "매우 가는 획과 작은 자소가 비슷한 크기와 간격으로 차례로 놓인다."
+    },
+    {
+      "family": "OOCHand MuGungHwa",
+      "name": "무궁화",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "가느다란"
+      ],
+      "observation": "간결하고 가는 자소와 분명한 받침을 일정한 높이로 가지런히 쓴다."
+    },
+    {
+      "family": "OOCHand MiNiSonGeurSsi",
+      "name": "미니 손글씨",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박"
+      ],
+      "observation": "작고 분명한 자소와 둥근 획 끝이 일정한 간격으로 정렬된다."
+    },
+    {
+      "family": "Griun_OnHandwriting-Rg",
+      "name": "그리운 오엔손글씨체",
+      "group": "각진 글씨",
+      "tags": [
+        "또박또박",
+        "각진",
+        "가느다란"
+      ],
+      "observation": "큰 네모 자소와 곧은 세로획이 가는 굵기로 반복되고 글자 사이가 명확하다."
+    },
+    {
+      "family": "부산단디손글씨",
+      "name": "부산단디손글씨",
+      "group": "각진 글씨",
+      "tags": [
+        "또박또박",
+        "각진",
+        "강약있는",
+        "어른스러운"
+      ],
+      "observation": "비스듬한 직선과 긴 가로획이 눈에 띄지만 자소는 분리되어 있고 획 굵기 변화가 선명하다."
+    },
+    {
+      "family": "GriunXHangeulSarangseureoun-Regular",
+      "name": "그리운X국한박 사랑스러운",
+      "group": "각진 글씨",
+      "tags": [
+        "또박또박",
+        "각진",
+        "힘있는"
+      ],
+      "observation": "크고 네모난 자소를 직선으로 선명하게 나누어 단단하고 힘 있게 보인다."
+    },
+    {
+      "family": "Ownglyph_brilliant-Rg",
+      "name": "온글잎 영롱",
+      "group": "흘려쓴 글씨",
+      "tags": [
+        "흘림",
+        "강약있는",
+        "힘있는",
+        "어른스러운"
+      ],
+      "observation": "작고 응축된 자소의 굵은 획과 얇게 빠지는 끝획이 빠른 흐름을 만든다."
+    },
+    {
+      "family": "OOCHand GomSinCe",
+      "name": "곰신체",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "동글동글",
+        "가느다란"
+      ],
+      "observation": "가는 획으로 자소를 따로 세우고 둥근 받침을 비교적 일정한 높이에 놓았다."
+    },
+    {
+      "family": "OOCHand GiBbeumBarkEum",
+      "name": "기쁨밝음",
+      "group": "삐뚤한 글씨",
+      "tags": [
+        "삐뚤빼뚤",
+        "납작한"
+      ],
+      "observation": "낮고 넓은 글자에 대각선이 섞이고 글자마다 기울기와 높이가 조금씩 다르다."
+    },
+    {
+      "family": "Ownglyph_ParkDaHyun",
+      "name": "온글잎 박다현체",
+      "group": "둥근 글씨",
+      "tags": [
+        "또박또박",
+        "동글동글",
+        "도톰한",
+        "귀여운"
+      ],
+      "observation": "획 끝과 모서리가 둥글고 도톰한 자소를 비슷한 크기로 꽉 채웠다."
+    },
+    {
+      "family": "hippie_히피체",
+      "name": "히피체",
+      "group": "둥근 글씨",
+      "tags": [
+        "동글동글",
+        "삐뚤빼뚤",
+        "도톰한",
+        "귀여운"
+      ],
+      "observation": "굵고 둥근 획에 네모난 자소가 섞이며 글자마다 폭과 기울기가 들쑥날쑥하다."
+    },
+    {
+      "family": "Ownglyph_corncorn-Rg",
+      "name": "온글잎 콘콘체",
+      "group": "둥근 글씨",
+      "tags": [
+        "또박또박",
+        "동글동글",
+        "길쭉한",
+        "귀여운"
+      ],
+      "observation": "큰 둥근 자소와 길게 세운 세로획이 분명하게 나뉘어 가지런히 놓인다."
+    },
+    {
+      "family": "GangwonEduSaeeum_OTFMediumA",
+      "name": "강원교육새음체",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "납작한"
+      ],
+      "observation": "낮고 넓게 벌린 글자 안의 공간이 고르고 자소를 분명하게 끊어 썼다."
+    },
+    {
+      "family": "Griun_AhyoungsHandwriteIn2019-Rg",
+      "name": "그리운 2019년도 아영의 손글씨",
+      "group": "둥근 글씨",
+      "tags": [
+        "동글동글",
+        "도톰한",
+        "또박또박",
+        "귀여운"
+      ],
+      "observation": "도톰한 곡선과 넓게 열린 속공간이 눈에 띄며 글자 덩어리가 안정적으로 나란하다."
+    },
+    {
+      "family": "SSRONETHandwritten",
+      "name": "스스로넷 손글씨체",
+      "group": "삐뚤한 글씨",
+      "tags": [
+        "삐뚤빼뚤",
+        "길쭉한",
+        "귀여운"
+      ],
+      "observation": "세로획을 길게 세우되 글자별 높낮이와 자소의 크기를 서로 다르게 놓았다."
+    },
+    {
+      "family": "Ownglyph_daelong-Rg",
+      "name": "온글잎 대롱체",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "동글동글",
+        "도톰한",
+        "귀여운"
+      ],
+      "observation": "작고 도톰한 자소를 일정하게 띄우고 둥근 받침과 획 끝을 고르게 다듬었다."
+    },
+    {
+      "family": "KyoboHandwriting2023wsa",
+      "name": "교보손글씨 2023 우선아",
+      "group": "삐뚤한 글씨",
+      "tags": [
+        "삐뚤빼뚤",
+        "강약있는"
+      ],
+      "observation": "기울어진 획과 넓게 휘는 곡선이 섞이고 단어마다 글자 높이가 다르게 움직인다."
+    },
+    {
+      "family": "Griun_SejongBaragiKimChaeeun-Rg",
+      "name": "그리운 세종대왕바라기 김채은",
+      "group": "둥근 글씨",
+      "tags": [
+        "동글동글",
+        "길쭉한",
+        "가느다란"
+      ],
+      "observation": "가는 세로획과 큼직한 둥근 자소가 어울리고 긴 숫자도 부드러운 곡선으로 이어진다."
+    },
+    {
+      "family": "Ownglyph_UNZ-Rg",
+      "name": "온글잎 언즈체",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "납작한",
+        "도톰한"
+      ],
+      "observation": "낮고 도톰한 자소를 일정한 간격으로 놓아 줄 전체가 단단하고 고르게 보인다."
+    },
+    {
+      "family": "Griun_MIGA-Handwriting-Rg",
+      "name": "그리운 미가 손글씨",
+      "group": "삐뚤한 글씨",
+      "tags": [
+        "동글동글",
+        "삐뚤빼뚤",
+        "귀여운"
+      ],
+      "observation": "둥근 받침과 큰 곡선이 도드라지며 글자 크기와 밑선이 조금씩 달라진다."
+    },
+    {
+      "family": "Ownglyph_jiwoosonang",
+      "name": "온글잎 지우쏘낭",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "납작한"
+      ],
+      "observation": "작고 낮은 자소를 분리해 놓고 단어 안의 간격과 글자 높이를 고르게 유지했다."
+    },
+    {
+      "family": "Griun_Fromsol-Rg",
+      "name": "그리운 프롬솔",
+      "group": "둥근 글씨",
+      "tags": [
+        "동글동글",
+        "또박또박",
+        "도톰한",
+        "귀여운"
+      ],
+      "observation": "굵고 둥근 모서리와 넓은 속공간이 분명하고 자소가 또렷하게 나뉜다."
+    },
+    {
+      "family": "Griun_Mongtori-Rg",
+      "name": "그리운 몽토리체",
+      "group": "둥근 글씨",
+      "tags": [
+        "동글동글",
+        "또박또박",
+        "도톰한",
+        "귀여운",
+        "힘있는"
+      ],
+      "observation": "굵은 세로획과 둥근 획 끝이 비슷한 무게로 이어져 또렷한 덩어리를 만든다."
+    },
+    {
+      "family": "Ownglyph_meetme-Rg",
+      "name": "밑미 폰트",
+      "group": "둥근 글씨",
+      "tags": [
+        "동글동글",
+        "또박또박",
+        "도톰한",
+        "귀여운"
+      ],
+      "observation": "작고 통통한 자소를 촘촘하게 채우고 모서리와 받침을 부드럽게 마무리했다."
+    },
+    {
+      "family": "omyu_pretty",
+      "name": "오뮤 다예쁨체",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "각진"
+      ],
+      "observation": "곧은 세로획과 네모난 받침을 분명히 나누고 일정한 글자 크기로 정돈했다."
+    },
+    {
+      "family": "Griun_Yeeun-Rg",
+      "name": "그리운 예은체",
+      "group": "둥근 글씨",
+      "tags": [
+        "동글동글",
+        "또박또박",
+        "도톰한",
+        "귀여운",
+        "힘있는"
+      ],
+      "observation": "짙고 도톰한 획 끝을 둥글게 다듬어 글자마다 무게가 고르게 느껴진다."
+    },
+    {
+      "family": "OOCHand NeuRisNeuRisCe",
+      "name": "느릿느릿체",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "납작한",
+        "가느다란"
+      ],
+      "observation": "가는 획으로 낮고 작은 자소를 나누고 줄의 높낮이를 비교적 고르게 맞췄다."
+    },
+    {
+      "family": "OOCHand DongHwaDdoBag",
+      "name": "동화또박",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "동글동글",
+        "가느다란"
+      ],
+      "observation": "가는 곡선과 곧은 획이 분명하게 떨어져 있고 글자 사이에 고른 여유가 있다."
+    },
+    {
+      "family": "OOCHand MasIssNeunCe",
+      "name": "맛있는체",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "동글동글",
+        "가느다란"
+      ],
+      "observation": "작은 둥근 받침과 가는 세로획을 단정히 놓아 부드럽고 가벼운 줄을 만든다."
+    },
+    {
+      "family": "OOCHand BanJjagBanJjagByeor",
+      "name": "반짝반짝 별",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "각진",
+        "납작한",
+        "가느다란"
+      ],
+      "observation": "얇은 직선과 네모난 자소를 낮고 넓게 벌려 또렷하게 썼다."
+    },
+    {
+      "family": "OOCHand SangHaeCanMiCe",
+      "name": "상해찬미체",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "각진",
+        "도톰한"
+      ],
+      "observation": "도톰한 직선과 각이 선 받침을 작은 크기로 분리해 안정된 간격으로 놓았다."
+    },
+    {
+      "family": "OOCHand SeHwaCe",
+      "name": "세화체",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "납작한"
+      ],
+      "observation": "낮은 자소의 크기와 간격이 고르고 획을 짧게 끊어 글자 구조가 잘 드러난다."
+    },
+    {
+      "family": "OOCHand SuJubEunDaeHagSaeng",
+      "name": "수줍은 대학생",
+      "group": "둥근 글씨",
+      "tags": [
+        "동글동글",
+        "도톰한",
+        "귀여운"
+      ],
+      "observation": "통통한 획과 작은 둥근 받침이 섞여 부드럽고 살짝 통통 튀는 줄을 만든다."
+    },
+    {
+      "family": "OOCHand SiUGwiYeoWeo",
+      "name": "시우 귀여워",
+      "group": "삐뚤한 글씨",
+      "tags": [
+        "삐뚤빼뚤",
+        "가느다란",
+        "귀여운"
+      ],
+      "observation": "가는 획의 글자 크기와 밑선이 제각각이고 자소 사이 공간도 불규칙하다."
+    },
+    {
+      "family": "OOCHand SinHonBuBu",
+      "name": "신혼부부",
+      "group": "각진 글씨",
+      "tags": [
+        "각진",
+        "길쭉한",
+        "가느다란"
+      ],
+      "observation": "가늘고 긴 세로획과 네모난 자소가 반복되어 곧고 길쭉한 인상이 강하다."
+    },
+    {
+      "family": "OOCHand AGiSaRangCe",
+      "name": "아기사랑체",
+      "group": "삐뚤한 글씨",
+      "tags": [
+        "동글동글",
+        "삐뚤빼뚤",
+        "귀여운"
+      ],
+      "observation": "둥근 자소를 가볍게 기울이고 글자마다 크기와 자소 위치를 다르게 두었다."
+    },
+    {
+      "family": "OOCHand YeBbeunMinGyeongCe",
+      "name": "예쁜 민경체",
+      "group": "둥근 글씨",
+      "tags": [
+        "동글동글",
+        "또박또박",
+        "도톰한",
+        "귀여운"
+      ],
+      "observation": "도톰한 곡선과 둥근 획 끝을 작은 글자 안에 또렷하게 모았다."
+    },
+    {
+      "family": "OOCHand YuNiDdingDdangDdingDdang",
+      "name": "유니 띵땅띵땅",
+      "group": "삐뚤한 글씨",
+      "tags": [
+        "삐뚤빼뚤",
+        "가느다란",
+        "귀여운"
+      ],
+      "observation": "아주 작은 자소를 가는 획으로 쓰며 글자 높이와 받침 위치가 가볍게 흔들린다."
+    },
+    {
+      "family": "OOCHand JangMiCe",
+      "name": "장미체",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "각진",
+        "도톰한"
+      ],
+      "observation": "굵기가 고른 짧은 직선과 네모난 자소가 반복되어 단단하게 정돈돼 보인다."
+    },
+    {
+      "family": "OOCHand JeomGgorCe",
+      "name": "점꼴체",
+      "group": "삐뚤한 글씨",
+      "tags": [
+        "각진",
+        "삐뚤빼뚤",
+        "거친",
+        "독특한"
+      ],
+      "observation": "가느다란 획의 연결이 군데군데 끊기고 각진 자소와 들쑥날쑥한 밑선이 두드러진다."
+    },
+    {
+      "family": "OOCHand KoKoCe",
+      "name": "코코체",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "납작한",
+        "가느다란"
+      ],
+      "observation": "작고 낮은 직선 자소를 분리하고 비슷한 간격으로 가지런하게 놓았다."
+    },
+    {
+      "family": "OOCHand HaNaSonGeurSsi",
+      "name": "하나손글씨",
+      "group": "둥근 글씨",
+      "tags": [
+        "동글동글",
+        "또박또박",
+        "도톰한",
+        "귀여운"
+      ],
+      "observation": "둥근 획 끝과 도톰한 받침이 반복되고 작은 자소가 분명하게 나뉜다."
+    },
+    {
+      "family": "OOCHand HyoNamNeurHwaITing",
+      "name": "효남 늘 화이팅",
+      "group": "삐뚤한 글씨",
+      "tags": [
+        "각진",
+        "길쭉한",
+        "삐뚤빼뚤",
+        "가느다란"
+      ],
+      "observation": "긴 세로획과 각진 자소가 보이지만 글자별 높낮이와 기울기는 불규칙하다."
+    },
+    {
+      "family": "OOCHand HeuiMangNuRi",
+      "name": "희망누리",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "납작한",
+        "가느다란"
+      ],
+      "observation": "가늘고 짧은 획으로 자소를 또렷하게 나누고 글자 높이를 비슷하게 맞췄다."
+    },
+    {
+      "family": "OOCHand HimNaeRaNeunMarBoDan",
+      "name": "힘내라는 말보단",
+      "group": "둥근 글씨",
+      "tags": [
+        "동글동글",
+        "도톰한",
+        "귀여운"
+      ],
+      "observation": "둥글고 도톰한 획이 부드럽게 꺾이며 글자마다 작은 크기 차이가 있다."
+    },
+    {
+      "family": "GriunXHangeulDDURAE-Regular",
+      "name": "그리운X국한박 뚜레",
+      "group": "삐뚤한 글씨",
+      "tags": [
+        "삐뚤빼뚤",
+        "각진",
+        "어른스러운"
+      ],
+      "observation": "크기가 다른 자소와 기울어진 직선이 섞여 밑선이 자연스럽게 오르내린다."
+    },
+    {
+      "family": "KCC-Kimhwanki",
+      "name": "KCC김환기체",
+      "group": "흘려쓴 글씨",
+      "tags": [
+        "흘림",
+        "강약있는",
+        "어른스러운"
+      ],
+      "observation": "기울어진 획의 시작과 끝에 굵기 차이가 있고 일부 자소를 간추려 빠르게 이어 쓴 듯하다."
+    },
+    {
+      "family": "YUN-BONG-GIL",
+      "name": "윤봉길체",
+      "group": "흘려쓴 글씨",
+      "tags": [
+        "흘림",
+        "각진",
+        "강약있는",
+        "어른스러운",
+        "힘있는"
+      ],
+      "observation": "굵게 눌린 부분과 뾰족한 획 끝이 크게 대비되고 자소가 기울며 빠르게 연결된다."
+    },
+    {
+      "family": "OOCHand YeorIrCe",
+      "name": "열일체",
+      "group": "흘려쓴 글씨",
+      "tags": [
+        "흘림",
+        "길쭉한",
+        "가느다란",
+        "어른스러운"
+      ],
+      "observation": "가는 사선과 길게 뻗는 획을 이어 쓰며 자소 모양을 간추린 부분이 눈에 띈다."
+    },
+    {
+      "family": "OOCHand NoRyeogHaNeunDongHeui",
+      "name": "노력하는 동희",
+      "group": "삐뚤한 글씨",
+      "tags": [
+        "삐뚤빼뚤",
+        "가느다란"
+      ],
+      "observation": "가는 획으로 둥근 자소와 직선을 섞고 글자마다 크기와 밑선을 조금씩 달리했다."
+    },
+    {
+      "family": "OOCHand BuJangNimNunCiCe",
+      "name": "부장님 눈치체",
+      "group": "삐뚤한 글씨",
+      "tags": [
+        "삐뚤빼뚤",
+        "납작한"
+      ],
+      "observation": "낮고 넓은 자소가 약간씩 기울고 글자 간격과 받침 위치도 일정하지 않다."
+    },
+    {
+      "family": "OOCHand BiSangCe",
+      "name": "비상체",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "각진",
+        "납작한"
+      ],
+      "observation": "작고 낮은 직선 자소가 또렷하게 분리되고 줄의 높이가 비교적 고르다."
+    },
+    {
+      "family": "OOCHand SeGyeJeogInHanGeur",
+      "name": "세계적인 한글",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "각진",
+        "가느다란"
+      ],
+      "observation": "가느다란 직선과 네모난 받침을 작은 크기로 분명하게 구분했다."
+    },
+    {
+      "family": "OOCHand AJumMaJaYu",
+      "name": "아줌마 자유",
+      "group": "각진 글씨",
+      "tags": [
+        "각진",
+        "삐뚤빼뚤",
+        "도톰한",
+        "힘있는",
+        "독특한"
+      ],
+      "observation": "곡선 자소까지 뾰족하게 꺾고 삼각형처럼 벌린 획과 굵은 사선을 섞었다."
+    },
+    {
+      "family": "OOCHand JaBuSimJiU",
+      "name": "자부심지우",
+      "group": "삐뚤한 글씨",
+      "tags": [
+        "삐뚤빼뚤",
+        "가느다란",
+        "귀여운"
+      ],
+      "observation": "아주 작은 글자마다 자소 크기와 간격이 달라 가볍게 흔들리는 리듬이 보인다."
+    },
+    {
+      "family": "온글잎 윤탱체",
+      "name": "온글잎 윤탱체",
+      "group": "둥근 글씨",
+      "tags": [
+        "동글동글",
+        "또박또박",
+        "도톰한",
+        "귀여운"
+      ],
+      "observation": "짧고 도톰한 획의 모서리를 둥글게 다듬고 작은 자소를 분명하게 나눴다."
+    },
+    {
+      "family": "SangSangShinb7",
+      "name": "신비는일곱살",
+      "group": "삐뚤한 글씨",
+      "tags": [
+        "삐뚤빼뚤",
+        "가느다란",
+        "귀여운"
+      ],
+      "observation": "가느다란 획이 조금씩 흔들리고 작은 글자와 받침의 높낮이가 고르지 않다."
+    },
+    {
+      "family": "Kim Sonmat",
+      "name": "손맛체",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "각진"
+      ],
+      "observation": "곧은 세로획과 네모난 자소를 크게 벌려 쓰고 글자 구조를 또렷하게 유지했다."
+    },
+    {
+      "family": "KyoboHand",
+      "name": "교보손글씨 2019",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "각진"
+      ],
+      "observation": "직선으로 세운 자소와 반듯한 받침을 일정한 크기와 간격으로 배치했다."
+    },
+    {
+      "family": "Ownglyph_positive",
+      "name": "온글잎 긍정",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "동글동글"
+      ],
+      "observation": "둥근 받침과 단순한 직선이 고른 크기로 놓여 부드럽고 또렷하게 읽힌다."
+    },
+    {
+      "family": "LeeSeoyun",
+      "name": "이서윤체",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "각진"
+      ],
+      "observation": "네모난 자소와 곧은 세로획을 균일하게 분리해 안정된 줄을 만든다."
+    },
+    {
+      "family": "CallifontDaynoteJellypen-Bold",
+      "name": "하루일기체 젤리펜",
+      "group": "삐뚤한 글씨",
+      "tags": [
+        "삐뚤빼뚤",
+        "가느다란",
+        "귀여운"
+      ],
+      "observation": "작고 가벼운 획이 위아래로 들쭉날쭉하고 자소 사이가 느슨해 경쾌한 낙서처럼 보인다."
+    },
+    {
+      "family": "OOCHand URiDdarSonGeurSsi",
+      "name": "우리딸 손글씨",
+      "group": "각진 글씨",
+      "tags": [
+        "각진",
+        "가느다란"
+      ],
+      "observation": "가는 직선과 뾰족한 꺾임이 눈에 띄고 글자별 기울기가 조금씩 다르다."
+    },
+    {
+      "family": "OOCHand JungHagSaeng",
+      "name": "중학생",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "동글동글"
+      ],
+      "observation": "자소를 하나씩 분명하게 쓰고 둥근 곡선과 일정한 줄 높이를 유지해 편안하고 정돈돼 보인다."
+    },
+    {
+      "family": "OOCHand CoDingHeuiMang",
+      "name": "초딩희망",
+      "group": "정갈한 글씨",
+      "tags": [
+        "또박또박",
+        "길쭉한",
+        "가느다란"
+      ],
+      "observation": "길고 가는 세로획과 넉넉한 자소 간격이 보이며 줄 높이가 고르다."
+    }
+  ],
+  "revision": 3,
+  "removedTags": [
+    "다정한",
+    "자유로운",
+    "차분한"
+  ],
+  "groupRenames": {
+    "자유로운 글씨": "삐뚤한 글씨"
+  }
+}
