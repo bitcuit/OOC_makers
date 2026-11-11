@@ -240,6 +240,10 @@ button{cursor:pointer}
 .out{display:flex;flex-direction:column;align-items:center;gap:48px}
 .out>.pair{display:flex;flex-wrap:wrap;gap:48px 56px;justify-content:center;align-items:flex-start;width:100%}
 .out>.xrow{display:flex;justify-content:center;width:100%}
+/* 폰처럼 좁아도 PNG와 같은 680px 배치를 줄여서 보여 줌(--fit = 화면 폭 / 680) */
+.out .gift{max-width:none;zoom:var(--fit,1)}
+.out.locked .stk,.out.locked [data-piece]{touch-action:auto;cursor:default}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));z-index:40;max-width:calc(100vw - 32px);padding:10px 16px;border-radius:14px;background:rgba(42,33,28,.84);color:#fffdf9;font-size:13px;line-height:1.5;text-align:center;word-break:keep-all;transform:translateX(-50%);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 12px 30px -12px rgba(42,33,28,.5)}
 .main.is-empty{display:flex;align-items:center;justify-content:center}
 .main.is-empty .out{display:none}
 /* 떠 있는 창: 한 겹, 살짝 비치는 흰 바탕 + 뒤는 흐리게 */
@@ -283,7 +287,8 @@ html{scrollbar-color:var(--hair) transparent}
 @media (max-width:760px){
   body{height:auto;overflow:visible}
   .bar{position:sticky;top:0;padding:10px 16px;gap:6px;background:var(--paper)}
-  .mark{width:100%;margin:0 0 4px}
+  .mark{flex:1 1 auto;width:auto;margin:0;order:-2}
+  .grp-reset{order:-1}
   .sep,.push{display:none}
   .grp{flex-wrap:wrap}
   .btn{padding:0 4px;margin:0 6px 0 4px}
@@ -427,6 +432,7 @@ html{scrollbar-color:var(--hair) transparent}
     <button class="btn" id="designBtn" type="button" aria-expanded="false" aria-controls="design" disabled>꾸미기</button>
     <button class="btn" id="stkBtn" type="button" aria-expanded="false" aria-controls="stk" disabled>스티커</button>
     <button class="btn" id="txBtn" type="button" aria-expanded="false" aria-controls="txp" disabled>글자</button>
+    <button class="btn toggle" id="lockPos" type="button" role="switch" aria-checked="false" title="켜 두면 카드의 종이 · 스티커가 움직이지 않음(스크롤만)"><i aria-hidden="true"></i>위치 잠금</button>
   </div>
   <i class="push" aria-hidden="true"></i>
   <div class="grp">
@@ -435,11 +441,12 @@ html{scrollbar-color:var(--hair) transparent}
     <span class="status" id="saveStatus" aria-live="polite"></span>
   </div>
   <i class="sep" aria-hidden="true"></i>
-  <div class="grp">
+  <div class="grp grp-reset">
     <button class="btn" id="resetAll" type="button" title="글 · 꾸밈 · 이름 모두 지우고 이름부터 다시">처음부터</button>
   </div>
 </header>
 
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 <main class="main" id="main">
   <div class="out" id="out" aria-live="polite"></div>
 </main>
@@ -1046,6 +1053,16 @@ function resetCards(){
   d.stickers={};d.decoMod={};d.deco={};for(const k of Object.keys(d.ribbon||{}))if(k.startsWith('gift:'))delete d.ribbon[k];
   stkSelId=null;storeDesign();
 }
+// 좁은 화면: 카드 배율. 끌기 · 틀 계산은 화면 px 를 이 배율로 나눠 카드 안 px 로 바꿈
+let fitZ=1;
+function fitCards(){const w=out.clientWidth,z=w&&w<680?Math.max(.3,w/680):1;if(z===fitZ&&out.style.getPropertyValue('--fit'))return;fitZ=z;out.style.setProperty('--fit',String(z))}
+addEventListener('resize',()=>{fitCards();syncFrame()});
+// 위치 잠금: 폰(좁은 화면 · 손가락)은 처음부터 켬. 켜면 카드 위에서 끌어도 스크롤만
+const LOCK_KEY=KEY+'.lock';
+let posLock;try{const v=localStorage.getItem(LOCK_KEY);posLock=v==null?matchMedia('(max-width:760px),(pointer:coarse)').matches:v==='1'}catch(e){posLock=matchMedia('(max-width:760px)').matches}
+function applyLock(){out.classList.toggle('locked',posLock);$('lockPos').setAttribute('aria-checked',String(posLock));if(posLock&&typeof selectStk==='function'&&stkSel)selectStk(null)}
+let toastT=0;
+function toast(t,ms=2600){const el=$('toast');el.textContent=t;el.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>{el.hidden=true},ms)}
 function render(options={}){
   const text=src.value;
   try{localStorage.setItem(KEY+'.input',text)}catch(e){}
@@ -1059,8 +1076,10 @@ function render(options={}){
   let html='',row=[];const flush=()=>{if(row.length)html+=`<div class="pair">${row.join('')}</div>`;row=[]};
   const xRow=g=>{const h=xAt(g);if(h){flush();html+=`<div class="xrow">${h}</div>`}};
   xRow(null);gifts.forEach((g,i)=>{row.push(card(g,i));xRow(g)});flush();
-  out.innerHTML=html;
-  placePieces(out);applyFx(out);syncOver(out);
+  out.innerHTML=html;fitCards();
+  placePieces(out);applyFx(out);syncOver(out);applyLock();
+  // 처음 한 번(폰): 줄여 보이는 까닭과 잠금 안내
+  if(fitZ<1){try{if(!localStorage.getItem(KEY+'.fitTip')){localStorage.setItem(KEY+'.fitTip','1');toast('PNG와 같은 배치로 줄여 보기 · 위치 잠금 중이라 스크롤만 · 옮기기는 위 막대 위치 잠금 끄기',6500)}}catch(e){}}
   fitRo.disconnect();out.querySelectorAll('.spread .paper,.spread>.side').forEach(el=>fitRo.observe(el));fitSpread(out);
   if(stkSelId){const el=out.querySelector(`.stk[data-id="${stkSelId}"]`);if(el)selectStk(el);else stkSelId=null}
   st.textContent='';
@@ -1137,7 +1156,7 @@ function syncFrame(){
   const tl=q('.tl'),tr=q('.tr'),bl=q('.bl'),br=q(':not(.tl):not(.tr):not(.bl)');if(!tl||!tr||!bl||!br)return;
   let f=art.querySelector(':scope>.sel-frame');
   if(!f){f=document.createElement('div');f.className='sel-frame';f.innerHTML='<i class="h sz"></i><i class="h sz tl"></i><i class="h sz tr"></i><i class="h sz bl"></i><i class="h rot"></i>';art.append(f)}
-  const a=art.getBoundingClientRect(),cx=(tl[0]+br[0])/2-a.left,cy=(tl[1]+br[1])/2-a.top,w=Math.hypot(tr[0]-tl[0],tr[1]-tl[1]),h=Math.hypot(bl[0]-tl[0],bl[1]-tl[1]),ang=Math.atan2(tr[1]-tl[1],tr[0]-tl[0]);
+  const a=art.getBoundingClientRect(),z=fitZ,cx=((tl[0]+br[0])/2-a.left)/z,cy=((tl[1]+br[1])/2-a.top)/z,w=Math.hypot(tr[0]-tl[0],tr[1]-tl[1])/z,h=Math.hypot(bl[0]-tl[0],bl[1]-tl[1])/z,ang=Math.atan2(tr[1]-tl[1],tr[0]-tl[0]);
   Object.assign(f.style,{left:cx+'px',top:cy+'px',width:w+'px',height:h+'px',transform:`translate(-50%,-50%) rotate(${ang}rad)`});
 }
 // 고른 내 그림의 효과 칸: 내 그림을 골랐을 때만 보임
@@ -1228,7 +1247,10 @@ function refreshMemo(g){const art=out.querySelector(`.gift[data-i="${gifts.findI
   if(el.classList.contains('editing')){const c=el.querySelector('.crd'),cr=memoCredit(g);if(c)c.textContent=cr?', '+cr:'';return}
   el.querySelectorAll('.tx,.crd').forEach(n=>n.remove());el.insertAdjacentHTML('afterbegin',memoInner(g));
   el.classList.toggle('empty',!(memoOf(g).text||'').trim()&&!memoCredit(g));syncFrame()}
-out.addEventListener('dblclick',e=>{const el=e.target.closest('.stk.txt:not(.foot)');if(el){if(stkSel!==el)selectStk(el);startEdit(el)}});
+let lockTipAt=0;
+out.addEventListener('click',e=>{if(!posLock||!e.target.closest('.stk,[data-piece]'))return;if(Date.now()-lockTipAt<5000)return;lockTipAt=Date.now();toast('위치 잠금 중 · 위 막대 위치 잠금 끄면 이동')});
+$('lockPos').addEventListener('click',()=>{posLock=!posLock;try{localStorage.setItem(LOCK_KEY,posLock?'1':'0')}catch(e){}applyLock();toast(posLock?'위치 잠금 · 스크롤만':'위치 잠금 풀림 · 종이 · 스티커 끌어 옮기기',1800)});
+out.addEventListener('dblclick',e=>{if(posLock)return;const el=e.target.closest('.stk.txt:not(.foot)');if(el){if(stkSel!==el)selectStk(el);startEdit(el)}});
 $('stkText').onclick=()=>{const g=gifts[activeI]||gifts[0];if(!g)return;const id=Date.now().toString(36)+Math.random().toString(36).slice(2,6);
   const gi=gifts.indexOf(g);stkList(g).push({id,t:'text',text:'',x:50,y:45,fs:28,r:0});storeDesign();render({keepDesign:true});
   const el=out.querySelector(`.gift[data-i="${gi}"] .stk[data-id="${id}"]`);selectStk(el);startEdit(el)};
@@ -1281,7 +1303,7 @@ function raisePiece(g,name,art){const order=pieceOrder(g).filter(n=>n!==name);or
 function dragPiece(e,el,g){
   const m=decoMod(g,'piece:'+el.dataset.piece),o={dx:m.dx||0,dy:m.dy||0},sx=e.clientX,sy=e.clientY;let on=false;
   raisePiece(g,el.dataset.piece,el.closest('.gift[data-i]'));
-  const mv=ev=>{const dx=ev.clientX-sx,dy=ev.clientY-sy;
+  const mv=ev=>{const dx=(ev.clientX-sx)/fitZ,dy=(ev.clientY-sy)/fitZ;
     if(!on){if(Math.hypot(dx,dy)<5)return;on=true;el.setPointerCapture(e.pointerId);el.classList.add('moving');getSelection().removeAllRanges()}
     m.dx=Math.round(o.dx+dx);m.dy=Math.round(o.dy+dy);setOff(el,m)};
   const up=()=>{el.removeEventListener('pointermove',mv);el.removeEventListener('pointerup',up);el.removeEventListener('pointercancel',up);el.classList.remove('moving');if(on)storeDesign()};
@@ -1289,6 +1311,7 @@ function dragPiece(e,el,g){
 }
 out.addEventListener('pointerdown',e=>{
   const art=e.target.closest('.gift[data-i]');if(art){activeI=+art.dataset.i;if(!stkBox.hidden||!txBox.hidden){stkWho.value=String(activeI);if(txWho.options.length)txWho.value=String(activeI);syncDeco()}}
+  if(posLock){selectStk(null);return}
   const el=e.target.closest('.sel-frame')?stkSel:e.target.closest('.stk');
   if(!el){selectStk(null);const pc=art&&e.target.closest('[data-piece]');if(pc&&e.button===0){const g=gifts[+art.dataset.i];if(g)dragPiece(e,pc,g)}return}
   const g=gifts[+art.dataset.i];if(!g)return;
@@ -1319,7 +1342,7 @@ function dragDeco(e,el,g){
   const mode=e.target.classList.contains('sz')?'size':e.target.classList.contains('rot')?'rot':'move';
   el.setPointerCapture(e.pointerId);
   const mv=ev=>{
-    if(mode==='move'){m.dx=Math.round(o.dx+ev.clientX-sx);m.dy=Math.round(o.dy+ev.clientY-sy)}
+    if(mode==='move'){m.dx=Math.round(o.dx+(ev.clientX-sx)/fitZ);m.dy=Math.round(o.dy+(ev.clientY-sy)/fitZ)}
     else if(mode==='size'){const d0=Math.hypot(sx-cx,sy-cy)||1;m.s=Math.max(.3,Math.min(4,+(o.s*Math.hypot(ev.clientX-cx,ev.clientY-cy)/d0).toFixed(3)))}
     else if(stick){const a=(x,y)=>Math.atan2(x-cx,cy-y)*180/Math.PI;m.r=Math.round(o.r+a(ev.clientX,ev.clientY)-a(sx,sy))}
     else m.r=Math.round(Math.atan2(ev.clientX-cx,cy-ev.clientY)*180/Math.PI)-base;
