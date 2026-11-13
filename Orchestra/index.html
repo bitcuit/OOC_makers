@@ -22,7 +22,7 @@
   티켓은 팜플렛 위로 20px 만 삐져나오고 클립(.clip, GPT 그림)이 팜플렛 윗변과 티켓을 같이 물고 있다. 클립은 티켓 안에 있고 자리를 이름 칸 기준 비율로 잡아서(사용자 제안) 세로 배치에서도 사진을 가리지 않고, 옮긴 자리도 두 배치에서 같은 곳에 온다. 티켓 · 클립 · 별 · 원(.ring)은 끌어서 옮긴다(--dx · --dy / --cx · --cy / --sx · --sy / --rx · --ry, 두 번 누르면 제자리). 원 · 별은 누르면 작은 창(진하기 막대 · 숨기기)이 뜨고, Delete 로도 숨긴다. 그 제목을 두 번 누르면 되살아난다. 좁은 폭에서는 옮긴 값을 쓰지 않는다.
   홈은 mask 로 실제로 뚫는다(뒤의 팜플렛 · 바탕이 비친다). 그림자는 mask 에 잘리지 않게 바깥 .tk 의 drop-shadow.
   팜플렛 폭 720 이하(폰)는 컨테이너 쿼리로 쌓는다. 저장 복제본은 1180 고정이라 화면 폭과 상관없다.
-  팜플렛 오른쪽 아래에는 그 사람 악기의 연필 스케치(.pm-bg, GPT 그림 img/inst/*.webp)를 연하게 깐다. 악기 이름에 든 낱말로 찾고(INST), 목록에 없으면 깔지 않는다.
+  팜플렛 오른쪽 아래에는 그 사람 악기의 연필 스케치(.pm-bg, GPT 그림 img/inst/*.webp)를 연하게 깐다. 악기마다 크기 배율이 다르고(ART_SCALE), 끌어서 옮길 수 있다(두 번 누르면 제자리). 악기 이름에 든 낱말로 찾고(INST), 목록에 없으면 깔지 않는다.
   이 <style> 에는 카드 규칙만 둔다 — 카드 밖 규칙은 아래 두 번째 <style> 에.
 */
 .pm{--paper:#f5f1e8;--ink:#131417;--soft:#6b675f;--line:rgba(19,20,23,.14);--acc:#b8432c;--tk:#fffdf9;--tk-ink:#131417;--tk-soft:#6b675f;--tk-line:rgba(19,20,23,.14);--stub-w:176px;
@@ -33,7 +33,10 @@
 .lab{font:500 10.5px/1 "Instrument Sans","Hahmlet",sans-serif;letter-spacing:.2em;color:var(--soft);text-transform:uppercase}
 .pm{isolation:isolate}
 .pm-bg{position:absolute;inset:0;z-index:-1;overflow:hidden;border-radius:4px;pointer-events:none}
-.pm-bg img{position:absolute;right:-26px;bottom:-44px;width:auto;height:auto;max-width:560px;max-height:460px;opacity:.12;transform:rotate(-8deg);transform-origin:100% 100%}
+/* 악기마다 크기가 다르다(--s: 바이올린 < 비올라 < 첼로 < 콘트라베이스처럼 실제 크기 순서가 보이게). 끌어서 옮긴 자리는 --ax · --ay */
+.pm-bg img{position:absolute;right:-26px;bottom:-44px;width:auto;height:auto;max-width:calc(560px*var(--s,1));max-height:calc(460px*var(--s,1));opacity:.12;transform:translate(var(--ax,0px),var(--ay,0px)) rotate(-8deg);transform-origin:100% 100%}
+/* 가로로 긴 악기(트롬본 · 플루트 · 피아노 …)는 아래로 덜 내리고 덜 기울여서 잘리지 않게 */
+.pm-bg img.wide{right:14px;bottom:38px;max-width:calc(600px*var(--s,1));max-height:calc(300px*var(--s,1));transform:translate(var(--ax,0px),var(--ay,0px)) rotate(-4deg)}
 .pm-top{display:grid;grid-template-columns:minmax(0,1fr) 690px;gap:36px;align-items:start;padding-bottom:30px}
 .pm-ttl{padding:56px 0 10px}
 .pm-ttl h3{margin-top:18px;font:400 54px/1.05 "Playfair Display","Hahmlet",serif;letter-spacing:-.01em}
@@ -101,7 +104,8 @@
   .tk-main{gap:0 16px;padding:20px 18px 20px;border-radius:5px 5px 0 0}
   .who{width:88px}
   .ph{width:84px;height:108px}
-  .pm-bg img{max-width:300px;max-height:300px}
+  .pm-bg img{max-width:calc(300px*var(--s,1));max-height:calc(300px*var(--s,1));transform:translate(var(--nax,0px),var(--nay,0px)) rotate(-8deg)}
+  .pm-bg img.wide{max-width:calc(320px*var(--s,1));max-height:calc(180px*var(--s,1));transform:translate(var(--nax,0px),var(--nay,0px)) rotate(-4deg)}
   .pm .tk-name{font-size:28px}
   .tk-stub{flex-direction:row;flex-wrap:wrap;align-items:flex-end;gap:12px 24px;padding:18px 22px 20px;border-left:0;border-top:2px dashed rgba(251,246,238,.55);border-radius:0 0 5px 5px}
   .tk-stub .fill{display:none}
@@ -216,6 +220,7 @@ button{cursor:pointer}
 .out .tk,.out .clip,.out .stars,.out .ring{cursor:grab;touch-action:none}
 .out .stars:focus-visible,.out .ring:focus-visible,.out .stars:focus,.out .ring:focus{outline:1px dashed var(--acc);outline-offset:3px}
 .out .tk.drag,.out .clip.drag{cursor:grabbing}
+.out.moving{user-select:none;cursor:grabbing}
 @container (max-width:720px){.out .tk{cursor:auto}.out .tk,.out .clip,.out .stars,.out .ring{touch-action:auto}}
 .out .ph{cursor:pointer}
 .out .ph.sel{outline:2px solid var(--acc);outline-offset:3px}
@@ -572,8 +577,8 @@ const CLIP='data:image/webp;base64,UklGRo41AABXRUJQVlA4WAoAAAAQAAAAXwAAUwEAQUxQS
 // 티켓 · 클립을 끌어 옮긴 자리: 이름 → {tk:[dx,dy], clip:[dx,dy]} (1180 폭 기준 px)
 let place={};try{place=JSON.parse(localStorage.getItem(KEY+'.place')||'{}')||{}}catch(e){}
 // 끌어 옮기는 것마다 쓰는 CSS 변수
-const VARS={tk:['--dx','--dy'],clip:['--cx','--cy'],stars:['--sx','--sy'],ring:['--rx','--ry']};
-const kindOf=el=>el.classList.contains('clip')?'clip':el.classList.contains('stars')?'stars':el.classList.contains('ring')?'ring':'tk';
+const VARS={tk:['--dx','--dy'],clip:['--cx','--cy'],stars:['--sx','--sy'],ring:['--rx','--ry'],art:['--ax','--ay'],artn:['--nax','--nay']};
+const kindOf=el=>el.classList.contains('clip')?'clip':el.classList.contains('stars')?'stars':el.classList.contains('ring')?'ring':el.classList.contains('art')?(el.closest('.pm').offsetWidth>720?'art':'artn'):'tk';
 // 숨긴 표시(원 · 별): place[이름].hide = {ring:1, stars:1}
 const hidden=(name,kind)=>!!(place[name]&&place[name].hide&&place[name].hide[kind]);
 function placeStyle(name,kind){
@@ -598,7 +603,19 @@ function imgStyle(p){
 const INST=[['english-horn',/잉글리[시쉬]\s*호른|코랑글레/],['bass-drum',/큰북|베이스\s*드럼/],['bass',/콘트라\s*베이스|더블\s*베이스/],['piccolo',/피콜로/],['violin',/바이올린/],['viola',/비올라/],['cello',/첼로/],['harp',/하프(?!시코드)/],
   ['flute',/플루트|플룻/],['oboe',/오보에/],['clarinet',/클라리넷/],['bassoon',/바순|파곳/],['saxophone',/[색섹]소폰/],['recorder',/리코더/],['horn',/호른/],['trumpet',/트럼펫/],['trombone',/트롬본/],['tuba',/튜바/],
   ['timpani',/팀파니/],['snare',/스네어|작은북|드럼/],['cymbals',/심벌/],['marimba',/마림바|실로폰|비브라폰/],['triangle',/트라이앵글/],['piano',/피아노/],['organ',/오르간/],['guitar',/기타/],['baton',/지휘/]];
-function instImg(inst){const m=INST.find(([,re])=>re.test(inst||''));return m?'img/inst/'+m[0]+'.webp':''}
+function instKey(inst){const m=INST.find(([,re])=>re.test(inst||''));return m?m[0]:''}
+function instImg(inst){const k=instKey(inst);return k?'img/inst/'+k+'.webp':''}
+// 배경 그림 크기 배율(같은 무리 안에서 실제 크기 순서가 보이게)과 가로로 긴 악기
+const ART_SCALE={violin:.74,viola:.88,cello:1.1,bass:1.3,harp:1.15,piccolo:.62,flute:1,oboe:.95,'english-horn':1.05,clarinet:1,bassoon:1.2,recorder:.75,saxophone:1,trumpet:.85,trombone:1.05,horn:.95,tuba:1.15,
+  triangle:.7,snare:.85,cymbals:.9,'bass-drum':1.15,timpani:1.05,marimba:1.05,piano:1.1,organ:1.2,guitar:.95,baton:.8};
+const ART_WIDE=new Set(['flute','piccolo','trumpet','trombone','timpani','marimba','piano','baton']);
+function artHtml(name,inst){
+  const k=instKey(inst);if(!k)return '';
+  const pl=place[name]||{}, parts=[`--s:${ART_SCALE[k]||1}`];
+  if(Array.isArray(pl.art))parts.push(`--ax:${pl.art[0]}px;--ay:${pl.art[1]}px`);       // 가로 배치에서 옮긴 자리
+  if(Array.isArray(pl.artn))parts.push(`--nax:${pl.artn[0]}px;--nay:${pl.artn[1]}px`);   // 세로 배치에서 옮긴 자리
+  return `<div class="pm-bg"><img class="art${ART_WIDE.has(k)?' wide':''}" src="img/inst/${k}.webp" alt="" draggable="false" style="${parts.join(';')}"></div>`;
+}
 const FACE_COLOR='#d9c7b8';
 function photoHtml(name,inst){
   const ph=photos[name], f=face[name]||{}, mode=f.mode||'color', art=instImg(inst);
@@ -611,8 +628,7 @@ function ticket(p,idx){
   const fav=[...p.pieces.filter(x=>x.kind==='best'),...p.pieces.filter(x=>x.kind==='fav')];
   const skill=p.pieces.filter(x=>x.kind==='skill');
   const ens=ensemble||'Orchestra';
-  const art=instImg(p.inst);
-  return `<article class="pm" data-name="${esc(p.name)}">${art?`<div class="pm-bg"><img src="${art}" alt=""></div>`:''}
+  return `<article class="pm" data-name="${esc(p.name)}">${artHtml(p.name,p.inst)}
   <div class="pm-top">
     <header class="pm-ttl"><p class="lab">Programme</p><h3${/[가-힣]/.test(ens)?' class="ko"':''}>${esc(ens)}</h3><p class="ssn">Season ${season()}</p></header>
     <div class="tk"${placeStyle(p.name,'tk')}><div class="tk-in">
@@ -790,10 +806,17 @@ $('clear').onclick=()=>{src.value='';render();src.focus()};
 // 좁은 배치에서는 손가락으로 밀면 화면이 스크롤돼야 하니 마우스로만 끈다
 let mv=null, justMoved=false;
 const wide=el=>el.closest('.pm').offsetWidth>720;
+// 배경 악기 그림은 글자 밑에 깔려 있어서 직접 잡히지 않는다 — 누른 자리가 그림 안이면 그 그림을 돌려준다
+function artAt(e){
+  if(e.target.closest('.ph,.circ,.stars,#tool,#markTool'))return null;
+  const pm=e.target.closest('.pm'), a=pm&&pm.querySelector('.pm-bg img');if(!a)return null;
+  const r=a.getBoundingClientRect();
+  return e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom?a:null;
+}
 out.addEventListener('pointerdown',e=>{
   // 원은 제목 글자 뒤에 깔려 있어서, 제목을 잡으면 원을 잡은 것으로 본다
   const circ=e.target.closest('.circ'), ring=circ&&!e.target.closest('.stars')&&circ.querySelector('.ring');
-  const el=ring||e.target.closest('.stars,.clip,.tk');if(!el||e.button>0||e.target.closest('.ph.sel.has'))return;
+  const el=ring||e.target.closest('.stars,.clip,.tk')||artAt(e);if(!el||e.button>0||e.target.closest('.ph.sel.has'))return;
   const kind=kindOf(el), name=el.closest('.pm').dataset.name;
   if(!wide(el)&&(kind==='tk'||e.pointerType!=='mouse'))return;
   if(ring)setTimeout(()=>ring.focus(),0);
@@ -808,7 +831,7 @@ out.addEventListener('pointerdown',e=>{
 out.addEventListener('pointermove',e=>{
   if(!mv||e.pointerId!==mv.id)return;
   const dx=e.clientX-mv.x, dy=e.clientY-mv.y;
-  if(!mv.moved){if(Math.abs(dx)+Math.abs(dy)<4)return;mv.moved=true;mv.el.classList.add('drag');mv.el.setPointerCapture(mv.id)}
+  if(!mv.moved){if(Math.abs(dx)+Math.abs(dy)<4)return;mv.moved=true;mv.el.classList.add('drag');out.classList.add('moving');const sl=getSelection();if(sl)sl.removeAllRanges();mv.el.setPointerCapture(mv.id)}
   if(mv.kind==='clip'){
     const f=Math.max(-.7,Math.min(1.9,+(mv.f0+dx/mv.nw).toFixed(4))), y=Math.round(mv.y0+dy);
     mv.el.style.setProperty('--cf',f);mv.el.style.setProperty('--cy',y+'px');mv.now={f,y};
@@ -820,20 +843,45 @@ out.addEventListener('pointermove',e=>{
 });
 function endMove(){
   if(!mv)return;
-  if(mv.moved){mv.el.classList.remove('drag');(place[mv.name]=place[mv.name]||{})[mv.kind]=mv.now;savePlace();justMoved=true;setTimeout(()=>{justMoved=false},0)}
+  if(mv.moved){mv.el.classList.remove('drag');out.classList.remove('moving');(place[mv.name]=place[mv.name]||{})[mv.kind]=mv.now;savePlace();justMoved=true;setTimeout(()=>{justMoved=false},0)}
   mv=null;
 }
 out.addEventListener('pointerup',endMove);out.addEventListener('pointercancel',endMove);
-function savePlace(){try{localStorage.setItem(KEY+'.place',JSON.stringify(place))}catch(e){}}
+function savePlace(){try{localStorage.setItem(KEY+'.place',JSON.stringify(place))}catch(e){}record()}
+// ── 되돌리기(Ctrl+Z) · 다시 하기(Ctrl+Shift+Z · Ctrl+Y): 옮긴 자리 · 숨김 · 진하기 · 빈 칸 모양 · 사진(넣기 · 빼기 · 확대 · 자리) ──
+// 붙여넣기 칸 같은 글 칸 안에서는 브라우저의 글자 되돌리기가 그대로 돈다
+const hist=[];let hi=-1, applying=false;
+const snap=()=>({place:JSON.stringify(place),face:JSON.stringify(face),photos:Object.fromEntries(Object.entries(photos).map(([k,v])=>[k,{...v}]))});
+const samePhotos=(a,b)=>{const ka=Object.keys(a),kb=Object.keys(b);return ka.length===kb.length&&ka.every(k=>b[k]&&a[k].src===b[k].src&&a[k].z===b[k].z&&a[k].x===b[k].x&&a[k].y===b[k].y)};
+function record(){
+  if(applying)return;
+  const s=snap(), last=hist[hi];
+  if(last&&last.place===s.place&&last.face===s.face&&samePhotos(last.photos,s.photos))return;
+  hist.length=hi+1;hist.push(s);if(hist.length>100)hist.shift();hi=hist.length-1;
+}
+function applyHist(i){
+  if(i<0||i>=hist.length)return;
+  applying=true;hi=i;const s=hist[i];
+  place=JSON.parse(s.place);face=JSON.parse(s.face);
+  for(const n of new Set([...Object.keys(photos),...Object.keys(s.photos)])){if(s.photos[n])photos[n]={...s.photos[n]};else delete photos[n];putPhoto(n)}
+  savePlace();saveFace();render();
+  applying=false;
+}
+document.addEventListener('keydown',e=>{
+  if(!(e.ctrlKey||e.metaKey)||e.altKey||(e.code!=='KeyZ'&&e.code!=='KeyY'))return;
+  if(e.target.closest&&e.target.closest('textarea,input'))return;
+  e.preventDefault();
+  if(e.code==='KeyY'||e.shiftKey)applyHist(hi+1);else applyHist(hi-1);
+});
 out.addEventListener('dblclick',e=>{
   if(e.target.closest('.ph'))return;
   // 제일 좋아하는 곡 제목(원 · 별 포함)을 두 번 누르면: 숨긴 원 · 별을 되살리고 둘 다 제자리로
   const circ=e.target.closest('.circ');
   if(circ){const name=circ.closest('.pm').dataset.name;if(place[name]){delete place[name].ring;delete place[name].stars;delete place[name].hide;delete place[name].op;savePlace()}render();return}
-  const el=e.target.closest('.tk,.clip');if(!el)return;
+  const el=e.target.closest('.tk,.clip')||artAt(e);if(!el)return;
   const kind=kindOf(el), name=el.closest('.pm').dataset.name;
   if(place[name]){delete place[name][kind];savePlace()}
-  el.removeAttribute('style');
+  render();
 });
 // 원 · 별을 누르면 그 아래 작은 창: 진하기 막대 · 숨기기
 const markTool=$('markTool'), markOp=$('markOp');let mk=null;
@@ -869,7 +917,7 @@ out.addEventListener('dragstart',e=>{if(e.target.closest('.tk,.clip,.stars,.ring
 let dbp=null;
 function db(){return dbp||(dbp=new Promise((ok,no)=>{const r=indexedDB.open('orchestra',1);r.onupgradeneeded=()=>r.result.createObjectStore('images');r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)}))}
 async function store(mode,fn){const d=await db();return new Promise((ok,no)=>{const tx=d.transaction('images',mode),req=fn(tx.objectStore('images'));tx.oncomplete=()=>ok(req&&req.result);tx.onerror=()=>no(tx.error)})}
-const putPhoto=name=>store('readwrite',st=>photos[name]?st.put(photos[name],'photo:'+name):st.delete('photo:'+name)).catch(()=>{});
+const putPhoto=name=>{record();return store('readwrite',st=>photos[name]?st.put(photos[name],'photo:'+name):st.delete('photo:'+name)).catch(()=>{})};
 async function loadPhotos(){
   try{
     const keys=await store('readonly',st=>st.getAllKeys()), vals=await store('readonly',st=>st.getAll());
@@ -919,7 +967,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&sel!=null)select(nu
 main.addEventListener('scroll',placeTool);addEventListener('scroll',placeTool);addEventListener('resize',placeTool);
 $('phPick').onclick=()=>{if(sel!=null)pick(sel)};
 $('phDel').onclick=()=>{if(sel==null)return;delete photos[sel];putPhoto(sel);render()};
-function saveFace(){try{localStorage.setItem(KEY+'.face',JSON.stringify(face))}catch(e){}}
+function saveFace(){try{localStorage.setItem(KEY+'.face',JSON.stringify(face))}catch(e){}record()}
 modeSeg.addEventListener('click',e=>{const b=e.target.closest('[data-m]');if(!b||sel==null)return;(face[sel]=face[sel]||{}).mode=b.dataset.m;saveFace();render()});
 colorIn.addEventListener('input',()=>{if(sel==null)return;(face[sel]=face[sel]||{}).color=colorIn.value;const ph=[...out.querySelectorAll('.ph')].find(x=>x.dataset.ph===sel);if(ph)ph.style.background=colorIn.value});
 colorIn.addEventListener('change',saveFace);
@@ -1047,7 +1095,7 @@ $('savePng').onclick=async()=>{
 let saved='';try{saved=localStorage.getItem(KEY+'.input')||''}catch(e){}
 src.value=saved===SAMPLE?'':saved;   // 손대지 않은 예시는 새로고침 때 비운다
 render();
-loadPhotos().then(()=>{if(Object.keys(photos).length)render()});
+loadPhotos().then(()=>{if(Object.keys(photos).length)render();record()});   // 처음 상태를 되돌리기의 바닥으로
 </script>
 </body>
 </html>
