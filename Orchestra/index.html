@@ -71,7 +71,7 @@
 .sec+.sec{margin-top:30px}
 .sec>.lab{display:flex;align-items:baseline;gap:10px;margin-bottom:16px;color:var(--ink)}
 .sec>.lab small{font:400 12px/1 "Hahmlet",serif;letter-spacing:0;color:var(--soft);text-transform:none}
-.prog{list-style:none;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px 0}
+.prog{list-style:none;padding:0;display:grid;grid-template-columns:repeat(var(--n,3),minmax(0,1fr));gap:22px 0}
 .pc{display:grid;grid-template-columns:28px minmax(0,1fr);gap:0 10px;padding:0 26px}
 .pc:first-child{padding-left:0}
 .pc:last-child{padding-right:0}
@@ -345,7 +345,7 @@ html{scrollbar-color:rgba(245,241,232,.25) transparent}
   .steps li+li{padding-left:12px}
   .steps li:nth-child(3){padding-left:0}
   .steps i{font-size:26px}
-  .tickets{padding:28px 16px 48px}
+  .tickets{padding:28px 16px 48px;overflow-x:clip}   /* 기울인 별 · 원이 화면 오른쪽으로 몇 px 넘쳐 가로 스크롤이 생기던 것을 막는다 */
   .th{flex-wrap:wrap;gap:8px 16px}
   .th h2{font-size:34px}
   .th .push{flex:1 0 100%;height:0}
@@ -398,6 +398,7 @@ html{scrollbar-color:rgba(245,241,232,.25) transparent}
       <span class="status" id="saveStatus" aria-live="polite"></span>
       <button class="ibtn" id="helpBtn" type="button" aria-label="도움말" title="도움말" aria-expanded="false" aria-controls="help">i</button>
       <div class="lay" id="layout" role="group" aria-label="티켓 모양"><button class="tbtn two" type="button" data-lay="wide" aria-pressed="true"><small>가로</small><b>브로슈어</b></button><button class="tbtn two" type="button" data-lay="tall" aria-pressed="false"><small>세로</small><b>리플릿</b></button></div>
+      <button class="tbtn two" id="ensBtn" type="button" aria-pressed="false" title="팜플렛 제목의 악단 이름을 티켓 오른쪽(떼는 쪽)에도 표시"><small>악단 이름</small><b>티켓에 표시</b></button>
       <button class="tbtn two" id="pngClear" type="button" aria-pressed="false" title="PNG 바탕을 비워서 저장"><small>배경</small><b>투명</b></button>
       <button class="cta two" id="savePng" type="button" title="사람마다 파일 하나"><small>PNG 저장</small><b>티켓 발권</b></button>
     </div>
@@ -437,17 +438,25 @@ html{scrollbar-color:rgba(245,241,232,.25) transparent}
 갈래:
 좋아하는 부분:
 이유:
+[좋아하는 곡] 작곡가 - 곡 제목
+갈래:
+좋아하는 부분:
+이유:
 [자신 있는 곡] 작곡가 - 곡 제목
 갈래:
 실력: 1~5 숫자
 한마디: 이 곡을 연주하는 자기 실력에 대해 그 인물이 하는 말
+[자신 있는 곡] 작곡가 - 곡 제목
+갈래:
+실력:
+한마디:
 
 - 악단 이름은 두 사람의 설정과 세계관에 어울리게 짓는다. 실제로 있는 악단 이름은 쓰지 않는다.
 - 악기와 자리는 성격, 체격, 살아온 배경, 음악 경험에서 고른다. 악기를 다루는 설정이 있으면 그 악기를 따른다. 오케스트라에 드문 악기도 설정에 근거가 있으면 된다.
 - 연주 스타일은 그 사람이 소리를 내는 방식이다. 음색, 박자를 대하는 태도, 합주에서 남과 맞추는 법, 연습 습관 가운데 그 인물다운 것을 고른다.
-- 좋아하는 곡은 [제일 좋아하는 곡] 하나와 [좋아하는 곡] 둘. 단원이라고 클래식만 고르지 않는다. 갈래는 정해 두지 않고, 그 인물이 평소 즐겨 들을 법한 음악에서 고른다. 세 곡의 갈래가 같아도, 모두 달라도 된다.
+- 좋아하는 곡은 모두 세 곡이다. [제일 좋아하는 곡] 하나와 [좋아하는 곡] 둘을 빠짐없이 쓴다. 단원이라고 클래식만 고르지 않는다. 갈래는 정해 두지 않고, 그 인물이 평소 즐겨 들을 법한 음악에서 고른다. 세 곡의 갈래가 같아도, 모두 달라도 된다.
 - 좋아하는 부분은 악장, 주제가 돌아오는 곳, 어떤 악기가 들어오는 순간처럼 곡을 들어 본 사람이 짚을 수 있는 대목으로 쓴다. 분·초는 확실할 때만 쓴다.
-- 자신 있는 곡은 1~2개, 그 악기로 연주하는 곡(편곡 포함)이다. 실력은 설정이 뒷받침하는 만큼만 매기고 부풀리지 않는다.
+- 자신 있는 곡은 두 곡, 그 악기로 연주하는 곡(편곡 포함)이다. 두 곡 모두 빠짐없이 쓴다. 실력은 설정이 뒷받침하는 만큼만 매기고 부풀리지 않는다.
 - 곡은 실제로 있는 곡만 고른다. 작곡가나 제목이 확실하지 않으면 다른 곡을 고른다. 곡을 지어내지 않는다.
 - 감정은 두 사람의 설정이 뒷받침하는 만큼만 쓴다.
 - 한 항목은 한 줄. 번호, 목록 기호, 따옴표, 굵은 글씨, 표, 이모지, 맺음말을 쓰지 않는다.]</pre></div>
@@ -710,13 +719,14 @@ function ticket(p,idx){
         <div class="nmcol"><h4 class="tk-name">${esc(p.name||'이름 없음')}</h4>${p.style?`<p class="tk-style"><span class="lab">Playing style</span>${br(p.style)}</p>`:''}</div>
       </div>
       <aside class="tk-stub">
+        ${showEns&&ensemble?`<div class="ens"><p class="lab">Orchestra</p><p class="seat">${esc(ensemble)}</p></div>`:''}
         ${p.seat?`<div><p class="lab">Seat</p><p class="seat">${br(p.seat)}</p></div>`:''}
         <i class="fill"></i>
         <div class="code"><div class="bars">${bars(p.name+idx)}</div><p class="bars-n">No. ${pad(idx+1,3)}</p></div>
       </aside>
     </div><img class="clip" src="${CLIP}" alt="" draggable="false"${placeStyle(p.name,'clip')}></div>
   </div>
-  ${fav.length?`<section class="sec"><p class="lab">Program<small>좋아하는 곡</small></p><ol class="prog">${fav.map((x,i)=>pieceHtml(x,i,p.name)).join('')}</ol></section>`:''}
+  ${fav.length?`<section class="sec"><p class="lab">Program<small>좋아하는 곡</small></p><ol class="prog" style="--n:${Math.min(3,fav.length)}">${fav.map((x,i)=>pieceHtml(x,i,p.name)).join('')}</ol></section>`:''}
   ${skill.length?`<section class="sec enc"><p class="lab">Encore<small>자신 있는 곡</small></p><ol class="prog">${skill.map(pieceHtml).join('')}</ol></section>`:''}
 </article>`;
 }
@@ -770,7 +780,7 @@ const HELP=[
   ['단원 사진',()=>`<span class="ph" style="background:${FACE_COLOR}"></span>`,[['타원 누르기','사진 넣기 · 빈 칸 모양'],['끌기 · 휠','사진 자리 · 확대'],['Delete','사진 빼기']]],
   ['악기 그림',()=>`<img src="img/inst/violin.webp" alt="" style="opacity:.55">`,[['끌기','옮기기'],['모서리 끌기','크기'],['위 동그라미 끌기','기울기'],['두 번 누르기','제자리']]],
   ['되돌리기 · 글',()=>`<kbd>Ctrl</kbd><kbd>Z</kbd><i class="kgap"></i><kbd>Enter</kbd>`,[['Ctrl+Z','되돌리기'],['Ctrl+Shift+Z','다시 하기'],['글 중간 줄바꿈','출력에도 줄바꿈'],['명단 고치기','글 다시 열기']]],
-  ['저장',()=>`<span class="chess"></span>`,[['배경 투명','PNG 바탕 비우기'],['가로 · 세로','브로슈어 · 리플릿'],['티켓 발권','사람마다 PNG 한 장']]],
+  ['저장',()=>`<span class="chess"></span>`,[['악단 이름','티켓에도 표시하기 · 빼기'],['배경 투명','PNG 바탕 비우기'],['가로 · 세로','브로슈어 · 리플릿'],['티켓 발권','사람마다 PNG 한 장']]],
 ];
 function drawHelp(){$('helpG').innerHTML=HELP.map(([t,pic,rows])=>`<section class="hc"><div class="pic">${pic()}</div><h3>${t}</h3><dl>${rows.map(([a,b])=>`<dt>${a}</dt><dd>${b}</dd>`).join('')}</dl></section>`).join('')}
 const setHelpPip=makePip($('help'),$('helpBtn'),'.pip-x');
@@ -780,7 +790,7 @@ $('helpBtn').addEventListener('click',()=>{if(!$('helpG').firstChild)drawHelp()}
 $('resetNo').onclick=()=>setResetPip(false);
 // 초기화: 이 도구가 브라우저에 남긴 것만 지운다(글 · 이름 · 옮긴 자리 · 빈 칸 모양 · 사진)
 $('resetGo').onclick=async()=>{
-  ['input','cast','place','face','layout','clear'].forEach(k=>{try{localStorage.removeItem(KEY+'.'+k)}catch(e){}});
+  ['input','cast','place','face','layout','clear','ens'].forEach(k=>{try{localStorage.removeItem(KEY+'.'+k)}catch(e){}});
   try{await store('readwrite',st=>st.clear())}catch(e){}
   location.reload();
 };
@@ -1238,6 +1248,10 @@ function lockSave(on){saving=on;saveSt.classList.toggle('busy',on);$('savePng').
 // 티켓 모양: wide(가로 1180 — 브로슈어) / tall(세로 420 — 리플릿). 화면 보기와 PNG 가 같이 바뀐다
 let layout='wide';try{if(localStorage.getItem(KEY+'.layout')==='tall')layout='tall'}catch(e){}
 // PNG 바탕: 기본은 화면과 같은 검정, 체크하면 투명(티켓의 홈은 실제로 뚫려 있어 그대로 비친다)
+// 티켓에 악단 이름: 기본 켬(팜플렛 제목과 겹쳐 나오는 것이 기본, 사용자 지시). 떼는 쪽 맨 위에 (OOC 에 악단 줄이 있을 때만)
+const ensBtn=$('ensBtn');var showEns=true;try{showEns=localStorage.getItem(KEY+'.ens')!=='0'}catch(e){}
+ensBtn.setAttribute('aria-pressed',String(showEns));
+ensBtn.addEventListener('click',()=>{showEns=!showEns;ensBtn.setAttribute('aria-pressed',String(showEns));try{localStorage.setItem(KEY+'.ens',showEns?'1':'0')}catch(e){}render()});
 const clearBtn=$('pngClear');let pngClear=false;try{pngClear=localStorage.getItem(KEY+'.clear')==='1'}catch(e){}
 clearBtn.setAttribute('aria-pressed',String(pngClear));
 clearBtn.addEventListener('click',()=>{pngClear=!pngClear;clearBtn.setAttribute('aria-pressed',String(pngClear));try{localStorage.setItem(KEY+'.clear',pngClear?'1':'0')}catch(e){}});
