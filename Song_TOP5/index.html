@@ -188,6 +188,9 @@ button{cursor:pointer}
 .who .seg button{padding:0 10px}
 .who.msg b{font-weight:600}
 .grp{display:inline-flex;align-items:center;gap:10px}
+.who.look .tog{height:auto;padding:0;border:0;background:none}
+.who.look.solo{padding-right:12px}
+.who.look [hidden]{display:none}
 .vsep{width:1px;height:18px;margin:0 2px;background:var(--line)}
 .who[hidden]{display:none}
 .tog:focus-visible{outline:2px dashed var(--ink);outline-offset:2px}
@@ -350,7 +353,7 @@ html{scrollbar-color:rgba(29,28,34,.25) transparent}
 </head>
 <body>
 <main class="stage is-empty" id="main">
-  <div class="topbar" id="topbar" hidden><button class="tog" id="thumbs" type="button" aria-pressed="true">곡별 앨범아트<i class="sw"></i></button><label class="who pen" id="hlRow" hidden>형광펜<input id="hlColor" type="color" value="#ffffff" aria-label="지금 곡 제목의 형광펜 색"></label><span class="who" id="albRow" hidden>앨범<span class="seg" id="albSeg" role="group" aria-label="앨범 배치"><button type="button" data-dir="h">가로</button><button type="button" data-dir="v">세로</button></span></span><span class="who msg" id="msgRow" hidden><b>메시지</b><i class="vsep"></i><span class="grp">줄바꿈<span class="seg" id="wrapSeg" role="group" aria-label="메시지 줄바꿈"><button type="button" data-wrap="char" title="메신저처럼 글자 단위">글자</button><button type="button" data-wrap="word" title="낱말이 끊기지 않게">어절</button></span></span><i class="vsep"></i><span class="grp">오른쪽 말풍선<span class="seg" id="meSeg" role="group" aria-label="메시지에서 오른쪽에 설 사람"></span></span></div>
+  <div class="topbar" id="topbar" hidden><span class="who look" id="artRow"><button class="tog" id="thumbs" type="button" aria-pressed="true">곡별 앨범아트<i class="sw"></i></button><i class="vsep" id="artSep"></i><span class="grp" id="bgGrp">바탕<span class="seg" id="bgSeg" role="group" aria-label="카드 바탕"><button type="button" data-bg="blur" title="대표 그림을 흐리게 번지게">번짐</button><button type="button" data-bg="flat" title="대표 그림의 한 가지 색">단색</button></span></span></span><label class="who pen" id="hlRow" hidden>형광펜<input id="hlColor" type="color" value="#ffffff" aria-label="지금 곡 제목의 형광펜 색"></label><span class="who" id="albRow" hidden>앨범<span class="seg" id="albSeg" role="group" aria-label="앨범 배치"><button type="button" data-dir="h">가로</button><button type="button" data-dir="v">세로</button></span></span><span class="who msg" id="msgRow" hidden><b>메시지</b><i class="vsep"></i><span class="grp">줄바꿈<span class="seg" id="wrapSeg" role="group" aria-label="메시지 줄바꿈"><button type="button" data-wrap="char" title="메신저처럼 글자 단위">글자</button><button type="button" data-wrap="word" title="낱말이 끊기지 않게">어절</button></span></span><i class="vsep"></i><span class="grp">오른쪽 말풍선<span class="seg" id="meSeg" role="group" aria-label="메시지에서 오른쪽에 설 사람"></span></span></div>
   <div class="blank" id="blank"></div>
   <div class="out" id="out" aria-live="polite"></div>
 </main>
@@ -430,7 +433,8 @@ html{scrollbar-color:rgba(29,28,34,.25) transparent}
     <dt>그림 끌어다 놓기 · Ctrl+V</dt><dd>그 커버에 그림 넣기</dd>
     <dt>넣은 그림 끌기 · 휠</dt><dd>틀 안 자리 · 확대</dd>
     <dt>그림</dt><dd>사람마다 대표 · 프로필(곡별 앨범아트를 켜면 곡 그림도)을 한 창에서</dd>
-    <dt>곡별 앨범아트</dt><dd>켬: 곡마다 다른 그림 · 곡 줄 작은 커버 / 끔: 대표 그림 하나</dd></dl>
+    <dt>곡별 앨범아트</dt><dd>켬: 곡마다 다른 그림 · 곡 줄 작은 커버 / 끔: 대표 그림 하나</dd>
+    <dt>바탕</dt><dd>번짐: 그림을 흐리게 / 단색: 그림의 평균 색</dd></dl>
     <h4>곡</h4>
     <dl><dt>곡 제목 누르기</dt><dd>유튜브 검색 새 탭</dd>
     <dt>곡 줄 · 이전 · 다음 누르기</dt><dd>그 곡으로 (플레이어 · CD)</dd>
@@ -659,8 +663,8 @@ function readImage(file){return new Promise((ok,no)=>{
 const pad2=n=>String(n).padStart(2,'0');
 const ck=(key,label,has=!!covers[key])=>`data-ck="${esc(key)}" tabindex="0" role="button" aria-label="${esc(label)} 커버 그림 넣기" title="${has?'끌어서 옮기기 · 휠로 확대 · 누르면 바꾸기':'눌러서 그림 넣기 · 올려놓고 Ctrl+V'}"${has?' data-has':''}`;
 const TINT='linear-gradient(rgba(24,20,34,.22),rgba(24,20,34,.5))';
-let people=[], shape='player', thumbs=false, heads={}, cur={}, me='', hl='#ffffff', bars={}, wrap='char', clear=false, albDir='h';   // thumbs = 곡별 앨범아트(기본 끔, 저장 이름 rowArt)
-try{const s=JSON.parse(localStorage.getItem(KEY+'.settings')||'null');if(s&&['player','cd','album','list'].includes(s.shape))shape=s.shape;if(s&&s.heads&&typeof s.heads==='object')heads=s.heads;if(s&&typeof s.me==='string')me=s.me;if(s&&/^#[0-9a-f]{6}$/i.test(s.hl||''))hl=s.hl;if(s&&s.bars&&typeof s.bars==='object')bars=s.bars;if(s&&s.wrap==='word')wrap='word';if(s&&s.clear===true)clear=true;if(s&&s.albDir==='v')albDir='v'}catch(e){}
+let people=[], shape='player', thumbs=false, heads={}, cur={}, me='', hl='#ffffff', bars={}, wrap='char', clear=false, albDir='h', bgMode='blur';   // thumbs = 곡별 앨범아트(기본 끔, 저장 이름 rowArt)
+try{const s=JSON.parse(localStorage.getItem(KEY+'.settings')||'null');if(s&&['player','cd','album','list'].includes(s.shape))shape=s.shape;if(s&&s.heads&&typeof s.heads==='object')heads=s.heads;if(s&&typeof s.me==='string')me=s.me;if(s&&/^#[0-9a-f]{6}$/i.test(s.hl||''))hl=s.hl;if(s&&s.bars&&typeof s.bars==='object')bars=s.bars;if(s&&s.wrap==='word')wrap='word';if(s&&s.clear===true)clear=true;if(s&&s.albDir==='v')albDir='v';if(s&&s.bg==='flat')bgMode='flat'}catch(e){}
 const curOf=p=>Math.max(0,Math.min(p.songs.length-1,cur[p.name]||0));
 const ICON={prev:'<svg width="20" height="20" viewBox="0 0 24 24"><path d="M6 5h2v14H6zM20 5v14L9 12z"/></svg>',pause:'<svg width="28" height="28" viewBox="0 0 24 24"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>',next:'<svg width="20" height="20" viewBox="0 0 24 24"><path d="M16 5h2v14h-2zM4 5l11 7-11 7z"/></svg>'};
 // 곡 제목 → 유튜브에서 '제목 가수'로 찾은 화면
@@ -672,13 +676,18 @@ const sub=s=>[s.artist,s.genre].filter(Boolean).map(esc).join(' · ');
 // 대표 그림의 기본 색 = 1번 곡 색(그 곡에 고친 색이 있으면 그 색)
 function leadSd(p){const s=p.songs.find(x=>x.rank===1)||p.songs[0];return s?tints[songKey(s)]||s.color||s.g:(p.title||p.name)}
 function artOf(p,s){return thumbs?{k:songKey(s),sd:s.color||s.g,lb:s.title}:{k:albumKey(p),sd:leadSd(p),lb:(p.title||p.name)+' 대표'}}
+// 카드 바탕: 번짐 = 흐린 그림, 단색 = 대표 그림의 평균 색(그림이 없으면 색 면의 가운데 색)
+const avgs={};
+function avgOf(k){const c=covers[k];if(!avgs[k]||avgs[k].bg!==c.bg){avgs[k]={bg:c.bg,col:null};const im=new Image();im.onload=()=>{const cv=document.createElement('canvas');cv.width=cv.height=1;const g=cv.getContext('2d');g.imageSmoothingQuality='high';g.drawImage(im,0,0,1,1);const d=g.getImageData(0,0,1,1).data;avgs[k].col='#'+[0,1,2].map(i=>d[i].toString(16).padStart(2,'0')).join('');if(people.length)draw()};im.src=c.bg}
+  return avgs[k].col||'#8a8790'}
+function back(k,sd){if(bgMode==='blur')return cover(k,sd,true);const col=covers[k]?avgOf(k):midHex(tints[k]||sd);return `linear-gradient(${col},${col})`}
 const glow=(k,sd)=>covers[k]?`<i class="st-glow" data-cv="${esc(k)}" style="background-image:${cover(k,sd)}"></i>`:'';   // 넣은 그림에만
 // 재생바 자리(0~1): 끌어서 정한 값(곡마다), 없으면 순위에 따라
 const barOf=(s,i,n)=>bars[songKey(s)]!=null?bars[songKey(s)]:(i+.5)/n;
 function playerHtml(p,pi){
   const i=curOf(p), s=p.songs[i], {k,sd,lb}=artOf(p,s);
   const rest=p.songs.map((x,j)=>j===i?'':`<div class="pl-row" data-go="${j}"><span class="st-n">${x.rank}</span><i class="st-cv" ${cvAttr(songKey(x),x.color||x.g)}></i><div><b>${star(x)}${yt(x)}</b>${x.artist?`<span>${esc(x.artist)}</span>`:''}${x.why?`<p>${br(x.why)}</p>`:''}</div></div>`).join('');
-  return `<article class="st st-player${thumbs?'':' no-thumb'}" data-p="${pi}" data-name="${esc(p.name)}" style="background-image:${TINT},${cover(k,sd,true)}">
+  return `<article class="st st-player${thumbs?'':' no-thumb'}" data-p="${pi}" data-name="${esc(p.name)}" style="background-image:${TINT},${back(k,sd)}">
   <div class="pl-top"><div>${p.title?`<b>${esc(p.title)}</b>`:''}<span>${esc(p.name||'이름 없음')}</span></div><span class="st-n">No.${s.rank}</span></div>
   <div class="pl-gw">${glow(k,sd)}<div class="st-cv pl-art" ${ck(k,lb)} ${cvAttr(k,sd)}></div></div>
   <p class="pl-t1">${star(s)}${yt(s)}</p>${sub(s)?`<p class="pl-t2">${sub(s)}</p>`:''}
@@ -692,7 +701,7 @@ function playerHtml(p,pi){
 const VEIL='linear-gradient(rgba(247,246,243,.42),rgba(247,246,243,.8) 58%,rgba(247,246,243,.88))';
 function cdHtml(p,pi){
   const i=curOf(p), s=p.songs[i], {k,sd,lb}=artOf(p,s);
-  return `<article class="st st-cd" data-p="${pi}" data-name="${esc(p.name)}" style="--hl:${hl};background-image:${VEIL},${cover(k,sd,true)}">
+  return `<article class="st st-cd" data-p="${pi}" data-name="${esc(p.name)}" style="--hl:${hl};background-image:${VEIL},${back(k,sd)}">
   <div class="cd-gw">${glow(k,sd)}<div class="st-cv cd-disc" ${ck(k,lb)} ${cvAttr(k,sd)}></div></div>
   <div class="cd-lcd"><span>DISC 1</span><span class="st-n">TRACK ${pad2(i+1)} / ${pad2(p.songs.length)}</span></div>
   <h3>${esc(p.title||'TOP '+p.songs.length)}</h3><p class="cd-by">${esc(p.name||'이름 없음')}</p>
@@ -701,7 +710,7 @@ function cdHtml(p,pi){
 }
 function albumHtml(p,pi){
   const k=albumKey(p), genres=[...new Set(p.songs.map(s=>s.genre.split(/\s*[·(]\s*/)[0].trim()).filter(Boolean))];
-  return `<article class="st st-album${albDir==='v'?' v':''}" data-p="${pi}" data-name="${esc(p.name)}" style="background-image:${cover(k,leadSd(p),true)}">
+  return `<article class="st st-album${albDir==='v'?' v':''}" data-p="${pi}" data-name="${esc(p.name)}" style="background-image:${back(k,leadSd(p))}">
   <div class="st-cv al-front" ${ck(k,(p.title||p.name)+' 앞표지')} data-cv="${esc(k)}" data-sd="${esc(leadSd(p))}" style="background-image:linear-gradient(rgba(24,20,34,.1),rgba(24,20,34,.46)),${cover(k,leadSd(p))}"><small>TOP ${p.songs.length}</small><h3>${esc(p.title||p.name||'TOP '+p.songs.length)}</h3>${p.title&&p.name?`<em>${esc(p.name)}</em>`:''}<i class="al-bc"></i></div>
   <div class="al-back"><p class="al-hd">TRACKLIST</p>
   ${p.songs.map(x=>`<div class="al-tr"><span class="st-n">${pad2(x.rank)}</span><div><b>${star(x)}${yt(x)}</b>${x.artist?`<span>${esc(x.artist)}</span>`:''}${x.why?`<p>${br(x.why)}</p>`:''}</div></div>`).join('')}
@@ -765,14 +774,31 @@ function fitOne(el){
   el.style.backgroundPosition=(lay?'0 0,':'')+((c.x==null?.5:c.x)*100).toFixed(3)+'% '+((c.y==null?.5:c.y)*100).toFixed(3)+'%';
   return {fw,fh,bw,bh};
 }
-function fitCovers(root,key){root.querySelectorAll('[data-cv]').forEach(el=>{if(!key||el.dataset.cv===key)fitOne(el)})}
+function fitCovers(root,key){root.querySelectorAll('[data-cv]').forEach(el=>{if(!key||el.dataset.cv===key)fitOne(el)});
+  [...(root.matches&&root.matches('.st')?[root]:[]),...root.querySelectorAll('.st')].forEach(fitBack)}
+// 카드 바탕 번짐: 그림 전체가 아니라 틀에 보이는 부분만 카드 크기로 키운다(틀 그림과 바탕이 다른 크기로 겹쳐 보이지 않게)
+function fitBack(card){
+  if(bgMode!=='blur'){card.style.backgroundSize=card.style.backgroundPosition='';return}
+  const fr=card.querySelector('.pl-art,.cd-disc,.al-front');if(!fr)return;
+  const c=covers[fr.dataset.cv];if(!c||!c.ar)return;
+  const fw=fr.clientWidth,fh=fr.clientHeight,CW=card.clientWidth,CH=card.clientHeight;if(!fw||!fh||!CW||!CH)return;
+  const s=Math.max(fw/c.ar,fh)*(c.z||1), bw=c.ar*s, bh=s, x=c.x==null?.5:c.x, y=c.y==null?.5:c.y;
+  const rw=fw/bw, rh=fh/bh, u=(bw-fw)*x/bw+rw/2, v=(bh-fh)*y/bh+rh/2;   // 보이는 부분의 크기 · 가운데(그림 비율 0~1)
+  const IW=Math.max(CW/rw,CH*c.ar/rh), IH=IW/c.ar;
+  const L=Math.min(0,Math.max(CW-IW,CW/2-u*IW)), T=Math.min(0,Math.max(CH-IH,CH/2-v*IH));
+  const px=IW>CW+.5?L/(CW-IW)*100:50, py=IH>CH+.5?T/(CH-IH)*100:50, pre=card.matches('.st-album')?'':'auto,';
+  card.style.backgroundSize=pre+(IW/CW*100).toFixed(3)+'% '+(IH/CH*100).toFixed(3)+'%';
+  card.style.backgroundPosition=pre+px.toFixed(3)+'% '+py.toFixed(3)+'%';
+}
 // 곡별 앨범아트 토글은 작은 커버가 있는 모양(플레이어 · 재생목록)에서만 보인다
 const topbar=$('topbar'), thumbBtn=$('thumbs');
 function drawTop(){
   const tog=shape==='player'||shape==='cd'||shape==='list', sp=people.length?speakers():[], right=norm(meName());
   $('artBtn').hidden=!people.length;
   const pen=shape==='cd';$('hlRow').hidden=!pen;$('hlColor').value=hl;
-  thumbBtn.hidden=!tog;thumbBtn.setAttribute('aria-pressed',String(thumbs));
+  const bgOn=shape!=='list';thumbBtn.hidden=!tog;thumbBtn.setAttribute('aria-pressed',String(thumbs));
+  $('bgGrp').hidden=!bgOn;$('artSep').hidden=!tog||!bgOn;$('artRow').hidden=!tog&&!bgOn;$('artRow').classList.toggle('solo',!bgOn);
+  $('bgSeg').querySelectorAll('[data-bg]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.bg===bgMode)));
   $('albRow').hidden=shape!=='album';$('albSeg').querySelectorAll('[data-dir]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.dir===albDir)));
   $('msgRow').hidden=!sp.length;
   topbar.hidden=!people.length||![...topbar.children].some(c=>!c.hidden);
@@ -783,9 +809,10 @@ let hlRec=false;
 $('hlColor').addEventListener('input',e=>{if(!hlRec){record();hlRec=true}hl=e.target.value;saveSettings();out.querySelectorAll('.st-cd').forEach(c=>c.style.setProperty('--hl',hl))});
 $('hlColor').addEventListener('change',()=>{hlRec=false});
 $('albSeg').addEventListener('click',e=>{const b=e.target.closest('[data-dir]');if(!b||b.dataset.dir===albDir)return;record();albDir=b.dataset.dir;saveSettings();draw()});
+$('bgSeg').addEventListener('click',e=>{const b=e.target.closest('[data-bg]');if(!b||b.dataset.bg===bgMode)return;record();bgMode=b.dataset.bg;saveSettings();draw()});
 $('wrapSeg').addEventListener('click',e=>{const b=e.target.closest('[data-wrap]');if(!b||b.dataset.wrap===wrap)return;record();wrap=b.dataset.wrap;saveSettings();draw()});
 $('meSeg').addEventListener('click',e=>{const b=e.target.closest('[data-me]');if(!b)return;record();me=b.dataset.me;saveSettings();draw()});
-function saveSettings(){try{localStorage.setItem(KEY+'.settings',JSON.stringify({shape,heads,me,hl,bars,wrap,clear,albDir}))}catch(e){}}
+function saveSettings(){try{localStorage.setItem(KEY+'.settings',JSON.stringify({shape,heads,me,hl,bars,wrap,clear,albDir,bg:bgMode}))}catch(e){}}
 thumbBtn.onclick=()=>{record();thumbs=!thumbs;saveSettings();draw()};
 // 폰: 오른쪽 말풍선 고르기는 위 막대가 아니라 메시지 카드 바로 위에 둔다(위 막대가 따라오지 않아서)
 const phone=matchMedia('(max-width:860px)'), meSlot=document.createElement('div');meSlot.className='me-slot';
@@ -846,7 +873,7 @@ function coverAct(el){
 let dragCv=null, skipClick=false, hoverCk=null, saveT=0;
 // ── 되돌리기 Ctrl+Z · 다시 하기 Ctrl+Shift+Z · Ctrl+Y: 그림(넣기 · 빼기 · 자리 · 확대) · 색 · 재생목록 그림 방식 · 오른쪽 말풍선 · 곡별 앨범아트 ──
 const undoList=[], redoList=[];let tintRec=false, zoomT=0;
-const snap=()=>({covers:Object.fromEntries(Object.entries(covers).map(([k,v])=>[k,{...v}])),tints:{...tints},heads:{...heads},me,thumbs,hl,bars:{...bars},wrap,albDir});
+const snap=()=>({covers:Object.fromEntries(Object.entries(covers).map(([k,v])=>[k,{...v}])),tints:{...tints},heads:{...heads},me,thumbs,hl,bars:{...bars},wrap,albDir,bgMode});
 function record(){undoList.push(snap());if(undoList.length>60)undoList.shift();redoList.length=0}
 const zoomRec=()=>{const n=Date.now();if(n-zoomT>800)record();zoomT=n};   // 휠 · 막대는 한 번 움직임을 한 걸음으로
 function restore(st){
@@ -854,7 +881,7 @@ function restore(st){
     const a=covers[k], b=st.covers[k];
     if(!b)putCover(k,null);else if(!a||a.src!==b.src||a.z!==b.z||a.x!==b.x||a.y!==b.y)putCover(k,{...b});
   }
-  tints={...st.tints};saveTints();heads={...st.heads};me=st.me;thumbs=st.thumbs;hl=st.hl;bars={...st.bars};wrap=st.wrap;albDir=st.albDir;saveSettings();closeMenu();draw();
+  tints={...st.tints};saveTints();heads={...st.heads};me=st.me;thumbs=st.thumbs;hl=st.hl;bars={...st.bars};wrap=st.wrap;albDir=st.albDir;bgMode=st.bgMode||'blur';saveSettings();closeMenu();draw();
 }
 function stepHist(from,to,none){if(!from.length){say(none);return}clearTimeout(saveT);to.push(snap());restore(from.pop())}
 document.addEventListener('keydown',e=>{
