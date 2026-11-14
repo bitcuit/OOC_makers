@@ -1,0 +1,1152 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OOC MAKERS : SONG TOP5</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Cg fill='%236f66a8'%3E%3Crect x='5' y='1' width='6' height='1'/%3E%3Crect x='3' y='2' width='10' height='1'/%3E%3Crect x='2' y='3' width='12' height='2'/%3E%3Crect x='1' y='5' width='14' height='6'/%3E%3Crect x='2' y='11' width='12' height='2'/%3E%3Crect x='3' y='13' width='10' height='1'/%3E%3Crect x='5' y='14' width='6' height='1'/%3E%3C/g%3E%3Cg fill='%23c9a2c7'%3E%3Crect x='8' y='2' width='4' height='1'/%3E%3Crect x='9' y='3' width='4' height='2'/%3E%3Crect x='3' y='11' width='4' height='2'/%3E%3Crect x='4' y='13' width='4' height='1'/%3E%3C/g%3E%3Crect x='6' y='6' width='4' height='4' fill='%23f3c9b2'/%3E%3Crect x='7' y='7' width='2' height='2' fill='%23ffffff'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/hahmlet@5.2.5/600.css">
+<script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.js" defer></script>
+<style id="card-css">
+/*
+  SONG TOP5 카드 — 한 사람 = 카드 한 장, 모양 넷(.st-player · .st-cd · .st-album · .st-list).
+  커버(.st-cv)는 넣은 그림 또는 곡 제목으로 정해지는 색 면. 바탕 그림은 인라인 style 로 들어온다.
+  카드에 쓰는 규칙만 여기에 — 카드 밖 규칙은 아래 두 번째 <style> 에.
+*/
+.st{--ink:#1d1c22;box-sizing:border-box;max-width:100%;font:400 14px/1.5 Pretendard,"Malgun Gothic",sans-serif;color:var(--ink);word-break:keep-all;overflow-wrap:anywhere;text-align:left;container-type:inline-size}
+.st *{box-sizing:border-box}
+.st p,.st h3{margin:0}
+.st b{font-weight:600}
+.st-cv{flex:none;background-size:cover;background-position:center;background-repeat:no-repeat}
+.st-n{font-variant-numeric:tabular-nums}
+.st-yt{color:inherit;text-decoration:none}
+.st-star{fill:#f0b429;vertical-align:-2px}
+.pl-t1 .st-star{width:21px;height:21px;vertical-align:-3px}
+.st-yt:hover{text-decoration:underline;text-underline-offset:3px}
+
+/* 메시지: 서로의 재생목록에서 고른 곡을 주고받는 대화 */
+.st-chat{width:360px;border-radius:28px;background:#fff;padding-bottom:18px;box-shadow:0 14px 30px rgba(40,30,60,.14);overflow:hidden}
+.ch-hd{display:flex;flex-direction:column;align-items:center;gap:6px;padding:16px 16px 12px;background:#f6f6f8;border-bottom:1px solid #e6e5ea}
+.ch-avs{display:flex}
+.ch-av{position:relative;display:grid;place-items:center;width:56px;height:56px;border-radius:50%;background-size:cover;background-position:center;font-style:normal;font-weight:600;font-size:20px;color:#fff;box-shadow:0 0 0 2px #f6f6f8}
+.ch-avs.many .ch-av{width:42px;height:42px;margin-left:-10px;font-size:16px}
+.ch-avs.many .ch-av:first-child{margin-left:0}
+.ch-nm{font-size:13px;font-weight:600;color:#3a3842;text-align:center}
+.ch-nm small{display:block;font-size:11px;font-weight:400;color:#8a8792}
+.ch-body{display:flex;flex-direction:column;padding:6px 14px 0}
+.st-chat.wrap-word .ch-m{word-break:keep-all}
+.ch-m{word-break:normal;align-self:flex-start;max-width:76%;margin-top:3px !important;padding:8px 13px;border-radius:18px;background:#e9e9eb;font-size:14.5px;line-height:1.42}
+.ch-m.me{align-self:flex-end;background:#2f7cf6;color:#fff}
+.ch-m.gap{margin-top:12px !important}
+.ch-who{margin-top:12px !important;padding-left:13px;font-size:12px;font-weight:600;color:#6f6c78}
+.ch-who+.ch-m.gap{margin-top:2px !important}
+.ch-song{display:flex;align-items:center;gap:10px;align-self:flex-start;width:76%;margin-top:3px;padding:8px;border-radius:16px;background:#f2f2f5}
+.ch-song.me{align-self:flex-end}
+.ch-song .st-cv{width:44px;height:44px;border-radius:8px}
+.ch-song b{display:block;font-size:13.5px;line-height:1.35}
+.ch-song span{font-size:12px;color:#6b6780}
+
+/* 음악 플레이어 */
+.st-player{width:360px;border-radius:28px;padding:20px 22px 10px;color:#fff;background-size:cover;background-position:center;box-shadow:0 14px 30px rgba(40,30,60,.22)}
+.pl-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;font-size:12px;line-height:1.45}
+.pl-top b{display:block;font-size:13px}
+.pl-top span{opacity:.78}
+.pl-top .st-n{white-space:nowrap}
+.pl-gw{position:relative;width:54%;margin:12px auto 0}
+.pl-art{position:relative;width:100%;aspect-ratio:1;border-radius:14px;box-shadow:0 10px 24px rgba(0,0,0,.18)}
+/* 아트 뒤로 번지는 빛: 같은 그림을 크게 흐리고 채도 · 밝기를 올려 뒤에 깐다 */
+.st-glow{position:absolute;inset:4% 2% -6%;border-radius:inherit;background-repeat:no-repeat;background-size:cover;background-position:center;filter:blur(18px) saturate(1.8) brightness(1.15);opacity:.9;pointer-events:none}
+.pl-gw .st-glow{border-radius:14px}
+.cd-gw{position:relative;width:236px;height:236px;margin:0 auto}
+.cd-gw .st-glow{border-radius:50%;inset:3% 3% -5%}
+.pl-t1{margin-top:14px !important;font-size:20px;font-weight:700;line-height:1.3}
+.pl-t2{margin-top:2px !important;font-size:13px;opacity:.82}
+.pl-why{margin-top:8px !important;font-size:14px;line-height:1.6}
+.pl-bar{position:relative;height:3px;margin-top:14px;border-radius:3px;background:rgba(255,255,255,.3)}
+.pl-bar::before{content:"";position:absolute;left:-6px;right:-6px;top:-10px;bottom:-10px}
+.pl-bar i{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:#fff}
+.pl-bar i::after{content:"";position:absolute;right:-5px;top:-4px;width:11px;height:11px;border-radius:50%;background:#fff}
+.pl-ctl{display:flex;justify-content:center;align-items:center;gap:30px;margin:8px 0}
+.pl-ctl span{display:flex;padding:4px}
+.pl-ctl svg{fill:#fff}
+.pl-nx{font-size:12px;opacity:.72;margin-bottom:6px !important}
+.pl-row{display:grid;grid-template-columns:14px 38px minmax(0,1fr);gap:10px;padding:7px 0;border-top:1px solid rgba(255,255,255,.18);align-items:start}
+.pl-row .st-n{padding-top:2px;font-size:13px;opacity:.72}
+.pl-row .st-cv{width:38px;height:38px;border-radius:6px}
+.pl-row b{font-size:14px}
+.pl-row span{margin-left:6px;font-size:12px;opacity:.78}
+.pl-row p{margin-top:2px;font-size:12.5px;line-height:1.5;opacity:.88}
+.st.no-thumb .pl-row{grid-template-columns:14px minmax(0,1fr)}
+.st.no-thumb .pl-row .st-cv,.st.no-thumb .ls-ti .st-cv{display:none}
+
+/* CD 플레이어 */
+.st-cd{width:400px;border-radius:20px;padding:28px 28px 16px;background:#f7f6f3 center/cover no-repeat;box-shadow:0 14px 30px rgba(40,30,60,.14)}
+.cd-disc{position:relative;width:236px;height:236px;margin:0;border-radius:50%;box-shadow:0 8px 22px rgba(0,0,0,.18);overflow:hidden}
+.cd-disc::before{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 20deg,rgba(255,255,255,0) 0 12%,rgba(255,255,255,.35) 18%,rgba(255,255,255,0) 26% 60%,rgba(255,255,255,.28) 68%,rgba(255,255,255,0) 76%)}
+.cd-disc::after{content:"";position:absolute;left:50%;top:50%;width:60px;height:60px;margin:-30px;border-radius:50%;background:radial-gradient(circle,#f7f6f3 0 12px,rgba(255,255,255,.55) 13px 29px,rgba(255,255,255,.9) 30px)}
+.cd-lcd{display:flex;justify-content:space-between;margin-top:20px;font-size:11.5px;font-weight:600;letter-spacing:.14em;color:#77736b}
+.st-cd h3{margin-top:8px;font:600 22px/1.3 "Hahmlet",serif;letter-spacing:-.02em}
+.cd-by{margin:2px 0 12px !important;font-size:13px;color:#6d6a63}
+.cd-tr{display:grid;grid-template-columns:28px minmax(0,1fr);padding:9px 0;border-top:1px solid rgba(29,28,34,.12)}
+.cd-tr .st-n{padding-top:1px;font-size:13px;color:#8b877e}
+.cd-tr b{font-size:14.5px}
+.cd-tr span{margin-left:6px;font-size:12.5px;color:#6d6a63}
+.cd-tr p{margin-top:2px;font-size:12.5px;line-height:1.5;color:#55524c}
+.cd-tr.on .st-n{color:var(--ink);font-weight:700}
+/* 지금 곡: 제목에 형광펜 밑줄(색은 만드는 사람이 고름, 기본 흰색) */
+.cd-tr.on b{box-shadow:inset 0 -11px 0 var(--hl,#fff)}
+
+/* 앨범: 앞표지 + 뒷면 */
+.st-album.v{width:520px}   /* 세로: 폭이 좁아 아래 컨테이너 쿼리로 앞표지 위 · 트랙리스트 아래 */
+.st-album{width:1040px;background:#18171c center/cover no-repeat;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);border-radius:6px;overflow:hidden;box-shadow:0 14px 30px rgba(40,30,60,.2)}
+.al-front{position:relative;min-height:50cqi;padding:30px 30px 30px 40px;color:#fff;display:flex;flex-direction:column}
+.al-front::before{content:"";position:absolute;left:0;top:0;bottom:0;width:10px;background:rgba(0,0,0,.2)}
+.al-front small{font-size:12px;font-weight:600;letter-spacing:.3em;opacity:.88}
+.al-front h3{margin-top:auto;font:600 42px/1.22 "Hahmlet",serif;letter-spacing:-.02em}
+.al-front em{margin-top:12px;font-style:normal;font-size:15px;opacity:.92}
+/* 뒷면: 앞표지 그림(색)이 어두운 반투명 막 아래로 번져 비친다 */
+.al-back{display:flex;flex-direction:column;padding:28px 30px 24px;background:linear-gradient(rgba(24,23,28,.66),rgba(24,23,28,.8));color:#f1eff5}
+.al-hd{margin-bottom:8px !important;font-size:11px;font-weight:600;letter-spacing:.3em;color:rgba(255,255,255,.6)}
+.al-tr{display:grid;grid-template-columns:30px minmax(0,1fr);padding:9px 0;border-bottom:1px solid rgba(255,255,255,.13)}
+.al-tr .st-n{font-size:13px;color:rgba(255,255,255,.6);padding-top:2px}
+.al-tr b{font-size:15px}
+.al-tr span{margin-left:6px;font-size:12.5px;color:rgba(255,255,255,.7)}
+.al-tr p{margin-top:2px;font-size:12.5px;line-height:1.5;color:rgba(255,255,255,.8)}
+.al-foot{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-top:auto;padding-top:16px;font-size:11px;color:rgba(255,255,255,.6)}
+.al-foot span{flex:1}
+/* 바코드: 앞표지 그림 위에 붙인 흰 딱지(그림을 일부러 가린다) */
+/* 제목 · 이름은 바코드 자리만큼 오른쪽을 비운다 */
+.al-front h3,.al-front em{padding-right:132px}
+.al-bc{position:absolute;right:26px;bottom:30px;width:112px;height:46px;border-radius:3px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.28)}
+.al-bc::before{content:"";position:absolute;inset:7px 9px;background:repeating-linear-gradient(90deg,#1d1c22 0 2px,transparent 2px 4px,#1d1c22 4px 5px,transparent 5px 9px,#1d1c22 9px 12px,transparent 12px 14px)}
+@container (max-width:700px){
+  .al-front,.al-back{grid-column:1/-1}   /* 좁으면 앞표지 위 · 트랙리스트 아래 */
+  .al-front{min-height:100cqi;padding:24px 24px 24px 34px}
+  .al-front h3{font-size:34px;padding-right:0}
+  .al-front em{min-height:58px}   /* 이름 줄이 바코드 높이만큼 차지해 제목은 바코드 위로 */
+  .al-back{padding:22px 22px 20px}
+}
+
+/* 재생목록 */
+.st-list{width:980px;border-radius:16px;background:#fff;border:1px solid #e1dfe6;box-shadow:0 10px 24px rgba(40,30,60,.1);overflow:hidden}
+.ls-hd{display:flex;gap:22px;align-items:center;padding:24px 26px 20px;background:linear-gradient(180deg,#e9e4f1,#fff)}
+.ls-mo{flex:none;width:124px;height:124px;display:grid;grid-template-columns:1fr 1fr;border-radius:8px;overflow:hidden}
+.ls-hd small{font-size:12px;font-weight:600;color:#6b6780}
+.ls-hd h3{margin:2px 0 6px;font-size:32px;font-weight:700;line-height:1.25;letter-spacing:-.02em}
+.ls-hd p{font-size:13px;color:#6b6780}
+.ls-th,.ls-r{display:grid;grid-template-columns:30px minmax(0,1fr) minmax(0,.95fr) minmax(0,1.5fr);gap:16px;padding:0 26px;align-items:center}
+.ls-th{height:34px;font-size:12px;color:#8a879b;border-bottom:1px solid #eceaf0}
+.ls-th span:first-child,.ls-r .st-n{text-align:center}
+.ls-r{padding-top:10px;padding-bottom:10px;border-bottom:1px solid #f1eff5}
+.ls-r:last-child{border-bottom:0;padding-bottom:24px}
+.ls-r .st-n{font-size:15px;color:#8a879b}
+.ls-ti{display:flex;gap:12px;align-items:center;min-width:0}
+.ls-ti .st-cv{width:44px;height:44px;border-radius:6px}
+.ls-ti b{display:block;font-size:15px}
+.ls-ti span{font-size:12.5px;color:#6b6780}
+.ls-tag{display:inline-block;padding:2px 9px;border-radius:10px;background:#f0edf6;font-size:12px;line-height:1.5;color:#565270}
+.ls-why{font-size:13px;line-height:1.55;color:#3a3847}
+@container (max-width:640px){
+  .ls-hd{gap:14px;padding:18px 16px 14px}
+  .ls-mo{width:84px;height:84px}
+  .ls-hd h3{font-size:22px}
+  .ls-th{display:none}
+  .ls-r{grid-template-columns:22px minmax(0,1fr);gap:4px 10px;padding:12px 16px;align-items:start}
+  .ls-r:last-child{padding-bottom:18px}
+  .ls-r .st-n{padding-top:12px}
+  .ls-r>div:nth-child(n+3){grid-column:2}
+}
+</style>
+<style>
+/*
+  도구 화면 — 가운데 카드, 아래에 떠 있는 막대 하나(플레이어의 재생 막대 자리).
+  막대: OOC 복사 · 바꾸기 · 내용 보기 │ 모양 │ 붙여넣기 · 그림 │ 투명 · PNG │ i. 알림은 막대 바로 위.
+  카드가 없을 때는 가운데 큰 붙여넣기 칸, 있으면 막대의 붙여넣기가 작은 창을 연다.
+*/
+:root{--bg:#ecebef;--ink:#1d1c22;--soft:#6b6877;--line:rgba(29,28,34,.12);--glass:rgba(255,255,255,.74)}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{display:flex;flex-direction:column;height:100vh;overflow:hidden;background:var(--bg);color:var(--ink);font:400 14px/1.5 Pretendard,"Malgun Gothic",sans-serif}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+.stage{flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column;padding:12px 24px 96px}
+/* 위 막대: 스크롤해도 위에 붙어 따라온다(PC). 칸 사이 빈 곳은 눌림을 막지 않는다 */
+.topbar{flex:none;position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;justify-content:center;gap:8px 10px;margin-bottom:10px;pointer-events:none}
+.topbar>*{pointer-events:auto;-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);box-shadow:0 8px 20px -10px rgba(40,30,60,.35)}
+.topbar[hidden]{display:block;height:12px;margin:0;visibility:hidden}
+.tog{display:inline-flex;align-items:center;gap:10px;height:36px;padding:0 12px 0 14px;border:1px solid var(--line);border-radius:10px;background:var(--glass);white-space:nowrap}
+.tog:hover{background:#fff}
+.tog[hidden],.who[hidden]{display:none}
+.who.pen{padding-right:8px;cursor:pointer}
+.who.pen input{width:24px;height:24px;padding:0;border:1px solid var(--line);border-radius:7px;background:none;cursor:pointer}
+.who.pen input::-webkit-color-swatch-wrapper{padding:2px}
+.who.pen input::-webkit-color-swatch{border:0;border-radius:4px}
+/* 메시지에서 오른쪽에 설 사람 */
+.who{display:inline-flex;align-items:center;gap:10px;height:36px;padding:0 3px 0 14px;border:1px solid var(--line);border-radius:10px;background:var(--glass);white-space:nowrap}
+.who .seg{height:30px;padding:2px}
+.who .seg button{padding:0 10px}
+.who.msg b{font-weight:600}
+.grp{display:inline-flex;align-items:center;gap:10px}
+.vsep{width:1px;height:18px;margin:0 2px;background:var(--line)}
+.who[hidden]{display:none}
+.tog:focus-visible{outline:2px dashed var(--ink);outline-offset:2px}
+.sw{position:relative;width:30px;height:18px;border-radius:9px;background:rgba(29,28,34,.22)}
+.sw::after{content:"";position:absolute;left:2px;top:2px;width:14px;height:14px;border-radius:50%;background:#fff;transition:transform .15s}
+.tog[aria-pressed="true"] .sw{background:var(--ink)}
+.tog[aria-pressed="true"] .sw::after{transform:translateX(12px)}
+.out{margin:auto;display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:32px;max-width:100%}
+.out[data-shape="album"],.out[data-shape="list"]{flex-direction:column;align-items:center;flex-wrap:nowrap}
+.stage.is-empty .out{display:none}
+.blank{margin:auto;width:560px;max-width:100%}
+.stage:not(.is-empty) .blank{display:none}
+/* 카드에서 누를 수 있는 곳 */
+.out [data-ck],.out [data-go],.out [data-step]{cursor:pointer}
+.out [data-ck]:hover,.out [data-ck]:focus-visible{outline:2px solid rgba(255,255,255,.85);outline-offset:-2px}
+.out .st-list [data-ck]:hover,.out .st-list [data-ck]:focus-visible{outline-color:var(--ink)}
+/* 올리면 어두워지지 않고 밝게 뜬다 */
+.out .st-player [data-go]:hover{background-color:rgba(255,255,255,.14)}
+.out .st-cd [data-go]:hover{background-color:rgba(255,255,255,.5)}
+.out [data-step]:hover{background:rgba(255,255,255,.18);border-radius:50%}
+.out .drop{outline:2px dashed #fff !important;outline-offset:-2px}
+/* 아래 막대 */
+.dock{position:fixed;z-index:10;left:50%;bottom:16px;transform:translateX(-50%);display:flex;align-items:center;gap:6px;height:56px;padding:0 10px 0 18px;border-radius:18px;background:var(--glass);border:1px solid var(--line);box-shadow:0 12px 32px -8px rgba(40,30,60,.28);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);white-space:nowrap}
+.logo{margin-right:10px;font-size:13px;font-weight:700;letter-spacing:.08em}
+.sep{width:1px;height:22px;margin:0 8px;background:var(--line)}
+.dock .sep:last-of-type{margin-right:5px}   /* i 단추 양옆 간격을 막대 끝과 같게 */
+.lnk,.cta{height:36px;padding:0 12px;border:0;border-radius:10px;background:transparent;white-space:nowrap}
+.lnk:hover,.lnk[aria-expanded="true"]{background:rgba(29,28,34,.08)}
+.lnk[hidden]{display:none}
+.lnk.tgl[aria-pressed="true"]{background:var(--ink);color:#fff}
+.lnk:disabled{opacity:.4;cursor:default}
+.cta{padding:0 16px;background:var(--ink);color:#fff;font-weight:600}
+.cta:hover{background:#34323d}
+.seg{display:inline-flex;height:36px;padding:3px;border-radius:10px;background:rgba(29,28,34,.07)}
+.seg button{border:0;border-radius:8px;padding:0 12px;background:transparent;color:var(--soft);white-space:nowrap}
+.seg button[aria-pressed="true"]{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(29,28,34,.16)}
+.lnk:focus-visible,.cta:focus-visible,.seg button:focus-visible,.pip-x:focus-visible{outline:2px dashed var(--ink);outline-offset:2px}
+.status{position:fixed;z-index:11;left:50%;bottom:82px;transform:translateX(-50%);margin:0;padding:7px 14px;border-radius:99px;background:var(--ink);color:#fff;font-size:13px;white-space:nowrap;max-width:calc(100vw - 32px);overflow:hidden;text-overflow:ellipsis}
+.status:empty{display:none}
+.status.busy::before{content:"";display:inline-block;width:10px;height:10px;margin-right:7px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;vertical-align:-1px}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* 떠 있는 작은 창 */
+.pip,.desk.inline{background:rgba(255,255,255,.9);border:1px solid var(--line);border-radius:16px;box-shadow:0 20px 48px -12px rgba(40,30,60,.35);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px)}
+.pip{position:fixed;z-index:20;width:420px;max-width:calc(100vw - 32px);display:flex;flex-direction:column;max-height:calc(100vh - 106px);max-height:calc(100dvh - 106px)}
+.pip>.pip-in{min-height:0;overflow:auto}
+.pip>.pip-bar{flex:none}
+.pip[hidden]{display:none}
+.pip.desk{width:560px}
+.desk.inline{background:#fff;box-shadow:0 10px 24px rgba(40,30,60,.1)}
+.pip-bar{display:flex;align-items:center;justify-content:space-between;padding:10px 8px 10px 18px;border-bottom:1px solid var(--line)}
+.pip-x{width:28px;height:28px;border:0;border-radius:8px;background:transparent;font-size:18px;line-height:1;color:var(--soft)}
+.pip-x:hover{background:rgba(29,28,34,.08)}
+.desk.inline .pip-x{visibility:hidden}
+.pip-in{padding:14px 18px 16px}
+.desk textarea{display:block;width:100%;height:min(44vh,380px);resize:vertical;border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:#fff;line-height:1.6;font-size:13px}
+.desk textarea:focus{outline:0;border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+.desk .row{display:flex;align-items:center;gap:4px;margin-top:10px}
+.desk .row .lnk{margin-left:-12px}
+.desk .row .lnk+.lnk{margin-left:0}
+.note{font-size:13px;color:var(--soft);margin-left:8px}
+.peek{width:620px}
+.art{width:700px}
+.art.few{width:320px}
+.art.few .art-g{grid-template-columns:repeat(2,minmax(0,1fr))}
+.art .pip-in{max-height:min(64vh,560px);overflow:auto}
+.art-p+.art-p{margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.art-p>b{display:block;margin-bottom:8px;font-size:13px}
+.art-g{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
+.art-t{position:relative;min-width:0;cursor:pointer;border-radius:10px;outline-offset:3px}
+.art-t:focus-visible,.art-t.drop{outline:2px dashed var(--ink)}
+.art-t i{display:block;aspect-ratio:1;border-radius:10px;background-size:cover;background-position:center;box-shadow:inset 0 0 0 1px rgba(29,28,34,.08)}
+.art-t:hover i{box-shadow:inset 0 0 0 2px var(--ink)}
+.art-t span{display:block;margin-top:5px;font-size:12px;line-height:1.35;color:var(--soft);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.art-t.rep span{color:var(--ink);font-weight:600}
+.art-x{position:absolute;right:4px;top:4px;width:22px;height:22px;border:0;border-radius:50%;background:rgba(29,28,34,.72);color:#fff;font-size:14px;line-height:1}
+.art-x:hover{background:var(--ink)}
+.help{width:460px}
+.help h4{margin:14px 0 4px;font-size:12px;font-weight:600;color:var(--soft)}
+.help h4:first-child{margin-top:0}
+.help dl{display:grid;grid-template-columns:168px minmax(0,1fr);gap:4px 14px;margin:0;font-size:13px;line-height:1.5}
+.help dt{font-weight:600}
+.help dd{margin:0;color:#4b4954}
+.lnk.ic{width:36px;padding:0;font:italic 700 16px/1 Georgia,"Times New Roman",serif}
+.peek pre{margin:0;max-height:min(60vh,540px);overflow:auto;white-space:pre-wrap;font:13px/1.7 Pretendard,"Malgun Gothic",sans-serif}
+.cast .line{display:grid;grid-template-columns:36px minmax(0,1fr) auto;align-items:center;gap:10px}
+.cast .line>.seg{flex-wrap:wrap;height:auto;min-height:36px;justify-self:start;max-width:100%}
+.cast .line+.line{margin-top:10px}
+.cast .line>b{width:36px;flex:none;font-weight:400;color:var(--soft);font-size:13px}
+.names{gap:4px;height:auto;min-height:36px;flex-wrap:wrap}
+.badge{display:inline-flex;align-items:center;border-radius:8px;background:#fff;box-shadow:0 1px 3px rgba(29,28,34,.16)}
+.badge input{height:30px;border:0;background:transparent;padding:0 8px;outline:0;min-width:40px}
+.badge input::placeholder{color:#aaa7b4}
+.badge .x{border:0;background:transparent;color:var(--soft);padding:0 8px 0 0;font-size:15px}
+.add{height:36px;border:0;border-radius:10px;background:transparent;color:var(--soft);padding:0 8px}
+.add:hover{background:rgba(29,28,34,.08)}
+.menu{position:fixed;z-index:30;display:flex;gap:2px;padding:4px;border-radius:12px;background:rgba(255,255,255,.92);border:1px solid var(--line);box-shadow:0 12px 28px -8px rgba(40,30,60,.4);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px)}
+.menu[hidden],.menu [hidden]{display:none !important}
+.menu .zoom{display:flex;align-items:center;gap:8px;padding:0 10px 0 8px;font-size:13px;color:var(--soft);white-space:nowrap}
+.menu .zoom input{width:120px;accent-color:var(--ink)}
+.menu .tint{display:flex;align-items:center;gap:8px;padding:0 8px;font-size:13px;color:var(--soft);white-space:nowrap;cursor:pointer}
+.menu .tint input{width:28px;height:28px;padding:0;border:1px solid var(--line);border-radius:8px;background:none;cursor:pointer}
+.menu .tint input::-webkit-color-swatch-wrapper{padding:2px}
+.menu .tint input::-webkit-color-swatch{border:0;border-radius:5px}
+.out .pl-bar{cursor:pointer;touch-action:none}
+.out [data-has]{touch-action:none;user-select:none;-webkit-user-select:none}
+.out [data-has]:active{cursor:grabbing}
+html{scrollbar-color:rgba(29,28,34,.25) transparent}
+@media (max-width:860px){
+  body{height:auto;min-height:100vh;overflow:visible}
+  .stage{overflow:visible;padding:8px 16px 128px}
+  .topbar{position:static}
+  .me-slot{flex:1 0 100%;display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-bottom:-8px}
+  .out{gap:20px}
+  .dock{left:8px;right:8px;bottom:8px;transform:none;height:auto;flex-wrap:wrap;justify-content:center;gap:4px;padding:8px}
+  .logo{display:none}
+  .dock>.seg{order:-1;justify-content:center}
+  .dock>.seg button{flex:1;padding:0 6px}
+  .dock .lnk{padding:0 6px;font-size:13px}
+  .dock .cta{padding:0 11px;font-size:13px}
+  .dock{gap:8px 2px}
+  /* 폰 막대: 1줄 모양 · i / 2줄 OOC 복사 · 바꾸기 · 내용 보기 | 붙여넣기 · 그림 | 투명 · PNG */
+  .dock{flex-wrap:wrap;column-gap:0}
+  .dock .sep:nth-of-type(2),.dock .sep:nth-of-type(4){display:none}
+  .dock .sep{height:16px;margin:0 3px}
+  .dock .lnk:not(.ic){padding:0 5px;font-size:12.5px}
+  .dock .cta{padding:0 9px;font-size:12.5px}
+  .status{bottom:116px}
+  .pip{max-height:calc(100vh - 150px);max-height:calc(100dvh - 150px)}
+  .help dl{grid-template-columns:118px minmax(0,1fr);column-gap:10px}
+  .dock>.seg{flex:0 0 calc(100% - 44px);min-width:0}   /* 모양 칸 + 간격 8 + i 36 = 한 줄 꽉 */
+  .dock .lnk.ic{order:-1;flex:none;width:36px;margin-left:8px}
+  .art-g{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .who.msg{flex-wrap:wrap;justify-content:center;height:auto;min-height:36px;padding:4px 4px 4px 12px;row-gap:4px}
+  .me-slot .who.msg b,.me-slot .who.msg .vsep{display:none}
+  .me-slot .who.msg{column-gap:16px}
+  .who .seg{order:0;flex:0 1 auto}
+  .who .seg button{flex:none;padding:0 10px}
+}
+/* 400~547: 막대를 두 줄 폭(폰 크기)에 맞춰 가운데에 — 넓게 펼치면 둘째 줄 양옆이 빈다 */
+@media (min-width:400px) and (max-width:547px){
+  .dock{left:50%;right:auto;transform:translateX(-50%);width:367px}
+}
+/* 폰보다 넓은 좁은 창(브라우저 창을 줄였을 때 등): 둘째 줄에 자리가 남으니 i 도 둘째 줄 끝에, 글자도 크게 */
+@media (min-width:548px) and (max-width:860px){
+  .dock{left:50%;right:auto;transform:translateX(-50%);width:532px}   /* 두 줄 폭에 맞춰 가운데, 줄마다 꽉 차게 */
+  .dock>.seg{flex:0 0 100%}
+  .dock .lnk.ic{order:0;margin-left:0}
+  .dock .sep:nth-of-type(4){display:block}
+  .dock .lnk:not(.ic){padding:0 9px;font-size:14px}
+  .dock .cta{padding:0 14px;font-size:14px}
+  .dock .sep{margin:0 6px}
+}
+@media (max-width:375px){
+  .dock{padding:8px 6px}
+  .dock .lnk:not(.ic){padding:0 4px;font-size:12px}
+  .dock .cta{padding:0 7px;font-size:12px}
+  .dock .sep{margin:0 2px}
+}
+</style>
+</head>
+<body>
+<main class="stage is-empty" id="main">
+  <div class="topbar" id="topbar" hidden><button class="tog" id="thumbs" type="button" aria-pressed="true">곡별 앨범아트<i class="sw"></i></button><label class="who pen" id="hlRow" hidden>형광펜<input id="hlColor" type="color" value="#ffffff" aria-label="지금 곡 제목의 형광펜 색"></label><span class="who" id="albRow" hidden>앨범<span class="seg" id="albSeg" role="group" aria-label="앨범 배치"><button type="button" data-dir="h">가로</button><button type="button" data-dir="v">세로</button></span></span><span class="who msg" id="msgRow" hidden><b>메시지</b><i class="vsep"></i><span class="grp">줄바꿈<span class="seg" id="wrapSeg" role="group" aria-label="메시지 줄바꿈"><button type="button" data-wrap="char" title="메신저처럼 글자 단위">글자</button><button type="button" data-wrap="word" title="낱말이 끊기지 않게">어절</button></span></span><i class="vsep"></i><span class="grp">오른쪽 말풍선<span class="seg" id="meSeg" role="group" aria-label="메시지에서 오른쪽에 설 사람"></span></span></div>
+  <div class="blank" id="blank"></div>
+  <div class="out" id="out" aria-live="polite"></div>
+</main>
+
+<p class="status" id="status" aria-live="polite"></p>
+<footer class="dock">
+  <b class="logo">SONG TOP5</b>
+  <button class="cta" id="copyOoc" type="button">OOC 복사</button>
+  <button class="lnk" id="castBtn" type="button" aria-expanded="false" aria-controls="cast">바꾸기</button>
+  <button class="lnk" id="peekBtn" type="button" aria-expanded="false" aria-controls="peek">내용 보기</button>
+  <i class="sep"></i>
+  <div class="seg" id="shape" role="group" aria-label="모양"><button type="button" data-shape="player">플레이어</button><button type="button" data-shape="cd">CD</button><button type="button" data-shape="album">앨범</button><button type="button" data-shape="list">재생목록</button></div>
+  <i class="sep"></i>
+  <button class="lnk" id="pasteBtn" type="button" aria-expanded="false" aria-controls="paste" hidden>붙여넣기</button>
+  <button class="lnk" id="artBtn" type="button" aria-expanded="false" aria-controls="art" hidden>그림</button>
+  <i class="sep"></i>
+  <button class="lnk tgl" id="pngClear" type="button" aria-pressed="false" title="PNG 바탕을 비워요">투명</button>
+  <button class="lnk" id="savePng" type="button" title="사람마다 파일 하나">PNG</button>
+  <i class="sep"></i>
+  <button class="lnk ic" id="helpBtn" type="button" aria-expanded="false" aria-controls="help" aria-label="할 수 있는 것" title="할 수 있는 것">i</button>
+</footer>
+
+<section class="pip desk" id="paste" role="dialog" aria-label="챗봇 출력 붙여넣기" hidden>
+  <div class="pip-bar"><b>챗봇 출력 붙여넣기</b><button class="pip-x" type="button" aria-label="닫기" title="닫기 (Esc)">×</button></div>
+  <div class="pip-in">
+    <textarea id="src" spellcheck="false" aria-label="챗봇 출력" placeholder="@이름&#10;재생목록: …&#10;1. 곡 제목 - 가수&#10;분류: …&#10;이유: …"></textarea>
+    <div class="row">
+      <button class="lnk" id="sample" type="button">예시</button>
+      <button class="lnk" id="clear" type="button">비우기</button>
+      <span class="note" id="parseStatus" aria-live="polite"></span>
+    </div>
+  </div>
+</section>
+
+<div class="pip peek" id="peek" role="dialog" aria-label="OOC 내용" hidden>
+  <div class="pip-bar"><b>OOC 내용</b><button class="pip-x" type="button" aria-label="닫기" title="닫기 (Esc)">×</button></div>
+  <div class="pip-in"><pre class="ooc" id="ooc" tabindex="0">[OOC: 롤플레이를 잠시 멈춘다. PC와 NPC 각자가 좋아하는 노래 TOP 5를 재생목록으로 정리한다. 다른 말 없이 아래 양식만 출력하고, @이름부터 인물마다 반복한다.
+
+■ 출력 양식
+@이름
+재생목록: 그 인물이 직접 붙였을 법한 재생목록 이름
+1. 곡 제목 - 가수
+분류: 갈래 (OST면 작품 이름과 오프닝 · 엔딩 · 삽입곡 구분)
+색: #RRGGBB
+이유: 한두 문장
+2. 곡 제목 - 가수
+분류:
+색:
+이유:
+(5번까지 같은 모양)
+
+@대화
+이름: 메시지
+이름: 메시지
+
+- 실제로 있는 곡만 고른다. 제목과 가수를 정확히 쓰고, 확실하지 않으면 다른 곡을 고른다. 곡을 지어내지 않는다. 클래식과 연주곡은 가수 자리에 작곡가를 쓴다.
+- 갈래 · 나라 · 시대는 가리지 않는다. 클래식, 발라드, K-POP, J-POP, 그 밖의 나라 노래, 영화 · 게임 · 애니메이션의 OST와 오프닝 · 엔딩곡 모두 된다. 한 갈래로 몰릴지 여럿으로 흩어질지는 그 인물의 취향에 맡기고 억지로 섞지 않는다.
+- 인물이 사는 세계가 현실과 달라도 곡은 현실에 실제로 있는 곡에서 고른다. 그 인물이 들었다면 좋아했을 곡을 성격, 살아온 일, 두 사람 사이에 있었던 일에 비추어 고른다.
+- 색은 그 곡을 들으면 떠오르는 색 하나를 #RRGGBB로 쓴다. 곡의 분위기, 음반 표지, 그 인물이 그 곡을 듣던 장면에서 고르고, 다섯 곡이 서로 뚜렷이 다른 색이 되게 한다.
+- 1번이 가장 좋아하는 곡이다.
+- 이유는 그 인물의 평소 말투로 쓴다. 곡 소개가 아니라 그 인물에게 이 곡이 무엇인지 쓰고, 감정은 설정이 뒷받침하는 만큼만 담는다. 가사가 있는 곡이면 어느 대목이 좋은지 짚어도 되지만, 가사를 그대로 옮겨 적지 않고 자기 말로 쓴다.
+- 모든 재생목록을 적은 뒤 맨 끝에 @대화를 한 번 쓴다. 서로의 재생목록을 본 PC와 NPC 모두가 메신저로 주고받는 대화다. 각자 상대 재생목록에서 가장 마음에 든 곡 하나를 제목 그대로 짚어 말하고, 상대는 거기에 답한다. 한 줄에 메시지 하나, 모두 4~8줄. 메신저에서 쓰는 평소 말투로 짧게 쓴다.
+- 한 항목은 한 줄. 목록 기호, 따옴표, 굵은 글씨, 표, 이모지, 맺음말을 쓰지 않는다.]</pre></div>
+</div>
+
+<div class="pip art" id="art" role="dialog" aria-label="그림" hidden>
+  <div class="pip-bar"><b>그림</b><button class="pip-x" type="button" aria-label="닫기" title="닫기 (Esc)">×</button></div>
+  <div class="pip-in" id="artIn"></div>
+</div>
+<input id="artFile" type="file" accept="image/*" multiple hidden>
+
+<div class="pip help" id="help" role="dialog" aria-label="할 수 있는 것" hidden>
+  <div class="pip-bar"><b>할 수 있는 것</b><button class="pip-x" type="button" aria-label="닫기" title="닫기 (Esc)">×</button></div>
+  <div class="pip-in">
+    <h4>커버</h4>
+    <dl><dt>커버 누르기</dt><dd>그림 넣기 · 색 바꾸기</dd>
+    <dt>그림 끌어다 놓기 · Ctrl+V</dt><dd>그 커버에 그림 넣기</dd>
+    <dt>넣은 그림 끌기 · 휠</dt><dd>틀 안 자리 · 확대</dd>
+    <dt>그림</dt><dd>사람마다 대표 · 프로필(곡별 앨범아트를 켜면 곡 그림도)을 한 창에서</dd>
+    <dt>곡별 앨범아트</dt><dd>켬: 곡마다 다른 그림 · 곡 줄 작은 커버 / 끔: 대표 그림 하나</dd></dl>
+    <h4>곡</h4>
+    <dl><dt>곡 제목 누르기</dt><dd>유튜브 검색 새 탭</dd>
+    <dt>곡 줄 · 이전 · 다음 누르기</dt><dd>그 곡으로 (플레이어 · CD)</dd>
+    <dt>제목 앞 별</dt><dd>1번 = 가장 좋아하는 곡</dd>
+    <dt>앨범 가로 · 세로</dt><dd>앞표지 옆 / 위에 트랙리스트 (PNG도)</dd>
+    <dt>재생바 끌기</dt><dd>재생 위치 (플레이어, 곡마다 저장)</dd>
+    <dt>형광펜</dt><dd>CD에서 지금 곡 제목의 밑줄 색</dd></dl>
+    <h4>메시지</h4>
+    <dl><dt>오른쪽 말풍선</dt><dd>파란 말풍선으로 오른쪽에 설 사람</dd>
+    <dt>줄바꿈</dt><dd>글자: 메신저처럼 / 어절: 낱말이 안 끊김</dd>
+    <dt>머리 프로필 누르기</dt><dd>프로필 그림 넣기 (없으면 플레이어 그림)</dd></dl>
+    <h4>되돌리기</h4>
+    <dl><dt>Ctrl+Z</dt><dd>그림 · 색 · 고른 것 되돌리기</dd>
+    <dt>Ctrl+Shift+Z · Ctrl+Y</dt><dd>다시 하기</dd></dl>
+    <h4>저장</h4>
+    <dl><dt>PNG</dt><dd>카드마다 한 장</dd>
+    <dt>투명</dt><dd>켜면 PNG 바탕을 비움</dd></dl>
+  </div>
+</div>
+
+<div class="pip" id="cast" role="dialog" aria-label="바꾸기" hidden>
+  <div class="pip-bar"><b>바꾸기</b><button class="pip-x" type="button" aria-label="닫기" title="닫기 (Esc)">×</button></div>
+  <div class="pip-in cast">
+    <div class="line"><b>이름</b><div class="seg" id="castPreset" role="group" aria-label="이름 한 번에 바꾸기"><button type="button" data-preset="tag" title="PC = {{user}}, 첫 NPC = {{char}}">{{user}} · {{char}}</button><button type="button" data-preset="word" title="PC = PC, 첫 NPC = NPC">PC · NPC</button><button type="button" data-preset="custom" title="이름을 직접 적기">직접 입력</button></div></div>
+    <div class="line"><b>PC</b><div class="seg names" id="castPc"></div></div>
+    <div class="line"><b>NPC</b><div class="seg names" id="castNpc"></div><button class="add" id="addNpc" type="button">+ NPC</button></div>
+  </div>
+</div>
+
+<div class="menu" id="cvMenu" role="menu" hidden>
+  <span class="seg" id="cvHead" role="group" aria-label="재생목록 그림" hidden><button type="button" data-head="mix">모아서 만들기</button><button type="button" data-head="own">따로 넣기</button></span>
+  <button class="lnk" id="cvAdd" type="button" role="menuitem">그림 넣기</button>
+  <label class="tint" id="cvTintRow">색<input id="cvTint" type="color" aria-label="색 고르기"></label>
+  <button class="lnk" id="cvTintOff" type="button" role="menuitem">색 되돌리기</button>
+  <button class="lnk" id="cvPick" type="button" role="menuitem">그림 바꾸기</button>
+  <button class="lnk" id="cvDrop" type="button" role="menuitem">빼기</button>
+  <label class="zoom">확대<input id="cvZoom" type="range" min="1" max="4" step="0.01" value="1"></label>
+</div>
+<input id="cvFile" type="file" accept="image/*" hidden>
+
+<script>
+const SAMPLE=`@재훈
+재생목록: VALKYRIE 상공 2km
+1. Ride of the Valkyries - Richard Wagner
+분류: 클래식 (오페라 발키리 삽입곡)
+색: #8B0000
+이유: 내 아가씨 이름값 하는 곡이지. 상공에서 지상 쓸어버리기 직전에 틀어놓으면 폭격 리듬 맞추기 딱 좋거든.
+2. Feeling Good - Muse
+분류: 얼터너티브 록
+색: #FF8C00
+이유: 하늘 위에서 내려다볼 때의 그 절대적인 해방감이 뭔지 아는 것 같은 소리야. 시작할 때부터 거만하게 깔리는 베이스가 내 취향이고.
+3. 피아노 소나타 14번 월광 1악장 - Ludwig van Beethoven
+분류: 클래식
+색: #191970
+이유: 감각이 곤두서서 짜증 날 때 직접 건반 두드리던 유일한 곡이다. 느릿하고 묵직하게 가라앉는 소리가 시끄러운 머릿속을 누르는 데는 제법 쓸만해.
+4. Supermassive Black Hole - Muse
+분류: 얼터너티브 록
+색: #4B0082
+이유: 빠져나올 생각도 못 하게 상대를 집어삼키는 그 집요한 분위기가 마음에 들어. 누구 하나 길들여서 내 손안에 가둬둘 때 어울리는 박자지.
+5. Take Five - The Dave Brubeck Quartet
+분류: 재즈
+색: #2F4F4F
+이유: 임무 끝나고 격납고에서 시가 하나 태울 때 틀어놓는다. 엇박자로 여유 부리는 색소폰 소리가 나른해서 제법 들을 만해.
+
+@준후
+재생목록: 대기실 휴식용
+1. 달빛 - Claude Debussy
+분류: 클래식
+색: #B0C4DE
+이유: 가이딩 끝나고 피로가 몰려올 때 틀어두면 신경이 빨리 가라앉아. 조용한 밤에 창밖 보면서 아무 생각 없이 듣기 좋아서 제일 자주 찾아 듣는 곡이야.
+2. River Flows in You - 이루마
+분류: 뉴에이지
+색: #E0FFFF
+이유: 멜로디가 물 흐르듯 잔잔해서 틀어놓고 눈 감고 있기 편해. 재훈이가 옆에서 잠들었을 때 방해되지 않게 아주 작게 틀어두곤 해.
+3. 밤편지 - 아이유
+분류: K-POP 발라드
+색: #FFD700
+이유: 예전에 떨어져 지낼 때 밤마다 혼자 자주 들었어. 좋아하는 사람에게 조용히 좋은 꿈 꾸라고 바라는 마음이 내 마음 같아서 오래 남더라.
+4. 짐노페디 제1번 - Erik Satie
+분류: 클래식
+색: #556B2F
+이유: 느리고 단조로운 피아노 소리라 내 파장 유지할 때 방해가 안 돼. 사탕 하나 물고 소파에 기대어 쉬기에 딱 알맞은 속도야.
+5. 위풍당당 행진곡 제1번 - Edward Elgar
+분류: 클래식
+색: #DAA520
+이유: 평소 내 취향이랑은 좀 다르지만 들을 때마다 먼지 하나 없는 제복 코트 입고 걸어오는 재훈이가 생각나서 넣어뒀어. 그 오만한 걸음걸이랑 이상하게 잘 어울려.
+
+@대화
+재훈: 위풍당당 행진곡 제1번은 뭐냐. 날 아주 행진곡에 맞춰 등장하는 황제 취급하는군.
+준후: 제복 입고 걸어올 때마다 그 브금이 깔리는 것 같아서. 너한테 잘 어울려.
+준후: 난 네 목록에서 피아노 소나타 14번 월광 1악장이 제일 좋더라.
+재훈: 그거야 내가 직접 치는 걸 네가 옆에서 들었으니까 그렇겠지.
+재훈: 밤편지는 또 언제부터 듣고 다닌 거야. 나 없을 때 혼자 청승맞게 굴었나 보지.
+준후: 그냥 목소리가 조용해서 들은 거야. 이따 밤에 월광이나 오랜만에 한번 쳐줘.
+재훈: 내일 훈련 끝나고 네가 가이딩 똑바로 하면 생각해 보지.`;
+
+const KEY='song-top5';
+const $=id=>document.getElementById(id);
+const src=$('src'), out=$('out'), main=$('main'), st=$('parseStatus'), pasteBox=$('paste'), status=$('status');
+// 사용자가 바꾼 줄은 그대로 보이게
+const br=t=>esc(t).replace(/\n/g,'<br>');
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function say(t,keep){status.textContent=t;clearTimeout(status._t);if(t&&!keep)status._t=setTimeout(()=>{if(status.textContent===t)status.textContent=''},3000)}
+// 너그럽게: **굵게** · `코드` · 앞의 - • · 와 줄 앞 이모지를 걷어 낸다
+function clean(l){return l.replace(/\*\*|__|`/g,'').replace(/^\s*[-•·*]\s+/,'').replace(/^[\s\p{Extended_Pictographic}️‍]+/u,'').trim()}
+const unq=s=>(s||'').trim().replace(/^["“'‘「『〈《]+|["”'’」』〉》]+$/g,'').trim();
+
+// ── 읽기 ──
+const L={list:/^(재생\s*목록|플레이\s*리스트|재생\s*목록\s*이름)$/,genre:/^(분류|갈래|장르)$/,why:/^(이유|까닭|한\s*마디|대사)$/,artist:/^(가수|아티스트|작곡가|노래)$/,color:/^(색|색상|색깔|컬러|대표\s*색|메인\s*컬러)$/};
+const LABELS='재생\\s*목록|플레이\\s*리스트|분류|갈래|장르|이유|까닭|색|색상|색깔|컬러';
+// 채팅 화면이 줄바꿈을 먹어 한 덩어리로 붙여넣어도 읽게 표시 앞에서 줄을 다시 나눈다
+function split(text){
+  let t=text.replace(/[ \t]+(?=@\S)/g,'\n').replace(new RegExp('[ \\t]+(?=(?:'+LABELS+')\\s*[:：])','g'),'\n');
+  // 곡 번호 앞: 번호로 시작하는 줄이 하나도 없을 때만(제목 속 숫자를 가르지 않게)
+  if(!/^\s*(?:[-•*]\s*)?\d+\s*(?:위|[.)])/m.test(t.replace(/^[^\n]*\n?/,'')))t=t.replace(/[ \t]+(?=[1-9]\s*(?:위|[.)])\s+\S)/g,'\n');
+  return t;
+}
+function song(rank,head){
+  const s=unq(head);
+  // 곡 제목 - 가수: 마지막 " - " · " – " · " — " 로 가른다. 없으면 제목만
+  const m=s.match(/^(.+)\s+[-–—]\s+(.+)$/);
+  return {rank,title:unq(m?m[1]:s),artist:m?unq(m[2]):'',genre:'',why:''};
+}
+function parse(text){
+  const list=[];let p=null,cur=null,last='',chat=null,inChat=false,gap=false;
+  const person=name=>{p={name,title:'',songs:[]};list.push(p);cur=null;last='';inChat=false};
+  // @대화 아래: 이름: 메시지. 한 덩어리로 붙어 와도 아는 이름 앞에서 다시 가른다. 이름 없는 줄은 앞 메시지에 잇는다
+  const feed=l=>{
+    const names=[...new Set([...list.map(x=>x.name),...chat.map(c=>c.who)].filter(Boolean))];
+    const parts=names.length?l.split(new RegExp('\\s+(?=(?:'+names.map(n=>n.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|')+')\\s*[:：])')):[l];
+    for(const part of parts){
+      const m=part.match(/^(.{1,20}?)\s*[:：]\s*(.+)$/);
+      if(m)chat.push({who:unq(m[1]),text:unq(m[2])});
+      else if(chat.length)chat[chat.length-1].text+=(parts.length>1?' ':'\n')+unq(part);   // 줄이 살아 있으면 사용자가 바꾼 줄 그대로
+    }
+  };
+  for(const raw of split(text).split(/\r?\n/)){
+    if(/^\s*```/.test(raw))continue;
+    const l=clean(raw);if(!l){last='';gap=true;continue}   // 빈 줄 다음의 표시 없는 줄은 버린다(챗봇 맺음말이 딸려 오지 않게)
+    const afterGap=gap;gap=false;
+    let m;
+    if((m=l.match(/^@\s*(.+)$/))||(m=l.match(/^#{1,}\s*(.+)$/))){
+      const c=unq(m[1]).match(/^(?:대화|메시지|메신저|채팅)(?:\s+(.*))?$/);
+      if(c){chat=chat||[];inChat=true;cur=null;last='';if(c[1])feed(c[1])}else person(unq(m[1]));
+      continue;
+    }
+    if(inChat){if(afterGap&&!/^.{1,20}?\s*[:：]\s*\S/.test(l))continue;feed(l);continue}
+    if((m=l.match(/^(\d{1,2})\s*(?:위\s*[.:)]?|[.)]|:)\s*(.+)$/))){
+      if(!p)person('');
+      cur=song(+m[1],m[2]);p.songs.push(cur);last='';continue;
+    }
+    if((m=l.match(/^([^:：]{1,10}?)\s*[:：]\s*(.*)$/))){
+      const key=m[1].trim(), val=unq(m[2]);
+      if(L.list.test(key)){if(!p)person('');if(val)p.title=val;last='';continue}
+      if(cur&&L.genre.test(key)){cur.genre=val;last='genre';continue}
+      if(cur&&L.why.test(key)){cur.why=val;last='why';continue}
+      if(cur&&L.color.test(key)){const c=val.match(/#?([0-9a-f]{6})(?![0-9a-f])/i);if(c)cur.color='#'+c[1].toLowerCase();last='';continue}
+      if(cur&&L.artist.test(key)){if(val)cur.artist=val;last='';continue}
+    }
+    // 라벨 없는 줄은 바로 앞 이유에 이어 붙인다(이유가 두 줄로 온 출력)
+    if(cur&&last==='why')cur.why+=(cur.why?'\n':'')+unq(l);
+  }
+  const res=list.filter(x=>x.songs.length);
+  // 색 면 씨앗: 제목 + 가수 글자로 정한다. 한 사람 안에서는 색상이 40도 안쪽으로 붙지 않게 민다
+  for(const x of res){const used=[];for(const s of x.songs){let g=hash(norm(s.title)+'|'+norm(s.artist));for(let k=0;k<8&&used.some(u=>{const d=Math.abs(u-g%360);return Math.min(d,360-d)<40});k++)g=(g+47)>>>0;used.push(g%360);s.g=g}}
+  res.chat=chat||[];
+  return res;
+}
+
+// ── 커버: 넣은 그림은 IndexedDB(곡마다 · 앨범 앞표지는 사람마다), 없으면 제목으로 정해지는 색 면 ──
+// 글자 → 숫자 → 색상 · 색 흐름 · 짙기. 모양은 늘 같은 비스듬한 번짐(짙은 색 → 중간 → 옅은 색), 같은 글자는 늘 같은 면
+function hash(s){let h=2166136261;for(const c of s)h=Math.imul(h^c.codePointAt(0),16777619)>>>0;return h}
+const hslHex=(h,s,l)=>{s/=100;l/=100;const f=n=>{const k=(n+h/30)%12;return Math.round(255*(l-s*Math.min(l,1-l)*Math.max(-1,Math.min(k-3,9-k,1)))).toString(16).padStart(2,'0')};return '#'+f(0)+f(8)+f(4)};
+function hexHsl(x){const r=parseInt(x.slice(1,3),16)/255,g=parseInt(x.slice(3,5),16)/255,b=parseInt(x.slice(5,7),16)/255,mx=Math.max(r,g,b),mn=Math.min(r,g,b),l=(mx+mn)/2,d=mx-mn;if(!d)return [0,0,l*100];const s=d/(1-Math.abs(2*l-1)),h=mx===r?((g-b)/d+6)%6:mx===g?(b-r)/d+2:(r-g)/d+4;return [h*60,s*100,l*100]}
+const isHex=x=>typeof x==='string'&&/^#[0-9a-f]{6}$/i.test(x);
+// 색 면의 세 색 [짙은 색, 가운데 색, 끝 색] (각각 [색상, 채도, 밝기])
+function tones(seed){
+  // 정해 준 색(챗봇이 고른 색 · 사용자가 고친 색): 그 색이 가운데에 그대로 오고, 앞은 더 짙게 · 끝은 색상을 조금 틀어 더 옅게
+  if(isHex(seed)){const [h,s,l]=hexHsl(seed);return [[h,s*.9,Math.max(8,l-24)],[h,s,l],[(h+24)%360,Math.min(100,s+6),Math.min(93,l+(l>68?12:26))]]}
+  // 끝 색이 다 같은 옅은 색으로 모이지 않게: 끝 색의 색상(앞 색에서 더 멀리) · 짙기(62~88%) · 채도를 따로 뽑는다
+  const h=typeof seed==='number'?seed>>>0:hash(String(seed)), hue=h%360, d=[0,18,32,48,-22][(h>>>9)%5], e=[20,45,70,-35,-60,150][(h>>>3)%6];
+  const s1=24+(h>>>12)%18, l1=22+(h>>>17)%24, s2=26+(h>>>22)%16, l2=l1+22, s3=34+(h>>>26)%30, l3=Math.max(l2+12,62+(h>>>6)%27);
+  return [[hue,s1,l1],[(hue+d+360)%360,s2,l2],[(hue+d+e+360)%360,s3,Math.min(l3,90)]];
+}
+function grad(seed){const [a,b,c]=tones(seed).map(t=>hslHex(t[0],t[1],t[2]));return `linear-gradient(150deg,${a},${b} 58%,${c})`}
+const midHex=seed=>isHex(seed)?seed.toLowerCase():hslHex(...tones(seed)[1]);
+const norm=s=>(s||'').toLowerCase().replace(/\s+/g,' ').trim();
+const songKey=s=>'s:'+norm(s.title)+'|'+norm(s.artist), albumKey=p=>'a:'+norm(p.name);
+let covers={};
+// 사용자가 고친 색(커버 열쇠 → #hex). 챗봇이 준 색 · 글자에서 나온 색보다 먼저
+let tints={};try{tints=JSON.parse(localStorage.getItem('song-top5.tints')||'{}')||{}}catch(e){}
+const saveTints=()=>{try{localStorage.setItem('song-top5.tints',JSON.stringify(tints))}catch(e){}};
+// 커버 바탕. small = 흐린 작은 판(플레이어 바탕용)
+function cover(key,seed,small){const c=covers[key];return c?`url('${small?c.bg:c.src}')`:grad(tints[key]||seed)}
+const cvAttr=(key,seed)=>`data-cv="${esc(key)}" data-sd="${esc(seed)}" style="background-image:${cover(key,seed)}"`;
+let db=null;
+function openDb(){return new Promise(ok=>{try{const r=indexedDB.open(KEY,1);r.onupgradeneeded=()=>r.result.createObjectStore('images');r.onsuccess=()=>ok(r.result);r.onerror=()=>ok(null)}catch(e){ok(null)}})}
+function loadCovers(){return new Promise(ok=>{if(!db)return ok();const res={},q=db.transaction('images').objectStore('images').openCursor();
+  q.onsuccess=()=>{const c=q.result;if(c){res[c.key]=c.value;c.continue()}else{covers=res;ok()}};q.onerror=()=>ok()})}
+function putCover(key,val){if(val)covers[key]=val;else delete covers[key];if(!db)return;const s=db.transaction('images','readwrite').objectStore('images');if(val)s.put(val,key);else s.delete(key)}
+// 그림 파일 → 긴 변 640px JPEG + 16px 흐린 판
+// 바탕용 흐린 판: 작게 줄였다가(평균) 여러 번 나눠 키워 매끈하게 번지게, 채도는 1.2배
+function softBg(img){
+  const ar=img.width/img.height, W=240, H=Math.max(1,Math.round(W/ar));
+  let c=document.createElement('canvas'), w=img.width, h=img.height;c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0);
+  const step=(nw,nh)=>{const d=document.createElement('canvas');d.width=Math.max(1,Math.round(nw));d.height=Math.max(1,Math.round(nh));const g=d.getContext('2d');g.imageSmoothingEnabled=true;g.imageSmoothingQuality='high';g.drawImage(c,0,0,d.width,d.height);c=d};
+  while(c.width>24)step(c.width/2,c.height/2);
+  step(12,Math.max(1,12/ar));
+  for(const k of [3,3,W/36])step(c.width*k,c.height*k);
+  step(W,H);
+  const g=c.getContext('2d'), d=g.getImageData(0,0,c.width,c.height), a=d.data;
+  for(let i=0;i<a.length;i+=4){const l=.3*a[i]+.59*a[i+1]+.11*a[i+2];for(let j=0;j<3;j++)a[i+j]=Math.max(0,Math.min(255,l+(a[i+j]-l)*1.2))}
+  g.putImageData(d,0,0);
+  return c.toDataURL('image/jpeg',.86);
+}
+function readImage(file){return new Promise((ok,no)=>{
+  const url=URL.createObjectURL(file),img=new Image();
+  img.onload=()=>{
+    const fit=(max,q)=>{const k=Math.min(1,max/Math.max(img.width,img.height)),c=document.createElement('canvas');c.width=Math.max(1,Math.round(img.width*k));c.height=Math.max(1,Math.round(img.height*k));
+      const g=c.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,c.width,c.height);g.drawImage(img,0,0,c.width,c.height);return c.toDataURL('image/jpeg',q)};
+    const v={src:fit(640,.86),bg:softBg(img),bgv:2,ar:img.width/img.height,z:1,x:.5,y:.5};URL.revokeObjectURL(url);ok(v)};
+  img.onerror=()=>{URL.revokeObjectURL(url);no(new Error('그림을 읽지 못했어요.'))};
+  img.src=url})}
+
+// ── 그리기 ──
+const pad2=n=>String(n).padStart(2,'0');
+const ck=(key,label,has=!!covers[key])=>`data-ck="${esc(key)}" tabindex="0" role="button" aria-label="${esc(label)} 커버 그림 넣기" title="${has?'끌어서 옮기기 · 휠로 확대 · 누르면 바꾸기':'눌러서 그림 넣기 · 올려놓고 Ctrl+V'}"${has?' data-has':''}`;
+const TINT='linear-gradient(rgba(24,20,34,.22),rgba(24,20,34,.5))';
+let people=[], shape='player', thumbs=false, heads={}, cur={}, me='', hl='#ffffff', bars={}, wrap='char', clear=false, albDir='h';   // thumbs = 곡별 앨범아트(기본 끔, 저장 이름 rowArt)
+try{const s=JSON.parse(localStorage.getItem(KEY+'.settings')||'null');if(s&&['player','cd','album','list'].includes(s.shape))shape=s.shape;if(s&&s.heads&&typeof s.heads==='object')heads=s.heads;if(s&&typeof s.me==='string')me=s.me;if(s&&/^#[0-9a-f]{6}$/i.test(s.hl||''))hl=s.hl;if(s&&s.bars&&typeof s.bars==='object')bars=s.bars;if(s&&s.wrap==='word')wrap='word';if(s&&s.clear===true)clear=true;if(s&&s.albDir==='v')albDir='v'}catch(e){}
+const curOf=p=>Math.max(0,Math.min(p.songs.length-1,cur[p.name]||0));
+const ICON={prev:'<svg width="20" height="20" viewBox="0 0 24 24"><path d="M6 5h2v14H6zM20 5v14L9 12z"/></svg>',pause:'<svg width="28" height="28" viewBox="0 0 24 24"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>',next:'<svg width="20" height="20" viewBox="0 0 24 24"><path d="M16 5h2v14h-2zM4 5l11 7-11 7z"/></svg>'};
+// 곡 제목 → 유튜브에서 '제목 가수'로 찾은 화면
+const yt=x=>`<a class="st-yt" href="https://www.youtube.com/results?search_query=${encodeURIComponent([x.title,x.artist].filter(Boolean).join(' '))}" target="_blank" rel="noopener">${esc(x.title)}</a>`;
+// 1번(가장 좋아하는 곡) 제목 앞 별. 제목 첫 낱말과 붙어 다닌다
+const star=x=>x.rank===1?'<svg class="st-star" viewBox="0 0 24 24" width="16" height="16" role="img" aria-label="가장 좋아하는 곡"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg>&nbsp;':'';
+const sub=s=>[s.artist,s.genre].filter(Boolean).map(esc).join(' · ');
+// 큰 그림: 곡별 앨범아트가 켜져 있으면 지금 곡 그림, 꺼져 있으면 대표 그림(앨범 앞표지와 같은 그림)
+function artOf(p,s){return thumbs?{k:songKey(s),sd:s.color||s.g,lb:s.title}:{k:albumKey(p),sd:p.title||p.name,lb:(p.title||p.name)+' 대표'}}
+const glow=(k,sd)=>covers[k]?`<i class="st-glow" data-cv="${esc(k)}" style="background-image:${cover(k,sd)}"></i>`:'';   // 넣은 그림에만
+// 재생바 자리(0~1): 끌어서 정한 값(곡마다), 없으면 순위에 따라
+const barOf=(s,i,n)=>bars[songKey(s)]!=null?bars[songKey(s)]:(i+.5)/n;
+function playerHtml(p,pi){
+  const i=curOf(p), s=p.songs[i], {k,sd,lb}=artOf(p,s);
+  const rest=p.songs.map((x,j)=>j===i?'':`<div class="pl-row" data-go="${j}"><span class="st-n">${x.rank}</span><i class="st-cv" ${cvAttr(songKey(x),x.color||x.g)}></i><div><b>${star(x)}${yt(x)}</b>${x.artist?`<span>${esc(x.artist)}</span>`:''}${x.why?`<p>${br(x.why)}</p>`:''}</div></div>`).join('');
+  return `<article class="st st-player${thumbs?'':' no-thumb'}" data-p="${pi}" data-name="${esc(p.name)}" style="background-image:${TINT},${cover(k,sd,true)}">
+  <div class="pl-top"><div>${p.title?`<b>${esc(p.title)}</b>`:''}<span>${esc(p.name||'이름 없음')}</span></div><span class="st-n">No.${s.rank}</span></div>
+  <div class="pl-gw">${glow(k,sd)}<div class="st-cv pl-art" ${ck(k,lb)} ${cvAttr(k,sd)}></div></div>
+  <p class="pl-t1">${star(s)}${yt(s)}</p>${sub(s)?`<p class="pl-t2">${sub(s)}</p>`:''}
+  ${s.why?`<p class="pl-why">${br(s.why)}</p>`:''}
+  <div class="pl-bar" data-bar="${esc(songKey(s))}"><i style="width:${(barOf(s,i,p.songs.length)*100).toFixed(1)}%"></i></div>
+  <div class="pl-ctl"><span data-step="-1">${ICON.prev}</span><span>${ICON.pause}</span><span data-step="1">${ICON.next}</span></div>
+  ${rest?`<p class="pl-nx">다음 곡</p>${rest}`:''}
+</article>`;
+}
+// CD 바탕: 지금 곡 커버를 크림색 막 아래에 흐리게(위는 색이 비치고 글 자리는 옅게)
+const VEIL='linear-gradient(rgba(247,246,243,.42),rgba(247,246,243,.8) 58%,rgba(247,246,243,.88))';
+function cdHtml(p,pi){
+  const i=curOf(p), s=p.songs[i], {k,sd,lb}=artOf(p,s);
+  return `<article class="st st-cd" data-p="${pi}" data-name="${esc(p.name)}" style="--hl:${hl};background-image:${VEIL},${cover(k,sd,true)}">
+  <div class="cd-gw">${glow(k,sd)}<div class="st-cv cd-disc" ${ck(k,lb)} ${cvAttr(k,sd)}></div></div>
+  <div class="cd-lcd"><span>DISC 1</span><span class="st-n">TRACK ${pad2(i+1)} / ${pad2(p.songs.length)}</span></div>
+  <h3>${esc(p.title||'TOP '+p.songs.length)}</h3><p class="cd-by">${esc(p.name||'이름 없음')}</p>
+  ${p.songs.map((x,j)=>`<div class="cd-tr${j===i?' on':''}" data-go="${j}"><span class="st-n">${pad2(x.rank)}</span><div><b>${star(x)}${yt(x)}</b>${x.artist?`<span>${esc(x.artist)}</span>`:''}${x.why?`<p>${br(x.why)}</p>`:''}</div></div>`).join('')}
+</article>`;
+}
+function albumHtml(p,pi){
+  const k=albumKey(p), genres=[...new Set(p.songs.map(s=>s.genre.split(/\s*[·(]\s*/)[0].trim()).filter(Boolean))];
+  return `<article class="st st-album${albDir==='v'?' v':''}" data-p="${pi}" data-name="${esc(p.name)}" style="background-image:${cover(k,p.title||p.name,true)}">
+  <div class="st-cv al-front" ${ck(k,(p.title||p.name)+' 앞표지')} data-cv="${esc(k)}" data-sd="${esc(p.title||p.name)}" style="background-image:linear-gradient(rgba(24,20,34,.1),rgba(24,20,34,.46)),${cover(k,p.title||p.name)}"><small>TOP ${p.songs.length}</small><h3>${esc(p.title||p.name||'TOP '+p.songs.length)}</h3>${p.title&&p.name?`<em>${esc(p.name)}</em>`:''}<i class="al-bc"></i></div>
+  <div class="al-back"><p class="al-hd">TRACKLIST</p>
+  ${p.songs.map(x=>`<div class="al-tr"><span class="st-n">${pad2(x.rank)}</span><div><b>${star(x)}${yt(x)}</b>${x.artist?`<span>${esc(x.artist)}</span>`:''}${x.why?`<p>${br(x.why)}</p>`:''}</div></div>`).join('')}
+  <div class="al-foot"><span>${genres.map(esc).join(' · ')}</span></div></div>
+</article>`;
+}
+function listHtml(p,pi){
+  // 머리 그림: 따로 넣은 재생목록 그림(앨범 앞표지와 같은 그림)이 있으면 그것, 없으면 곡 커버 넷
+  // 곡별 앨범아트가 켜져 있으면 모아서 / 따로를 고를 수 있다(heads). 꺼져 있으면 넣은 그림이 늘 보인다
+  const ak=albumKey(p), own=covers[ak]&&!(thumbs&&heads[p.name]==='mix'), mo=[0,1,2,3].map(j=>{const x=p.songs[j%p.songs.length];return `<i class="st-cv" ${cvAttr(songKey(x),x.color||x.g)}></i>`}).join('');
+  return `<article class="st st-list${thumbs?'':' no-thumb'}" data-p="${pi}" data-name="${esc(p.name)}">
+  <div class="ls-hd">${own?`<div class="ls-mo st-cv" data-head ${ck(ak,(p.title||p.name)+' 재생목록')} ${cvAttr(ak,0)}></div>`:`<div class="ls-mo" data-head ${ck(ak,(p.title||p.name)+' 재생목록',false)}>${mo}</div>`}<div><small>재생목록</small><h3>${esc(p.title||'TOP '+p.songs.length)}</h3><p>${esc(p.name||'이름 없음')} · ${p.songs.length}곡</p></div></div>
+  <div class="ls-th"><span>#</span><span>제목</span><span>분류</span><span>이유</span></div>
+  ${p.songs.map(x=>`<div class="ls-r"><span class="st-n">${x.rank}</span><div class="ls-ti"><i class="st-cv" ${ck(songKey(x),x.title)} ${cvAttr(songKey(x),x.color||x.g)}></i><div><b>${star(x)}${yt(x)}</b>${x.artist?`<span>${esc(x.artist)}</span>`:''}</div></div><div>${x.genre?`<span class="ls-tag">${esc(x.genre)}</span>`:''}</div><div class="ls-why">${br(x.why)}</div></div>`).join('')}
+</article>`;
+}
+// 메시지에서 말한 사람들(나온 순서)과 오른쪽에 설 사람: 위 막대에서 고른 사람 → 바꾸기의 PC 이름 · user · pc → 글에서 맨 먼저 나온 사람
+const speakers=()=>[...new Set((people.chat||[]).map(m=>m.who))];
+function meName(){
+  const sp=speakers(), pcs=new Set([norm(cast.pc),'pc','user','{{user}}','유저','나'].filter(Boolean));
+  return sp.find(w=>me&&norm(w)===norm(me))||sp.find(w=>pcs.has(norm(w)))||(people[0]?people[0].name:'');
+}
+// 메시지 카드: PC(바꾸기의 PC 이름 · user · pc)가 오른쪽 파란 말풍선, 나머지는 왼쪽 + 말 위에 이름.
+// PC 이름으로 말한 사람이 없으면 글에서 맨 먼저 나온 사람을 오른쪽에. 상대 곡 제목이 처음 나온 메시지 아래에 그 곡을 붙인다
+function chatHtml(){
+  const msgs=people.chat||[];if(!msgs.length||!people.length)return '';
+  const right=norm(meName());
+  const shown=new Set();let prev=null, body='';
+  for(const m of msgs){
+    const mine=norm(m.who)===right, first=m.who!==prev;prev=m.who;
+    if(first&&!mine)body+=`<p class="ch-who">${esc(m.who)}</p>`;
+    body+=`<p class="ch-m${mine?' me':''}${first?' gap':''}">${br(m.text)}</p>`;
+    const t=norm(m.text);
+    const hit=people.filter(x=>norm(x.name)!==norm(m.who)).flatMap(x=>x.songs).filter(x=>norm(x.title).length>1&&t.includes(norm(x.title))&&!shown.has(songKey(x))).sort((a,b)=>b.title.length-a.title.length)[0];
+    if(hit){shown.add(songKey(hit));body+=`<div class="ch-song${mine?' me':''}"><i class="st-cv" ${cvAttr(songKey(hit),hit.color||hit.g)}></i><div><b>${yt(hit)}</b>${hit.artist?`<span>${esc(hit.artist)}</span>`:''}</div></div>`}
+  }
+  return `<article class="st st-chat${wrap==='word'?' wrap-word':''}" data-name="대화">
+  ${chatHead()}<div class="ch-body">${body}</div>
+</article>`;
+}
+// 프로필: 따로 넣은 그림(p:<이름>) → 그 사람 플레이어 그림 → 이름 첫 글자
+function avatar(name){
+  const pk='p:'+norm(name), p=people.find(x=>norm(x.name)===norm(name)), lb=name+' 프로필';
+  if(covers[pk])return `<i class="ch-av st-cv" ${ck(pk,lb)} ${cvAttr(pk,name)}></i>`;
+  if(p){const {k,sd}=artOf(p,p.songs[curOf(p)]);return `<i class="ch-av st-cv" ${ck(pk,lb,false)} data-cv="${esc(k)}" style="background-image:${cover(k,sd)}"></i>`}
+  return `<i class="ch-av" ${ck(pk,lb,false)} style="background-image:${grad(name)}">${esc([...name][0]||'')}</i>`;
+}
+function chatHead(){
+  const right=norm(meName()), others=speakers().filter(w=>norm(w)!==right);
+  if(!others.length)return '';
+  if(others.length===1)return `<div class="ch-hd"><div class="ch-avs">${avatar(others[0])}</div><p class="ch-nm">${esc(others[0])}</p></div>`;
+  return `<div class="ch-hd"><div class="ch-avs many">${others.slice(0,4).map(avatar).join('')}</div><p class="ch-nm">${others.map(esc).join(', ')}<small>${others.length+1}명</small></p></div>`;
+}
+const DRAW={player:playerHtml,cd:cdHtml,album:albumHtml,list:listHtml};
+// 넣은 그림을 틀에 채운 뒤 확대(z) · 자리(x · y, 0~1)를 입힌다. 틀 크기의 % 로 적어 저장 복제본에서도 같다
+function fitOne(el){
+  const c=covers[el.dataset.cv];if(!c||!c.ar)return null;
+  const fw=el.clientWidth,fh=el.clientHeight;if(!fw||!fh)return null;
+  const s=Math.max(fw/c.ar,fh)*(c.z||1), bw=c.ar*s, bh=s, lay=el.classList.contains('al-front');
+  el.style.backgroundSize=(lay?'100% 100%,':'')+(bw/fw*100).toFixed(3)+'% '+(bh/fh*100).toFixed(3)+'%';
+  el.style.backgroundPosition=(lay?'0 0,':'')+((c.x==null?.5:c.x)*100).toFixed(3)+'% '+((c.y==null?.5:c.y)*100).toFixed(3)+'%';
+  return {fw,fh,bw,bh};
+}
+function fitCovers(root,key){root.querySelectorAll('[data-cv]').forEach(el=>{if(!key||el.dataset.cv===key)fitOne(el)})}
+// 곡별 앨범아트 토글은 작은 커버가 있는 모양(플레이어 · 재생목록)에서만 보인다
+const topbar=$('topbar'), thumbBtn=$('thumbs');
+function drawTop(){
+  const tog=shape==='player'||shape==='cd'||shape==='list', sp=people.length?speakers():[], right=norm(meName());
+  $('artBtn').hidden=!people.length;
+  const pen=shape==='cd';$('hlRow').hidden=!pen;$('hlColor').value=hl;
+  thumbBtn.hidden=!tog;thumbBtn.setAttribute('aria-pressed',String(thumbs));
+  $('albRow').hidden=shape!=='album';$('albSeg').querySelectorAll('[data-dir]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.dir===albDir)));
+  $('msgRow').hidden=!sp.length;
+  topbar.hidden=!people.length||![...topbar.children].some(c=>!c.hidden);
+  $('wrapSeg').querySelectorAll('[data-wrap]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.wrap===wrap)));
+  $('meSeg').innerHTML=sp.map(w=>`<button type="button" data-me="${esc(w)}" aria-pressed="${norm(w)===right}">${esc(w)}</button>`).join('');
+}
+let hlRec=false;
+$('hlColor').addEventListener('input',e=>{if(!hlRec){record();hlRec=true}hl=e.target.value;saveSettings();out.querySelectorAll('.st-cd').forEach(c=>c.style.setProperty('--hl',hl))});
+$('hlColor').addEventListener('change',()=>{hlRec=false});
+$('albSeg').addEventListener('click',e=>{const b=e.target.closest('[data-dir]');if(!b||b.dataset.dir===albDir)return;record();albDir=b.dataset.dir;saveSettings();draw()});
+$('wrapSeg').addEventListener('click',e=>{const b=e.target.closest('[data-wrap]');if(!b||b.dataset.wrap===wrap)return;record();wrap=b.dataset.wrap;saveSettings();draw()});
+$('meSeg').addEventListener('click',e=>{const b=e.target.closest('[data-me]');if(!b)return;record();me=b.dataset.me;saveSettings();draw()});
+function saveSettings(){try{localStorage.setItem(KEY+'.settings',JSON.stringify({shape,heads,me,hl,bars,wrap,clear,albDir}))}catch(e){}}
+thumbBtn.onclick=()=>{record();thumbs=!thumbs;saveSettings();draw()};
+// 폰: 오른쪽 말풍선 고르기는 위 막대가 아니라 메시지 카드 바로 위에 둔다(위 막대가 따라오지 않아서)
+const phone=matchMedia('(max-width:860px)'), meSlot=document.createElement('div');meSlot.className='me-slot';
+phone.addEventListener('change',()=>{if(people.length)draw()});
+function draw(){topbar.append($('msgRow'));meSlot.remove();out.dataset.shape=shape;out.innerHTML=people.map(DRAW[shape]).join('')+chatHtml();fitCovers(out);drawTop();
+  const chat=out.querySelector('.st-chat');
+  if(phone.matches&&chat){meSlot.append($('msgRow'));chat.before(meSlot);topbar.hidden=![...topbar.children].some(c=>!c.hidden)}
+  if(!$('art').hidden)drawArt()}
+addEventListener('resize',()=>fitCovers(out));
+function render(){
+  const text=src.value;
+  try{localStorage.setItem(KEY+'.input',text)}catch(e){}
+  people=parse(text);
+  if(!people.length){
+    out.innerHTML='';setEmpty(true);drawTop();
+    st.textContent=text.trim()?'양식을 읽지 못했어요. 1. 곡 제목 - 가수 줄이 있는지 봐 주세요.':'';
+    return;
+  }
+  draw();setEmpty(false);st.textContent='';
+}
+// 모양
+const shapeSeg=$('shape');
+function drawShape(){shapeSeg.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.shape===shape)))}
+shapeSeg.addEventListener('click',e=>{const b=e.target.closest('[data-shape]');if(!b||b.dataset.shape===shape)return;shape=b.dataset.shape;
+  saveSettings();drawShape();if(people.length)draw()});
+drawShape();
+
+// ── 카드에서 누르기: 커버 = 그림 넣기, 곡 줄 · 이전 · 다음 = 그 곡으로 ──
+const cvMenu=$('cvMenu'), cvFile=$('cvFile');let cvKey='';
+function closeMenu(){cvMenu.hidden=true}
+async function setCover(key,file){
+  if(!file||!/^image\//.test(file.type)){say('그림 파일만 넣을 수 있어요.');return}
+  try{const img=await readImage(file);record();putCover(key,img);
+    people.forEach(p=>{if(albumKey(p)===key)heads[p.name]='own'});saveSettings();   // 재생목록 그림을 넣으면 따로 넣기로
+    draw()}catch(err){say(err.message)}
+}
+let cvName=null;
+function coverAct(el){
+  cvKey=el.dataset.ck;tintRec=false;
+  const shown=el.hasAttribute('data-has'), head=thumbs&&el.hasAttribute('data-head'), p=people[+(el.closest('.st')||{dataset:{}}).dataset.p];
+  cvName=head&&p?p.name:null;
+  // 그림이 없는 커버: 그림 넣기 + 색 고치기. 색을 못 고치는 곳(곡 커버 넷을 모은 머리)은 바로 그림 고르기
+  const sd=el.dataset.sd, tint=!shown&&sd!=null;
+  if(!head&&!shown&&!tint){cvFile.click();return}
+  $('cvAdd').hidden=shown||head;$('cvTintRow').hidden=!tint;$('cvTintOff').hidden=!tint||!tints[cvKey];
+  if(tint)$('cvTint').value=tints[cvKey]||midHex(/^\d+$/.test(sd)?+sd:sd);
+  $('cvHead').hidden=!head;
+  $('cvHead').querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String((b.dataset.head==='own')===shown)));
+  $('cvPick').hidden=$('cvDrop').hidden=cvMenu.querySelector('.zoom').hidden=!shown;
+  const r=el.getBoundingClientRect();cvMenu.hidden=false;
+  cvMenu.style.left=Math.max(8,Math.min(r.left+r.width/2-cvMenu.offsetWidth/2,innerWidth-cvMenu.offsetWidth-8))+'px';
+  const below=r.bottom+8, mh=cvMenu.offsetHeight;
+  cvMenu.style.top=Math.max(8,below+mh<=innerHeight-8?below:r.top-8-mh)+'px';
+  if(shown)$('cvZoom').value=covers[cvKey].z||1;
+  (shown?$('cvPick'):head?$('cvHead').querySelector('button'):$('cvAdd')).focus();
+}
+// 넣은 그림: 끌면 틀 안에서 자리, 휠 · 확대 막대로 크기. 5px 넘게 움직였으면 누르기(메뉴)로 치지 않는다
+let dragCv=null, skipClick=false, hoverCk=null, saveT=0;
+// ── 되돌리기 Ctrl+Z · 다시 하기 Ctrl+Shift+Z · Ctrl+Y: 그림(넣기 · 빼기 · 자리 · 확대) · 색 · 재생목록 그림 방식 · 오른쪽 말풍선 · 곡별 앨범아트 ──
+const undoList=[], redoList=[];let tintRec=false, zoomT=0;
+const snap=()=>({covers:Object.fromEntries(Object.entries(covers).map(([k,v])=>[k,{...v}])),tints:{...tints},heads:{...heads},me,thumbs,hl,bars:{...bars},wrap,albDir});
+function record(){undoList.push(snap());if(undoList.length>60)undoList.shift();redoList.length=0}
+const zoomRec=()=>{const n=Date.now();if(n-zoomT>800)record();zoomT=n};   // 휠 · 막대는 한 번 움직임을 한 걸음으로
+function restore(st){
+  for(const k of new Set([...Object.keys(covers),...Object.keys(st.covers)])){
+    const a=covers[k], b=st.covers[k];
+    if(!b)putCover(k,null);else if(!a||a.src!==b.src||a.z!==b.z||a.x!==b.x||a.y!==b.y)putCover(k,{...b});
+  }
+  tints={...st.tints};saveTints();heads={...st.heads};me=st.me;thumbs=st.thumbs;hl=st.hl;bars={...st.bars};wrap=st.wrap;albDir=st.albDir;saveSettings();closeMenu();draw();
+}
+function stepHist(from,to,none){if(!from.length){say(none);return}clearTimeout(saveT);to.push(snap());restore(from.pop())}
+document.addEventListener('keydown',e=>{
+  if(!(e.ctrlKey||e.metaKey)||e.altKey)return;const k=e.key.toLowerCase();if(k!=='z'&&k!=='y')return;
+  const a=document.activeElement;   // 글 칸 안에서는 브라우저의 글자 되돌리기 그대로
+  if(a&&(a.tagName==='TEXTAREA'||a.isContentEditable||(a.tagName==='INPUT'&&a.type!=='range'&&a.type!=='color')))return;
+  e.preventDefault();
+  if(k==='y'||e.shiftKey)stepHist(redoList,undoList,'다시 할 것이 없어요.');else stepHist(undoList,redoList,'되돌릴 것이 없어요.');
+});
+const saveCover=key=>{clearTimeout(saveT);saveT=setTimeout(()=>{if(covers[key])putCover(key,covers[key])},250)};
+function setZoom(key,z){const c=covers[key];if(!c)return;c.z=Math.max(1,Math.min(4,z));fitCovers(out,key);saveCover(key)}
+let dragBar=null;
+function setBar(e){const d=dragBar,r=d.el.getBoundingClientRect(),v=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width));bars[d.key]=Math.round(v*1000)/1000;d.el.firstElementChild.style.width=(v*100).toFixed(1)+'%'}
+out.addEventListener('pointerdown',e=>{
+  const bar=e.target.closest('.pl-bar[data-bar]');
+  if(bar&&e.button<=0){record();dragBar={el:bar,key:bar.dataset.bar};setBar(e);try{bar.setPointerCapture(e.pointerId)}catch(err){}return}
+  const el=e.target.closest('[data-ck][data-has]');if(!el||!covers[el.dataset.ck]||e.button>0)return;
+  const c=covers[el.dataset.ck];dragCv={el,key:el.dataset.ck,sx:e.clientX,sy:e.clientY,x:c.x==null?.5:c.x,y:c.y==null?.5:c.y,moved:false};
+  try{el.setPointerCapture(e.pointerId)}catch(err){}
+});
+out.addEventListener('pointermove',e=>{
+  if(dragBar){setBar(e);return}
+  const d=dragCv;if(!d)return;const dx=e.clientX-d.sx,dy=e.clientY-d.sy;
+  if(!d.moved&&Math.hypot(dx,dy)<5)return;
+  if(!d.moved){d.moved=true;closeMenu();record()}
+  const g=fitOne(d.el),c=covers[d.key];if(!g)return;
+  if(g.bw-g.fw>.5)c.x=Math.max(0,Math.min(1,d.x-dx/(g.bw-g.fw)));
+  if(g.bh-g.fh>.5)c.y=Math.max(0,Math.min(1,d.y-dy/(g.bh-g.fh)));
+  fitCovers(out,d.key);
+});
+function endDrag(){if(dragBar){dragBar=null;saveSettings();skipClick=true;setTimeout(()=>{skipClick=false},0);return}const d=dragCv;if(!d)return;dragCv=null;if(d.moved){skipClick=true;setTimeout(()=>{skipClick=false},0);saveCover(d.key)}}
+out.addEventListener('pointerup',endDrag);out.addEventListener('pointercancel',endDrag);
+out.addEventListener('dragstart',e=>e.preventDefault());
+out.addEventListener('wheel',e=>{
+  const el=e.target.closest('[data-ck][data-has]');if(!el||!covers[el.dataset.ck])return;
+  e.preventDefault();const k=el.dataset.ck;zoomRec();setZoom(k,(covers[k].z||1)*Math.exp(-e.deltaY*.0015));
+  if(!cvMenu.hidden&&cvKey===k)$('cvZoom').value=covers[k].z;
+},{passive:false});
+$('cvZoom').addEventListener('input',e=>{zoomRec();setZoom(cvKey,+e.target.value)});
+// Ctrl+V: 마우스를 올려 둔(또는 초점이 있는) 커버에 클립보드 그림을 넣는다
+out.addEventListener('pointerover',e=>{hoverCk=e.target.closest('[data-ck]')});
+out.addEventListener('pointerleave',()=>{hoverCk=null});
+document.addEventListener('paste',e=>{
+  const f=[...(e.clipboardData&&e.clipboardData.files||[])].find(x=>x.type.startsWith('image/'));if(!f)return;
+  if(!artBox.hidden&&hoverArt&&hoverArt.isConnected){e.preventDefault();fillCovers(tileKeys(hoverArt),[f]);return}
+  const a=document.activeElement, el=a&&a.matches&&a.matches('[data-ck]')?a:(hoverCk&&hoverCk.isConnected?hoverCk:null);
+  if(a&&(a.tagName==='TEXTAREA'||a.tagName==='INPUT')&&!el)return;
+  e.preventDefault();
+  if(!el){say(people.length?'그림을 넣을 커버에 마우스를 올리고 Ctrl+V를 눌러 주세요.':'카드가 나온 뒤에 커버에 붙여넣을 수 있어요.');return}
+  setCover(el.dataset.ck,f);
+});
+out.addEventListener('click',e=>{
+  if(skipClick)return;
+  if(e.target.closest('.st-yt'))return;
+  const c=e.target.closest('[data-ck]');if(c){e.stopPropagation();coverAct(c);return}
+  const card=e.target.closest('.st');if(!card)return;const p=people[+card.dataset.p];if(!p)return;
+  const g=e.target.closest('[data-go]'), s=e.target.closest('[data-step]');
+  if(g)cur[p.name]=+g.dataset.go;
+  else if(s)cur[p.name]=(curOf(p)+ +s.dataset.step+p.songs.length)%p.songs.length;
+  else return;
+  draw();
+});
+out.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches('[data-ck]')){e.preventDefault();coverAct(e.target)}});
+$('cvPick').onclick=$('cvAdd').onclick=()=>{closeMenu();cvFile.click()};
+$('cvTint').addEventListener('input',e=>{if(!tintRec){record();tintRec=true}tints[cvKey]=e.target.value;saveTints();$('cvTintOff').hidden=false;draw()});
+$('cvTintOff').onclick=()=>{record();delete tints[cvKey];saveTints();closeMenu();draw()};
+$('cvHead').addEventListener('click',e=>{const b=e.target.closest('[data-head]');if(!b||cvName==null)return;closeMenu();
+  if(b.dataset.head==='own'&&!covers[cvKey]){cvFile.click();return}   // 넣은 그림이 없으면 바로 고른다
+  record();heads[cvName]=b.dataset.head;saveSettings();draw()});
+$('cvDrop').onclick=()=>{closeMenu();record();putCover(cvKey,null);draw()};
+cvFile.onchange=()=>{const f=cvFile.files[0];cvFile.value='';if(f)setCover(cvKey,f)};
+document.addEventListener('pointerdown',e=>{if(!cvMenu.hidden&&!cvMenu.contains(e.target))closeMenu()});
+main.addEventListener('scroll',closeMenu);
+// 그림 파일을 커버에 끌어다 놓기
+out.addEventListener('dragover',e=>{const c=e.target.closest('[data-ck]');if(!c)return;e.preventDefault();c.classList.add('drop')});
+out.addEventListener('dragleave',e=>{const c=e.target.closest('[data-ck]');if(c)c.classList.remove('drop')});
+out.addEventListener('drop',e=>{const c=e.target.closest('[data-ck]');if(!c)return;e.preventDefault();c.classList.remove('drop');setCover(c.dataset.ck,e.dataTransfer.files[0])});
+
+// ── 작은 창: 연 단추 바로 위(막대가 아래에 있어서). 옮기지 않는다. × · Esc 로 닫는다 ──
+const pips=[];
+function makePip(box,btn,focusSel){
+  function place(){
+    const r=btn.getBoundingClientRect(), w=box.offsetWidth, hgt=box.offsetHeight, gap=18;
+    box.style.left=Math.max(16,Math.min(r.left+r.width/2-w/2,innerWidth-w-16))+'px';
+    const top=btn.closest('.dock')?Math.min(r.top,btn.closest('.dock').getBoundingClientRect().top):r.top, above=top-gap-hgt;
+    box.style.top=(above>=16?above:Math.max(16,Math.min(r.bottom+gap,innerHeight-hgt-16)))+'px';
+  }
+  function set(open){
+    if(open)pips.forEach(p=>{if(p.box!==box&&!p.box.hidden&&!p.box.classList.contains('inline'))p.set(false)});
+    box.hidden=!open;btn.setAttribute('aria-expanded',String(open));
+    if(open){place();const t=focusSel&&box.querySelector(focusSel);if(t)t.focus()}else if(document.activeElement&&box.contains(document.activeElement))btn.focus();
+  }
+  btn.addEventListener('click',()=>set(box.hidden));
+  box.querySelector('.pip-x').addEventListener('click',()=>set(false));
+  addEventListener('resize',()=>{if(!box.hidden&&!box.classList.contains('inline'))place()});
+  pips.push({box,set});
+  return set;
+}
+const castBox=$('cast'), castBtn=$('castBtn');
+const setCastPip=makePip(castBox,castBtn,'input');
+const setPeekPip=makePip($('peek'),$('peekBtn'),'pre');
+makePip($('help'),$('helpBtn'),'.pip-x');
+// ── 그림 창: 사람마다 대표(앨범 앞표지 · 재생목록 맨 위) + 곡 다섯 칸. 칸 누르기 · 끌어 놓기 · 올려놓고 Ctrl+V.
+// 여러 장을 고르거나 끌어 놓으면 그 칸부터 차례로 채운다 ──
+const artBox=$('art'), artIn=$('artIn'), artFile=$('artFile');let artKeys=[], hoverArt=null;
+const keysOf=p=>[albumKey(p),...p.songs.map(songKey)];
+function drawArt(){
+  artBox.classList.toggle('few',!thumbs);   // 곡별 앨범아트가 꺼져 있으면 대표 · 프로필만
+  artIn.innerHTML=people.map((p,pi)=>{
+    const tile=(key,seed,label,i,rep,bg)=>`<div class="art-t${rep?' rep':''}" role="button" tabindex="0" data-pi="${pi}" data-i="${i}" title="${esc(label)}"><i style="background-image:${bg||cover(key,seed)}"></i>${covers[key]?'<button class="art-x" type="button" aria-label="빼기" title="빼기">×</button>':''}<span>${esc(label)}</span></div>`;
+    return `<div class="art-p"><b>${esc(p.name||'이름 없음')}</b><div class="art-g">${tile(albumKey(p),p.title||p.name,'대표',0,true)}${thumbs?p.songs.map((x,j)=>tile(songKey(x),x.color||x.g,x.rank+' '+x.title,j+1)).join(''):''}${(()=>{const pk='p:'+norm(p.name),a=artOf(p,p.songs[curOf(p)]);return tile(pk,p.name,'프로필','p',false,covers[pk]?'':cover(a.k,a.sd))})()}</div></div>`;
+  }).join('');
+}
+$('artBtn').addEventListener('click',()=>{if(artBox.hidden)drawArt()});
+makePip(artBox,$('artBtn'),'.art-t');
+async function fillCovers(keys,files){
+  const imgs=[];
+  for(const f of files){if(imgs.length>=keys.length)break;if(/^image\//.test(f.type))try{imgs.push(await readImage(f))}catch(err){}}
+  if(!imgs.length){say('그림 파일만 넣을 수 있어요.');return}
+  record();
+  imgs.forEach((img,i)=>{putCover(keys[i],img);people.forEach(p=>{if(albumKey(p)===keys[i])heads[p.name]='own'})});
+  saveSettings();draw();
+}
+const tileKeys=t=>{const p=people[+t.dataset.pi];if(!p)return [];return t.dataset.i==='p'?['p:'+norm(p.name)]:keysOf(p).slice(+t.dataset.i)};
+artIn.addEventListener('click',e=>{
+  const t=e.target.closest('.art-t');if(!t)return;
+  if(e.target.closest('.art-x')){const k=tileKeys(t)[0];if(k){record();putCover(k,null);draw()}return}
+  artKeys=tileKeys(t);artFile.click();
+});
+artIn.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches('.art-t')){e.preventDefault();artKeys=tileKeys(e.target);artFile.click()}});
+artFile.onchange=()=>{const fs=[...artFile.files];artFile.value='';if(fs.length&&artKeys.length)fillCovers(artKeys,fs)};
+artIn.addEventListener('dragover',e=>{const t=e.target.closest('.art-t');if(!t)return;e.preventDefault();artIn.querySelectorAll('.drop').forEach(n=>n!==t&&n.classList.remove('drop'));t.classList.add('drop')});
+artIn.addEventListener('dragleave',e=>{const t=e.target.closest('.art-t');if(t&&!t.contains(e.relatedTarget))t.classList.remove('drop')});
+artIn.addEventListener('drop',e=>{const t=e.target.closest('.art-t');if(!t)return;e.preventDefault();t.classList.remove('drop');fillCovers(tileKeys(t),[...e.dataTransfer.files])});
+artIn.addEventListener('pointerover',e=>{hoverArt=e.target.closest('.art-t')});
+artIn.addEventListener('pointerleave',()=>{hoverArt=null});
+const pasteBtn=$('pasteBtn');
+const setPastePip=makePip(pasteBox,pasteBtn,'textarea');
+// 붙여넣기 칸: 카드가 없으면 가운데 큰 칸, 있으면 막대 "붙여넣기"의 작은 창
+let emptyState=null;
+function setEmpty(on){
+  if(on===emptyState)return;emptyState=on;
+  main.classList.toggle('is-empty',on);
+  if(on){pasteBox.classList.add('inline');pasteBox.classList.remove('pip');pasteBox.hidden=false;pasteBox.style.left=pasteBox.style.top='';$('blank').append(pasteBox);pasteBtn.hidden=true;pasteBtn.setAttribute('aria-expanded','false')}
+  else{pasteBox.classList.remove('inline');pasteBox.classList.add('pip');pasteBox.hidden=true;document.body.append(pasteBox);pasteBtn.hidden=false}
+}
+document.addEventListener('keydown',e=>{
+  if(e.key!=='Escape')return;
+  if(!cvMenu.hidden){closeMenu();return}
+  const open=pips.filter(p=>!p.box.hidden&&!p.box.classList.contains('inline'));if(open.length)open[open.length-1].set(false);
+});
+
+// ── 바꾸기: PC · NPC 이름 넣기 ──
+const pre=$('ooc'), OOC_BASE=pre.textContent;
+const PRESETS={tag:['{{user}}','{{char}}'],word:['PC','NPC']};
+let cast={mode:'tag',pc:'{{user}}',npc:['{{char}}'],saved:null};
+try{const c=JSON.parse(localStorage.getItem(KEY+'.cast')||'null');if(c&&typeof c.pc==='string'&&Array.isArray(c.npc)){
+  cast=Object.assign(cast,c);
+  if(!PRESETS[cast.mode]&&cast.mode!=='custom')cast.mode=Object.keys(PRESETS).find(k=>PRESETS[k][0]===cast.pc&&PRESETS[k][1]===cast.npc[0])||'custom';
+}}catch(e){}
+const names=()=>({pc:cast.pc.trim(),npc:cast.npc.map(s=>s.trim()).filter(Boolean)});
+function josaWa(word){const c=word.charCodeAt(word.length-1);return c>=0xAC00&&c<=0xD7A3&&(c-0xAC00)%28?'과':'와'}
+function oocText(){
+  const n=names(), pc=n.pc||'이름', npc=n.npc.join(', ')||'이름';
+  return OOC_BASE.replace(/\bPC와 NPC\b/g,()=>pc+josaWa(pc)+' '+npc).replace(/\bNPC\b/g,()=>npc).replace(/\bPC\b/g,()=>pc);
+}
+const measure=document.createElement('canvas').getContext('2d');
+function fitBadge(input){measure.font='14px Pretendard, "Malgun Gothic", sans-serif';input.style.width=Math.ceil(measure.measureText(input.value||input.placeholder||' ').width+18)+'px'}
+function badge(value,i){
+  return `<span class="badge"><input value="${esc(value)}" placeholder="이름" data-i="${i}" spellcheck="false" aria-label="${i<0?'PC':'NPC '+(i+1)} 이름">${i>=0&&cast.npc.length>1?`<button class="x" type="button" data-x="${i}" aria-label="NPC ${i+1} 빼기" title="빼기">×</button>`:''}</span>`;
+}
+function drawPreset(){document.querySelectorAll('#castPreset [data-preset]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.preset===cast.mode)))}
+$('castPreset').addEventListener('click',e=>{const b=e.target.closest('[data-preset]');if(!b)return;
+  const m=b.dataset.preset;if(m===cast.mode)return;
+  if(cast.mode==='custom')cast.saved={pc:cast.pc,npc:[...cast.npc]};
+  if(m==='custom'){const s=cast.saved||{pc:'',npc:['']};cast.pc=s.pc;cast.npc=s.npc.length?[...s.npc]:['']}
+  else{const [p,n]=PRESETS[m];cast.pc=p;cast.npc[0]=n}
+  cast.mode=m;drawCast();castChanged();
+  if(m==='custom'){const empty=[...castBox.querySelectorAll('.names input')].find(i=>!i.value.trim());if(empty)empty.focus()}
+});
+function drawCast(){
+  drawPreset();
+  $('castPc').innerHTML=badge(cast.pc,-1);
+  $('castNpc').innerHTML=cast.npc.map(badge).join('');
+  castBox.querySelectorAll('.names input').forEach(fitBadge);
+}
+function castChanged(){try{localStorage.setItem(KEY+'.cast',JSON.stringify(cast))}catch(e){}pre.textContent=oocText();if(people.length&&people.chat&&people.chat.length)draw()}
+castBox.addEventListener('input',e=>{const t=e.target;if(!t.dataset.i)return;const i=+t.dataset.i;
+  if(i<0)cast.pc=t.value;else cast.npc[i]=t.value;cast.mode='custom';fitBadge(t);drawPreset();castChanged()});
+castBox.addEventListener('click',e=>{const x=e.target.closest('[data-x]');if(!x)return;cast.npc.splice(+x.dataset.x,1);drawCast();castChanged()});
+$('addNpc').onclick=()=>{cast.npc.push('');drawCast();castChanged();const ins=document.querySelectorAll('#castNpc input');ins[ins.length-1].focus()};
+drawCast();pre.textContent=oocText();
+document.fonts.load('14px Pretendard','가').then(()=>castBox.querySelectorAll('.names input').forEach(fitBadge));
+
+$('copyOoc').onclick=()=>{
+  const n=names();
+  if(!n.pc||!n.npc.length){
+    say('PC · NPC 이름을 입력해 주세요.');setCastPip(true);
+    const empty=[...castBox.querySelectorAll('.names input')].find(i=>!i.value.trim());if(empty)empty.focus();
+    return;
+  }
+  pre.textContent=oocText();
+  const selAll=()=>{setPeekPip(true);const r=document.createRange();r.selectNodeContents(pre);const w=getSelection();w.removeAllRanges();w.addRange(r);say('선택해 뒀어요. Ctrl+C로 복사하세요.',true)};
+  try{navigator.clipboard.writeText(pre.textContent).then(()=>say('복사했어요.'),selAll)}catch(e){selAll()}
+};
+
+// ── 붙여넣기 ──
+src.addEventListener('input',()=>{cur={};render()});
+// 통째로 붙여넣어 카드가 나오면 작은 창은 닫아 카드를 보여 준다(손으로 고칠 때는 열린 채)
+src.addEventListener('paste',()=>setTimeout(()=>{if(!emptyState&&!pasteBox.hidden)setPastePip(false)},0));
+$('sample').onclick=()=>{src.value=SAMPLE;cur={};me='준후';saveSettings();render();if(!emptyState)setPastePip(false)};
+$('clear').onclick=()=>{src.value='';render();src.focus()};
+
+// ── 저장 ──
+// PNG: html-to-image. 글꼴은 페이지와 같은 CSS 조각 중 카드에 쓰인 글자 · 굵기가 든 것만 data URL 로 넣는다
+const toData=async url=>{const r=await fetch(url);if(!r.ok)throw new Error(r.status+' '+url);const b=await r.blob();return await new Promise(ok=>{const fr=new FileReader();fr.onload=()=>ok(fr.result);fr.readAsDataURL(b)})};
+const FONT_CSS=['https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css','https://cdn.jsdelivr.net/npm/@fontsource/hahmlet@5.2.5/600.css'];
+const FONT_USE={Pretendard:['400','600','700'],Hahmlet:['600']};
+const cdnText={}, cdnData={};
+function inRange(range,cps){
+  return range.split(',').some(part=>{
+    let [a,b]=part.trim().replace(/^U\+/i,'').split('-');
+    if(a.includes('?')){b=a.replace(/\?/g,'F');a=a.replace(/\?/g,'0')}
+    const lo=parseInt(a,16),hi=parseInt(b||a,16);
+    for(const c of cps)if(c>=lo&&c<=hi)return true;return false;
+  });
+}
+async function pngFontCss(text){
+  const cps=new Set([...text+'0123456789/ ·'].map(c=>c.codePointAt(0))), res=[];
+  for(const url of FONT_CSS){
+    const css=cdnText[url]||(cdnText[url]=await (await fetch(url)).text());
+    for(const [,body] of css.matchAll(/@font-face\s*\{([^}]*)\}/g)){
+      const fam=((body.match(/font-family:\s*['"]?([^;'"]+)/)||[])[1]||'').trim(), w=(body.match(/font-weight:\s*(\d+)/)||[,'400'])[1];
+      if(!FONT_USE[fam]||!FONT_USE[fam].includes(w))continue;
+      const ur=(body.match(/unicode-range:\s*([^;]+)/)||[])[1];
+      if(ur&&!inRange(ur,cps))continue;
+      const file=new URL(body.match(/url\(['"]?([^)'"]+?\.woff2)['"]?\)/)[1],url).href;
+      const data=cdnData[file]||(cdnData[file]=await toData(file));
+      res.push(`@font-face{font-family:"${fam}";src:url("${data}") format("woff2");font-weight:${w};font-style:normal;${ur?`unicode-range:${ur};`:''}}`);
+    }
+  }
+  return res.join('\n');
+}
+const BG='#ecebef', PNG_W={player:360,cd:400,album:1040,list:980};
+const stem=name=>'song-top5'+(name?'-'+name:'');
+function download(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name.replace(/[\\/:*?"<>|]/g,'_');document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000)}
+let saving=false;
+function lockSave(on){saving=on;status.classList.toggle('busy',on);['savePng'].forEach(id=>{$(id).disabled=on})}
+// 저장 복제본: 누르기용 속성을 뺀다
+function cleanCopy(el){const c=el.cloneNode(true);c.removeAttribute('data-p');c.querySelectorAll('[data-ck],[data-go],[data-step],[data-sd]').forEach(n=>['data-sd','data-ck','data-go','data-step','data-has','data-head','tabindex','role','aria-label','title'].forEach(a=>n.removeAttribute(a)));c.querySelectorAll('.drop').forEach(n=>n.classList.remove('drop'));return c}
+// PNG 는 화면 폭과 상관없이 모양마다 정해진 폭
+async function makePng(el){
+  if(!window.htmlToImage)throw new Error('PNG 저장 도구를 못 불러왔어요. 인터넷 연결을 확인해 주세요.');
+  await document.fonts.ready;
+  const holder=document.createElement('div');holder.style.cssText='position:fixed;left:-100000px;top:0';
+  const frame=document.createElement('div');frame.style.cssText='display:inline-block;padding:28px 28px 40px;background:'+(clear?'transparent':BG);
+  const copy=cleanCopy(el);
+  Object.assign(copy.style,{width:(el.classList.contains('st-chat')?360:shape==='album'&&albDir==='v'?520:PNG_W[shape])+'px',maxWidth:'none'});
+  frame.append(copy);holder.append(frame);document.body.append(holder);
+  fitCovers(copy);   // 화면과 폭이 달라도 그림 자리가 같게 다시 맞춘다
+  copy.querySelectorAll('[data-cv]').forEach(n=>n.removeAttribute('data-cv'));
+  try{
+    const opt={pixelRatio:2,fontEmbedCSS:await pngFontCss(frame.textContent)};
+    await htmlToImage.toCanvas(frame,opt);   // 처음 그릴 때 글꼴이 늦게 붙는 일이 있어 한 번 데운다
+    return await htmlToImage.toBlob(frame,opt);
+  }finally{holder.remove()}
+}
+const clearBtn=$('pngClear');clearBtn.setAttribute('aria-pressed',String(clear));
+clearBtn.onclick=()=>{clear=!clear;clearBtn.setAttribute('aria-pressed',String(clear));saveSettings();say(clear?'PNG 바탕을 비워요.':'PNG 바탕을 채워요.')};
+$('savePng').onclick=async()=>{
+  if(saving)return;
+  const list=[...out.querySelectorAll('.st')];
+  if(!list.length){say('저장할 카드가 없어요.');return}
+  lockSave(true);
+  try{
+    for(let i=0;i<list.length;i++){
+      say(list.length>1?`만드는 중… ${i+1}/${list.length}`:'만드는 중…',true);
+      download(await makePng(list[i]),stem(list[i].dataset.name)+'.png');
+      if(i<list.length-1)await new Promise(r=>setTimeout(r,400));   // 한꺼번에 받으면 브라우저가 몇 개를 버린다
+    }
+    lockSave(false);say(list.length>1?`${list.length}개 파일로 저장했어요.`:'저장했어요.');
+  }catch(err){lockSave(false);say('PNG를 만들지 못했어요. '+(err&&err.message||''),true)}
+};
+
+
+// ── 시작 ──
+let saved='';try{saved=localStorage.getItem(KEY+'.input')||''}catch(e){}
+src.value=saved===SAMPLE?'':saved;   // 손대지 않은 예시는 새로고침 때 비운다
+render();
+openDb().then(d=>{db=d;return loadCovers()}).then(()=>{
+  // 예전에 넣은 그림은 흐린 판을 새 방식으로 다시 만든다
+  for(const k in covers){const c=covers[k];if(c.ar&&c.bgv===2)continue;const im=new Image();im.onload=()=>{c.ar=im.width/im.height;c.bg=softBg(im);c.bgv=2;putCover(k,c);if(people.length)draw()};im.src=c.src}
+  if(people.length)draw();
+});
+</script>
+</body>
+</html>
