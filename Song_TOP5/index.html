@@ -278,6 +278,11 @@ button{cursor:pointer}
 .cast .line{display:grid;grid-template-columns:36px minmax(0,1fr) auto;align-items:center;gap:10px}
 .cast .line>.seg{flex-wrap:wrap;height:auto;min-height:36px;justify-self:start;max-width:100%}
 .cast .line+.line{margin-top:10px}
+#castGenre{grid-column:2/-1}
+.cast .line[hidden]{display:none}
+.cast .etc{grid-column:2/-1;height:36px;padding:0 12px;border:1px solid var(--line);border-radius:10px;background:#fff;font:inherit;font-size:14px;min-width:0}
+@media (max-width:480px){#castGenre button{padding:0 8px}}
+@media (max-width:380px){#castGenre button{padding:0 6px}}
 .cast .line>b{width:36px;flex:none;font-weight:400;color:var(--soft);font-size:13px}
 .names{gap:4px;height:auto;min-height:36px;flex-wrap:wrap}
 .badge{display:inline-flex;align-items:center;border-radius:8px;background:#fff;box-shadow:0 1px 3px rgba(29,28,34,.16)}
@@ -462,6 +467,8 @@ html{scrollbar-color:rgba(29,28,34,.25) transparent}
     <div class="line"><b>이름</b><div class="seg" id="castPreset" role="group" aria-label="이름 한 번에 바꾸기"><button type="button" data-preset="tag" title="PC = {{user}}, 첫 NPC = {{char}}">{{user}} · {{char}}</button><button type="button" data-preset="word" title="PC = PC, 첫 NPC = NPC">PC · NPC</button><button type="button" data-preset="custom" title="이름을 직접 적기">직접 입력</button></div></div>
     <div class="line"><b>PC</b><div class="seg names" id="castPc"></div></div>
     <div class="line"><b>NPC</b><div class="seg names" id="castNpc"></div><button class="add" id="addNpc" type="button">+ NPC</button></div>
+    <div class="line"><b>갈래</b><div class="seg" id="castGenre" role="group" aria-label="고를 곡의 갈래 (여러 개 고르기)"><button type="button" data-g="" title="갈래를 가리지 않음">전체</button><button type="button" data-g="kpop" title="한국 대중가요">가요</button><button type="button" data-g="pop" title="해외 대중가요 · J-POP">팝</button><button type="button" data-g="ost" title="영화 · 드라마 · 게임 · 애니 OST">OST</button><button type="button" data-g="classic" title="클래식 · 뉴에이지 · 연주곡">클래식</button><button type="button" data-g="etc" title="갈래를 직접 적기">기타</button></div></div>
+    <div class="line" id="etcRow" hidden><b></b><input class="etc" id="castEtc" placeholder="예: 재즈, 시티팝" spellcheck="false" aria-label="기타 갈래 직접 적기"></div>
   </div>
 </div>
 
@@ -1042,23 +1049,33 @@ document.addEventListener('keydown',e=>{
 // ── 바꾸기: PC · NPC 이름 넣기 ──
 const pre=$('ooc'), OOC_BASE=pre.textContent;
 const PRESETS={tag:['{{user}}','{{char}}'],word:['PC','NPC']};
-let cast={mode:'tag',pc:'{{user}}',npc:['{{char}}'],saved:null};
+let cast={mode:'tag',pc:'{{user}}',npc:['{{char}}'],saved:null,genres:[],etcOn:false,etc:''};
+// 갈래 범위: 아무것도 안 고르면 전체(OOC 기본 문장 그대로)
+const GENRES={kpop:'한국 가요(발라드 · K-POP · 인디 · 힙합 · 트로트 등)',pop:'해외 대중가요(팝 · J-POP 등)',ost:'영화 · 드라마 · 게임 · 애니메이션의 OST와 오프닝 · 엔딩곡',classic:'클래식과 뉴에이지 · 연주곡'};
+const GENRE_ALL='- 갈래 · 나라 · 시대는 가리지 않는다.';
 try{const c=JSON.parse(localStorage.getItem(KEY+'.cast')||'null');if(c&&typeof c.pc==='string'&&Array.isArray(c.npc)){
-  cast=Object.assign(cast,c);
+  cast=Object.assign(cast,c);if(!Array.isArray(cast.genres))cast.genres=[];cast.etcOn=cast.etcOn===true;if(typeof cast.etc!=='string')cast.etc='';cast.genres=Object.keys(GENRES).filter(g=>cast.genres.includes(g));
   if(!PRESETS[cast.mode]&&cast.mode!=='custom')cast.mode=Object.keys(PRESETS).find(k=>PRESETS[k][0]===cast.pc&&PRESETS[k][1]===cast.npc[0])||'custom';
 }}catch(e){}
 const names=()=>({pc:cast.pc.trim(),npc:cast.npc.map(s=>s.trim()).filter(Boolean)});
 function josaWa(word){const c=word.charCodeAt(word.length-1);return c>=0xAC00&&c<=0xD7A3&&(c-0xAC00)%28?'과':'와'}
 function oocText(){
   const n=names(), pc=n.pc||'이름', npc=n.npc.join(', ')||'이름';
-  return OOC_BASE.replace(/\bPC와 NPC\b/g,()=>pc+josaWa(pc)+' '+npc).replace(/\bNPC\b/g,()=>npc).replace(/\bPC\b/g,()=>pc);
+  const gs=cast.genres.filter(g=>GENRES[g]).map(g=>GENRES[g]);if(cast.etcOn&&cast.etc.trim())gs.push(cast.etc.trim());
+  const base=gs.length?OOC_BASE.split('\n').map(l=>l.startsWith(GENRE_ALL)?`- 곡은 ${gs.join(', ')}${gs.length>1?' 중에서':'에서'}만 고른다.${gs.length>1?' 어느 쪽으로 몰릴지 흩어질지는 그 인물의 취향에 맡기고 억지로 섞지 않는다.':''}`:l).join('\n'):OOC_BASE;
+  return base.replace(/\bPC와 NPC\b/g,()=>pc+josaWa(pc)+' '+npc).replace(/\bNPC\b/g,()=>npc).replace(/\bPC\b/g,()=>pc);
 }
 const measure=document.createElement('canvas').getContext('2d');
 function fitBadge(input){measure.font='14px Pretendard, "Malgun Gothic", sans-serif';input.style.width=Math.ceil(measure.measureText(input.value||input.placeholder||' ').width+18)+'px'}
 function badge(value,i){
   return `<span class="badge"><input value="${esc(value)}" placeholder="이름" data-i="${i}" spellcheck="false" aria-label="${i<0?'PC':'NPC '+(i+1)} 이름">${i>=0&&cast.npc.length>1?`<button class="x" type="button" data-x="${i}" aria-label="NPC ${i+1} 빼기" title="빼기">×</button>`:''}</span>`;
 }
-function drawPreset(){document.querySelectorAll('#castPreset [data-preset]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.preset===cast.mode)))}
+function drawPreset(){document.querySelectorAll('#castPreset [data-preset]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.preset===cast.mode)));
+  document.querySelectorAll('#castGenre [data-g]').forEach(b=>{const g=b.dataset.g;b.setAttribute('aria-pressed',String(g==='etc'?cast.etcOn:g?cast.genres.includes(g):!cast.genres.length&&!cast.etcOn))});
+  $('etcRow').hidden=!cast.etcOn;if($('castEtc').value!==cast.etc)$('castEtc').value=cast.etc}
+$('castGenre').addEventListener('click',e=>{const b=e.target.closest('[data-g]');if(!b)return;const g=b.dataset.g;
+  if(!g){cast.genres=[];cast.etcOn=false}else if(g==='etc'){cast.etcOn=!cast.etcOn;drawPreset();castChanged();if(cast.etcOn)$('castEtc').focus();return}else{const s=new Set(cast.genres);s.has(g)?s.delete(g):s.add(g);cast.genres=Object.keys(GENRES).filter(k=>s.has(k));if(cast.genres.length===Object.keys(GENRES).length&&!cast.etcOn)cast.genres=[]}
+  drawPreset();castChanged()});
 $('castPreset').addEventListener('click',e=>{const b=e.target.closest('[data-preset]');if(!b)return;
   const m=b.dataset.preset;if(m===cast.mode)return;
   if(cast.mode==='custom')cast.saved={pc:cast.pc,npc:[...cast.npc]};
@@ -1074,6 +1091,7 @@ function drawCast(){
   castBox.querySelectorAll('.names input').forEach(fitBadge);
 }
 function castChanged(){try{localStorage.setItem(KEY+'.cast',JSON.stringify(cast))}catch(e){}pre.textContent=oocText();if(people.length&&people.chat&&people.chat.length)draw()}
+$('castEtc').addEventListener('input',e=>{cast.etc=e.target.value;castChanged()});
 castBox.addEventListener('input',e=>{const t=e.target;if(!t.dataset.i)return;const i=+t.dataset.i;
   if(i<0)cast.pc=t.value;else cast.npc[i]=t.value;cast.mode='custom';fitBadge(t);drawPreset();castChanged()});
 castBox.addEventListener('click',e=>{const x=e.target.closest('[data-x]');if(!x)return;cast.npc.splice(+x.dataset.x,1);drawCast();castChanged()});
