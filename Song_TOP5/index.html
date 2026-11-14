@@ -669,7 +669,9 @@ const yt=x=>`<a class="st-yt" href="https://www.youtube.com/results?search_query
 const star=x=>x.rank===1?'<svg class="st-star" viewBox="0 0 24 24" width="16" height="16" role="img" aria-label="가장 좋아하는 곡"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg>&nbsp;':'';
 const sub=s=>[s.artist,s.genre].filter(Boolean).map(esc).join(' · ');
 // 큰 그림: 곡별 앨범아트가 켜져 있으면 지금 곡 그림, 꺼져 있으면 대표 그림(앨범 앞표지와 같은 그림)
-function artOf(p,s){return thumbs?{k:songKey(s),sd:s.color||s.g,lb:s.title}:{k:albumKey(p),sd:p.title||p.name,lb:(p.title||p.name)+' 대표'}}
+// 대표 그림의 기본 색 = 1번 곡 색(그 곡에 고친 색이 있으면 그 색)
+function leadSd(p){const s=p.songs.find(x=>x.rank===1)||p.songs[0];return s?tints[songKey(s)]||s.color||s.g:(p.title||p.name)}
+function artOf(p,s){return thumbs?{k:songKey(s),sd:s.color||s.g,lb:s.title}:{k:albumKey(p),sd:leadSd(p),lb:(p.title||p.name)+' 대표'}}
 const glow=(k,sd)=>covers[k]?`<i class="st-glow" data-cv="${esc(k)}" style="background-image:${cover(k,sd)}"></i>`:'';   // 넣은 그림에만
 // 재생바 자리(0~1): 끌어서 정한 값(곡마다), 없으면 순위에 따라
 const barOf=(s,i,n)=>bars[songKey(s)]!=null?bars[songKey(s)]:(i+.5)/n;
@@ -699,8 +701,8 @@ function cdHtml(p,pi){
 }
 function albumHtml(p,pi){
   const k=albumKey(p), genres=[...new Set(p.songs.map(s=>s.genre.split(/\s*[·(]\s*/)[0].trim()).filter(Boolean))];
-  return `<article class="st st-album${albDir==='v'?' v':''}" data-p="${pi}" data-name="${esc(p.name)}" style="background-image:${cover(k,p.title||p.name,true)}">
-  <div class="st-cv al-front" ${ck(k,(p.title||p.name)+' 앞표지')} data-cv="${esc(k)}" data-sd="${esc(p.title||p.name)}" style="background-image:linear-gradient(rgba(24,20,34,.1),rgba(24,20,34,.46)),${cover(k,p.title||p.name)}"><small>TOP ${p.songs.length}</small><h3>${esc(p.title||p.name||'TOP '+p.songs.length)}</h3>${p.title&&p.name?`<em>${esc(p.name)}</em>`:''}<i class="al-bc"></i></div>
+  return `<article class="st st-album${albDir==='v'?' v':''}" data-p="${pi}" data-name="${esc(p.name)}" style="background-image:${cover(k,leadSd(p),true)}">
+  <div class="st-cv al-front" ${ck(k,(p.title||p.name)+' 앞표지')} data-cv="${esc(k)}" data-sd="${esc(leadSd(p))}" style="background-image:linear-gradient(rgba(24,20,34,.1),rgba(24,20,34,.46)),${cover(k,leadSd(p))}"><small>TOP ${p.songs.length}</small><h3>${esc(p.title||p.name||'TOP '+p.songs.length)}</h3>${p.title&&p.name?`<em>${esc(p.name)}</em>`:''}<i class="al-bc"></i></div>
   <div class="al-back"><p class="al-hd">TRACKLIST</p>
   ${p.songs.map(x=>`<div class="al-tr"><span class="st-n">${pad2(x.rank)}</span><div><b>${star(x)}${yt(x)}</b>${x.artist?`<span>${esc(x.artist)}</span>`:''}${x.why?`<p>${br(x.why)}</p>`:''}</div></div>`).join('')}
   <div class="al-foot"><span>${genres.map(esc).join(' · ')}</span></div></div>
@@ -963,7 +965,7 @@ function drawArt(){
   artBox.classList.toggle('few',!thumbs);   // 곡별 앨범아트가 꺼져 있으면 대표 · 프로필만
   artIn.innerHTML=people.map((p,pi)=>{
     const tile=(key,seed,label,i,rep,bg)=>`<div class="art-t${rep?' rep':''}" role="button" tabindex="0" data-pi="${pi}" data-i="${i}" title="${esc(label)}"><i style="background-image:${bg||cover(key,seed)}"></i>${covers[key]?'<button class="art-x" type="button" aria-label="빼기" title="빼기">×</button>':''}<span>${esc(label)}</span></div>`;
-    return `<div class="art-p"><b>${esc(p.name||'이름 없음')}</b><div class="art-g">${tile(albumKey(p),p.title||p.name,'대표',0,true)}${thumbs?p.songs.map((x,j)=>tile(songKey(x),x.color||x.g,x.rank+' '+x.title,j+1)).join(''):''}${(()=>{const pk='p:'+norm(p.name),a=artOf(p,p.songs[curOf(p)]);return tile(pk,p.name,'프로필','p',false,covers[pk]?'':cover(a.k,a.sd))})()}</div></div>`;
+    return `<div class="art-p"><b>${esc(p.name||'이름 없음')}</b><div class="art-g">${tile(albumKey(p),leadSd(p),'대표',0,true)}${thumbs?p.songs.map((x,j)=>tile(songKey(x),x.color||x.g,x.rank+' '+x.title,j+1)).join(''):''}${(()=>{const pk='p:'+norm(p.name),a=artOf(p,p.songs[curOf(p)]);return tile(pk,p.name,'프로필','p',false,covers[pk]?'':cover(a.k,a.sd))})()}</div></div>`;
   }).join('');
 }
 $('artBtn').addEventListener('click',()=>{if(artBox.hidden)drawArt()});
