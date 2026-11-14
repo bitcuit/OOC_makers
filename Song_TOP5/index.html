@@ -241,6 +241,8 @@ button{cursor:pointer}
 .pip.desk{width:560px}
 .desk.inline{background:#fff;box-shadow:0 10px 24px rgba(40,30,60,.1)}
 .pip-bar{display:flex;align-items:center;justify-content:space-between;padding:10px 8px 10px 18px;border-bottom:1px solid var(--line)}
+.pip-r{display:flex;align-items:center;gap:4px}
+.pip-r .lnk{height:28px;padding:0 8px;font-size:13px}
 .pip-x{width:28px;height:28px;border:0;border-radius:8px;background:transparent;font-size:18px;line-height:1;color:var(--soft)}
 .pip-x:hover{background:rgba(29,28,34,.08)}
 .desk.inline .pip-x{visibility:hidden}
@@ -462,7 +464,7 @@ html{scrollbar-color:rgba(29,28,34,.25) transparent}
 </div>
 
 <div class="pip" id="cast" role="dialog" aria-label="바꾸기" hidden>
-  <div class="pip-bar"><b>바꾸기</b><button class="pip-x" type="button" aria-label="닫기" title="닫기 (Esc)">×</button></div>
+  <div class="pip-bar"><b>바꾸기</b><span class="pip-r"><button class="lnk" id="castReset" type="button" title="이름 {{user}} · {{char}}, 갈래 전체로">초기화</button><button class="pip-x" type="button" aria-label="닫기" title="닫기 (Esc)">×</button></span></div>
   <div class="pip-in cast">
     <div class="line"><b>이름</b><div class="seg" id="castPreset" role="group" aria-label="이름 한 번에 바꾸기"><button type="button" data-preset="tag" title="PC = {{user}}, 첫 NPC = {{char}}">{{user}} · {{char}}</button><button type="button" data-preset="word" title="PC = PC, 첫 NPC = NPC">PC · NPC</button><button type="button" data-preset="custom" title="이름을 직접 적기">직접 입력</button></div></div>
     <div class="line"><b>PC</b><div class="seg names" id="castPc"></div></div>
@@ -1054,7 +1056,7 @@ let cast={mode:'tag',pc:'{{user}}',npc:['{{char}}'],saved:null,genres:[],etcOn:f
 const GENRES={kpop:'한국 가요(발라드 · K-POP · 인디 · 힙합 · 트로트 등)',pop:'해외 대중가요(팝 · J-POP 등)',ost:'영화 · 드라마 · 게임 · 애니메이션의 OST와 오프닝 · 엔딩곡',classic:'클래식과 뉴에이지 · 연주곡'};
 const GENRE_ALL='- 갈래 · 나라 · 시대는 가리지 않는다.';
 try{const c=JSON.parse(localStorage.getItem(KEY+'.cast')||'null');if(c&&typeof c.pc==='string'&&Array.isArray(c.npc)){
-  cast=Object.assign(cast,c);if(!Array.isArray(cast.genres))cast.genres=[];cast.etcOn=cast.etcOn===true;if(typeof cast.etc!=='string')cast.etc='';cast.genres=Object.keys(GENRES).filter(g=>cast.genres.includes(g));
+  cast=Object.assign(cast,c);cast.genres=[];cast.etcOn=false;cast.etc='';   // 갈래는 저장하지 않는다(열 때마다 전체)
   if(!PRESETS[cast.mode]&&cast.mode!=='custom')cast.mode=Object.keys(PRESETS).find(k=>PRESETS[k][0]===cast.pc&&PRESETS[k][1]===cast.npc[0])||'custom';
 }}catch(e){}
 const names=()=>({pc:cast.pc.trim(),npc:cast.npc.map(s=>s.trim()).filter(Boolean)});
@@ -1090,11 +1092,13 @@ function drawCast(){
   $('castNpc').innerHTML=cast.npc.map(badge).join('');
   castBox.querySelectorAll('.names input').forEach(fitBadge);
 }
-function castChanged(){try{localStorage.setItem(KEY+'.cast',JSON.stringify(cast))}catch(e){}pre.textContent=oocText();if(people.length&&people.chat&&people.chat.length)draw()}
+function castChanged(){try{localStorage.setItem(KEY+'.cast',JSON.stringify({mode:cast.mode,pc:cast.pc,npc:cast.npc,saved:cast.saved}))}catch(e){}pre.textContent=oocText();if(people.length&&people.chat&&people.chat.length)draw()}
 $('castEtc').addEventListener('input',e=>{cast.etc=e.target.value;castChanged()});
 castBox.addEventListener('input',e=>{const t=e.target;if(!t.dataset.i)return;const i=+t.dataset.i;
   if(i<0)cast.pc=t.value;else cast.npc[i]=t.value;cast.mode='custom';fitBadge(t);drawPreset();castChanged()});
 castBox.addEventListener('click',e=>{const x=e.target.closest('[data-x]');if(!x)return;cast.npc.splice(+x.dataset.x,1);drawCast();castChanged()});
+// 초기화: 이름은 {{user}} · {{char}}, 갈래는 전체. 직접 적은 이름은 '직접 입력'을 누르면 돌아온다
+$('castReset').onclick=()=>{if(cast.mode==='custom')cast.saved={pc:cast.pc,npc:[...cast.npc]};cast.mode='tag';cast.pc='{{user}}';cast.npc=['{{char}}'];cast.genres=[];cast.etcOn=false;cast.etc='';drawCast();castChanged()};
 $('addNpc').onclick=()=>{cast.npc.push('');drawCast();castChanged();const ins=document.querySelectorAll('#castNpc input');ins[ins.length-1].focus()};
 drawCast();pre.textContent=oocText();
 document.fonts.load('14px Pretendard','가').then(()=>castBox.querySelectorAll('.names input').forEach(fitBadge));
