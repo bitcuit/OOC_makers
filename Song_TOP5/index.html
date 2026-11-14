@@ -433,6 +433,7 @@ html{scrollbar-color:rgba(29,28,34,.25) transparent}
     <dt>그림 끌어다 놓기 · Ctrl+V</dt><dd>그 커버에 그림 넣기</dd>
     <dt>넣은 그림 끌기 · 휠</dt><dd>틀 안 자리 · 확대</dd>
     <dt>그림</dt><dd>사람마다 대표 · 프로필(곡별 앨범아트를 켜면 곡 그림도)을 한 창에서</dd>
+    <dt>대표 그림</dt><dd>안 넣으면 1번 곡 그림 · × 로 빼면 다시 1번 곡</dd>
     <dt>곡별 앨범아트</dt><dd>켬: 곡마다 다른 그림 · 곡 줄 작은 커버 / 끔: 대표 그림 하나</dd>
     <dt>바탕</dt><dd>번짐: 그림을 흐리게 / 단색: 그림의 평균 색</dd></dl>
     <h4>곡</h4>
@@ -675,7 +676,11 @@ const sub=s=>[s.artist,s.genre].filter(Boolean).map(esc).join(' · ');
 // 큰 그림: 곡별 앨범아트가 켜져 있으면 지금 곡 그림, 꺼져 있으면 대표 그림(앨범 앞표지와 같은 그림)
 // 대표 그림의 기본 색 = 1번 곡 색(그 곡에 고친 색이 있으면 그 색)
 function leadSd(p){const s=p.songs.find(x=>x.rank===1)||p.songs[0];return s?tints[songKey(s)]||s.color||s.g:(p.title||p.name)}
-function artOf(p,s){return thumbs?{k:songKey(s),sd:s.color||s.g,lb:s.title}:{k:albumKey(p),sd:leadSd(p),lb:(p.title||p.name)+' 대표'}}
+// 대표 그림: 따로 넣은 대표 그림 → 없으면 1번 곡 그림 → 없으면 색 면. k = 넣을 자리, v = 보여 줄 그림
+function repView(p){const ak=albumKey(p);if(covers[ak])return ak;const s=p.songs.find(x=>x.rank===1)||p.songs[0];return s&&covers[songKey(s)]?songKey(s):ak}
+function artOf(p,s){if(thumbs){const k=songKey(s);return {k,v:k,sd:s.color||s.g,lb:s.title}}return {k:albumKey(p),v:repView(p),sd:leadSd(p),lb:(p.title||p.name)+' 대표'}}
+// 보여 줄 그림이 넣을 자리와 다르면(1번 곡 그림을 따라감) 색 고치기 없이 누르면 바로 대표 그림 고르기
+const viewAttr=(k,v,sd)=>v===k?cvAttr(k,sd):`data-cv="${esc(v)}" style="background-image:${cover(v,sd)}"`;
 // 카드 바탕: 번짐 = 흐린 그림, 단색 = 대표 그림의 평균 색(그림이 없으면 색 면의 가운데 색)
 const avgs={};
 function avgOf(k){const c=covers[k];if(!avgs[k]||avgs[k].bg!==c.bg){avgs[k]={bg:c.bg,col:null};const im=new Image();im.onload=()=>{const cv=document.createElement('canvas');cv.width=cv.height=1;const g=cv.getContext('2d');g.imageSmoothingQuality='high';g.drawImage(im,0,0,1,1);const d=g.getImageData(0,0,1,1).data;avgs[k].col='#'+[0,1,2].map(i=>d[i].toString(16).padStart(2,'0')).join('');if(people.length)draw()};im.src=c.bg}
@@ -685,11 +690,11 @@ const glow=(k,sd)=>covers[k]?`<i class="st-glow" data-cv="${esc(k)}" style="back
 // 재생바 자리(0~1): 끌어서 정한 값(곡마다), 없으면 순위에 따라
 const barOf=(s,i,n)=>bars[songKey(s)]!=null?bars[songKey(s)]:(i+.5)/n;
 function playerHtml(p,pi){
-  const i=curOf(p), s=p.songs[i], {k,sd,lb}=artOf(p,s);
+  const i=curOf(p), s=p.songs[i], {k,v,sd,lb}=artOf(p,s);
   const rest=p.songs.map((x,j)=>j===i?'':`<div class="pl-row" data-go="${j}"><span class="st-n">${x.rank}</span><i class="st-cv" ${cvAttr(songKey(x),x.color||x.g)}></i><div><b>${star(x)}${yt(x)}</b>${x.artist?`<span>${esc(x.artist)}</span>`:''}${x.why?`<p>${br(x.why)}</p>`:''}</div></div>`).join('');
-  return `<article class="st st-player${thumbs?'':' no-thumb'}" data-p="${pi}" data-name="${esc(p.name)}" style="background-image:${TINT},${back(k,sd)}">
+  return `<article class="st st-player${thumbs?'':' no-thumb'}" data-p="${pi}" data-name="${esc(p.name)}" style="background-image:${TINT},${back(v,sd)}">
   <div class="pl-top"><div>${p.title?`<b>${esc(p.title)}</b>`:''}<span>${esc(p.name||'이름 없음')}</span></div><span class="st-n">No.${s.rank}</span></div>
-  <div class="pl-gw">${glow(k,sd)}<div class="st-cv pl-art" ${ck(k,lb)} ${cvAttr(k,sd)}></div></div>
+  <div class="pl-gw">${glow(v,sd)}<div class="st-cv pl-art" ${ck(k,lb)} ${viewAttr(k,v,sd)}></div></div>
   <p class="pl-t1">${star(s)}${yt(s)}</p>${sub(s)?`<p class="pl-t2">${sub(s)}</p>`:''}
   ${s.why?`<p class="pl-why">${br(s.why)}</p>`:''}
   <div class="pl-bar" data-bar="${esc(songKey(s))}"><i style="width:${(barOf(s,i,p.songs.length)*100).toFixed(1)}%"></i></div>
@@ -700,18 +705,18 @@ function playerHtml(p,pi){
 // CD 바탕: 지금 곡 커버를 크림색 막 아래에 흐리게(위는 색이 비치고 글 자리는 옅게)
 const VEIL='linear-gradient(rgba(247,246,243,.42),rgba(247,246,243,.8) 58%,rgba(247,246,243,.88))';
 function cdHtml(p,pi){
-  const i=curOf(p), s=p.songs[i], {k,sd,lb}=artOf(p,s);
-  return `<article class="st st-cd" data-p="${pi}" data-name="${esc(p.name)}" style="--hl:${hl};background-image:${VEIL},${back(k,sd)}">
-  <div class="cd-gw">${glow(k,sd)}<div class="st-cv cd-disc" ${ck(k,lb)} ${cvAttr(k,sd)}></div></div>
+  const i=curOf(p), s=p.songs[i], {k,v,sd,lb}=artOf(p,s);
+  return `<article class="st st-cd" data-p="${pi}" data-name="${esc(p.name)}" style="--hl:${hl};background-image:${VEIL},${back(v,sd)}">
+  <div class="cd-gw">${glow(v,sd)}<div class="st-cv cd-disc" ${ck(k,lb)} ${viewAttr(k,v,sd)}></div></div>
   <div class="cd-lcd"><span>DISC 1</span><span class="st-n">TRACK ${pad2(i+1)} / ${pad2(p.songs.length)}</span></div>
   <h3>${esc(p.title||'TOP '+p.songs.length)}</h3><p class="cd-by">${esc(p.name||'이름 없음')}</p>
   ${p.songs.map((x,j)=>`<div class="cd-tr${j===i?' on':''}" data-go="${j}"><span class="st-n">${pad2(x.rank)}</span><div><b>${star(x)}${yt(x)}</b>${x.artist?`<span>${esc(x.artist)}</span>`:''}${x.why?`<p>${br(x.why)}</p>`:''}</div></div>`).join('')}
 </article>`;
 }
 function albumHtml(p,pi){
-  const k=albumKey(p), genres=[...new Set(p.songs.map(s=>s.genre.split(/\s*[·(]\s*/)[0].trim()).filter(Boolean))];
-  return `<article class="st st-album${albDir==='v'?' v':''}" data-p="${pi}" data-name="${esc(p.name)}" style="background-image:${back(k,leadSd(p))}">
-  <div class="st-cv al-front" ${ck(k,(p.title||p.name)+' 앞표지')} data-cv="${esc(k)}" data-sd="${esc(leadSd(p))}" style="background-image:linear-gradient(rgba(24,20,34,.1),rgba(24,20,34,.46)),${cover(k,leadSd(p))}"><small>TOP ${p.songs.length}</small><h3>${esc(p.title||p.name||'TOP '+p.songs.length)}</h3>${p.title&&p.name?`<em>${esc(p.name)}</em>`:''}<i class="al-bc"></i></div>
+  const k=albumKey(p), v=repView(p), genres=[...new Set(p.songs.map(s=>s.genre.split(/\s*[·(]\s*/)[0].trim()).filter(Boolean))];
+  return `<article class="st st-album${albDir==='v'?' v':''}" data-p="${pi}" data-name="${esc(p.name)}" style="background-image:${back(v,leadSd(p))}">
+  <div class="st-cv al-front" ${ck(k,(p.title||p.name)+' 앞표지')} data-cv="${esc(v)}"${v===k?` data-sd="${esc(leadSd(p))}"`:''} style="background-image:linear-gradient(rgba(24,20,34,.1),rgba(24,20,34,.46)),${cover(v,leadSd(p))}"><small>TOP ${p.songs.length}</small><h3>${esc(p.title||p.name||'TOP '+p.songs.length)}</h3>${p.title&&p.name?`<em>${esc(p.name)}</em>`:''}<i class="al-bc"></i></div>
   <div class="al-back"><p class="al-hd">TRACKLIST</p>
   ${p.songs.map(x=>`<div class="al-tr"><span class="st-n">${pad2(x.rank)}</span><div><b>${star(x)}${yt(x)}</b>${x.artist?`<span>${esc(x.artist)}</span>`:''}${x.why?`<p>${br(x.why)}</p>`:''}</div></div>`).join('')}
   <div class="al-foot"><span>${genres.map(esc).join(' · ')}</span></div></div>
@@ -755,7 +760,7 @@ function chatHtml(){
 function avatar(name){
   const pk='p:'+norm(name), p=people.find(x=>norm(x.name)===norm(name)), lb=name+' 프로필';
   if(covers[pk])return `<i class="ch-av st-cv" ${ck(pk,lb)} ${cvAttr(pk,name)}></i>`;
-  if(p){const {k,sd}=artOf(p,p.songs[curOf(p)]);return `<i class="ch-av st-cv" ${ck(pk,lb,false)} data-cv="${esc(k)}" style="background-image:${cover(k,sd)}"></i>`}
+  if(p){const {v,sd}=artOf(p,p.songs[curOf(p)]);return `<i class="ch-av st-cv" ${ck(pk,lb,false)} data-cv="${esc(v)}" style="background-image:${cover(v,sd)}"></i>`}
   return `<i class="ch-av" ${ck(pk,lb,false)} style="background-image:${grad(name)}">${esc([...name][0]||'')}</i>`;
 }
 function chatHead(){
@@ -992,7 +997,7 @@ function drawArt(){
   artBox.classList.toggle('few',!thumbs);   // 곡별 앨범아트가 꺼져 있으면 대표 · 프로필만
   artIn.innerHTML=people.map((p,pi)=>{
     const tile=(key,seed,label,i,rep,bg)=>`<div class="art-t${rep?' rep':''}" role="button" tabindex="0" data-pi="${pi}" data-i="${i}" title="${esc(label)}"><i style="background-image:${bg||cover(key,seed)}"></i>${covers[key]?'<button class="art-x" type="button" aria-label="빼기" title="빼기">×</button>':''}<span>${esc(label)}</span></div>`;
-    return `<div class="art-p"><b>${esc(p.name||'이름 없음')}</b><div class="art-g">${tile(albumKey(p),leadSd(p),'대표',0,true)}${thumbs?p.songs.map((x,j)=>tile(songKey(x),x.color||x.g,x.rank+' '+x.title,j+1)).join(''):''}${(()=>{const pk='p:'+norm(p.name),a=artOf(p,p.songs[curOf(p)]);return tile(pk,p.name,'프로필','p',false,covers[pk]?'':cover(a.k,a.sd))})()}</div></div>`;
+    return `<div class="art-p"><b>${esc(p.name||'이름 없음')}</b><div class="art-g">${(()=>{const ak=albumKey(p),rv=repView(p);return rv===ak?tile(ak,leadSd(p),'대표',0,true):tile(ak,0,'대표(1번)',0,true,cover(rv))})()}${thumbs?p.songs.map((x,j)=>tile(songKey(x),x.color||x.g,x.rank+' '+x.title,j+1)).join(''):''}${(()=>{const pk='p:'+norm(p.name),a=artOf(p,p.songs[curOf(p)]);return tile(pk,p.name,'프로필','p',false,covers[pk]?'':cover(a.v,a.sd))})()}</div></div>`;
   }).join('');
 }
 $('artBtn').addEventListener('click',()=>{if(artBox.hidden)drawArt()});
