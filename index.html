@@ -110,6 +110,13 @@ body { min-height: 100vh; background: var(--c0); color: var(--c4); font-family: 
   </div>
 
   <ol class="list">
+    <li data-tags="기록" data-keywords="도장 도장판 참 잘했어요 칭찬 스티커 스티커판 소원 쿠폰 메모 장면 서로 NPC">
+      <a class="item" href="Stamp_Board/index.html">
+        <div class="pic" data-icon="stamp" aria-hidden="true"></div>
+        <div><p class="name">STAMP BOARD</p><p class="what">참 잘했어요 도장판 열 칸 · 소원 · 열 번째 도장 장면</p></div>
+        <div class="tags"></div>
+      </a>
+    </li>
     <li data-tags="기록" data-keywords="노래 음악 좋아하는 노래 TOP5 재생목록 플레이리스트 플레이어 CD 앨범 클래식 발라드 K-POP J-POP OST 애니메이션 게임 영화 NPC">
       <a class="item" href="Song_TOP5/index.html">
         <div class="pic" data-icon="song" aria-hidden="true"></div>
@@ -200,6 +207,32 @@ document.getElementById('count').textContent = String(rows.length);
 
 // 도트 그림 — 24×24 칸. 글자 하나가 한 칸, "." 은 빈칸, 나머지는 pal 의 색. 같은 색이 가로로 이어지면 한 사각형으로 그린다.
 const ICONS = {
+  stamp: { pal: { r:'#d0453a', w:'#fffaf2' }, rows: [
+    '........................',
+    '........................',
+    '..........rrrr..........',
+    '.......rrrrrrrrrr.......',
+    '......rrrrwwwwrrrr......',
+    '.....rrrwwwwwwwwrrr.....',
+    '....rrrwwwwwwwwwwrrr....',
+    '...rrrwwwwwwwwwwwwrrr...',
+    '...rrwwwwwwwwwwrwwwrr...',
+    '...rrwwwwwwwwwrrwwwrr...',
+    '..rrwwwwwwwwwrrwwwwwrr..',
+    '..rrwwwwrwwwrrwwwwwwrr..',
+    '..rrwwwwrrwrrwwwwwwwrr..',
+    '..rrwwwwwrrrwwwwwwwwrr..',
+    '...rrwwwwwrwwwwwwwwrr...',
+    '...rrwwwwwwwwwwwwwwrr...',
+    '...rrrwwwwwwwwwwwwrrr...',
+    '....rrrwwwwwwwwwwrrr....',
+    '.....rrrwwwwwwwwrrr.....',
+    '......rrrrwwwwrrrr......',
+    '.......rrrrrrrrrr.......',
+    '..........rrrr..........',
+    '........................',
+    '........................',
+  ] },
   pepero: { pal: { c:'#5c3320', p:'#f08fb0', w:'#f3ead8', g:'#b8a68c', b:'#e0aa62', l:'#e07a98', k:'#c2456b', d:'#8f2c4c', r:'#fff3f6' }, rows: [
     '........................',
     '........................',
