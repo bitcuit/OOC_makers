@@ -226,6 +226,29 @@ button:focus-visible,summary:focus-visible{outline:2px solid var(--tx);outline-o
 .link:hover{color:var(--tx)}
 pre.ooc{margin:0;max-height:62vh;overflow:auto;white-space:pre-wrap;word-break:keep-all;overflow-wrap:anywhere;font:400 13px/1.7 var(--font);scrollbar-width:thin}
 #peek{width:580px}
+.btn.ic{width:36px;padding:0;font:italic 600 17px/1 "Bodoni Moda","Gowun Batang",serif}
+.help{width:660px;background:rgba(255,255,255,.62);-webkit-backdrop-filter:blur(8px) saturate(1.2);backdrop-filter:blur(8px) saturate(1.2)}
+.help-g{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:4px 20px 20px}
+.hc{padding:12px 14px 14px;border-radius:16px;background:color-mix(in oklab,var(--tint,#d0453a) 9%,rgba(255,255,255,.45));box-shadow:inset 0 0 0 1px color-mix(in oklab,var(--tint,#d0453a) 14%,transparent)}
+.hc .pic{display:flex;align-items:center;justify-content:center;gap:6px;height:66px;margin-bottom:12px}
+.hc .pic img{max-height:52px;max-width:100%}
+.hc .pic .ex{display:flex;flex-direction:column;align-items:center;gap:9px}
+.hc .pic .ex-r{display:flex;gap:3px}
+.hc .pic .ex img{height:26px}
+.hc .pic .ex em{padding:5px;background:var(--card,#fffdf8);font:600 10.5px/1.2 "Gothic A1",sans-serif;font-style:normal;color:var(--mut);white-space:nowrap}
+.hc .pic .ex-sep{align-self:stretch;width:1px;margin:2px 12px;background:rgba(27,28,26,.2)}
+
+.hc .pic .fr{display:block;width:52px;height:52px;background:var(--tint,#d0453a);-webkit-mask:var(--m) center/contain no-repeat;mask:var(--m) center/contain no-repeat}
+.hc .pic .tk{display:flex;height:34px;border-radius:5px;overflow:hidden;box-shadow:0 0 0 1px rgba(27,28,26,.12)}
+.hc .pic .tk i{width:34px;background:var(--tint,#d0453a)}.hc .pic .tk b{width:72px;background:#fff;border-left:1.5px dashed var(--tint,#d0453a)}
+.hc .pic .mini-g{display:grid;grid-template-columns:repeat(5,14px);gap:4px}.hc .pic .mini-g i{height:12px;border-radius:3px;background:color-mix(in oklab,var(--tint,#d0453a) 22%,#fff)}
+.hc .pic .mini-g i:nth-child(-n+7){background:var(--tint,#d0453a)}
+.hc kbd{padding:4px 8px;border-radius:6px;background:#fff;box-shadow:0 0 0 1px rgba(27,28,26,.18),0 2px 0 rgba(27,28,26,.12);font:600 12px/1 "Gothic A1",sans-serif}
+.hc .pic svg{width:30px;height:30px;color:var(--tint,#d0453a)}
+.hc h3{margin:0 0 8px;text-align:center;font-size:14px;font-weight:800;letter-spacing:-.01em}
+.hc dl{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:3px 10px;margin:0;font-size:12.5px;line-height:1.45;word-break:keep-all}
+.hc dt{font-weight:600;white-space:nowrap}.hc dd{margin:0;color:var(--mut)}
+@media (max-width:760px){.help-g{grid-template-columns:minmax(0,1fr)}}
 #paste textarea{display:block;width:100%;height:240px;resize:vertical;border:0;border-radius:16px;background:#fff;box-shadow:0 0 0 1px var(--hair);padding:14px 16px;line-height:1.6;scrollbar-width:thin}
 #paste textarea:focus{outline:0;box-shadow:0 0 0 2px var(--tx)}
 #paste .links{display:flex;gap:18px;margin-top:10px;padding:0 4px}
@@ -386,6 +409,7 @@ pre.ooc{margin:0;max-height:62vh;overflow:auto;white-space:pre-wrap;word-break:k
     <button class="btn" id="savePng" type="button">저장</button>
     <span class="sp"></span>
     <button class="btn" id="resetBar" type="button" title="글 · 이름 · 꾸밈을 전부 지워요">초기화</button>
+    <button class="btn ic" id="helpBtn" type="button" aria-expanded="false" aria-controls="help" aria-label="할 수 있는 것" title="할 수 있는 것">i</button>
   </div>
 </div>
 <div class="status" id="status" aria-live="polite"></div>
@@ -404,6 +428,11 @@ pre.ooc{margin:0;max-height:62vh;overflow:auto;white-space:pre-wrap;word-break:k
   </div></article>
   <div class="out" id="out"></div>
 </main>
+
+<div class="pip help" id="help" role="dialog" aria-label="할 수 있는 것" hidden>
+  <div class="pip-bar"><b>할 수 있는 것</b><button class="pip-x" type="button" aria-label="닫기" title="닫기 (Esc)">×</button></div>
+  <div class="help-g" id="helpG"></div>
+</div>
 
 <div class="pip" id="cast" role="dialog" aria-label="바꾸기" hidden>
   <div class="pip-bar"><b>바꾸기</b><button class="pip-x" type="button" aria-label="닫기" title="닫기 (Esc)">×</button></div>
@@ -640,6 +669,21 @@ function makePip(box,btn,focusSel){
 }
 const castPip=makePip(castBox,$('castBtn'),'input'), peekPip=makePip($('peek'),$('peekBtn')), pastePip=makePip($('paste'),$('pasteBtn'),'textarea'), decoPip=makePip($('deco'),$('decoBtn'));
 document.addEventListener('keydown',e=>{if(e.key==='Escape')pips.forEach(p=>{if(!p.box.hidden)p.set(false)})});
+// 할 수 있는 것: 묶음마다 그림 한 칸 + 동작 → 결과
+const HELP=[
+  ['도장 · 스티커',()=>`<i class="fr" style="--m:url(${ART.stamp.flower})"></i><img src="${emojiSrc('🌸',tintNow(),true)}" alt="">`,[['꾸미기 → 도장','모양&nbsp;· 색&nbsp;· 크기'],['열 번째만','열 번째 칸만 따로'],['+ 그림','내 그림으로 도장&nbsp;· 스티커'],['글자','도장 문구&nbsp;· 스티커 아래 글. Enter 줄바꿈']]],
+  ['붙이기',()=>{const em=['🍀','⭐','🌸','🎀'], g=(full,label)=>`<span class="ex"><em>${label}</em><span class="ex-r">${em.map(e=>`<img src="${emojiSrc(e,tintNow(),full)}" alt="">`).join('')}</span></span>`;return g(true,'원래 색')+'<i class="ex-sep" aria-hidden="true"></i>'+g(false,'한 색')},[['이모지&nbsp;· + 그림','도장판&nbsp;· 에피소드 위에 붙이기'],['색','원래 색&nbsp;· 한 색(도장 색)'],['끌기','옮기기'],['아래 아이콘','크기'],['위 아이콘','기울기. Shift 15°씩'],['Delete','빼기']]],
+  ['글 고치기',()=>`<kbd>Enter</kbd>`,[['이름&nbsp;· 메모 누르기','그 자리에서 고치기'],['연필 단추','에피소드 제목&nbsp;· 글'],['손글씨','메모&nbsp;· 소원 글씨 따로'],['초기화','챗봇이 준 글로']]],
+  ['소원권',()=>`<span class="tk"><i></i><b></b></span>`,[['끌기','옮기기. 아래로 옮기면 영역도 늘어남'],['두 번 누르기','제자리']]],
+  ['도장판',()=>`<span class="mini-g">${'<i></i>'.repeat(10)}</span>`,[['줄','줄마다 칸 수. 3-3-4 직접 입력'],['아래','아래 여백'],['색','포인트&nbsp;· 소원권'],['글자','자수&nbsp;· 명조&nbsp;· 고딕']]],
+  ['저장',()=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/></svg>`,[['둘 다&nbsp;· 도장판&nbsp;· 에피소드','종이마다 PNG 한 장'],['메모','저장 영역 왼쪽 아래 글'],['모으기','그림 출처를 메모 끝에'],['초기화','두 번 눌러 전부 지우기']]],
+];
+function drawHelp(){$('helpG').innerHTML=HELP.map(([t,pic,rows])=>`<section class="hc"><h3>${t}</h3><div class="pic">${pic()}</div><dl>${rows.map(([a,b])=>`<dt>${a}</dt><dd>${b}</dd>`).join('')}</dl></section>`).join('')}
+const helpPip=makePip($('help'),$('helpBtn'),'.pip-x');
+$('helpBtn').addEventListener('click',drawHelp,true);
+// 큰 참고 창이라 단추 옆이 아니라 화면 가운데, 위 줄 바로 아래에 띄운다
+function centerHelp(){const h=$('help');if(h.hidden)return;const top=document.querySelector('.top').getBoundingClientRect().bottom+10;h.style.left=Math.max(16,(innerWidth-h.offsetWidth)/2)+'px';h.style.top=Math.max(16,Math.min(top,innerHeight-16-h.offsetHeight))+'px'}
+$('helpBtn').addEventListener('click',()=>requestAnimationFrame(centerHelp));addEventListener('resize',centerHelp);
 document.addEventListener('pointerdown',e=>{pips.forEach(p=>{if(!p.box.hidden&&!p.box.contains(e.target)&&!p.btn.contains(e.target)&&!(p.box.id==='deco'&&e.target.closest&&e.target.closest('.sb')))p.set(false)})});
 
 $('copyOoc').onclick=()=>{
